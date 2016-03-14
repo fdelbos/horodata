@@ -1,0 +1,31 @@
+<md-dialog aria-label="Nouveau Dossier" flex="40">
+  <form name="newCustomerForm">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Nouveaux Dossiers</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Fermer" ng-click="close()">
+          <md-icon md-font-icon="fa fa-close"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+
+        <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.name}" >
+          <label>Noms des Dossiers a ajouter (saisissez un dossier par ligne).</label>
+          <textarea md-no-autogrow md-maxlength="1500" ng-model="name" rows="5" md-select-on-focus></textarea>
+          <small ng-if="errors.name" class="input-error">{{ errors.name }}</small>
+        </md-input-container>
+
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions>
+      <md-button ng-click="send()" class="md-primary md-raised">Ajouter</md-button>
+      <md-button ng-click="close()" class="md-raised">Annuler</md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

@@ -1,0 +1,30 @@
+<div>
+  <div layout="row" layout-align="space-around center" hide show-gt-md layout-padding>
+
+      <md-datepicker  flex="25" ng-model="beginDate" md-placeholder="Date debut" md-max-date="endDate"></md-datepicker>
+
+      <md-datepicker flex="25" ng-model="endDate" md-placeholder="Date fin" md-max-date="maxDate"></md-datepicker>
+
+      <md-input-container flex="25">
+        <label>Utilisateur</label>
+        <md-select ng-model="user">
+          <md-option ng-repeat="u in users" value="{{ u.email }}">
+            {{ u.name }}
+          </md-option>
+        </md-select>
+      </md-input-container>
+
+      <md-input-container flex="25">
+        <label>Dossier</label>
+        <md-select ng-model="folder">
+          <md-option ng-repeat="u in users" value="{{ u.email }}">
+            {{ u.name }}
+          </md-option>
+        </md-select>
+      </md-input-container>
+
+  </div>
+
+  <md-divider></md-divider>
+
+</div>

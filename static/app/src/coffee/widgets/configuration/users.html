@@ -1,0 +1,50 @@
+<div  layout-margin layout-padding>
+
+  <div layout="column">
+
+    <div layout="row" layout-align="space-between center">
+      <div class="md-display-1">
+        Utilisateurs
+      </div>
+
+      <md-button ng-click="showConfigurationUsersDialog()" class="md-raised md-primary" hide show-gt-sm>
+        <span class="fa fa-plus"></span>
+        Ajouter
+      </md-button>
+
+      <md-button ng-click="showConfigurationUsersDialog()" class="md-fab md-primary" hide-gt-sm aria-label="Ajouter un utilisateur">
+        <span class="fa fa-plus"></span>
+      </md-button>
+    </div>
+
+    <p class="md-body-1">
+      Pour que vos collaborateurs puissent enregister leur travail,
+      vous devez les inviter.
+    </p>
+
+    <div layout="row">
+      <md-input-container flex>
+        <label>Utilisateur</label>
+        <md-select ng-model="selectedTask">
+          <md-option ng-repeat="u in users" value="{{ u.email }}">
+            {{ u.name }}
+          </md-option>
+        </md-select>
+      </md-input-container>
+
+      <div ng-if="selectedTask">
+        <md-button ng-click="showConfigurationUsersDialog()" class="md-raised md-accent" hide show-gt-sm>
+          <span class="fa fa-pencil"></span>
+          Editer
+        </md-button>
+
+        <md-button ng-click="showConfigurationUsersDialog()" class="md-fab md-accent" hide-gt-sm aria-label="Editer un utilisateur">
+          <span class="fa fa-pencil"></span>
+        </md-button>
+      </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,70 @@
+{% extends "account/base.html" %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+
+{% include "account/social.html" %}
+
+<br>
+
+<div class="row">
+  <form method="post" class="col s12">
+
+    <div class="row">
+      <div class="input-field col s12">
+        <label for="username">Nom d'utilisateur</label>
+
+        <input
+          type="text"
+          id="username"
+          class="form-control {% if errors.username %}invalid{% endif %}"
+          name="username"
+          maxlength="30"
+          value="{{ username }}">
+
+        {% if errors.username %}
+        <small class="error red-text">{{  errors.username }} </small>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <label for="password">Mot de passe</label>
+
+        <input
+          type="password"
+          id="password"
+          class="form-control {% if errors.password %}invalid{% endif %}"
+          name="password"
+          maxlength="100"
+          value="{{ password }}">
+
+        {% if errors.password %}
+        <small class="error red-text">{{ errors.password }} </small>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if errors.denied %}
+    <div class="row">
+      <div class="col s12">
+        <p class="red-text flow-text center-align">
+          Connexion refusée !
+        </p>
+      </div>
+    </div>
+    {% endif %}
+
+
+    <div class="row">
+      {% include "account/ok.html" %}
+    </div>
+
+  </form>
+</div>
+
+{% include "account/menu.html" with view="login" %}
+
+{% endblock %}

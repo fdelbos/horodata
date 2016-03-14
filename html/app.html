@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr" ng-app="horodata" ng-strict-di>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8">
+  <meta name="description" content="HoroData Website">
+  <meta name="author" content="Hyperboloide - https://hyperboloide.com">
+
+  <title>Horo Data</title>
+
+  <link href="{{ ctx.StaticRoot }}/roboto/Roboto.css" rel='stylesheet' type='text/css'>
+  <link href="{{ ctx.StaticRoot }}/bower_components/angular-material/angular-material.min.css" rel="stylesheet">
+  <link href="{{ ctx.StaticRoot }}/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" media="screen,projection">
+  <link href="{{ ctx.StaticRoot }}/app/horodata.css" rel="stylesheet">
+
+  <script type="text/javascript" src="{{ ctx.StaticRoot }}/bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="{{ ctx.StaticRoot }}/bower_components/lodash/dist/lodash.min.js"></script>
+  <script type="text/javascript" src="{{ ctx.StaticRoot }}/bower_components/moment/min/moment.min.js"></script>
+  <script type="text/javascript" src="{{ ctx.StaticRoot }}/bower_components/angular/angular.min.js"></script>
+  <script type="text/javascript" src="{{ ctx.StaticRoot }}/bower_components/angular-animate/angular-animate.min.js"></script>
+  <script type="text/javascript" src="{{ ctx.StaticRoot }}/bower_components/angular-aria/angular-aria.min.js"></script>
+  <script type="text/javascript" src="{{ ctx.StaticRoot }}/bower_components/angular-messages/angular-messages.min.js"></script>
+  <script type="text/javascript" src="{{ ctx.StaticRoot }}/bower_components/angular-material/angular-material.min.js"></script>
+  <script type="text/javascript" src="{{ ctx.StaticRoot }}/bower_components/angular-route/angular-route.min.js"></script>
+
+  <script type="text/javascript" src="{{ ctx.StaticRoot }}/app/horodata.js"></script>
+
+  <base href="{{ base }}" />
+  <api href="{{ api }}"></api>
+
+</head>
+<body>
+
+  <div layout="row" layout-fill>
+    <app-menu-sidenav></app-menu-sidenav>
+
+    <md-content flex layout="column">
+      <app-menu-toolbar></app-menu-toolbar>
+      <div ng-view></div>
+    </md-content>
+  </div>
+
+<!--
+  <div layout="row">
+    <app-menu-sidenav></app-menu-sidenav>
+
+    <div layout="column">
+      <app-menu-toolbar></app-menu-toolbar>
+      <md-content flex>
+        <div ng-view></div>
+      </md-content>
+    </div>
+  </div> -->
+
+</body>
+</html>

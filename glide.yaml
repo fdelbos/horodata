@@ -1,0 +1,22 @@
+package: bitbucket.com/hyperboloide/ud
+import:
+- package: github.com/lib/pq
+- package: github.com/spf13/viper
+- package: golang.org/x/crypto
+- package: github.com/gin-gonic/gin
+- package: github.com/asaskevich/govalidator
+- package: github.com/markbates/goth
+- package: github.com/dchest/uniuri
+- package: github.com/mailgun/mailgun-go
+- package: github.com/gorilla/sessions
+- package: github.com/gorilla/securecookie
+- package: gopkg.in/redis.v3
+- package: github.com/davecgh/go-spew
+- package: github.com/gin-gonic/contrib
+- package: github.com/Sirupsen/logrus
+- package: github.com/hyperboloide/pipe
+- package: github.com/flosch/pongo2
+- package: github.com/codahale/charlie
+- package: github.com/russross/blackfriday
+- package: github.com/microcosm-cc/bluemonday
+- package: github.com/flosch/pongo2-addons

@@ -1,0 +1,90 @@
+{% extends "account/base.html" %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+
+<p class="center-align">Utiliser un compte deja existant</p>
+
+{% include "account/social.html" %}
+
+<br>
+
+<p class="center-align">Ou creer un compte avec un mot de passe</p>
+
+<div class="row">
+  <form method="post" class="col s12">
+
+    <div class="row">
+      <div class="input-field col s12">
+        <label for="username">Nom d'utilisateur</label>
+
+        <input
+          type="text"
+          id="username"
+          class="form-control {% if errors.username %}invalid{% endif %}"
+          name="username"
+          maxlength="30"
+          value="{{ username }}">
+
+        {% if errors.username %}
+        <small class="error red-text">{{  errors.username }} </small>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <label for="email">Email</label>
+
+        <input
+          type="text"
+          id="email"
+          class="form-control {% if errors.email %}invalid{% endif %}"
+          name="email"
+          maxlength="30"
+          value="{{ email }}">
+
+        {% if errors.email %}
+        <small class="error red-text">{{ errors.email }} </small>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <label for="password">Mot de passe</label>
+
+        <input
+          type="password"
+          id="password"
+          class="form-control {% if errors.password %}invalid{% endif %}"
+          name="password"
+          maxlength="100">
+
+        {% if errors.password %}
+        <small class="error red-text">{{ errors.password }} </small>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12">
+        <div class="g-recaptcha" data-sitekey="{{ CaptchaPubKey}}"></div>
+        {% if errors.recaptcha %}
+        <small class="error red-text">{{ errors.recaptcha }} </small>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="row">
+      {% include "account/ok.html" %}
+    </div>
+
+  </form>
+</div>
+
+
+{% include "account/menu.html" with view="register" %}
+
+{% endblock %}

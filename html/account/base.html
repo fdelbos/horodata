@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8">
+  <meta name="description" content="HoroData Account">
+  <meta name="author" content="Hyperboloide - https://hyperboloide.com">
+
+  <title>Horo Data</title>
+
+  <link href="{{ ctx.StaticRoot }}/bower_components/Materialize/dist/css/materialize.min.css" rel="stylesheet" media="screen,projection">
+  <link href="{{ ctx.StaticRoot }}/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" media="screen,projection">
+
+  <style>
+    body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col s12 m8 offset-m2 l6 offset-l3">
+          <h2 class="center-align condensed light">
+            {% block title %}{% endblock %}
+          </h2>
+          <br>
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+    </div>
+  </main>
+
+  {% include "account/footer.html" %}
+
+  <script type="text/javascript" src="{{ ctx.StaticRoot }}/bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="{{ ctx.StaticRoot }}/bower_components/Materialize/dist/js/materialize.min.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</body>
+</html>

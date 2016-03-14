@@ -1,0 +1,44 @@
+<md-dialog aria-label="Nouvel Utilisateur" flex="40">
+  <form name="newUserForm">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Nouvel Utilisateur</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Fermer" ng-click="close()">
+          <md-icon md-font-icon="fa fa-close"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+
+        <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.email}" >
+          <label>Adresse Email</label>
+          <input type="text" ng-model="email">
+          <small ng-if="errors.email" class="input-error">{{ errors.email }}</small>
+        </md-input-container>
+
+        <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.rate}" >
+          <label>Taux Horraire</label>
+          <input type="text" ng-model="rate" ng-value="0">
+          <small ng-if="errors.rate" class="input-error">{{ errors.rate }}</small>
+        </md-input-container>
+
+        <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.admin}" >
+          <md-switch ng-model="admin" aria-label="Administrateur">
+            Administrateur
+          </md-switch>
+          <div class="input-hint">Cochez cette case si vous souhaitez deleguer la gestion de ce group a cet utilisateur.</div>
+        </md-input-container>
+
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions>
+      <md-button ng-click="send()" class="md-primary md-raised">Ajouter</md-button>
+      <md-button ng-click="close()" class="md-raised">Annuler</md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

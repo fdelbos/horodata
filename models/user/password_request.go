@@ -1,0 +1,79 @@
+package user
+
+import (
+	"bitbucket.com/hyperboloide/horo/services/mail"
+	"bitbucket.com/hyperboloide/horo/services/postgres"
+	"github.com/dchest/uniuri"
+	"time"
+)
+
+type PasswordRequest struct {
+	Id      int64     `json:"id"`
+	Created time.Time `json:"created"`
+	UserId  int64     `json:"user_id"`
+	Active  bool      `json:"active"`
+	Url     string    `json:"url"`
+}
+
+func (pr *PasswordRequest) Scan(scanFn func(dest ...interface{}) error) error {
+	return scanFn(
+		&pr.Id,
+		&pr.Created,
+		&pr.UserId,
+		&pr.Active,
+		&pr.Url)
+}
+
+func (pr *PasswordRequest) GetUser() (*User, error) {
+	return ById(pr.UserId)
+}
+
+func (pr *PasswordRequest) IsValid() bool {
+	if pr.Created.Add(time.Hour * 2).Before(time.Now()) {
+		return false
+	}
+	return pr.Active
+}
+
+func (pr *PasswordRequest) Invalidate() error {
+	const query = `UPDATE password_requests SET active = false WHERE id = $1;`
+	return postgres.Exec(query, pr.Id)
+}
+
+func (u *User) NewPasswordRequest() error {
+	pr := &PasswordRequest{
+		Created: time.Now(),
+		UserId:  u.Id,
+		Active:  true,
+		Url:     uniuri.NewLen(40),
+	}
+	const query = `
+    INSERT INTO password_requests (
+    	created,
+    	user_id,
+    	active,
+    	url)
+	VALUES ($1, $2, $3, $4);`
+	if err := postgres.Exec(query, pr.Created, pr.UserId, pr.Active, pr.Url); err != nil {
+		return err
+	}
+	m := mail.Mail{
+		Dests:    []string{u.Email},
+		Subject:  "Réinitialisation du mot de passe sur Horo Data",
+		Template: "reset_password",
+		Data: map[string]interface{}{
+			"login": u.Login,
+			"link":  pr.Url,
+		},
+	}
+	return m.Send()
+}
+
+func GetPasswordRequest(url string) (*PasswordRequest, error) {
+	pr := &PasswordRequest{}
+	query := `
+	SELECT id, created, user_id, active, url
+	FROM password_requests
+	WHERE url = $1;`
+	return pr, postgres.QueryRow(pr, query, url)
+}

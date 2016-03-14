@@ -1,0 +1,15 @@
+package v1
+
+import (
+	"bitbucket.com/hyperboloide/horo/www/api/v1/groups"
+	"bitbucket.com/hyperboloide/horo/www/api/v1/users"
+	"github.com/gin-gonic/gin"
+)
+
+func Group(r *gin.RouterGroup) {
+	v1 := r.Group("/v1")
+	{
+		users.Group(v1)
+		groups.Group(v1)
+	}
+}

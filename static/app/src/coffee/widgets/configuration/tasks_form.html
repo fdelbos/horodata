@@ -1,0 +1,38 @@
+<md-dialog aria-label="Nouveau type de tâche" flex="40">
+  <form name="newTaskForm">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Nouveau type de tâche</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Fermer" ng-click="close()">
+          <md-icon md-font-icon="fa fa-close"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+
+        <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.name}" >
+          <label>Nom de la tâche</label>
+          <input md-maxlength="40" type="text" ng-model="name">
+          <small ng-if="errors.name" class="input-error">{{ errors.name }}</small>
+        </md-input-container>
+
+        <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.admin}" >
+          <md-switch ng-model="admin" aria-label="Administrateur">
+            Commentaire obligatoire
+          </md-switch>
+          <div class="input-hint">Force l'utilisateur a associer un commentaire a la chaque tâche de ce type.</div>
+        </md-input-container>
+
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions>
+      <md-button ng-click="send()" class="md-primary md-raised">Ajouter</md-button>
+      <md-button ng-click="close()" class="md-raised">Annuler</md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

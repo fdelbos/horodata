@@ -1,0 +1,37 @@
+{% extends "account/base.html" %}
+
+{% block title %}Choisissez un nom d'utilisateur{% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+  <form method="post" class="col s12">
+
+    <div class="row">
+      <div class="input-field col s12">
+        <label for="username">Nom d'utilisateur</label>
+
+        <input
+          type="text"
+          id="username"
+          class="form-control {% if errors.username %}invalid{% endif %}"
+          name="username"
+          maxlength="30"
+          value="{{ username }}">
+
+        {% if errors.username %}
+        <small class="error red-text">{{  errors.username }} </small>
+        {% endif %}
+      </div>
+    </div>
+
+
+    <div class="row">
+      {% include "account/ok.html" %}
+    </div>
+
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+<div  layout-margin layout-padding>
+
+  <div layout="column">
+
+    <div layout="row" layout-align="space-between center">
+      <div class="md-display-1">
+        Dossiers
+      </div>
+
+      <md-button ng-click="showConfigurationCustomersDialog()" class="md-raised md-primary" hide show-gt-sm>
+        <span class="fa fa-plus"></span>
+        Ajouter
+      </md-button>
+
+      <md-button ng-click="showConfigurationCustomersDialog()" class="md-fab md-primary" hide-gt-sm aria-label="Ajouter un dossier">
+        <span class="fa fa-plus"></span>
+      </md-button>
+    </div>
+
+    <p class="md-body-1">
+      Un dossier peut representer un client ou un projet.
+      Chaque nouvelle tache est attachee a un dossier.
+    </p>
+
+    <div layout="row">
+      <md-input-container flex>
+        <label>Dossiers</label>
+        <md-select ng-model="selectedCustomer">
+          <md-option ng-repeat="u in users" value="{{ u.email }}">
+            {{ u.name }}
+          </md-option>
+        </md-select>
+      </md-input-container>
+
+      <div ng-if="selectedCustomer">
+        <md-button ng-click="showConfigurationCustomersDialog()" class="md-raised md-accent" hide show-gt-sm>
+          <span class="fa fa-pencil"></span>
+          Editer
+        </md-button>
+
+        <md-button ng-click="showConfigurationCustomersDialog()" class="md-fab md-accent" hide-gt-sm aria-label="Editer un dossier">
+          <span class="fa fa-pencil"></span>
+        </md-button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

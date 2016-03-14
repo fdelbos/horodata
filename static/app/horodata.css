@@ -1,0 +1,57 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+main {
+  flex: 1 0 auto;
+}
+header,
+main,
+footer {
+  padding-left: 300px;
+}
+@media only screen and (max-width: 992px) {
+  header,
+  main,
+  footer {
+    padding-left: 0;
+  }
+}
+md-sidenav {
+  height: 100%;
+}
+.input-error {
+  color: #dd2c00;
+}
+.autocomplete-user-template li {
+  border-bottom: 1px solid #ccc;
+  height: auto;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  white-space: normal;
+}
+.autocomplete-user-template li:last-child {
+  border-bottom-width: 0;
+}
+.autocomplete-user-template .item-name,
+.autocomplete-user-template .item-email {
+  display: block;
+  line-height: 2;
+}
+.autocomplete-user-template .highlight {
+  color: #0277BD !important;
+}
+.input-hint {
+  position: absolute;
+  left: 2px;
+  right: auto;
+  font-size: 12px;
+  line-height: 14px;
+  transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+  color: grey;
+}
+md-input-container textarea[md-no-autogrow].md-input {
+  height: inherit;
+  overflow-y: auto;
+}
