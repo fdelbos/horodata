@@ -17,6 +17,7 @@ create table tasks (
     active boolean default true not null,
     group_id bigint not null references groups on delete cascade,
     name varchar(40) not null,
+    comment_mandatory boolean default false not null,
     unique(group_id, name)
 );
 

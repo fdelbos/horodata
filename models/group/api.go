@@ -87,11 +87,46 @@ func ApiByUser(user_id int64, request *listing.Request) (*listing.Result, error)
 	return result, err
 }
 
-func ApiByUrl(url string) (*GroupApi, error) {
-	ga := &GroupApi{}
-	query := `
-    select g.url, u.login, g.created, g.name
-    from users u, groups g
-    where u.id = g.owner_id and g.url = $1;`
-	return ga, postgres.QueryRow(ga, query, url)
+func (g *Group) ApiDetail() (interface{}, error) {
+	var d struct {
+		Url       string        `json:"url"`
+		Owner     user.UserLink `json:"owner,omitempty"`
+		Created   time.Time     `json:"created,omitempty"`
+		Name      string        `json:"name"`
+		Tasks     []Task        `json:"tasks"`
+		Customers []Customer    `json:"customer"`
+	}
+	d.Url = g.Url
+	d.Created = g.Created
+	d.Name = g.Name
+
+	if owner, err := g.GetOwner(); err != nil {
+		return nil, err
+	} else {
+		d.Owner.Login = owner.Login
+	}
+
+	if tasks, err := g.Tasks(); err != nil {
+		return nil, err
+	} else {
+		d.Tasks = tasks
+	}
+
+	if customers, err := g.Customers(); err != nil {
+		return nil, err
+	} else {
+		d.Customers = customers
+	}
+
+	return d, nil
 }
+
+//
+// func ApiByUrl(url string) (*GroupApi, error) {
+// 	ga := &GroupApi{}
+// 	query := `
+//     select g.url, u.login, g.created, g.name
+//     from users u, groups g
+//     where u.id = g.owner_id and g.url = $1;`
+// 	return ga, postgres.QueryRow(ga, query, url)
+// }

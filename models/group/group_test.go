@@ -43,4 +43,77 @@ var _ = Describe("Group", func() {
 		Ω(res.Results[0].(*GroupApi).Url).To(Equal(group.Url))
 	})
 
+	It("should test customers", func() {
+		Ω(group.CustomerAdd("toto")).To(BeNil())
+		customers, err := group.Customers()
+		Ω(err).To(BeNil())
+		Ω(len(customers)).To(Equal(1))
+		c := customers[0]
+		Ω(c.Name).To(Equal("toto"))
+		c.Name = "titi"
+		Ω(c.Update()).To(BeNil())
+
+		customers, err = group.Customers()
+		Ω(err).To(BeNil())
+		Ω(len(customers)).To(Equal(1))
+		c = customers[0]
+		Ω(c.Name).To(Equal("titi"))
+
+		id := c.Id
+		c.Active = false
+		Ω(c.Update()).To(BeNil())
+		customers, err = group.Customers()
+		Ω(err).To(BeNil())
+		Ω(len(customers)).To(Equal(0))
+
+		Ω(group.CustomerAdd("titi")).To(BeNil())
+		customers, err = group.Customers()
+		Ω(err).To(BeNil())
+		Ω(len(customers)).To(Equal(1))
+		c = customers[0]
+		Ω(c.Name).To(Equal("titi"))
+		Ω(c.Id).To(Equal(id))
+	})
+
+	It("should test tasks", func() {
+		Ω(group.TaskAdd("toto", false)).To(BeNil())
+		tasks, err := group.Tasks()
+		Ω(err).To(BeNil())
+		Ω(len(tasks)).To(Equal(1))
+		t := tasks[0]
+		Ω(t.Name).To(Equal("toto"))
+		Ω(t.CommentMandatory).To(BeFalse())
+		t.Name = "tata"
+		t.CommentMandatory = true
+		Ω(t.Update()).To(BeNil())
+
+		tasks, err = group.Tasks()
+		Ω(err).To(BeNil())
+		Ω(len(tasks)).To(Equal(1))
+		t = tasks[0]
+		Ω(t.Name).To(Equal("tata"))
+		Ω(t.CommentMandatory).To(BeTrue())
+
+		id := t.Id
+		t.Active = false
+		Ω(t.Update()).To(BeNil())
+		tasks, err = group.Tasks()
+		Ω(err).To(BeNil())
+		Ω(len(tasks)).To(Equal(0))
+
+		Ω(group.TaskAdd("tata", false)).To(BeNil())
+		tasks, err = group.Tasks()
+		Ω(err).To(BeNil())
+		Ω(len(tasks)).To(Equal(1))
+		t = tasks[0]
+		Ω(t.Name).To(Equal("tata"))
+		Ω(t.CommentMandatory).To(BeFalse())
+		Ω(t.Id).To(Equal(id))
+	})
+
+	It("should test ApiDetail", func() {
+		d, err := group.ApiDetail()
+		Ω(err).To(BeNil())
+		Ω(d).ToNot(BeNil())
+	})
 })
