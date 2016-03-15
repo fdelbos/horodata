@@ -16,7 +16,7 @@ create table tasks (
     created timestamp default now() not null,
     active boolean default true not null,
     group_id bigint not null references groups on delete cascade,
-    name varchar(40) not null,
+    name citext not null,
     comment_mandatory boolean default false not null,
     unique(group_id, name)
 );
@@ -26,7 +26,7 @@ create table customers (
     created timestamp default now() not null,
     active boolean default true not null,
     group_id bigint not null references groups on delete cascade,
-    name varchar(200) not null,
+    name citext not null,
     unique(group_id, name)
 );
 

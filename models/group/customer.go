@@ -41,7 +41,7 @@ func (g *Group) CustomerGet(id int64) (*Customer, error) {
 func (g *Group) CustomerAdd(name string) error {
 	customer := &Customer{}
 	const findQuery = `
-    select * from customers where group_id = $1 and lower(name) = lower($2);`
+    select * from customers where group_id = $1 and name = $2;`
 
 	if err := postgres.QueryRow(customer, findQuery, g.Id, name); err == nil {
 		customer.Active = true

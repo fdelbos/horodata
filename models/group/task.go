@@ -44,7 +44,7 @@ func (g *Group) TaskGet(id int64) (*Task, error) {
 func (g *Group) TaskAdd(name string, cm bool) error {
 	task := &Task{}
 	const findQuery = `
-    select * from tasks where group_id = $1 and lower(name) = lower($2);`
+    select * from tasks where group_id = $1 and name = $2;`
 
 	if err := postgres.QueryRow(task, findQuery, g.Id, name); err == nil {
 		task.Active = true
