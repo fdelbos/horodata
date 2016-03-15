@@ -7,12 +7,12 @@
         Dossiers
       </div>
 
-      <md-button ng-click="showConfigurationCustomersDialog()" class="md-raised md-primary" hide show-gt-sm>
+      <md-button ng-click="customers.create()" class="md-raised md-primary" hide show-gt-sm>
         <span class="fa fa-plus"></span>
         Ajouter
       </md-button>
 
-      <md-button ng-click="showConfigurationCustomersDialog()" class="md-fab md-primary" hide-gt-sm aria-label="Ajouter un dossier">
+      <md-button ng-click="customers.create()" class="md-fab md-primary" hide-gt-sm aria-label="Ajouter un dossier">
         <span class="fa fa-plus"></span>
       </md-button>
     </div>
@@ -22,23 +22,28 @@
       Chaque nouvelle tache est attachee a un dossier.
     </p>
 
-    <div layout="row">
+    <md-whiteframe ng-if="group.customers.length == 0" class="md-whiteframe-5dp md-accent" layout-padding layout="column" layout-align="center center">
+      <div class="md-headline input-error">Aucune dossier enregistre</div>
+      <div>Vous devez definir des dossiers pour la saisie.</div>
+    </md-whiteframe>
+
+    <div layout="row" ng-if="group.customers.length > 0">
       <md-input-container flex>
-        <label>Dossiers</label>
-        <md-select ng-model="selectedCustomer">
-          <md-option ng-repeat="u in users" value="{{ u.email }}">
-            {{ u.name }}
+        <label>Selectionnez un dossiers pour l'editer</label>
+        <md-select ng-model="customers.selected">
+          <md-option ng-repeat="c in group.customers" value="{{ c.id }}">
+            {{ c.name }}
           </md-option>
         </md-select>
       </md-input-container>
 
-      <div ng-if="selectedCustomer">
-        <md-button ng-click="showConfigurationCustomersDialog()" class="md-raised md-accent" hide show-gt-sm>
+      <div ng-if="customers.selected">
+        <md-button ng-click="customers.edit()" class="md-raised md-accent" hide show-gt-sm>
           <span class="fa fa-pencil"></span>
           Editer
         </md-button>
 
-        <md-button ng-click="showConfigurationCustomersDialog()" class="md-fab md-accent" hide-gt-sm aria-label="Editer un dossier">
+        <md-button ng-click="customers.edit()" class="md-fab md-accent" hide-gt-sm aria-label="Editer un dossier">
           <span class="fa fa-pencil"></span>
         </md-button>
       </div>

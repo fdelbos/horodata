@@ -50,6 +50,7 @@ func (g *Group) Insert() error {
 func ByUrl(url string) (*Group, error) {
 	g := &Group{}
 	query := `
-    select * from groups where url = $1 and active = true;`
+    select * from groups where url = $1 and active = true
+	order by name, id;`
 	return g, postgres.QueryRow(g, query, url)
 }

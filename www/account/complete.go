@@ -45,7 +45,7 @@ func PostComplete(c *gin.Context) {
 	} else if len(username) < 4 {
 		errors["username"] = "Ce champ doit faire au moins 4 caractères."
 	} else if len(username) > 30 {
-		errors["username"] = "Ce champ ne doit pas depasser 30 caractères."
+		errors["username"] = "Ce champ ne doit pas dépasser 30 caractères."
 	} else if ok, err := regexp.MatchString(`^[\w.-]+$`, username); err != nil {
 		GetError(c, err)
 		return

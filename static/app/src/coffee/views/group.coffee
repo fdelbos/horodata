@@ -17,12 +17,21 @@ angular.module("horodata").controller("Group", [
 
     $scope.isOwner = false
 
-    userService.get((u) ->
+    getGroup = ->
       $http.get("#{apiService.get()}/groups/#{$routeParams.group}").then(
         (resp) ->
           $scope.group = resp.data.data
-          if $scope.group.owner.login == u.login
+          if $scope.group.owner.login == $scope.user.login
             $scope.isOwner = true
           titleService.set($scope.group.name)
-          fetchUsers()))
+      )
+
+    userService.get((u) ->
+      $scope.user = u
+      getGroup()
+      if $scope.isOwner then fetchUsers())
+
+    $scope.$on("group.reload", (e) ->
+      e.stopPropagation()
+      getGroup())
 ])

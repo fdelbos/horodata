@@ -34,6 +34,4 @@ angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages"])
     $mdDateLocaleProvider.msgOpenCalendar = 'Ouvrir le calendrier';
     $mdDateLocaleProvider.monthHeaderFormatter = (date) ->
       months[date.getMonth()] + ' ' + date.getFullYear()
-
-
 ])

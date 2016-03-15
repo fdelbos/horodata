@@ -1,0 +1,30 @@
+<md-dialog aria-label="Modifier un dossier" flex="40">
+  <form name="editCustomerForm">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Modifier un dossier</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Fermer" ng-click="close()">
+          <md-icon md-font-icon="fa fa-close"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.name}" >
+          <label>Nom du dossier</label>
+          <input md-maxlength="40" type="text" ng-model="customers.current.name">
+          <small ng-if="errors.name" class="input-error">{{ errors.name }}</small>
+        </md-input-container>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions>
+      <md-button ng-click="edit()" class="md-primary md-raised">Editer</md-button>
+      <md-button ng-click="delete()" class="md-warn md-raised">Supprimer</md-button>
+      <md-button ng-click="close()" class="md-raised">Annuler</md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

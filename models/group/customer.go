@@ -8,9 +8,9 @@ import (
 
 type Customer struct {
 	Id      int64     `json:"id"`
-	Created time.Time `json:"created"`
-	Active  bool      `json:"active"`
-	GroupId int64     `json:"group_id"`
+	Created time.Time `json:"-"`
+	Active  bool      `json:"-"`
+	GroupId int64     `json:"-"`
 	Name    string    `json:"name"`
 }
 
@@ -31,10 +31,17 @@ func (c *Customer) Update() error {
 	return postgres.Exec(query, c.Id, c.Active, c.Name)
 }
 
+func (g *Group) CustomerGet(id int64) (*Customer, error) {
+	c := &Customer{}
+	const query = `
+	select * from customers where active = true and group_id = $1 and id = $2`
+	return c, postgres.QueryRow(c, query, g.Id, id)
+}
+
 func (g *Group) CustomerAdd(name string) error {
 	customer := &Customer{}
 	const findQuery = `
-    select * from customers where group_id = $1 and name = $2;`
+    select * from customers where group_id = $1 and lower(name) = lower($2);`
 
 	if err := postgres.QueryRow(customer, findQuery, g.Id, name); err == nil {
 		customer.Active = true
@@ -54,7 +61,7 @@ func (g *Group) Customers() ([]Customer, error) {
 	const query = `
     select * from customers
     where group_id = $1 and active = true
-    order by name;`
+    order by name, id;`
 
 	rows, err := postgres.DB().Query(query, g.Id)
 	if err != nil {

@@ -14,17 +14,19 @@
     <md-dialog-content>
       <div class="md-dialog-content">
 
-        <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.name}" >
+        <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.customers}" >
           <label>Noms des Dossiers a ajouter (saisissez un dossier par ligne).</label>
-          <textarea md-no-autogrow md-maxlength="1500" ng-model="name" rows="5" md-select-on-focus></textarea>
-          <small ng-if="errors.name" class="input-error">{{ errors.name }}</small>
+
+          <textarea md-no-autogrow ng-model="customers.current.customers" rows="5" md-select-on-focus></textarea>
+
+          <small ng-if="errors.customers" class="input-error">{{ errors.customers }}</small>
         </md-input-container>
 
       </div>
     </md-dialog-content>
 
     <md-dialog-actions>
-      <md-button ng-click="send()" class="md-primary md-raised">Ajouter</md-button>
+      <md-button ng-click="create()" class="md-primary md-raised">Ajouter</md-button>
       <md-button ng-click="close()" class="md-raised">Annuler</md-button>
     </md-dialog-actions>
   </form>

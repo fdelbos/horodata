@@ -16,12 +16,12 @@
 
         <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.name}" >
           <label>Nom de la tâche</label>
-          <input md-maxlength="40" type="text" ng-model="name">
+          <input md-maxlength="40" type="text" ng-model="tasks.current.name">
           <small ng-if="errors.name" class="input-error">{{ errors.name }}</small>
         </md-input-container>
 
         <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.admin}" >
-          <md-switch ng-model="admin" aria-label="Administrateur">
+          <md-switch ng-model="tasks.current.comment_mandatory" aria-label="Administrateur">
             Commentaire obligatoire
           </md-switch>
           <div class="input-hint">Force l'utilisateur a associer un commentaire a la chaque tâche de ce type.</div>
@@ -31,7 +31,9 @@
     </md-dialog-content>
 
     <md-dialog-actions>
-      <md-button ng-click="send()" class="md-primary md-raised">Ajouter</md-button>
+      <md-button ng-if="!tasks.current.id" ng-click="create()" class="md-primary md-raised">Ajouter</md-button>
+      <md-button ng-if="tasks.current.id" ng-click="edit()" class="md-primary md-raised">Editer</md-button>
+      <md-button ng-if="tasks.current.id" ng-click="delete()" class="md-warn md-raised">Supprimer</md-button>
       <md-button ng-click="close()" class="md-raised">Annuler</md-button>
     </md-dialog-actions>
   </form>

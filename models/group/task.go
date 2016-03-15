@@ -8,9 +8,9 @@ import (
 
 type Task struct {
 	Id               int64     `json:"id"`
-	Created          time.Time `json:"created"`
-	Active           bool      `json:"active"`
-	GroupId          int64     `json:"group_id"`
+	Created          time.Time `json:"-"`
+	Active           bool      `json:"-"`
+	GroupId          int64     `json:"-"`
 	Name             string    `json:"name"`
 	CommentMandatory bool      `json:"comment_mandatory"`
 }
@@ -33,10 +33,18 @@ func (t *Task) Update() error {
 	return postgres.Exec(query, t.Id, t.Active, t.Name, t.CommentMandatory)
 }
 
+func (g *Group) TaskGet(id int64) (*Task, error) {
+	t := &Task{}
+	const query = `
+	select * from tasks where active = true and group_id = $1 and id = $2`
+
+	return t, postgres.QueryRow(t, query, g.Id, id)
+}
+
 func (g *Group) TaskAdd(name string, cm bool) error {
 	task := &Task{}
 	const findQuery = `
-    select * from tasks where group_id = $1 and name = $2;`
+    select * from tasks where group_id = $1 and lower(name) = lower($2);`
 
 	if err := postgres.QueryRow(task, findQuery, g.Id, name); err == nil {
 		task.Active = true

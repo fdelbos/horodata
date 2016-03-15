@@ -26,7 +26,7 @@ create table customers (
     created timestamp default now() not null,
     active boolean default true not null,
     group_id bigint not null references groups on delete cascade,
-    name varchar(100) not null,
+    name varchar(200) not null,
     unique(group_id, name)
 );
 

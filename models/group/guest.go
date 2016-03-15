@@ -86,6 +86,17 @@ func (g *Group) GuestGetByEmail(email string) (*Guest, error) {
 	return guest, postgres.QueryRow(guest, query, g.Id, email)
 }
 
+func (g *Group) GuestGetByUserId(id int64) (*Guest, error) {
+	guest := &Guest{}
+	const query = `
+    select *
+    from guests g
+    where   group_id = $1
+        and active = true
+        and user_id = $2`
+	return guest, postgres.QueryRow(guest, query, g.Id, id)
+}
+
 func (g *Group) Guests() ([]Guest, error) {
 	const query = `
     select * from guests

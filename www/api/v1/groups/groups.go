@@ -2,7 +2,6 @@ package groups
 
 import (
 	"bitbucket.com/hyperboloide/horo/middlewares"
-	"bitbucket.com/hyperboloide/horo/models/errors"
 	"bitbucket.com/hyperboloide/horo/models/group"
 	"bitbucket.com/hyperboloide/horo/models/types/listing"
 	"bitbucket.com/hyperboloide/horo/www/api/jsend"
@@ -50,23 +49,22 @@ func Create(c *gin.Context) {
 	}
 	if err := g.Insert(); err != nil {
 		jsend.Error(c, err)
-	} else if g, err := group.ApiByUrl(g.Url); err != nil {
-		jsend.Error(c, err)
 	} else {
-		jsend.Ok(c, g)
+		jsend.Ok(c, struct {
+			Url string `json:"url"`
+		}{g.Url})
 	}
 }
 
 func Get(c *gin.Context) {
-	//u := middlewares.GetUser(c)
-	url := c.Param("url")
-	if g, err := group.ApiByUrl(url); err != nil && err != errors.NotFound {
+	g := middlewares.GetGroup(c)
+	if detail, err := g.ApiDetail(); err != nil {
 		jsend.Error(c, err)
-	} else if err == errors.NotFound {
-		jsend.NotFound(c)
 	} else {
-		jsend.Ok(c, g)
+		jsend.Ok(c, detail)
 	}
 }
 
-func Update(c *gin.Context) {}
+func Update(c *gin.Context) {
+
+}

@@ -1,11 +1,16 @@
 angular.module("horodata").directive("appWidgetsConfigurationTasks", [
-  "$mdDialog",
-  "$mdMedia",
+  "$mdDialog"
+  "$mdMedia"
   ($mdDialog, $mdMedia)->
 
     l = (scope, elem, attr) ->
 
-      scope.showConfigurationTasksDialog = (ev) ->
+      genTask = -> {
+          name: "",
+          comment_mandatory: false
+        }
+
+      openForm = (ev) ->
         fullscreen = $mdMedia('xs') || $mdMedia('sm')
 
         $mdDialog.show({
@@ -20,6 +25,16 @@ angular.module("horodata").directive("appWidgetsConfigurationTasks", [
           fullscreen: fullscreen
         })
 
+      scope.tasks =
+        current: null
+        selected: null
+        edit: ->
+          @current = _.cloneDeep(_.find(scope.group.tasks, {id: parseInt @selected}))
+          openForm()
+        create: ->
+          @current = genTask()
+          openForm()
+
     return {
       link: l
       restrict: "E"
@@ -28,28 +43,51 @@ angular.module("horodata").directive("appWidgetsConfigurationTasks", [
 ])
 
 angular.module("horodata").controller("appWidgetsConfigurationTasksDialog", [
-  "$scope",
-  "$mdDialog",
-  "$mdToast",
-  "$http",
-  "$location",
+  "$scope"
+  "$mdDialog"
+  "$mdToast"
+  "$http"
+  "$location"
   "apiService"
   ($scope, $mdDialog, $mdToast, $http, $location, apiService)->
-    $scope.name = ""
     $scope.errors = null
 
     $scope.close = -> $mdDialog.hide()
 
-    # $scope.selectedTask = null
+    update = (t) ->
+      idx = _.findIndex($scope.group.tasks, {id: t.id})
+      $scope.group.tasks[idx] = $scope.tasks.current
+      $scope.group.tasks = _.sortBy($scope.group.tasks, ["name"])
 
-    $scope.send = ->
-      $http.post("#{apiService.get()}/groups", {name: $scope.name}).then(
+    $scope.create = ->
+      $http.post("#{apiService.get()}/groups/#{$scope.group.url}/tasks", $scope.tasks.current).then(
         (resp) ->
-          group = resp.data.data
+          $scope.$emit("group.reload")
           $mdDialog.hide()
-          $mdToast.showSimple("Nouveau groupe '#{group.name}' sauvegarde.")
-          $location.path("/group/#{group.url}")
+          $mdToast.showSimple("Nouveau type de tâche: '#{$scope.tasks.current.name}' ajouté.")
         (resp) -> $scope.errors = resp.data.errors
       )
+
+    $scope.edit = ->
+      $http.put("#{apiService.get()}/groups/#{$scope.group.url}/tasks/#{ $scope.tasks.selected }", $scope.tasks.current).then(
+        (resp) ->
+          $mdDialog.hide()
+          $mdToast.showSimple("Type de tâche: '#{$scope.tasks.current.name}' mis a jour.")
+          update($scope.tasks.current)
+          $scope.tasks.selected = null
+        (resp) -> $scope.errors = resp.data.errors
+      )
+
+    $scope.delete = ->
+      $http.delete("#{apiService.get()}/groups/#{$scope.group.url}/tasks/#{ $scope.tasks.selected }", $scope.tasks.current).then(
+        (resp) ->
+          $mdDialog.hide()
+          $mdToast.showSimple("Type de tâche: '#{$scope.tasks.current.name}' supprimé.")
+          $scope.group.tasks.splice(_.findIndex($scope.group.tasks, {id: parseInt $scope.tasks.selected}), 1)
+          $scope.tasks.selected = null
+        (resp) -> $scope.errors = resp.data.errors
+      )
+
+
 
 ])

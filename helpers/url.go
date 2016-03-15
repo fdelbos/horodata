@@ -47,7 +47,7 @@ func Gen(str string, checkFn func(string) (interface{}, error)) (string, error) 
 		return url, nil
 	}
 	for true {
-		test := fmt.Sprintf("%s-%s", url, RandomDigits(4))
+		test := fmt.Sprintf("%s-%s", url, RandomDigits(6))
 		if _, err := checkFn(test); err == errors.NotFound {
 			return test, nil
 		} else if err != nil {

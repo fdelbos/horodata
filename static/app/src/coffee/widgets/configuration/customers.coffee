@@ -5,21 +5,41 @@ angular.module("horodata").directive("appWidgetsConfigurationCustomers", [
 
     l = (scope, elem, attr) ->
 
-      scope.showConfigurationCustomersDialog = (ev) ->
-        
+      openCreateForm = (ev) ->
         fullscreen = $mdMedia('xs') || $mdMedia('sm')
-
-        $mdDialog.show({
-          controller: "appWidgetsConfigurationCustomersDialog",
-          templateUrl: "horodata/widgets/configuration/customers_form.html",
-          parent: angular.element(document.body),
-          targetEvent: ev,
-          preserveScope: true,
-          scope: scope,
-          clickOutsideToClose:true,
-          escapeToClose: true,
+        $mdDialog.show
+          controller: "appWidgetsConfigurationCustomersDialog"
+          templateUrl: "horodata/widgets/configuration/customers_create_form.html"
+          parent: angular.element(document.body)
+          targetEvent: ev
+          preserveScope: true
+          scope: scope
+          clickOutsideToClose:true
+          escapeToClose: true
           fullscreen: fullscreen
-        })
+
+      openEditForm = (ev) ->
+        fullscreen = $mdMedia('xs') || $mdMedia('sm')
+        $mdDialog.show
+          controller: "appWidgetsConfigurationCustomersDialog"
+          templateUrl: "horodata/widgets/configuration/customers_edit_form.html"
+          parent: angular.element(document.body)
+          targetEvent: ev
+          preserveScope: true
+          scope: scope
+          clickOutsideToClose:true
+          escapeToClose: true
+          fullscreen: fullscreen
+
+      scope.customers =
+        current: null
+        selected: null
+        edit: ->
+          @current = _.cloneDeep(_.find(scope.group.customers, {id: parseInt @selected}))
+          openEditForm()
+        create: ->
+          @current = {customers: ""}
+          openCreateForm()
 
     return {
       link: l
@@ -36,18 +56,45 @@ angular.module("horodata").controller("appWidgetsConfigurationCustomersDialog", 
   "$location",
   "apiService"
   ($scope, $mdDialog, $mdToast, $http, $location, apiService)->
-    $scope.name = ""
     $scope.errors = null
 
     $scope.close = -> $mdDialog.hide()
 
-    $scope.send = ->
-      $http.post("#{apiService.get()}/groups", {name: $scope.name}).then(
+    update = (t) ->
+      idx = _.findIndex($scope.group.customers, {id: t.id})
+      $scope.group.customers[idx] = $scope.customers.current
+      $scope.group.customers = _.sortBy($scope.group.customers, ["name"])
+
+    $scope.create = ->
+      $http.post("#{apiService.get()}/groups/#{$scope.group.url}/customers", $scope.customers.current).then(
         (resp) ->
-          group = resp.data.data
+          total = resp.data.data.total
+          $scope.$emit("group.reload")
           $mdDialog.hide()
-          $mdToast.showSimple("Nouveau groupe '#{group.name}' sauvegarde.")
-          $location.path("/group/#{group.url}")
+          if total == 1
+            $mdToast.showSimple("1 nouveau dossier a été ajouté.")
+          else
+            $mdToast.showSimple("#{total} nouveaux dossiers ont été ajoutés.")
+        (resp) -> $scope.errors = resp.data.errors
+      )
+
+    $scope.edit = ->
+      $http.put("#{apiService.get()}/groups/#{$scope.group.url}/customers/#{ $scope.customers.selected }", $scope.customers.current).then(
+        (resp) ->
+          $mdDialog.hide()
+          $mdToast.showSimple("Dossier: '#{$scope.customers.current.name}' mis a jour.")
+          update($scope.customers.current)
+          $scope.customers.selected = null
+        (resp) -> $scope.errors = resp.data.errors
+      )
+
+    $scope.delete = ->
+      $http.delete("#{apiService.get()}/groups/#{$scope.group.url}/customers/#{ $scope.customers.selected }", $scope.customers.current).then(
+        (resp) ->
+          $mdDialog.hide()
+          $mdToast.showSimple("Dossier: '#{$scope.customers.current.name}' supprimé.")
+          $scope.group.customers.splice(_.findIndex($scope.group.customers, {id: parseInt $scope.customers.selected}), 1)
+          $scope.customers.selected = null
         (resp) -> $scope.errors = resp.data.errors
       )
 

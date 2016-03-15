@@ -109,6 +109,12 @@ var _ = Describe("Group", func() {
 		Ω(t.Name).To(Equal("tata"))
 		Ω(t.CommentMandatory).To(BeFalse())
 		Ω(t.Id).To(Equal(id))
+
+		tt, err := group.TaskGet(id)
+		Ω(err).To(BeNil())
+		Ω(tt.Name).To(Equal("tata"))
+		Ω(tt.CommentMandatory).To(BeFalse())
+		Ω(tt.Id).To(Equal(id))
 	})
 
 	It("should test ApiDetail", func() {

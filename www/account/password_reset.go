@@ -23,7 +23,7 @@ func PostResetStart(c *gin.Context) {
 	if email == "" {
 		errors["email"] = "Ce champs est obligatoire."
 	} else if len(email) > 100 {
-		errors["email"] = "Ce champ ne doit pas depasser 100 caractères."
+		errors["email"] = "Ce champ ne doit pas dépasser 100 caractères."
 	} else if valid.IsEmail(email) == false {
 		errors["email"] = "Cette adresse email n'est pas valide."
 	}
@@ -101,7 +101,7 @@ func PostResetInput(c *gin.Context) {
 	} else if len(password1) < 6 {
 		errors["password1"] = "Ce champ doit faire au moins 6 caractères."
 	} else if len(password1) > 100 {
-		errors["password1"] = "Ce champ ne doit pas depasser 100 caractères."
+		errors["password1"] = "Ce champ ne doit pas dépasser 100 caractères."
 	}
 
 	password2 := c.PostForm("password2")
@@ -110,7 +110,7 @@ func PostResetInput(c *gin.Context) {
 	} else if len(password2) < 6 {
 		errors["password2"] = "Ce champ doit faire au moins 6 caractères."
 	} else if len(password2) > 100 {
-		errors["password2"] = "Ce champ ne doit pas depasser 100 caractères."
+		errors["password2"] = "Ce champ ne doit pas dépasser 100 caractères."
 	} else if password1 != password2 {
 		errors["password2"] = "Ce champs ne correspond pas au nouveau mot de passe."
 	}

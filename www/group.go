@@ -15,7 +15,7 @@ func Group(r *gin.RouterGroup) {
 	{
 		account.Group(www)
 		api.Group(www)
-		www.Any("/app/*all", GetApp, middlewares.UserFilter())
+		www.Any("/app/*all", middlewares.UserFilter(), GetApp)
 	}
 }
 

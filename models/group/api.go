@@ -94,7 +94,7 @@ func (g *Group) ApiDetail() (interface{}, error) {
 		Created   time.Time     `json:"created,omitempty"`
 		Name      string        `json:"name"`
 		Tasks     []Task        `json:"tasks"`
-		Customers []Customer    `json:"customer"`
+		Customers []Customer    `json:"customers"`
 	}
 	d.Url = g.Url
 	d.Created = g.Created
@@ -120,13 +120,3 @@ func (g *Group) ApiDetail() (interface{}, error) {
 
 	return d, nil
 }
-
-//
-// func ApiByUrl(url string) (*GroupApi, error) {
-// 	ga := &GroupApi{}
-// 	query := `
-//     select g.url, u.login, g.created, g.name
-//     from users u, groups g
-//     where u.id = g.owner_id and g.url = $1;`
-// 	return ga, postgres.QueryRow(ga, query, url)
-// }

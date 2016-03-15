@@ -7,12 +7,12 @@
         Types de Tâches
       </div>
 
-      <md-button ng-click="showConfigurationTasksDialog()" class="md-raised md-primary" hide show-gt-sm>
+      <md-button ng-click="tasks.create()" class="md-raised md-primary" hide show-gt-sm>
         <span class="fa fa-plus"></span>
         Ajouter
       </md-button>
 
-      <md-button ng-click="showConfigurationTasksDialog()" class="md-fab md-primary" hide-gt-sm aria-label="Ajouter une tâche">
+      <md-button ng-click="tasks.create()" class="md-fab md-primary" hide-gt-sm aria-label="Ajouter une tâche">
         <span class="fa fa-plus"></span>
       </md-button>
     </div>
@@ -22,27 +22,32 @@
       Chaque type de tâche peut etre associe a un commentaire pour plus de precisions.
     </p>
 
-    <div layout="row">
+    <md-whiteframe ng-if="group.tasks.length == 0" class="md-whiteframe-5dp md-accent" layout-padding layout="column" layout-align="center center">
+      <div class="md-headline input-error">Aucune tâches definie</div>
+      <div>Vous devez definir des tâches pour la saisie.</div>
+    </md-whiteframe>
+
+    <div layout="row" ng-if="group.tasks.length > 0">
       <md-input-container flex>
-        <label>Type de Tâche</label>
-        <md-select ng-model="selectedTask">
-          <md-option ng-repeat="u in users" value="{{ u.email }}">
-            {{ u.name }}
+        <label>Selectionnez un type de tâche pour l'editer</label>
+        <md-select ng-model="tasks.selected">
+          <md-option ng-repeat="t in group.tasks" value="{{ t.id }}">
+            {{ t.name }}
+            <small ng-if="t.comment_mandatory">(Commentaire obligatoire)</small>
           </md-option>
         </md-select>
       </md-input-container>
 
-      <div ng-if="selectedTask">
-        <md-button ng-click="showConfigurationTasksDialog()" class="md-raised md-accent" hide show-gt-sm>
+      <div ng-if="tasks.selected">
+        <md-button ng-click="tasks.edit()" class="md-raised md-accent" hide show-gt-sm>
           <span class="fa fa-pencil"></span>
           Editer
         </md-button>
 
-        <md-button ng-click="showConfigurationTasksDialog()" class="md-fab md-accent" hide-gt-sm aria-label="Editer une tâche">
+        <md-button ng-click="tasks.edit()" class="md-fab md-accent" hide-gt-sm aria-label="Editer une tâche">
           <span class="fa fa-pencil"></span>
         </md-button>
       </div>
-
     </div>
 
   </div>

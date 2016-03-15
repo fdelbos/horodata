@@ -6,17 +6,17 @@
       <md-datepicker flex="25" ng-model="endDate" md-placeholder="Date fin" md-max-date="maxDate"></md-datepicker>
 
       <md-input-container flex="25">
-        <label>Utilisateur</label>
-        <md-select ng-model="user">
-          <md-option ng-repeat="u in users" value="{{ u.email }}">
-            {{ u.name }}
+        <label>Dossier</label>
+        <md-select ng-model="customer">
+          <md-option ng-repeat="c in group.customers" value="{{ c.id }}">
+            {{ c.name }}
           </md-option>
         </md-select>
       </md-input-container>
 
       <md-input-container flex="25">
-        <label>Dossier</label>
-        <md-select ng-model="folder">
+        <label>Utilisateur</label>
+        <md-select ng-model="user">
           <md-option ng-repeat="u in users" value="{{ u.email }}">
             {{ u.name }}
           </md-option>

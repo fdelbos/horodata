@@ -25,7 +25,7 @@ func PostRegister(c *gin.Context) {
 	} else if len(username) < 4 {
 		errors["username"] = "Ce champ doit faire au moins 4 caractères."
 	} else if len(username) > 30 {
-		errors["username"] = "Ce champ ne doit pas depasser 30 caractères."
+		errors["username"] = "Ce champ ne doit pas dépasser 30 caractères."
 	} else if ok, err := regexp.MatchString(`^[\w.-]+$`, username); err != nil {
 		GetError(c, err)
 		return
@@ -42,7 +42,7 @@ func PostRegister(c *gin.Context) {
 	if email == "" {
 		errors["email"] = "Ce champs est obligatoire."
 	} else if len(email) > 100 {
-		errors["email"] = "Ce champ ne doit pas depasser 100 caractères."
+		errors["email"] = "Ce champ ne doit pas dépasser 100 caractères."
 	} else if valid.IsEmail(email) == false {
 		errors["email"] = "Cette adresse email n'est pas valide."
 	} else if _, err := user.ByEmail(email); err == nil {
@@ -58,7 +58,7 @@ func PostRegister(c *gin.Context) {
 	} else if len(password) < 6 {
 		errors["password"] = "Ce champ doit faire au moins 6 caractères."
 	} else if len(password) > 100 {
-		errors["password"] = "Ce champ ne doit pas depasser 100 caractères."
+		errors["password"] = "Ce champ ne doit pas dépasser 100 caractères."
 	}
 
 	recaptcha := c.PostForm("g-recaptcha-response")
