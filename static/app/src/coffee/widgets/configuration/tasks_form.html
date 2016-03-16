@@ -16,7 +16,7 @@
 
         <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.name}" >
           <label>Nom de la tâche</label>
-          <input md-maxlength="40" type="text" ng-model="tasks.current.name">
+          <input md-maxlength="30" type="text" ng-model="tasks.current.name">
           <small ng-if="errors.name" class="input-error">{{ errors.name }}</small>
         </md-input-container>
 

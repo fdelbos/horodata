@@ -11,6 +11,7 @@ import (
 	"github.com/flosch/pongo2"
 	_ "github.com/flosch/pongo2-addons"
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 	"io"
 	"net/http"
 	"time"
@@ -43,8 +44,14 @@ func (l *Loader) Get(path string) (io.Reader, error) {
 }
 
 func init() {
-	loader := NewLoader(Asset)
-	tmpls = pongo2.NewSet("www", loader)
+	if viper.GetBool("dev_mode") == true {
+		tmpls = pongo2.NewSet("www", pongo2.MustNewLocalFileSystemLoader("html"))
+		log.Info("Templates loaded from disk.")
+	} else {
+		tmpls = pongo2.NewSet("www", NewLoader(Asset))
+		log.Info("Templates loaded from binary.")
+	}
+
 }
 
 func AddContext(c *gin.Context, data map[string]interface{}) error {

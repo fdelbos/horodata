@@ -23,8 +23,8 @@ func TaskAdd(c *gin.Context) {
 	errors := map[string]string{}
 	if data.Name == "" {
 		errors["name"] = "Ce champs est obligatoire."
-	} else if len(data.Name) > 40 {
-		errors["name"] = "Ce champ ne doit pas depasser 40 caractères."
+	} else if len(data.Name) > 30 {
+		errors["name"] = "Ce champ ne doit pas depasser 30 caractères."
 	}
 	if len(errors) > 0 {
 		jsend.BadRequest(c, errors)

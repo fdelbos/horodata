@@ -1,4 +1,5 @@
 angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages"])
+
 .config([
   "$mdDateLocaleProvider"
   "$mdThemingProvider"
@@ -34,4 +35,11 @@ angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages"])
     $mdDateLocaleProvider.msgOpenCalendar = 'Ouvrir le calendrier';
     $mdDateLocaleProvider.monthHeaderFormatter = (date) ->
       months[date.getMonth()] + ' ' + date.getFullYear()
+])
+
+.run([
+  "$http"
+  ($http)->
+    $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+
 ])
