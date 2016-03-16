@@ -1,4 +1,7 @@
-<md-button ng-class="small ? 'md-fab md-primary md-mini' : 'md-raised md-primary'" ng-click="showNewGroupDialog()" aria-label="Nouveau Groupe">
-  <span class="fa fa-plus"></span>
-  <span ng-if="!small">Nouveau Groupe</span>
+<md-button class="md-fab md-primary md-mini" ng-click="showNewGroupDialog()" aria-label="Nouveau Groupe">
+  <!-- <span class="fa fa-plus"></span> -->
+  <md-icon class="md-24">add</md-icon>
+  <md-tooltip md-direction="top">
+    Ajouter un groupe
+  </md-tooltip>
 </md-button>

@@ -3,10 +3,7 @@ angular.module("horodata").directive("appWidgetsNewGroup", [
   "$mdMedia",
   ($mdDialog, $mdMedia)->
 
-    l = (scope, elem, attr) ->
-
-      if attr.size? and attr.size == "small"
-        scope.small = true
+    l = (scope) ->
 
       scope.showNewGroupDialog = (ev) ->
         fullscreen = $mdMedia('xs') || $mdMedia('sm')
@@ -26,8 +23,6 @@ angular.module("horodata").directive("appWidgetsNewGroup", [
     return {
       link: l
       restrict: "E"
-      scope:
-        size: "@"
       templateUrl: "horodata/widgets/new_group.html"
     }
 ])

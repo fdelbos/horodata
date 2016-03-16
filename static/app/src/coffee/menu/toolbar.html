@@ -1,14 +1,25 @@
-<md-toolbar>
-  <div class="md-toolbar-tools">
-    <md-button hide-gt-sm class="md-icon-button" aria-label="Settings" ng-click="toggleSidenav()">
-      <span class="fa fa-bars"></span>
+<div>
+
+    <md-button ng-if="MainTitle().canEdit" class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
+      <md-tooltip md-direction="left">
+        Ajouter un tâche
+      </md-tooltip>
+      <md-icon class="md-48" style="margin: -2px 0px 0px -1px ">access_time</md-icon>
     </md-button>
-    <h2>
-      <span>{{ MainTitle().title }}</span>
-    </h2>
-    <span flex></span>
-    <md-button class="md-fab md-mini" aria-label="Favorite">
-      <span class="fa fa-user"></span>
-    </md-button>
-  </div>
-</md-toolbar>
+
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <md-button hide-gt-sm class="md-icon-button" aria-label="Settings" ng-click="toggleSidenav()">
+        <md-icon class="md-24">menu</md-icon>
+      </md-button>
+      <h2>
+        <span>{{ MainTitle().title }}</span>
+      </h2>
+      <span flex></span>
+      <md-button class="md-fab md-mini" aria-label="Favorite">
+        <span class="fa fa-user"></span>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+</div>

@@ -15,7 +15,7 @@ angular.module("horodata").directive("appMenuSidenav", [
         (resp) ->
           scope.groups = resp.data.data.results
       )
-
+      
     return {
       link: l
       replace: true

@@ -15,6 +15,8 @@ angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages"])
     $mdThemingProvider.theme('default')
       .primaryPalette('blue')
       .accentPalette('pink')
+    $mdThemingProvider.setDefaultTheme('default')
+
 
     $locationProvider.html5Mode(true)
 

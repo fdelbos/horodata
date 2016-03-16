@@ -1,40 +1,38 @@
 <md-sidenav
-    class="md-sidenav-left"
+    class="md-sidenav-left md-whiteframe-z2"
     md-component-id="sidenav"
     md-is-locked-open="$mdMedia('gt-sm')"
-    md-disable-backdrop
-    layout="column"
-    md-whiteframe="4">
+    layout="column">
 
   <md-toolbar hide-gt-sm>
     <div class="md-toolbar-tools">
       <h1>
-        <i class="fa fa-clock-o"></i>&nbsp;
-        Horo Data
+        <md-icon class="md-24">access_time</md-icon>
+        &nbsp; Horo Data
       </h1>
       <span flex></span>
       <md-button ng-click="toggleSidenav()" class="md-icon-button">
-        <span class="fa fa-close " aria-label="Fermer"></span>
+        <md-icon class="md-24">close</md-icon>
       </md-button>
     </div>
   </md-toolbar>
 
   <md-content layout-padding hide show-gt-sm>
     <div layout="column" layout-align="center center">
+
       <div class="md-display-3">
-        <i class="fa fa-clock-o"></i>
+        <i class="material-icons" style="font-size: 64px;">access_time</i>
       </div>
       <div class="md-headline">Horo Data</div>
     </div>
   </md-content>
 
   <md-content flex>
-
     <section >
       <md-subheader class="md-accent" >
         <div layout="row" layout-align="space-between center">
           <span class="md-headline">Groupes</span>
-          <app-widgets-new-group layout-align="end" size="small"></app-widgets-new-group>
+          <app-widgets-new-group layout-align="end"></app-widgets-new-group>
         </div>
       </md-subheader>
       <md-list flex layout="column" class="md-body-1">

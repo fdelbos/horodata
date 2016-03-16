@@ -1,6 +1,6 @@
 <div  layout-margin layout-padding>
 
-  <div layout="column">
+  <div layout="column" flex-gt-md="60" flex-sm="70">
 
     <div layout="row" layout-align="space-between center">
       <div class="md-display-1">
@@ -8,12 +8,12 @@
       </div>
 
       <md-button ng-click="showConfigurationUsersDialog()" class="md-raised md-primary" hide show-gt-sm>
-        <span class="fa fa-plus"></span>
+        <md-icon class="md-24">add</md-icon>
         Ajouter
       </md-button>
 
       <md-button ng-click="showConfigurationUsersDialog()" class="md-fab md-primary" hide-gt-sm aria-label="Ajouter un utilisateur">
-        <span class="fa fa-plus"></span>
+        <md-icon class="md-36">add</md-icon>
       </md-button>
     </div>
 
@@ -32,16 +32,13 @@
         </md-select>
       </md-input-container>
 
-      <div ng-if="selectedTask">
-        <md-button ng-click="showConfigurationUsersDialog()" class="md-raised md-accent" hide show-gt-sm>
-          <span class="fa fa-pencil"></span>
-          Editer
-        </md-button>
+      <md-button ng-if="selectedTask" ng-click="showConfigurationUsersDialog()" class="md-fab md-accent" hide-gt-sm aria-label="Editer un utilisateur">
+        <md-tooltip md-direction="top">
+          Editer la l'utilisateur
+        </md-tooltip>
+        <md-icon class="md-36">edit</md-icon>
+      </md-button>
 
-        <md-button ng-click="showConfigurationUsersDialog()" class="md-fab md-accent" hide-gt-sm aria-label="Editer un utilisateur">
-          <span class="fa fa-pencil"></span>
-        </md-button>
-      </div>
       </div>
     </div>
 

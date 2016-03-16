@@ -24,24 +24,6 @@ md-sidenav {
 .input-error {
   color: #dd2c00;
 }
-.autocomplete-user-template li {
-  border-bottom: 1px solid #ccc;
-  height: auto;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  white-space: normal;
-}
-.autocomplete-user-template li:last-child {
-  border-bottom-width: 0;
-}
-.autocomplete-user-template .item-name,
-.autocomplete-user-template .item-email {
-  display: block;
-  line-height: 2;
-}
-.autocomplete-user-template .highlight {
-  color: #0277BD !important;
-}
 .input-hint {
   position: absolute;
   left: 2px;
@@ -54,4 +36,49 @@ md-sidenav {
 md-input-container textarea[md-no-autogrow].md-input {
   height: inherit;
   overflow-y: auto;
+}
+.free-space {
+  height: 100px;
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+.md-18 {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+.md-24 {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+.md-36 {
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+}
+.md-48 {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
 }

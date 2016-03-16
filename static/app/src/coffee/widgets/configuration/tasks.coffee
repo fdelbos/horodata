@@ -5,11 +5,6 @@ angular.module("horodata").directive("appWidgetsConfigurationTasks", [
 
     l = (scope, elem, attr) ->
 
-      genTask = -> {
-          name: "",
-          comment_mandatory: false
-        }
-
       openForm = (ev) ->
         fullscreen = $mdMedia('xs') || $mdMedia('sm')
 
@@ -32,7 +27,9 @@ angular.module("horodata").directive("appWidgetsConfigurationTasks", [
           @current = _.cloneDeep(_.find(scope.group.tasks, {id: parseInt @selected}))
           openForm()
         create: ->
-          @current = genTask()
+          @current =
+            name: ""
+            comment_mandatory: false
           openForm()
 
     return {
@@ -65,7 +62,7 @@ angular.module("horodata").controller("appWidgetsConfigurationTasksDialog", [
           $scope.$emit("group.reload")
           $mdDialog.hide()
           $mdToast.showSimple("Nouveau type de tâche: '#{$scope.tasks.current.name}' ajouté.")
-        (resp) -> $scope.errors = resp.data.errors
+        (resp) -> $scope.errors = resp.tasks.errors
       )
 
     $scope.edit = ->
@@ -84,7 +81,7 @@ angular.module("horodata").controller("appWidgetsConfigurationTasksDialog", [
           $mdDialog.hide()
           $mdToast.showSimple("Type de tâche: '#{$scope.tasks.current.name}' supprimé.")
           $scope.group.tasks.splice(_.findIndex($scope.group.tasks, {id: parseInt $scope.tasks.selected}), 1)
-          $scope.tasks.selected = null
+          $scope.task.selected = null
         (resp) -> $scope.errors = resp.data.errors
       )
 
