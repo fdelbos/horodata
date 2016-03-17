@@ -30,18 +30,6 @@ create table customers (
     unique(group_id, name)
 );
 
-create table jobs (
-    id bigserial primary key,
-    created timestamp default now() not null,
-    group_id bigint not null references groups on delete cascade,
-    task_id bigint not null references tasks on delete cascade,
-    customer_id bigint not null references customers on delete cascade,
-    user_id bigint not null references users on delete cascade,
-    day date default now() not null,
-    duration integer not null,
-    comment text
-);
-
 create table guests (
     id bigserial primary key,
     created timestamp default now() not null,
@@ -52,4 +40,17 @@ create table guests (
     admin boolean default false not null,
     email citext not null,
     unique(group_id, user_id)
+);
+
+create table jobs (
+    id bigserial primary key,
+    created timestamp default now() not null,
+    group_id bigint not null references groups on delete cascade,
+    task_id bigint not null references tasks on delete cascade,
+    customer_id bigint not null references customers on delete cascade,
+    creator_id bigint not null references guests on delete cascade,
+    duration bigint not null,
+    comment text,
+    updated timestamp,
+    updater_id bigint not null references guests on delete cascade,
 );

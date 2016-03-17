@@ -6,9 +6,8 @@ angular.module("horodata").controller("Group", [
   "userService"
   "apiService"
   "groupNewService"
-  "$mdMedia"
-  "$mdDialog"
-  ($http, $routeParams, $scope, titleService, userService, apiService, groupNewService, $mdMedia, $mdDialog)->
+  "popupService"
+  ($http, $routeParams, $scope, titleService, userService, apiService, groupNewService, popupService)->
 
     $scope.isGroupView = true
 
@@ -41,17 +40,10 @@ angular.module("horodata").controller("Group", [
       getGroup())
 
     groupNewService.set (ev)->
-      fullscreen = $mdMedia('xs') || $mdMedia('sm')
-      $mdDialog.show
-        controller: "groupNewTaskDialog"
-        templateUrl: "horodata/views/new_task_form.html"
-        parent: angular.element(document.body)
-        targetEvent: ev
-        preserveScope: true
-        scope: $scope
-        clickOutsideToClose:true
-        escapeToClose: true
-        fullscreen: fullscreen
+      popupService(
+        "horodata/views/new_task_form.html"
+        "groupNewTaskDialog"
+        $scope, ev)
 ])
 
 angular.module("horodata").controller("groupNewTaskDialog", [

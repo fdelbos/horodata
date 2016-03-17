@@ -130,10 +130,12 @@ func init() {
 	//
 
 	viper.BindEnv("oauth_provider_google_key")
-	viper.SetDefault("oauth_provider_google_key", "763925452628-6ujmpo0aa5gvrtnnjn7rleaok7tqvdi2.apps.googleusercontent.com")
+	viper.SetDefault(
+		"oauth_provider_google_key",
+		"682921687076-lgsos35csnfvq53n6dv95qpuf1pkg08j.apps.googleusercontent.com")
 
 	viper.BindEnv("oauth_provider_google_secret")
-	viper.SetDefault("oauth_provider_google_secret", "yS2NQ0SgU8_FZ4fy39gm4Dht")
+	viper.SetDefault("oauth_provider_google_secret", "q-cA7pU5KENQT5ImkmfVMsEG")
 
 	//
 	// log

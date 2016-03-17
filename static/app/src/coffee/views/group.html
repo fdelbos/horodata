@@ -4,10 +4,12 @@
     <md-tabs md-dynamic-height md-border-bottom>
 
       <md-tab label="Heures">
+        <app-widgets-empty-group ng-if="group.tasks.length == 0 || group.customers.length == 0" group="group"><app-widgets-empty-group>
 
       </md-tab>
 
       <md-tab label="Statistiques">
+        <app-widgets-empty-group ng-if="group.tasks.length == 0 || group.customers.length == 0" group="group"><app-widgets-empty-group>
 
       </md-tab>
 

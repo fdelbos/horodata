@@ -1,5 +1,50 @@
 <md-dialog aria-label="Nouvelle Tâche" flex="40">
-  <form name="newTaskForm">
+
+  <div ng-if="group.tasks.length == 0 || group.customers.length == 0">
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div ng-if="group.tasks.length == 0 && group.customers.length == 0">
+          <div class="md-headline input-error">
+            Aucune tâches ni aucun dossier enregistre
+          </div>
+          <p>
+            Vous devez definir des tâches et des dossiers pour la saisie.
+            Cliquez sur l'onglet configuration et ajoutez les.
+          </p>
+        </div>
+
+        <div ng-if="group.tasks.length > 0 && group.customers.length == 0">
+          <div class="md-headline input-error">
+            Aucun dossier enregistre
+          </div>
+          <p>
+            Vous devez definir des dossiers pour la saisie.
+            Cliquez sur l'onglet configuration et ajoutez les.
+          </p>
+        </div>
+
+        <div ng-if="group.tasks.length == 0 && group.customers.length > 0">
+          <div class="md-headline input-error">
+            Aucune tâches definie
+          </div>
+          <p>
+            Vous devez definir des tâches pour la saisie.
+            Cliquez sur l'onglet configuration et ajoutez les.
+          </p>
+        </div>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions>
+      <md-button ng-click="close()" class="md-raised">Fermer</md-button>
+    </md-dialog-actions>
+
+  </div>
+
+
+
+  <form ng-if="group.tasks.length > 0 && group.customers.length > 0" name="newTaskForm">
 
     <md-toolbar>
       <div class="md-toolbar-tools">
