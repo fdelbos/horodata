@@ -1,0 +1,53 @@
+<div  layout-margin layout-padding>
+
+  <div layout="column" flex-sm="70" flex-md="80" flex-gt-md="60">
+
+    <div layout="row" layout-align="space-between center">
+      <div class="md-display-1">
+        Utilisateurs
+      </div>
+
+      <md-button ng-click="guests.create($event)" class="md-raised md-primary" hide show-gt-sm>
+        <md-icon class="md-24">add</md-icon>
+        Ajouter
+      </md-button>
+
+      <md-button ng-click="guests.create($event)" class="md-fab md-primary" hide-gt-sm aria-label="Ajouter une tâche">
+        <md-tooltip md-direction="top">
+          Ajouter un utilisateur
+        </md-tooltip>
+        <md-icon class="md-36">add</md-icon>
+      </md-button>
+    </div>
+
+    <p class="md-body-1">
+      Pour que vos collaborateurs puissent enregister leur travail,
+      vous devez les inviter.
+    </p>
+
+    <div layout="row" ng-if="group.guests.length > 0">
+      <md-input-container flex>
+        <label>Selectionnez un utilisateur pour l'editer</label>
+        <md-select ng-model="guests.selected">
+          <md-option ng-repeat="g in group.guests" value="{{ g.id }}">
+            <span ng-if="!g.name">{{ g.email }}</span>
+            <span ng-if="g.name">
+              {{ g.name }}
+              <small>{{ g.email }}</small>
+            </span>
+          </md-option>
+        </md-select>
+      </md-input-container>
+
+        <md-button ng-if="guests.selected" ng-click="guests.edit($event)" class="md-fab md-accent" aria-label="Editer une tâche">
+          <md-tooltip md-direction="top">
+            Editer l'utilisateur
+          </md-tooltip>
+          <md-icon class="md-36">edit</md-icon>
+        </md-button>
+
+    </div>
+
+  </div>
+
+</div>

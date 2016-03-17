@@ -1,22 +1,22 @@
 package group
 
 import (
-	// "bitbucket.com/hyperboloide/horo/models/errors"
-	// "bitbucket.com/hyperboloide/horo/models/user"
+	"bitbucket.com/hyperboloide/horo/models/errors"
+	"bitbucket.com/hyperboloide/horo/models/user"
+	"bitbucket.com/hyperboloide/horo/services/mail"
 	"bitbucket.com/hyperboloide/horo/services/postgres"
 	"time"
 )
 
 type Guest struct {
 	Id      int64     `json:"id"`
-	Created time.Time `json:"created"`
-	Active  bool      `json:"active"`
-	GroupId int64     `json:"group_id"`
-	UserId  int64     `json:"user_id"`
-	Rate    int       `json:"hour_rate"`
+	Created time.Time `json:"-"`
+	Active  bool      `json:"-"`
+	GroupId int64     `json:"-"`
+	UserId  *int64    `json:"-"`
+	Rate    int       `json:"rate"`
 	Admin   bool      `json:"admin"`
 	Email   string    `json:"email"`
-	Message string    `json:"message"`
 }
 
 func (g *Guest) Scan(scanFn func(dest ...interface{}) error) error {
@@ -28,61 +28,93 @@ func (g *Guest) Scan(scanFn func(dest ...interface{}) error) error {
 		&g.UserId,
 		&g.Rate,
 		&g.Admin,
-		&g.Email,
-		&g.Message)
+		&g.Email)
 }
 
 func (g *Guest) Update() error {
 	const query = `
-	update groups
+	update guests
 	set active = $2, rate = $3, admin = $4
 	where id = $1;`
 	return postgres.Exec(query, g.Id, g.Active, g.Rate, g.Admin)
 }
 
-func (g *Group) GuestAdd(email string, message, rate int, admin bool) error {
-	// guest := &Guest{}
-	// const existsQuery = `
-	// select *
-	// from guests g
-	// where   group_id = $1
-	//     and user_id = (
-	//         select id from users where email = $2
-	//     );`
-	// err := postgres.QueryRow(guest, existsQuery, g.Id, email)
+func (g *Group) GuestAdd(email string, rate int, admin, sendMail bool) error {
 
-	// guest, err := g.GuestGetByEmail(email)
-	// if err != nil && err != errors.NotFound {
-	// 	return err
-	// } else if err == nil {
-	// 	guest.Active = true
-	// 	guest.Rate = rate
-	// 	guest.Admin = admin
-	// 	return guest.Update()
-	// }
-	//
-	// guest = &Guest{
-	//     Email: email,
-	//
-	// }
-	// if _, err := user.ByEmail(email); err != nil && err != errors.NotFound {
-	// 	return err
-	// } else if err == errors.NotFound {
-	//     guest.Email =
-	// }
-	return nil
+	u, err := user.ByEmail(email)
+	if err == errors.NotFound {
+		u = nil
+	} else if err != nil {
+		return err
+	}
+	owner, err := g.GetOwner()
+	if err != nil {
+		return err
+	}
+
+	guest := &Guest{}
+	const findQuery = `
+    select * from guests where group_id = $1 and email = $2;`
+
+	if err := postgres.QueryRow(guest, findQuery, g.Id, email); err == nil {
+		wasActive := guest.Active
+		if guest.UserId == nil || *guest.UserId != g.OwnerId {
+			guest.Admin = admin
+		}
+		guest.Active = true
+		guest.Rate = rate
+
+		if u != nil {
+			*guest.UserId = u.Id
+		}
+		if err := guest.Update(); err != nil {
+			return err
+		}
+		if wasActive {
+			return nil
+		}
+	} else if err != errors.NotFound {
+		return err
+	} else if u == nil {
+		const insertQuery = `
+		insert into guests (group_id, rate, admin, email)
+		values ($1, $2, $3, $4);`
+		if err := postgres.Exec(insertQuery, g.Id, rate, admin, email); err != nil {
+			return err
+		}
+	} else if u != nil {
+		const insertQuery = `
+		insert into guests (group_id, rate, admin, email, user_id)
+		values ($1, $2, $3, $4, $5);`
+		if err := postgres.Exec(insertQuery, g.Id, rate, admin, email, u.Id); err != nil {
+			return err
+		}
+	}
+
+	if !sendMail {
+		return nil
+	}
+	m := mail.Mail{
+		Dests:    []string{email},
+		Subject:  "Nouvelle invitation sur Horo Data.",
+		Template: "invitation",
+		Data: map[string]interface{}{
+			"ownerName": owner.Login,
+			"groupName": g.Name,
+			"groupUrl":  g.Url,
+		},
+	}
+	return m.Send()
+
 }
 
 func (g *Group) GuestGetByEmail(email string) (*Guest, error) {
 	guest := &Guest{}
 	const query = `
-    select *
-    from guests g
-    where   group_id = $1
-        and active = true
-        and user_id = (
-            select id from users where email = $2
-        );`
+    select * from guests
+    where 	group_id = $1
+		and active = true
+		and email = $2`
 	return guest, postgres.QueryRow(guest, query, g.Id, email)
 }
 
@@ -90,10 +122,21 @@ func (g *Group) GuestGetByUserId(id int64) (*Guest, error) {
 	guest := &Guest{}
 	const query = `
     select *
-    from guests g
+    from guests
     where   group_id = $1
         and active = true
         and user_id = $2`
+	return guest, postgres.QueryRow(guest, query, g.Id, id)
+}
+
+func (g *Group) GuestGetById(id int64) (*Guest, error) {
+	guest := &Guest{}
+	const query = `
+    select *
+    from guests
+    where   group_id = $1
+        and active = true
+        and id = $2`
 	return guest, postgres.QueryRow(guest, query, g.Id, id)
 }
 
@@ -117,8 +160,4 @@ func (g *Group) Guests() ([]Guest, error) {
 		results = append(results, *i)
 	}
 	return results, rows.Err()
-}
-
-func (g *Group) GuestRemove(id int64) error {
-	return nil
 }

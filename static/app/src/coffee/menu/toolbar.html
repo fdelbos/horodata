@@ -1,11 +1,6 @@
 <div>
 
-    <md-button ng-if="MainTitle().canEdit" class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
-      <md-tooltip md-direction="left">
-        Ajouter un tâche
-      </md-tooltip>
-      <md-icon class="md-48" style="margin: -2px 0px 0px -1px ">access_time</md-icon>
-    </md-button>
+  <app-widgets-new-task></app-widgets-new-task>
 
   <md-toolbar>
     <div class="md-toolbar-tools">
@@ -17,7 +12,7 @@
       </h2>
       <span flex></span>
       <md-button class="md-fab md-mini" aria-label="Favorite">
-        <span class="fa fa-user"></span>
+        <md-icon class="md-24">account_circle</md-icon>
       </md-button>
     </div>
   </md-toolbar>

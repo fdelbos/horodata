@@ -87,7 +87,7 @@ func ApiByUser(user_id int64, request *listing.Request) (*listing.Result, error)
 	return result, err
 }
 
-func (g *Group) ApiDetail() (interface{}, error) {
+func (g *Group) ApiDetail(admin bool) (interface{}, error) {
 	var d struct {
 		Url       string        `json:"url"`
 		Owner     user.UserLink `json:"owner,omitempty"`
@@ -95,6 +95,7 @@ func (g *Group) ApiDetail() (interface{}, error) {
 		Name      string        `json:"name"`
 		Tasks     []Task        `json:"tasks"`
 		Customers []Customer    `json:"customers"`
+		Guests    []Guest       `json:"guests,omitempty"`
 	}
 	d.Url = g.Url
 	d.Created = g.Created
@@ -118,5 +119,12 @@ func (g *Group) ApiDetail() (interface{}, error) {
 		d.Customers = customers
 	}
 
+	if admin {
+		if guests, err := g.Guests(); err != nil {
+			return nil, err
+		} else {
+			d.Guests = guests
+		}
+	}
 	return d, nil
 }

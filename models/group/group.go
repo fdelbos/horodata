@@ -8,10 +8,10 @@ import (
 )
 
 type Group struct {
-	Id      int64     `json:"id"`
-	Created time.Time `json:"created"`
-	Active  bool      `json:"active"`
-	OwnerId int64     `json:"owner_id"`
+	Id      int64     `json:"-"`
+	Created time.Time `json:"-"`
+	Active  bool      `json:"-"`
+	OwnerId int64     `json:"-"`
 	Name    string    `json:"name"`
 	Url     string    `json:"url"`
 }
@@ -44,6 +44,7 @@ func (g *Group) Insert() error {
 	const query = `
 	insert into groups (owner_id, name, url)
 	values ($1, $2, $3);`
+
 	return postgres.Exec(query, g.OwnerId, g.Name, g.Url)
 }
 

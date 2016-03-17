@@ -1,18 +1,21 @@
 <div  layout-margin layout-padding>
 
-  <div layout="column" flex-gt-md="60" flex-sm="70">
+  <div layout="column" flex-sm="70" flex-md="80" flex-gt-md="60">
 
     <div layout="row" layout-align="space-between center">
       <div class="md-display-1">
         Types de Tâches
       </div>
 
-      <md-button ng-click="tasks.create()" class="md-raised md-primary" hide show-gt-sm>
+      <md-button ng-click="tasks.create($event)" class="md-raised md-primary" hide show-gt-sm>
         <md-icon class="md-24">add</md-icon>
         Ajouter
       </md-button>
 
-      <md-button ng-click="tasks.create()" class="md-fab md-primary" hide-gt-sm aria-label="Ajouter une tâche">
+      <md-button ng-click="tasks.create($event)" class="md-fab md-primary" hide-gt-sm aria-label="Ajouter une tâche">
+        <md-tooltip md-direction="top">
+          Ajouter une tâche
+        </md-tooltip>
         <md-icon class="md-36">add</md-icon>
       </md-button>
     </div>
@@ -38,14 +41,12 @@
         </md-select>
       </md-input-container>
 
-
-
-        <md-button ng-if="tasks.selected" ng-click="tasks.edit()" class="md-fab md-accent" aria-label="Editer une tâche">
-          <md-tooltip md-direction="top">
-            Editer la tâche
-          </md-tooltip>
-          <md-icon class="md-36">edit</md-icon>
-        </md-button>
+      <md-button ng-if="tasks.selected" ng-click="tasks.edit($event)" class="md-fab md-accent" aria-label="Editer une tâche">
+        <md-tooltip md-direction="top">
+          Editer la tâche
+        </md-tooltip>
+        <md-icon class="md-36">edit</md-icon>
+      </md-button>
 
     </div>
 

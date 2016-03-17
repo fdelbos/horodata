@@ -1,36 +1,26 @@
 angular.module("horodata").directive("appWidgetsConfigurationTasks", [
-  "$mdDialog"
-  "$mdMedia"
-  ($mdDialog, $mdMedia)->
+  "popupService"
+  (popupService)->
 
     l = (scope, elem, attr) ->
-
-      openForm = (ev) ->
-        fullscreen = $mdMedia('xs') || $mdMedia('sm')
-
-        $mdDialog.show({
-          controller: "appWidgetsConfigurationTasksDialog",
-          templateUrl: "horodata/widgets/configuration/tasks_form.html",
-          parent: angular.element(document.body),
-          targetEvent: ev,
-          preserveScope: true,
-          scope: scope,
-          clickOutsideToClose:true,
-          escapeToClose: true,
-          fullscreen: fullscreen
-        })
 
       scope.tasks =
         current: null
         selected: null
-        edit: ->
+        edit: (ev) ->
           @current = _.cloneDeep(_.find(scope.group.tasks, {id: parseInt @selected}))
-          openForm()
-        create: ->
+          popupService(
+            "horodata/widgets/configuration/tasks_form.html"
+            "appWidgetsConfigurationTasksDialog"
+            scope, ev)
+        create: (ev) ->
           @current =
             name: ""
             comment_mandatory: false
-          openForm()
+          popupService(
+            "horodata/widgets/configuration/tasks_form.html"
+            "appWidgetsConfigurationTasksDialog"
+            scope, ev)
 
     return {
       link: l
@@ -62,7 +52,7 @@ angular.module("horodata").controller("appWidgetsConfigurationTasksDialog", [
           $scope.$emit("group.reload")
           $mdDialog.hide()
           $mdToast.showSimple("Nouveau type de tâche: '#{$scope.tasks.current.name}' ajouté.")
-        (resp) -> $scope.errors = resp.tasks.errors
+        (resp) -> $scope.errors = resp.data.errors
       )
 
     $scope.edit = ->
@@ -81,7 +71,7 @@ angular.module("horodata").controller("appWidgetsConfigurationTasksDialog", [
           $mdDialog.hide()
           $mdToast.showSimple("Type de tâche: '#{$scope.tasks.current.name}' supprimé.")
           $scope.group.tasks.splice(_.findIndex($scope.group.tasks, {id: parseInt $scope.tasks.selected}), 1)
-          $scope.task.selected = null
+          $scope.tasks.selected = null
         (resp) -> $scope.errors = resp.data.errors
       )
 

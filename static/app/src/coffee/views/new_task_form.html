@@ -1,0 +1,79 @@
+<md-dialog aria-label="Nouvelle Tâche" flex="40">
+  <form name="newTaskForm">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Nouvelle Tâche</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Fermer" ng-click="close()">
+          <md-icon class="md-24">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+
+        <div layout="column">
+
+          <md-input-container flex>
+            <label>Selectionnez un dossier</label>
+            <md-select ng-model="task.customer">
+              <md-option ng-repeat="c in group.customers" value="{{ c.id }}">
+                {{ c.name }}
+              </md-option>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container flex>
+            <label>Selectionnez une tâche</label>
+            <md-select ng-model="task.task">
+              <md-option ng-repeat="t in group.tasks" value="{{ t.id }}">
+                {{ t.name }}
+              </md-option>
+            </md-select>
+          </md-input-container>
+
+          <div layout="row">
+
+            <md-input-container flex>
+              <label>Heures</label>
+              <md-select ng-model="task.hours">
+                <md-option ng-repeat="h in hours" value="{{ h }}">
+                  {{ h }}
+                  <span ng-if="h > 1">Heures</span>
+                  <span ng-if="h <= 1">Heure</span>
+                </md-option>
+              </md-select>
+            </md-input-container>
+
+            <md-input-container flex>
+              <label>Minutes</label>
+              <md-select ng-model="task.minutes">
+                <md-option ng-repeat="t in group.tasks" value="{{ t.id }}">
+                  {{ t.name }}
+                </md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+
+          <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.comment}" >
+            <label>Commentaire</label>
+            <textarea md-no-autogrow ng-model="task.comment" rows="5" md-select-on-focus></textarea>
+            <small ng-if="errors.comment" class="input-error">{{ errors.comment }}</small>
+          </md-input-container>
+
+        </div>
+
+
+
+
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions>
+      <md-button ng-click="send()" class="md-primary md-raised">Creer</md-button>
+      <md-button ng-click="close()" class="md-raised">Annuler</md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

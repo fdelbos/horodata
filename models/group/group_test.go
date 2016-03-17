@@ -1,6 +1,7 @@
 package group_test
 
 import (
+	"bitbucket.com/hyperboloide/horo/helpers/tests"
 	. "bitbucket.com/hyperboloide/horo/models/group"
 	"bitbucket.com/hyperboloide/horo/models/types/listing"
 	"github.com/davecgh/go-spew/spew"
@@ -117,8 +118,44 @@ var _ = Describe("Group", func() {
 		Ω(tt.Id).To(Equal(id))
 	})
 
+	It("should test guests", func() {
+		guestUser, err := tests.NewUser()
+		Ω(err).To(BeNil())
+
+		Ω(group.GuestAdd(guestUser.Email, "some message", 4242, false, true)).To(BeNil())
+		guests, err := group.Guests()
+		Ω(err).To(BeNil())
+		Ω(len(guests)).To(Equal(1))
+		g := guests[0]
+		Ω(g.Email).To(Equal(guestUser.Email))
+		Ω(g.UserId).To(Equal(guestUser.Id))
+		Ω(g.Admin).To(BeFalse())
+
+		g.Admin = true
+		Ω(g.Update()).To(BeNil())
+
+		g2, err := group.GuestGetById(g.Id)
+		Ω(err).To(BeNil())
+		Ω(g2.Admin).To(BeTrue())
+
+		g.Active = false
+		Ω(g.Update()).To(BeNil())
+
+		_, err = group.GuestGetById(g.Id)
+		Ω(err).ToNot(BeNil())
+
+		Ω(group.GuestAdd(guestUser.Email, "some message", 4242, false, false)).To(BeNil())
+		g3, err := group.GuestGetById(g.Id)
+		Ω(err).To(BeNil())
+		Ω(g3.Id).To(Equal(g.Id))
+	})
+
 	It("should test ApiDetail", func() {
-		d, err := group.ApiDetail()
+		d, err := group.ApiDetail(false)
+		Ω(err).To(BeNil())
+		Ω(d).ToNot(BeNil())
+
+		d, err = group.ApiDetail(true)
 		Ω(err).To(BeNil())
 		Ω(d).ToNot(BeNil())
 	})

@@ -49,22 +49,22 @@ func Create(c *gin.Context) {
 	}
 	if err := g.Insert(); err != nil {
 		jsend.Error(c, err)
+	} else if g, err := group.ByUrl(g.Url); err != nil {
+		jsend.Error(c, err)
+	} else if err := g.GuestAdd(u.Email, 0, true, false); err != nil {
+		jsend.Error(c, err)
 	} else {
-		jsend.Ok(c, struct {
-			Url string `json:"url"`
-		}{g.Url})
+		jsend.Ok(c, g)
 	}
 }
 
 func Get(c *gin.Context) {
-	g := middlewares.GetGroup(c)
-	if detail, err := g.ApiDetail(); err != nil {
+	guest := middlewares.GetGuest(c)
+	group := middlewares.GetGroup(c)
+
+	if detail, err := group.ApiDetail(guest.Admin); err != nil {
 		jsend.Error(c, err)
 	} else {
 		jsend.Ok(c, detail)
 	}
-}
-
-func Update(c *gin.Context) {
-
 }

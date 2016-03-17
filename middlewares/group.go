@@ -13,43 +13,34 @@ func GroupFilter() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		u := GetUser(c)
 
-		url := c.Params.ByName("group")
-		if url == "" {
+		if url := c.Params.ByName("group"); url == "" {
 			log.WithFields(map[string]interface{}{
 				"context": c,
 			}).Fatal("no url definted for GroupFilter")
-		}
-
-		g, err := group.ByUrl(url)
-		if err != nil {
-			if err == errors.NotFound {
-				c.JSON(404, http.StatusText(404))
-			} else {
-				c.JSON(500, http.StatusText(500))
-			}
-			c.Abort()
+		} else if g, err := group.ByUrl(url); err == errors.NotFound {
+			c.JSON(404, http.StatusText(404))
+		} else if err != nil {
+			log.Error(err)
+			c.JSON(500, http.StatusText(500))
+		} else if guest, err := g.GuestGetByUserId(u.Id); err == errors.NotFound {
+			c.JSON(404, http.StatusText(404))
+		} else if err != nil {
+			log.Error(err)
+			c.JSON(500, http.StatusText(500))
+		} else {
+			c.Set("guest", guest)
+			c.Set("group", g)
+			c.Next()
 			return
-		} else if u.Id != g.OwnerId {
-			if _, err := g.GuestGetByUserId(u.Id); err != nil {
-				if err == errors.NotFound {
-					c.JSON(404, http.StatusText(404))
-				} else {
-					c.JSON(500, http.StatusText(500))
-				}
-				c.Abort()
-				return
-			}
 		}
-		c.Set("group", g)
-		c.Next()
+		c.Abort()
 	}
 }
 
-func GroupOwnerFilter() gin.HandlerFunc {
+func GroupAdminFilter() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		u := GetUser(c)
-		g := GetGroup(c)
-		if u.Id != g.OwnerId {
+		guest := GetGuest(c)
+		if !guest.Admin {
 			c.JSON(403, http.StatusText(403))
 			c.Abort()
 		} else {
@@ -60,4 +51,8 @@ func GroupOwnerFilter() gin.HandlerFunc {
 
 func GetGroup(c *gin.Context) *group.Group {
 	return c.MustGet("group").(*group.Group)
+}
+
+func GetGuest(c *gin.Context) *group.Guest {
+	return c.MustGet("guest").(*group.Guest)
 }

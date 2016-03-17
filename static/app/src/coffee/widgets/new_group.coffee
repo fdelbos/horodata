@@ -1,24 +1,14 @@
 angular.module("horodata").directive("appWidgetsNewGroup", [
-  "$mdDialog",
-  "$mdMedia",
-  ($mdDialog, $mdMedia)->
+  "popupService"
+  (popupService)->
 
     l = (scope) ->
 
       scope.showNewGroupDialog = (ev) ->
-        fullscreen = $mdMedia('xs') || $mdMedia('sm')
-
-        $mdDialog.show({
-          controller: "newGroupDialog",
-          templateUrl: "horodata/widgets/new_group_form.html",
-          parent: angular.element(document.body),
-          targetEvent: ev,
-          preserveScope: true,
-          scope: scope,
-          clickOutsideToClose:true,
-          escapeToClose: true,
-          fullscreen: fullscreen
-        })
+        popupService(
+          "horodata/widgets/new_group_form.html"
+          "newGroupDialog"
+          scope, ev)
 
     return {
       link: l

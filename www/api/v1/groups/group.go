@@ -17,36 +17,48 @@ func Group(r *gin.RouterGroup) {
 
 		groups.POST("/:group/tasks",
 			middlewares.GroupFilter(),
-			middlewares.GroupOwnerFilter(),
+			middlewares.GroupAdminFilter(),
 			TaskAdd)
 
 		groups.PUT("/:group/tasks/:taskId",
 			middlewares.GroupFilter(),
-			middlewares.GroupOwnerFilter(),
+			middlewares.GroupAdminFilter(),
 			TaskUpdate)
 
 		groups.DELETE("/:group/tasks/:taskId",
 			middlewares.GroupFilter(),
-			middlewares.GroupOwnerFilter(),
+			middlewares.GroupAdminFilter(),
 			TaskDelete)
 
 		groups.POST("/:group/customers",
 			middlewares.GroupFilter(),
-			middlewares.GroupOwnerFilter(),
+			middlewares.GroupAdminFilter(),
 			CustomerAdd)
 
 		groups.PUT("/:group/customers/:customerId",
 			middlewares.GroupFilter(),
-			middlewares.GroupOwnerFilter(),
+			middlewares.GroupAdminFilter(),
 			CustomerUpdate)
 
 		groups.DELETE("/:group/customers/:customerId",
 			middlewares.GroupFilter(),
-			middlewares.GroupOwnerFilter(),
+			middlewares.GroupAdminFilter(),
 			CustomerDelete)
 
-		// groups.PUT("/:url", Update, middlewares.GroupFilter(), middlewares.GroupOwnerFilter())
-		// groups.GET("/:group/users", UserListing)
+		groups.POST("/:group/guests",
+			middlewares.GroupFilter(),
+			middlewares.GroupAdminFilter(),
+			GuestAdd)
+
+		groups.PUT("/:group/guests/:guestId",
+			middlewares.GroupFilter(),
+			middlewares.GroupAdminFilter(),
+			GuestUpdate)
+
+		groups.DELETE("/:group/guests/:guestId",
+			middlewares.GroupFilter(),
+			middlewares.GroupAdminFilter(),
+			GuestDelete)
 
 	}
 }

@@ -5,7 +5,10 @@ angular.module("horodata").controller("Group", [
   "titleService"
   "userService"
   "apiService"
-  ($http, $routeParams, $scope, titleService, userService, apiService)->
+  "groupNewService"
+  "$mdMedia"
+  "$mdDialog"
+  ($http, $routeParams, $scope, titleService, userService, apiService, groupNewService, $mdMedia, $mdDialog)->
 
     $scope.isGroupView = true
 
@@ -36,4 +39,42 @@ angular.module("horodata").controller("Group", [
     $scope.$on("group.reload", (e) ->
       e.stopPropagation()
       getGroup())
+
+    groupNewService.set (ev)->
+      fullscreen = $mdMedia('xs') || $mdMedia('sm')
+      $mdDialog.show
+        controller: "groupNewTaskDialog"
+        templateUrl: "horodata/views/new_task_form.html"
+        parent: angular.element(document.body)
+        targetEvent: ev
+        preserveScope: true
+        scope: $scope
+        clickOutsideToClose:true
+        escapeToClose: true
+        fullscreen: fullscreen
+])
+
+angular.module("horodata").controller("groupNewTaskDialog", [
+  "$scope",
+  "$mdDialog",
+  "$mdToast",
+  "$http",
+  "$location",
+  "apiService"
+  ($scope, $mdDialog, $mdToast, $http, $location, apiService)->
+    $scope.task = {}
+    $scope.errors = null
+
+    $scope.close = -> $mdDialog.hide()
+
+    $scope.send = ->
+      $http.post("#{apiService.get()}/groups", {name: $scope.name}).then(
+        (resp) ->
+          group = resp.data.data
+          $mdDialog.hide()
+          $mdToast.showSimple("Nouveau groupe '#{group.name}' sauvegarde.")
+          $location.path("/group/#{group.url}")
+        (resp) -> $scope.errors = resp.data.errors
+      )
+
 ])

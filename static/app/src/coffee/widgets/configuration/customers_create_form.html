@@ -16,9 +16,7 @@
 
         <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.customers}" >
           <label>Noms des Dossiers a ajouter (saisissez un dossier par ligne).</label>
-
           <textarea md-no-autogrow ng-model="customers.current.customers" rows="5" md-select-on-focus></textarea>
-
           <small ng-if="errors.customers" class="input-error">{{ errors.customers }}</small>
         </md-input-container>
 

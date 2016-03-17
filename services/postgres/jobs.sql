@@ -47,10 +47,9 @@ create table guests (
     created timestamp default now() not null,
     active boolean default true not null,
     group_id bigint not null references groups on delete cascade,
-    user_id bigint not null references users on delete cascade,
+    user_id bigint,
     rate int default 0 not null,
     admin boolean default false not null,
-    email citext unique not null,
-    message text,
+    email citext not null,
     unique(group_id, user_id)
 );

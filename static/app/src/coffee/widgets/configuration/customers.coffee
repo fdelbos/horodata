@@ -1,45 +1,24 @@
 angular.module("horodata").directive("appWidgetsConfigurationCustomers", [
-  "$mdDialog",
-  "$mdMedia",
-  ($mdDialog, $mdMedia)->
+  "popupService"
+  (popupService)->
 
     l = (scope, elem, attr) ->
-
-      openCreateForm = (ev) ->
-        fullscreen = $mdMedia('xs') || $mdMedia('sm')
-        $mdDialog.show
-          controller: "appWidgetsConfigurationCustomersDialog"
-          templateUrl: "horodata/widgets/configuration/customers_create_form.html"
-          parent: angular.element(document.body)
-          targetEvent: ev
-          preserveScope: true
-          scope: scope
-          clickOutsideToClose:true
-          escapeToClose: true
-          fullscreen: fullscreen
-
-      openEditForm = (ev) ->
-        fullscreen = $mdMedia('xs') || $mdMedia('sm')
-        $mdDialog.show
-          controller: "appWidgetsConfigurationCustomersDialog"
-          templateUrl: "horodata/widgets/configuration/customers_edit_form.html"
-          parent: angular.element(document.body)
-          targetEvent: ev
-          preserveScope: true
-          scope: scope
-          clickOutsideToClose:true
-          escapeToClose: true
-          fullscreen: fullscreen
 
       scope.customers =
         current: null
         selected: null
-        edit: ->
+        edit: (ev)->
           @current = _.cloneDeep(_.find(scope.group.customers, {id: parseInt @selected}))
-          openEditForm()
-        create: ->
+          popupService(
+            "horodata/widgets/configuration/customers_edit_form.html"
+            "appWidgetsConfigurationCustomersDialog"
+            scope, ev)
+        create: (ev)->
           @current = {customers: ""}
-          openCreateForm()
+          popupService(
+            "horodata/widgets/configuration/customers_create_form.html"
+            "appWidgetsConfigurationCustomersDialog"
+            scope, ev)
 
     return {
       link: l
