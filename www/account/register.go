@@ -8,7 +8,6 @@ import (
 	valid "github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"regexp"
 )
 
 func GetRegister(c *gin.Context) {
@@ -18,25 +17,6 @@ func GetRegister(c *gin.Context) {
 
 func PostRegister(c *gin.Context) {
 	errors := map[string]string{}
-
-	username := c.PostForm("username")
-	if username == "" {
-		errors["username"] = "Ce champs est obligatoire."
-	} else if len(username) < 4 {
-		errors["username"] = "Ce champ doit faire au moins 4 caractères."
-	} else if len(username) > 30 {
-		errors["username"] = "Ce champ ne doit pas dépasser 30 caractères."
-	} else if ok, err := regexp.MatchString(`^[\w.-]+$`, username); err != nil {
-		GetError(c, err)
-		return
-	} else if !ok {
-		errors["username"] = "Ce champs ne peut contenir que des lettres, des chiffres et les caractères ./-/_ ."
-	} else if _, err := user.ByLogin(username); err == nil {
-		errors["username"] = "Ce nom d'utilisateur est déjà associé à un autre compte."
-	} else if err != sqlerrors.NotFound {
-		GetError(c, err)
-		return
-	}
 
 	email := c.PostForm("email")
 	if email == "" {
@@ -61,6 +41,15 @@ func PostRegister(c *gin.Context) {
 		errors["password"] = "Ce champ ne doit pas dépasser 100 caractères."
 	}
 
+	fullName := c.PostForm("full_name")
+	if fullName == "" {
+		errors["full_name"] = "Ce champs est obligatoire."
+	} else if len(fullName) < 4 {
+		errors["full_name"] = "Ce champ doit faire au moins 4 caractères."
+	} else if len(fullName) > 50 {
+		errors["full_name"] = "Ce champ ne doit pas dépasser 50 caractères."
+	}
+
 	recaptcha := c.PostForm("g-recaptcha-response")
 	if recaptcha == "" {
 		errors["recaptcha"] = "Ce champs est obligatoire."
@@ -75,7 +64,7 @@ func PostRegister(c *gin.Context) {
 		data := map[string]interface{}{
 			"Title":         "Inscription",
 			"errors":        errors,
-			"username":      username,
+			"full_name":     fullName,
 			"email":         email,
 			"CaptchaPubKey": captcha.PubKey,
 		}
@@ -83,7 +72,7 @@ func PostRegister(c *gin.Context) {
 	} else {
 		u := &user.User{}
 		u.Active = true
-		u.Login = username
+		u.FullName = fullName
 		u.Email = email
 
 		if err := u.Insert(); err != nil {

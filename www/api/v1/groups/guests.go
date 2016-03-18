@@ -19,7 +19,8 @@ func GuestAdd(c *gin.Context) {
 		Rate  int    `json:"rate"`
 	}
 	if err := json.NewDecoder(c.Request.Body).Decode(&data); err != nil {
-		jsend.Error(c, err)
+		jsend.ErrorJson(c)
+		return
 	}
 
 	errors := map[string]string{}
@@ -68,7 +69,8 @@ func GuestUpdate(c *gin.Context) {
 		Rate  int  `json:"admin"`
 	}
 	if err := json.NewDecoder(c.Request.Body).Decode(&data); err != nil {
-		jsend.Error(c, err)
+		jsend.ErrorJson(c)
+		return
 	}
 
 	errors := map[string]string{}

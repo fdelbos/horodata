@@ -171,7 +171,9 @@ func Configure() {
 
 	switch viper.GetString("log_format") {
 	case "text":
-		log.SetFormatter(&log.TextFormatter{})
+		log.SetFormatter(&log.TextFormatter{
+			DisableColors: true,
+		})
 	case "json":
 		log.SetFormatter(&log.JSONFormatter{})
 	default:

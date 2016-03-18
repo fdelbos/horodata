@@ -60,5 +60,9 @@ func Group(r *gin.RouterGroup) {
 			middlewares.GroupAdminFilter(),
 			GuestDelete)
 
+		groups.POST("/:group/jobs",
+			middlewares.GroupFilter(),
+			JobAdd)
+
 	}
 }

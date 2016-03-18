@@ -17,7 +17,7 @@ func CustomerAdd(c *gin.Context) {
 		Customers string `json:"customers"`
 	}
 	if err := json.NewDecoder(c.Request.Body).Decode(&data); err != nil {
-		jsend.Error(c, err)
+		jsend.ErrorJson(c)
 		return
 	}
 
@@ -70,7 +70,8 @@ func CustomerUpdate(c *gin.Context) {
 		Name string `json:"name"`
 	}
 	if err := json.NewDecoder(c.Request.Body).Decode(&data); err != nil {
-		jsend.Error(c, err)
+		jsend.ErrorJson(c)
+		return
 	}
 
 	errors := map[string]string{}

@@ -1,7 +1,10 @@
 package group
 
 import (
+	"bitbucket.com/hyperboloide/horo/models/types/listing"
 	"bitbucket.com/hyperboloide/horo/services/postgres"
+	"database/sql"
+	"fmt"
 	"time"
 )
 
@@ -73,4 +76,137 @@ func (g *Group) JobRemove(id int64) error {
 	const query = `
     delete from jobs where group_id = $1 and id = $2`
 	return postgres.Exec(query, g.Id, id)
+}
+
+type JobApi struct {
+	Id         int64     `json:"id"`
+	Created    time.Time `json:"created"`
+	TaskId     int64     `json:"task_id"`
+	CustomerId int64     `json:"customer_id"`
+	Creator    struct {
+		Id       int64  `json:"id"`
+		FullName string `json:"full_name"`
+		Email    string `json:"email"`
+	} `json:"creator"`
+	Duration int64  `json:"duration"`
+	Comment  string `json:"comment"`
+}
+
+func (j *JobApi) Scan(scanFn func(dest ...interface{}) error) error {
+	return scanFn(
+		&j.Id,
+		&j.Created,
+		&j.TaskId,
+		&j.CustomerId,
+		&j.Duration,
+		&j.Comment,
+		&j.Creator.Id,
+		&j.Creator.FullName,
+		&j.Creator.Email)
+}
+
+func (g *Group) JobApiGet(id int64) (*JobApi, error) {
+	j := &JobApi{}
+	const query = `
+    select
+		j.id, j.created, j.task_id, j.customer_id, j.duration, j.comment,
+		u.id, u.full_name, u.email
+    from
+		jobs j join users u on (j.creator_id = u.id)
+    where
+		j.group_id = $1 and j.id = $2;`
+	return j, postgres.QueryRow(j, query, g.Id, id)
+}
+
+func (g *Group) JobApiList(begin, end time.Time, customer, creator *int64, request *listing.Request) (*listing.Result, error) {
+	result := &listing.Result{}
+	result.Offset = request.Offset
+
+	query := jobApiGenQuery(customer, creator)
+	var rows *sql.Rows
+	var err error
+	if customer != nil && creator != nil {
+		rows, err = postgres.DB().Query(query, g.Id, begin, end, request.Size, request.Offset, customer, creator)
+	} else if customer != nil {
+		rows, err = postgres.DB().Query(query, g.Id, begin, end, request.Size, request.Offset, customer)
+	} else if creator != nil {
+		rows, err = postgres.DB().Query(query, g.Id, begin, end, request.Size, request.Offset, creator)
+	} else {
+		rows, err = postgres.DB().Query(query, g.Id, begin, end, request.Size, request.Offset)
+	}
+
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		job := &JobApi{}
+		if err := job.Scan(rows.Scan); err != nil {
+			return nil, err
+		}
+		result.Results = append(result.Results, job)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	result.Size = len(result.Results)
+
+	queryCount := jobApiGenQueryCount(customer, creator)
+	if customer != nil && creator != nil {
+		err = postgres.DB().QueryRow(queryCount, g.Id, begin, end, customer, creator).Scan(&result.Total)
+	} else if customer != nil {
+		err = postgres.DB().QueryRow(queryCount, g.Id, begin, end, customer).Scan(&result.Total)
+	} else if creator != nil {
+		err = postgres.DB().QueryRow(queryCount, g.Id, begin, end, creator).Scan(&result.Total)
+	} else {
+		err = postgres.DB().QueryRow(queryCount, g.Id, begin, end).Scan(&result.Total)
+	}
+	return result, err
+}
+
+func jobApiGenQuery(customer, creator *int64) string {
+	const query = `
+	select
+		j.id, j.created, j.task_id, j.customer_id, j.duration, j.comment,
+		u.id, u.full_name, u.email
+	from
+		jobs j join users u on (j.creator_id = u.id)
+	where
+			j.group_id = $1
+		and j.created > $2
+		and j.created < $3
+		%s
+	limit $4 offset $5;`
+
+	cond := ""
+	if customer != nil && creator != nil {
+		cond = "and customer_id = $6 and creator_id = $7"
+	} else if customer != nil {
+		cond = "and customer_id = $6"
+	} else if creator != nil {
+		cond = "and creator_id = $6"
+	}
+	return fmt.Sprintf(query, cond)
+}
+
+func jobApiGenQueryCount(customer, creator *int64) string {
+	const query = `
+		select count(id)
+		from jobs j
+		where
+				j.group_id = $1
+			and j.created > $2
+			and j.created < $3
+			%s;`
+
+	cond := ""
+	if customer != nil && creator != nil {
+		cond = "and customer_id = $6 and creator_id = $7"
+	} else if customer != nil {
+		cond = "and customer_id = $6"
+	} else if creator != nil {
+		cond = "and creator_id = $6"
+	}
+	return fmt.Sprintf(query, cond)
 }

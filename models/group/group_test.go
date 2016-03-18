@@ -7,6 +7,7 @@ import (
 	"github.com/davecgh/go-spew/spew"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"time"
 )
 
 var _ = Describe("Group", func() {
@@ -33,6 +34,8 @@ var _ = Describe("Group", func() {
 	})
 
 	It("should get api groups", func() {
+		Ω(group.GuestAdd(Owner.Email, 4242, true, false)).To(BeNil())
+
 		req := &listing.Request{
 			Size: 50,
 		}
@@ -42,6 +45,11 @@ var _ = Describe("Group", func() {
 		Ω(res).ToNot(BeNil())
 		Ω(res.Size).To(Equal(1))
 		Ω(res.Results[0].(*GroupApi).Url).To(Equal(group.Url))
+
+		g, err := group.GuestGetByEmail(Owner.Email)
+		Ω(err).To(BeNil())
+		g.Active = false
+		Ω(g.Update()).To(BeNil())
 	})
 
 	It("should test customers", func() {
@@ -122,13 +130,13 @@ var _ = Describe("Group", func() {
 		guestUser, err := tests.NewUser()
 		Ω(err).To(BeNil())
 
-		Ω(group.GuestAdd(guestUser.Email, "some message", 4242, false, true)).To(BeNil())
+		Ω(group.GuestAdd(guestUser.Email, 4242, false, true)).To(BeNil())
 		guests, err := group.Guests()
 		Ω(err).To(BeNil())
 		Ω(len(guests)).To(Equal(1))
 		g := guests[0]
 		Ω(g.Email).To(Equal(guestUser.Email))
-		Ω(g.UserId).To(Equal(guestUser.Id))
+		Ω(*g.UserId).To(Equal(guestUser.Id))
 		Ω(g.Admin).To(BeFalse())
 
 		g.Admin = true
@@ -144,10 +152,14 @@ var _ = Describe("Group", func() {
 		_, err = group.GuestGetById(g.Id)
 		Ω(err).ToNot(BeNil())
 
-		Ω(group.GuestAdd(guestUser.Email, "some message", 4242, false, false)).To(BeNil())
+		Ω(group.GuestAdd(guestUser.Email, 4242, false, false)).To(BeNil())
 		g3, err := group.GuestGetById(g.Id)
 		Ω(err).To(BeNil())
 		Ω(g3.Id).To(Equal(g.Id))
+
+		g4, err := group.GuestGetByEmail(guestUser.Email)
+		Ω(err).To(BeNil())
+		Ω(g4.Id).To(Equal(g.Id))
 	})
 
 	It("should test ApiDetail", func() {
@@ -158,5 +170,36 @@ var _ = Describe("Group", func() {
 		d, err = group.ApiDetail(true)
 		Ω(err).To(BeNil())
 		Ω(d).ToNot(BeNil())
+	})
+
+	It("should test jobs", func() {
+		d, err := group.ApiDetail(false)
+		Ω(err).To(BeNil())
+		Ω(d).ToNot(BeNil())
+
+		guestUser, err := tests.NewUser()
+		Ω(err).To(BeNil())
+		Ω(group.GuestAdd(guestUser.Email, 1000, false, true)).To(BeNil())
+
+		tasks, err := group.Tasks()
+		Ω(err).To(BeNil())
+		task := tasks[0]
+
+		customers, err := group.Customers()
+		Ω(err).To(BeNil())
+		customer := customers[0]
+
+		Ω(group.JobAdd(task.Id, customer.Id, guestUser.Id, 4242, "test comment")).To(BeNil())
+
+		tommorow := time.Now().Add(time.Hour * 24)
+		yesterday := time.Now().Add(time.Hour * -24)
+
+		req := &listing.Request{
+			Size: 50,
+		}
+		res, err := group.JobApiList(yesterday, tommorow, nil, nil, req)
+		Ω(err).To(BeNil())
+		Ω(res.Size).To(Equal(1))
+		Ω(res.Total).To(Equal(int64(1)))
 	})
 })

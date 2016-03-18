@@ -17,7 +17,8 @@ func TaskAdd(c *gin.Context) {
 		CommentMandatory bool   `json:"comment_mandatory"`
 	}
 	if err := json.NewDecoder(c.Request.Body).Decode(&data); err != nil {
-		jsend.Error(c, err)
+		jsend.ErrorJson(c)
+		return
 	}
 
 	errors := map[string]string{}
@@ -51,7 +52,8 @@ func TaskUpdate(c *gin.Context) {
 		CommentMandatory bool   `json:"comment_mandatory"`
 	}
 	if err := json.NewDecoder(c.Request.Body).Decode(&data); err != nil {
-		jsend.Error(c, err)
+		jsend.ErrorJson(c)
+		return
 	}
 
 	errors := map[string]string{}

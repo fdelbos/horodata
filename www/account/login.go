@@ -4,6 +4,7 @@ import (
 	"bitbucket.com/hyperboloide/horo/html"
 	sqlerrors "bitbucket.com/hyperboloide/horo/models/errors"
 	"bitbucket.com/hyperboloide/horo/models/user"
+	valid "github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -15,11 +16,13 @@ func GetLogin(c *gin.Context) {
 func PostLogin(c *gin.Context) {
 	errors := map[string]string{}
 
-	username := c.PostForm("username")
-	if username == "" {
-		errors["username"] = "Ce champs est obligatoire."
-	} else if len(username) > 30 {
-		errors["username"] = "Ce champ ne doit pas dépasser 30 caractères."
+	email := c.PostForm("email")
+	if email == "" {
+		errors["email"] = "Ce champs est obligatoire."
+	} else if len(email) > 100 {
+		errors["email"] = "Ce champ ne doit pas dépasser 100 caractères."
+	} else if valid.IsEmail(email) == false {
+		errors["email"] = "Cette adresse email n'est pas valide."
 	}
 
 	password := c.PostForm("password")
@@ -30,7 +33,7 @@ func PostLogin(c *gin.Context) {
 	}
 
 	if len(errors) == 0 {
-		u, err := user.ByLogin(username)
+		u, err := user.ByEmail(email)
 		if err == sqlerrors.NotFound {
 			errors["denied"] = "true"
 		} else if err != nil {
@@ -49,8 +52,8 @@ func PostLogin(c *gin.Context) {
 
 	c.Writer.WriteHeader(http.StatusBadRequest)
 	data := map[string]interface{}{
-		"errors":   errors,
-		"username": username,
+		"errors": errors,
+		"email":  email,
 	}
 	html.Render("account/login.html", c, data, http.StatusBadRequest)
 }

@@ -62,8 +62,7 @@ func (u *User) NewPasswordRequest() error {
 		Subject:  "Réinitialisation du mot de passe sur Horo Data",
 		Template: "reset_password",
 		Data: map[string]interface{}{
-			"login": u.Login,
-			"link":  pr.Url,
+			"link": pr.Url,
 		},
 	}
 	return m.Send()

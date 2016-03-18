@@ -46,11 +46,11 @@ create table jobs (
     id bigserial primary key,
     created timestamp default now() not null,
     group_id bigint not null references groups on delete cascade,
-    task_id bigint not null references tasks on delete cascade,
-    customer_id bigint not null references customers on delete cascade,
-    creator_id bigint not null references guests on delete cascade,
+    task_id bigint not null references tasks on delete restrict,
+    customer_id bigint not null references customers on delete restrict,
+    creator_id bigint not null references users on delete restrict,
     duration bigint not null,
     comment text,
     updated timestamp,
-    updater_id bigint not null references guests on delete cascade,
+    updater_id bigint references users on delete restrict
 );

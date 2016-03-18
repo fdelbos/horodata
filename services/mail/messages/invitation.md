@@ -1,7 +1,7 @@
 ### Vous avez recu une invitation a utiliser Horo Data!
 
 
-L'utilisateur {{ .ownerName }} vous invite a rejoindre le groupe **{{ .groupName}}**
+L'utilisateur **{{ .ownerName }}** vous invite a rejoindre le groupe **{{ .groupName}}**
 sur le site [https://horodata.com](https://horodata.com).
 
 Horo Data est un site permettant la saisie des heures de travail.

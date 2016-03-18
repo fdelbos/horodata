@@ -7,10 +7,8 @@ Veuillez vous rendre sur cette page et choisir un nouveau mot de passe :
 
 [https://horodata.com/account/password_reset/{{ .link }}](https://horodata.com/account/password_reset/{{ .link }}).
 
-Votre nom d'utilisateur, en cas d'oubli : **{{ .login }}**
 
 Merci d'utiliser notre site !
-
 
 
 Cordialement,

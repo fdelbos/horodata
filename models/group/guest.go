@@ -99,7 +99,7 @@ func (g *Group) GuestAdd(email string, rate int, admin, sendMail bool) error {
 		Subject:  "Nouvelle invitation sur Horo Data.",
 		Template: "invitation",
 		Data: map[string]interface{}{
-			"ownerName": owner.Login,
+			"ownerName": owner.FullName,
 			"groupName": g.Name,
 			"groupUrl":  g.Url,
 		},

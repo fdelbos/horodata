@@ -28,7 +28,7 @@ func Create(c *gin.Context) {
 		Name string `json:"name"`
 	}
 	if err := json.NewDecoder(c.Request.Body).Decode(&data); err != nil {
-		jsend.Error(c, err)
+		jsend.ErrorJson(c)
 		return
 	}
 	name := data.Name

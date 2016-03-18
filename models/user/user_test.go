@@ -12,8 +12,8 @@ import (
 var _ = Describe("User", func() {
 
 	user := &User{
-		Login: uniuri.NewLen(12),
-		Email: uniuri.NewLen(12) + "@test.com",
+		FullName: uniuri.NewLen(12),
+		Email:    uniuri.NewLen(12) + "@test.com",
 	}
 
 	It("should create a user", func() {
@@ -21,13 +21,9 @@ var _ = Describe("User", func() {
 	})
 
 	It("should find user", func() {
-		u, err := ByLogin(user.Login)
+		u, err := ByEmail(user.Email)
 		Ω(err).To(BeNil())
-		Ω(u.Id).To(Equal(user.Id))
-
-		u, err = ByEmail(user.Email)
-		Ω(err).To(BeNil())
-		Ω(u.Login).To(Equal(user.Login))
+		Ω(u.Email).To(Equal(user.Email))
 
 		u, err = ById(u.Id)
 		Ω(err).To(BeNil())
@@ -36,13 +32,13 @@ var _ = Describe("User", func() {
 		// again for cache
 		u, err = ById(u.Id)
 		Ω(err).To(BeNil())
-		Ω(u.Login).To(Equal(user.Login))
+		Ω(u.Email).To(Equal(user.Email))
 	})
 
 	It("should update password", func() {
 		err := user.UpdatePassword("new password")
 		Ω(err).To(BeNil())
-		user, err = ByLogin(user.Login)
+		user, err = ByEmail(user.Email)
 		ok, err := user.CheckPassword("new password")
 		Ω(ok).To(BeTrue())
 		Ω(err).To(BeNil())
@@ -52,69 +48,65 @@ var _ = Describe("User", func() {
 	})
 
 	It("should find user", func() {
-		u, err := ByLogin(user.Login)
+		u, err := ByEmail(user.Email)
 		Ω(err).To(BeNil())
-		Ω(u.Login).To(Equal(user.Login))
-
-		u, err = ByEmail(user.Email)
-		Ω(err).To(BeNil())
-		Ω(u.Login).To(Equal(user.Login))
+		Ω(u.Email).To(Equal(user.Email))
 
 		u, err = ById(u.Id)
 		Ω(err).To(BeNil())
-		Ω(u.Login).To(Equal(user.Login))
+		Ω(u.Email).To(Equal(user.Email))
 	})
 
-	It("should work with quotas", func() {
-		u, err := ByLogin(user.Login)
-		Ω(err).To(BeNil())
+	// It("should work with quotas", func() {
+	// 	u, err := ByEmail(user.Email)
+	// 	Ω(err).To(BeNil())
+	//
+	// 	quota, err := u.GetQuota()
+	// 	Ω(err).To(BeNil())
+	// 	Ω(quota).ToNot(BeNil())
+	// 	Ω(quota.Forms).To(Equal(PlansLimits["free"].Forms))
+	//
+	// 	u.AddBonus("test", &Limits{Forms: 2})
+	// 	quota, err = u.GetQuota()
+	// 	Ω(err).To(BeNil())
+	// 	Ω(quota).ToNot(BeNil())
+	// 	Ω(quota.Forms).To(Equal(PlansLimits["free"].Forms + 2))
+	// })
 
-		quota, err := u.GetQuota()
-		Ω(err).To(BeNil())
-		Ω(quota).ToNot(BeNil())
-		Ω(quota.Forms).To(Equal(PlansLimits["free"].Forms))
-
-		u.AddBonus("test", &Limits{Forms: 2})
-		quota, err = u.GetQuota()
-		Ω(err).To(BeNil())
-		Ω(quota).ToNot(BeNil())
-		Ω(quota.Forms).To(Equal(PlansLimits["free"].Forms + 2))
-	})
-
-	It("should work with usage", func() {
-		u, err := ByLogin(user.Login)
-		Ω(err).To(BeNil())
-
-		usage, err := u.GetUsage()
-		Ω(err).To(BeNil())
-		Ω(usage).ToNot(BeNil())
-		Ω(usage.Forms).To(Equal(int64(0)))
-
-		ok, err := u.CanAddUsage(&Limits{Forms: 1})
-		Ω(err).To(BeNil())
-		Ω(ok).To(BeTrue())
-
-		err = u.AddUsage(&Limits{Forms: 1000})
-		Ω(err).To(BeNil())
-
-		usage, err = u.GetUsage()
-		Ω(err).To(BeNil())
-		Ω(usage).ToNot(BeNil())
-		Ω(usage.Forms).To(Equal(int64(1000)))
-
-		ok, err = u.CanAddUsage(&Limits{Forms: 1})
-		Ω(err).To(BeNil())
-		Ω(ok).To(BeFalse())
-	})
+	// It("should work with usage", func() {
+	// 	u, err := ByEmail(user.Email)
+	// 	Ω(err).To(BeNil())
+	//
+	// 	usage, err := u.GetUsage()
+	// 	Ω(err).To(BeNil())
+	// 	Ω(usage).ToNot(BeNil())
+	// 	Ω(usage.Forms).To(Equal(int64(0)))
+	//
+	// 	ok, err := u.CanAddUsage(&Limits{Forms: 1})
+	// 	Ω(err).To(BeNil())
+	// 	Ω(ok).To(BeTrue())
+	//
+	// 	err = u.AddUsage(&Limits{Forms: 1000})
+	// 	Ω(err).To(BeNil())
+	//
+	// 	usage, err = u.GetUsage()
+	// 	Ω(err).To(BeNil())
+	// 	Ω(usage).ToNot(BeNil())
+	// 	Ω(usage.Forms).To(Equal(int64(1000)))
+	//
+	// 	ok, err = u.CanAddUsage(&Limits{Forms: 1})
+	// 	Ω(err).To(BeNil())
+	// 	Ω(ok).To(BeFalse())
+	// })
 
 	It("should gen reset password request", func() {
-		u, err := ByLogin(user.Login)
+		u, err := ByEmail(user.Email)
 		Ω(err).To(BeNil())
 		Ω(u.NewPasswordRequest()).To(BeNil())
 	})
 
 	It("should work with a session", func() {
-		user, err := ByLogin(user.Login)
+		user, err := ByEmail(user.Email)
 		Ω(err).To(BeNil())
 
 		id, err := NewSession(user, "localhost")
@@ -139,26 +131,9 @@ var _ = Describe("User", func() {
 		Ω(session.Active).To(BeFalse())
 	})
 
-	It("should update profile", func() {
-		user, err := ByLogin(user.Login)
-		Ω(err).To(BeNil())
-		user.FullName = "Test User"
-		user.Organization = "test llc"
-		user.Website = "test.com"
-		user.About = "somthing about me..."
-		Ω(user.UpdateProfile()).To(BeNil())
-
-		user2, err := ByLogin(user.Login)
-		Ω(err).To(BeNil())
-		Ω(user2.FullName).To(Equal("Test User"))
-		Ω(user2.Organization).To(Equal("test llc"))
-		Ω(user2.Website).To(Equal("test.com"))
-		Ω(user2.About).To(Equal("somthing about me..."))
-	})
-
 	It("should clean", func() {
-		postgres.DB().Exec("DELETE FROM users WHERE login = $1", user.Login)
-		_, err := ByLogin(user.Login)
+		postgres.DB().Exec("DELETE FROM users WHERE email = $1", user.Email)
+		_, err := ByEmail(user.Email)
 		Ω(err).To(Equal(errors.NotFound))
 	})
 

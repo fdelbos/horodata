@@ -1,4 +1,4 @@
-### Bienvenue sur Horo Data {{ .login }}!
+### Bienvenue sur Horo Data !
 
 Merci pour votre inscription!
 

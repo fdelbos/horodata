@@ -4,24 +4,18 @@ import (
 	"bitbucket.com/hyperboloide/horo/services/cache"
 	"bitbucket.com/hyperboloide/horo/services/mail"
 	"bitbucket.com/hyperboloide/horo/services/postgres"
-	"bitbucket.com/hyperboloide/horo/services/urls"
 	"database/sql"
-	"encoding/json"
 	"fmt"
 	"golang.org/x/crypto/bcrypt"
 	"time"
 )
 
 type User struct {
-	Id           int64     `json:"id,omitempty"`
-	Created      time.Time `json:"created"`
-	Active       bool      `json:"active"`
-	Login        string    `json:"login"`
-	Email        string    `json:"email,omitempty"`
-	FullName     string    `json:"full_name,omitempty"`
-	Organization string    `json:"organization,omitempty"`
-	Website      string    `json:"website,omitempty"`
-	About        string    `json:"about,omitempty"`
+	Id       int64     `json:"id,omitempty"`
+	Created  time.Time `json:"created"`
+	Active   bool      `json:"active"`
+	Email    string    `json:"email,omitempty"`
+	FullName string    `json:"name"`
 }
 
 const (
@@ -30,33 +24,12 @@ const (
 )
 
 func (u *User) Scan(scanFn func(dest ...interface{}) error) error {
-	var fullName, organization, website, about sql.NullString
-	err := scanFn(
+	return scanFn(
 		&u.Id,
 		&u.Created,
 		&u.Active,
-		&u.Login,
 		&u.Email,
-		&fullName,
-		&organization,
-		&website,
-		&about)
-	if err != nil {
-		return err
-	}
-	if fullName.Valid {
-		u.FullName = fullName.String
-	}
-	if organization.Valid {
-		u.Organization = organization.String
-	}
-	if website.Valid {
-		u.Website = website.String
-	}
-	if about.Valid {
-		u.About = about.String
-	}
-	return nil
+		&u.FullName)
 }
 
 func (u User) saveInCache() error {
@@ -74,9 +47,7 @@ func (u *User) SendWelcome() error {
 		Dests:    []string{u.Email},
 		Subject:  "Bienvenue sur Horo Data",
 		Template: "welcome",
-		Data: map[string]interface{}{
-			"login": u.Login,
-		},
+		Data:     map[string]interface{}{},
 	}
 	return m.Send()
 }
@@ -84,24 +55,12 @@ func (u *User) SendWelcome() error {
 func (u *User) Insert() error {
 	const query = `SELECT * from "user_new"($1, $2);`
 
-	if err := postgres.Exec(query, u.Login, u.Email); err != nil {
+	if err := postgres.Exec(query, u.Email, u.FullName); err != nil {
 		return err
-	} else if nu, err := ByLogin(u.Login); err != nil {
+	} else if nu, err := ByEmail(u.Email); err != nil {
 		return err
 	} else {
 		*u = *nu
-	}
-	return u.removeFromCache()
-}
-
-func (u User) UpdateProfile() error {
-	const query = `
-	update users
-	set full_name = $2, organization = $3, website = $4, about = $5
-	where id = $1;`
-
-	if err := postgres.Exec(query, u.Id, u.FullName, u.Organization, u.Website, u.About); err != nil {
-		return err
 	}
 	return u.removeFromCache()
 }
@@ -135,12 +94,6 @@ func (u User) UpdatePassword(password string) error {
 	return postgres.Exec(query, hash, currentHashVersion, u.Id)
 }
 
-func ByLogin(login string) (*User, error) {
-	user := &User{}
-	const query = `select * from  users_active where login = $1;`
-	return user, postgres.QueryRow(user, query, login)
-}
-
 func ByEmail(email string) (*User, error) {
 	user := &User{}
 	const query = `select * from  users_active where email = $1;`
@@ -158,16 +111,4 @@ func ById(id int64) (*User, error) {
 		return nil, err
 	}
 	return user, user.saveInCache()
-}
-
-type UserLink struct {
-	Login string `json:"login"`
-}
-
-func (ul *UserLink) MarshalJSON() ([]byte, error) {
-	type alias UserLink
-	return json.Marshal(&struct {
-		Link string `json:"_link"`
-		*alias
-	}{urls.ApiUsers + "/" + ul.Login, (*alias)(ul)})
 }

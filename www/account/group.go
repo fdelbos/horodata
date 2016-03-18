@@ -25,11 +25,9 @@ func Group(r *gin.RouterGroup) {
 		account.GET("/password_reset/:url", GetResetInput)
 		account.POST("/password_reset/:url", PostResetInput)
 
-		account.GET("provider/:provider", GetProvider)
-		account.GET("provider/:provider/callback", GetProviderCallback)
-
-		account.GET("/complete_registration", GetComplete)
-		account.POST("/complete_registration", PostComplete)
+		account.GET("provider/:provider", Provider)
+		account.GET("provider/:provider/callback", ProviderCallback)
+		account.GET("/complete_registration", ProviderComplete)
 	}
 }
 

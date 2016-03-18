@@ -8,13 +8,8 @@ create table users (
     id bigserial primary key,
     created timestamp default now()  not null,
     active boolean default true not null,
-    login varchar(30) unique not null,
     email citext unique not null,
-    full_name varchar(100),
-    organization varchar(100),
-    website text,
-    about text,
-
+    full_name varchar(50) not null,
     hash bytea,
     hash_version integer,
     admin boolean default false not null,
@@ -23,7 +18,7 @@ create table users (
 
 create view users_view as
     select
-        id, created, active, login, email, full_name, organization, website, about
+        id, created, active, email, full_name
     from users;
 
 create view users_active as
@@ -82,13 +77,12 @@ create table usages (
     files bigint default 0  not null
 );
 
-create function user_new(login varchar, email citext)
+create function user_new(email citext, full_name text)
 returns void as $$
 declare
   user_id bigint;
 begin
-    insert into users (login, email)
-    values (login, email);
+    insert into users (email, full_name) values (email, full_name);
 
     user_id := lastval();
 

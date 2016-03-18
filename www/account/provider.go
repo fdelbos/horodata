@@ -2,20 +2,22 @@ package account
 
 import (
 	"bitbucket.com/hyperboloide/horo/models/errors"
+	sqlerrors "bitbucket.com/hyperboloide/horo/models/errors"
 	"bitbucket.com/hyperboloide/horo/models/user"
 	"bitbucket.com/hyperboloide/horo/services/cookies"
 	"bitbucket.com/hyperboloide/horo/services/oauth"
 	"bitbucket.com/hyperboloide/horo/services/urls"
 	"github.com/gin-gonic/gin"
+	"github.com/markbates/goth"
 	"github.com/markbates/goth/gothic"
 	"net/http"
 )
 
-func GetProvider(c *gin.Context) {
+func Provider(c *gin.Context) {
 	gothic.BeginAuthHandler(c.Writer, c.Request)
 }
 
-func GetProviderCallback(c *gin.Context) {
+func ProviderCallback(c *gin.Context) {
 	ru, err := gothic.CompleteUserAuth(c.Writer, c.Request)
 	if err != nil {
 		GetError(c, err)
@@ -41,6 +43,33 @@ func GetProviderCallback(c *gin.Context) {
 		GetError(c, err)
 	} else if !u.Active {
 		c.Redirect(http.StatusTemporaryRedirect, urls.WWWLogin)
+	} else {
+		LogUser(u, c)
+	}
+}
+
+func ProviderComplete(c *gin.Context) {
+	tmp, err := cookies.Get("session", "provider", c)
+	if err != nil {
+		if err == sqlerrors.NotFound {
+			c.Redirect(http.StatusTemporaryRedirect, urls.WWWLogin)
+		} else {
+			GetError(c, err)
+		}
+		return
+	}
+	guser := tmp.(goth.User)
+	u := &user.User{}
+	u.Active = true
+	u.Email = guser.Email
+	u.FullName = guser.Name
+
+	if err := u.Insert(); err != nil {
+		GetError(c, err)
+	} else if err := u.SendWelcome(); err != nil {
+		GetError(c, err)
+	} else if err := cookies.Delete("session", "provider", c); err != nil {
+		GetError(c, err)
 	} else {
 		LogUser(u, c)
 	}
