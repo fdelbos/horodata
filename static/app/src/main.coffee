@@ -1,4 +1,4 @@
-angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages"])
+angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages", "infinite-scroll"])
 
 .config([
   "$mdDateLocaleProvider"
@@ -11,6 +11,8 @@ angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages"])
     $locationProvider
     $routeProvider
   ) ->
+
+    moment.locale('fr')
 
     $mdThemingProvider.theme('default')
       .primaryPalette('blue')

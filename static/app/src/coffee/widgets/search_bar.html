@@ -1,13 +1,13 @@
 <div>
   <div layout="row" layout-align="space-around center" hide show-gt-md layout-padding>
 
-      <md-datepicker  flex="25" ng-model="beginDate" md-placeholder="Date debut" md-max-date="endDate"></md-datepicker>
+      <md-datepicker  flex="25" ng-model="search.begin" md-placeholder="Date debut" md-max-date="search.end"></md-datepicker>
 
-      <md-datepicker flex="25" ng-model="endDate" md-placeholder="Date fin" md-max-date="maxDate"></md-datepicker>
+      <md-datepicker flex="25" ng-model="search.end" md-placeholder="Date fin" md-max-date="today"></md-datepicker>
 
       <md-input-container flex="25">
         <label>Dossier</label>
-        <md-select ng-model="customer">
+        <md-select ng-model="search.customer">
           <md-option ng-repeat="c in group.customers" value="{{ c.id }}">
             {{ c.name }}
           </md-option>
@@ -16,7 +16,7 @@
 
       <md-input-container flex="25">
         <label>Utilisateur</label>
-        <md-select ng-model="user">
+        <md-select ng-model="search.guest">
           <md-option ng-repeat="u in users" value="{{ u.email }}">
             {{ u.name }}
           </md-option>

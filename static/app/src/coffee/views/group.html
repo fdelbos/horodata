@@ -1,15 +1,16 @@
 <div>
   <app-widgets-search-bar></app-widgets-search-bar>
+
   <md-content>
     <md-tabs md-dynamic-height md-border-bottom>
 
       <md-tab label="Heures">
-        <app-widgets-empty-group ng-if="group.tasks.length == 0 || group.customers.length == 0" group="group"><app-widgets-empty-group>
-
+        <app-widgets-empty-group-boxed ng-if="group.tasks.length == 0 || group.customers.length == 0" group="group"></app-widgets-empty-group-boxed>
+        <app-widgets-listing ng-if="group.tasks.length > 0 && group.customers.length > 0"></app-widgets-listing>
       </md-tab>
 
       <md-tab label="Statistiques">
-        <app-widgets-empty-group ng-if="group.tasks.length == 0 || group.customers.length == 0" group="group"><app-widgets-empty-group>
+        <app-widgets-empty-group-boxed ng-if="group.tasks.length == 0 || group.customers.length == 0" group="group"></app-widgets-empty-group-boxed>
 
       </md-tab>
 

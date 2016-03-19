@@ -7,13 +7,24 @@ angular.module("horodata").controller("Group", [
   "apiService"
   "groupNewService"
   "popupService"
-  ($http, $routeParams, $scope, titleService, userService, apiService, groupNewService, popupService)->
+  "listingService"
+  ($http, $routeParams, $scope, titleService, userService, apiService, groupNewService, popupService, listingService)->
 
     $scope.isGroupView = true
 
-    $scope.maxDate = new Date()
-    $scope.endDate = $scope.maxDate
-    $scope.beginDate = moment().subtract(1, 'months').toDate()
+
+    $scope.search =
+      begin: moment().subtract(1, 'months').toDate()
+      end: new Date()
+      customer: null
+      guest: null
+
+
+    $scope.$watch("search", (v) ->
+      if !v? then return
+      listingService.search($routeParams.group, v)
+      console.log "new search"
+    , true)
 
     fetchUsers = ->
       $http.get("#{apiService.get()}/groups/#{$routeParams.group}/users").then(
@@ -44,6 +55,7 @@ angular.module("horodata").controller("Group", [
         "horodata/views/new_task_form.html"
         "groupNewTaskDialog"
         $scope, ev)
+
 ])
 
 angular.module("horodata").controller("groupNewTaskDialog", [
@@ -54,18 +66,25 @@ angular.module("horodata").controller("groupNewTaskDialog", [
   "$location",
   "apiService"
   ($scope, $mdDialog, $mdToast, $http, $location, apiService)->
-    $scope.task = {}
+    $scope.task =
+      minutes: 0
+      hours: 0
     $scope.errors = null
+    $scope.hours = [0..12]
+    $scope.minutes = (x for x in [0..55] by 5)
 
     $scope.close = -> $mdDialog.hide()
 
     $scope.send = ->
-      $http.post("#{apiService.get()}/groups", {name: $scope.name}).then(
+      task =
+        duration: $scope.task.hours * 3600 + $scope.task.minutes * 60
+        task: parseInt $scope.task.task
+        customer:  parseInt $scope.task.customer
+        comment:  $scope.task.comment
+      $http.post("#{apiService.get()}/groups/#{$scope.group.url}/jobs",task).then(
         (resp) ->
-          group = resp.data.data
           $mdDialog.hide()
-          $mdToast.showSimple("Nouveau groupe '#{group.name}' sauvegarde.")
-          $location.path("/group/#{group.url}")
+          $mdToast.showSimple("Nouvelle tâche ajoutee.")
         (resp) -> $scope.errors = resp.data.errors
       )
 

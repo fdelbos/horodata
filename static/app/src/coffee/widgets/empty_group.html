@@ -1,38 +1,34 @@
-<div layout-align="center center" layout="row">
+<div layout-padding layout-margin layout="column" layout-align="center center">
 
-  <md-whiteframe class="md-whiteframe-1dp md-accent" flex="100" flex-sm="70" flex-md="60" flex-gt-md="50" layout-padding layout-margin layout="column" layout-align="center center">
-
-    <div ng-if="group.tasks.length == 0 && group.customers.length == 0">
-      <div class="md-headline input-error">
-        Aucune tâches ni aucun dossier enregistre
-      </div>
-      <p>
-        Vous devez definir des tâches et des dossiers pour la saisie.
-        Cliquez sur l'onglet configuration et ajoutez les.
-      </p>
+  <div ng-if="group.tasks.length == 0 && group.customers.length == 0">
+    <div class="md-headline input-error">
+      Aucune tâches ni aucun dossier enregistre
     </div>
+    <p>
+      Vous devez definir des tâches et des dossiers pour la saisie.
+      Cliquez sur l'onglet configuration et ajoutez les.
+    </p>
+  </div>
 
-    <div ng-if="group.tasks.length > 0 && group.customers.length == 0">
-      <div class="md-headline input-error">
-        Aucun dossier enregistre
-      </div>
-      <p>
-        Vous devez definir des dossiers pour la saisie.
-        Cliquez sur l'onglet configuration et ajoutez les.
-      </p>
+  <div ng-if="group.tasks.length > 0 && group.customers.length == 0">
+    <div class="md-headline input-error">
+      Aucun dossier enregistre
     </div>
+    <p>
+      Vous devez definir des dossiers pour la saisie.
+      Cliquez sur l'onglet configuration et ajoutez les.
+    </p>
+  </div>
 
-    <div ng-if="group.tasks.length == 0 && group.customers.length > 0">
-      <div class="md-headline input-error">
-        Aucune tâches definie
-      </div>
-      <p>
-        Vous devez definir des tâches pour la saisie.
-        Cliquez sur l'onglet configuration et ajoutez les.
-      </p>
+  <div ng-if="group.tasks.length == 0 && group.customers.length > 0">
+    <div class="md-headline input-error">
+      Aucune tâches definie
     </div>
-
-  </md-whiteframe>
+    <p>
+      Vous devez definir des tâches pour la saisie.
+      Cliquez sur l'onglet configuration et ajoutez les.
+    </p>
+  </div>
 
 
 </div>

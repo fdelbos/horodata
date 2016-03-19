@@ -89,7 +89,7 @@ type JobApi struct {
 		Email    string `json:"email"`
 	} `json:"creator"`
 	Duration int64  `json:"duration"`
-	Comment  string `json:"comment"`
+	Comment  string `json:"comment,omitempty"`
 }
 
 func (j *JobApi) Scan(scanFn func(dest ...interface{}) error) error {

@@ -1,47 +1,13 @@
 <md-dialog aria-label="Nouvelle Tâche" flex="40">
 
   <div ng-if="group.tasks.length == 0 || group.customers.length == 0">
-
     <md-dialog-content>
-      <div class="md-dialog-content">
-        <div ng-if="group.tasks.length == 0 && group.customers.length == 0">
-          <div class="md-headline input-error">
-            Aucune tâches ni aucun dossier enregistre
-          </div>
-          <p>
-            Vous devez definir des tâches et des dossiers pour la saisie.
-            Cliquez sur l'onglet configuration et ajoutez les.
-          </p>
-        </div>
-
-        <div ng-if="group.tasks.length > 0 && group.customers.length == 0">
-          <div class="md-headline input-error">
-            Aucun dossier enregistre
-          </div>
-          <p>
-            Vous devez definir des dossiers pour la saisie.
-            Cliquez sur l'onglet configuration et ajoutez les.
-          </p>
-        </div>
-
-        <div ng-if="group.tasks.length == 0 && group.customers.length > 0">
-          <div class="md-headline input-error">
-            Aucune tâches definie
-          </div>
-          <p>
-            Vous devez definir des tâches pour la saisie.
-            Cliquez sur l'onglet configuration et ajoutez les.
-          </p>
-        </div>
-      </div>
+      <app-widgets-empty-group><app-widgets-empty-group>
     </md-dialog-content>
-
     <md-dialog-actions>
       <md-button ng-click="close()" class="md-raised">Fermer</md-button>
     </md-dialog-actions>
-
   </div>
-
 
 
   <form ng-if="group.tasks.length > 0 && group.customers.length > 0" name="newTaskForm">
@@ -68,6 +34,7 @@
                 {{ c.name }}
               </md-option>
             </md-select>
+            <small ng-if="errors.customer" class="input-error">{{ errors.customer }}</small>
           </md-input-container>
 
           <md-input-container flex>
@@ -77,12 +44,13 @@
                 {{ t.name }}
               </md-option>
             </md-select>
+            <small ng-if="errors.task" class="input-error">{{ errors.task }}</small>
           </md-input-container>
 
-          <div layout="row">
+          <div layout="row" layout-align="space-between center">
 
             <md-input-container flex>
-              <label>Heures</label>
+              <label>Temps en heures</label>
               <md-select ng-model="task.hours">
                 <md-option ng-repeat="h in hours" value="{{ h }}">
                   {{ h }}
@@ -90,27 +58,29 @@
                   <span ng-if="h <= 1">Heure</span>
                 </md-option>
               </md-select>
+              <small ng-if="errors.duration" class="input-error">{{ errors.duration }}</small>
             </md-input-container>
 
             <md-input-container flex>
-              <label>Minutes</label>
+              <label>Temps en minutes</label>
               <md-select ng-model="task.minutes">
-                <md-option ng-repeat="t in group.tasks" value="{{ t.id }}">
-                  {{ t.name }}
+                <md-option ng-repeat="m in minutes" value="{{ m }}">
+                  {{ m }}
+                  <span ng-if="m > 1">Minutes</span>
+                  <span ng-if="m <= 1">Minute</span>
                 </md-option>
               </md-select>
+              <small ng-if="errors.duration" class="input-error">{{ errors.duration }}</small>
             </md-input-container>
           </div>
 
           <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.comment}" >
             <label>Commentaire</label>
-            <textarea md-no-autogrow ng-model="task.comment" rows="5" md-select-on-focus></textarea>
+            <textarea md-no-autogrow ng-model="task.comment" rows="3" md-select-on-focus></textarea>
             <small ng-if="errors.comment" class="input-error">{{ errors.comment }}</small>
           </md-input-container>
 
         </div>
-
-
 
 
       </div>
