@@ -28,7 +28,7 @@ func JobListing(c *gin.Context) {
 	} else if t.After(time.Now()) {
 		errors["end"] = "Ce champ ne peut être supérieur a la date du jour."
 	} else {
-		end = t
+		end = t.Add(24 * time.Hour)
 	}
 
 	var begin time.Time
@@ -63,7 +63,7 @@ func JobListing(c *gin.Context) {
 
 	var guestUserId *int64
 	if !guest.Admin {
-		*guestUserId = guest.Id
+		guestUserId = guest.UserId
 	} else if str := c.Query("guest"); str == "" {
 		guestUserId = nil
 	} else if i, err := strconv.ParseInt(str, 10, 64); err != nil {

@@ -42,7 +42,7 @@ func GuestAdd(c *gin.Context) {
 		return
 	}
 
-	if err := g.GuestAdd(data.Email, data.Rate, data.Admin, false); err != nil {
+	if err := g.GuestAdd(data.Email, data.Rate, data.Admin, true); err != nil {
 		jsend.Error(c, err)
 	} else {
 		jsend.Ok(c, nil)
@@ -58,10 +58,13 @@ func GuestUpdate(c *gin.Context) {
 	}
 
 	guest, err := g.GuestGetById(id)
-	if err == sqlerrors.NotFound {
-		jsend.NotFound(c)
-	} else if err != nil {
-		jsend.Error(c, err)
+	if err != nil {
+		if err == sqlerrors.NotFound {
+			jsend.NotFound(c)
+		} else if err != nil {
+			jsend.Error(c, err)
+		}
+		return
 	}
 
 	var data struct {

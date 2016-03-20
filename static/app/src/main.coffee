@@ -1,4 +1,4 @@
-angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages", "infinite-scroll"])
+angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages"])
 
 .config([
   "$mdDateLocaleProvider"

@@ -34,9 +34,9 @@ func (g *Guest) Scan(scanFn func(dest ...interface{}) error) error {
 func (g *Guest) Update() error {
 	const query = `
 	update guests
-	set active = $2, rate = $3, admin = $4
+	set active = $2, rate = $3, admin = $4, user_id = $5
 	where id = $1;`
-	return postgres.Exec(query, g.Id, g.Active, g.Rate, g.Admin)
+	return postgres.Exec(query, g.Id, g.Active, g.Rate, g.Admin, g.UserId)
 }
 
 func (g *Group) GuestAdd(email string, rate int, admin, sendMail bool) error {
@@ -65,7 +65,7 @@ func (g *Group) GuestAdd(email string, rate int, admin, sendMail bool) error {
 		guest.Rate = rate
 
 		if u != nil {
-			*guest.UserId = u.Id
+			guest.UserId = &u.Id
 		}
 		if err := guest.Update(); err != nil {
 			return err
@@ -140,10 +140,33 @@ func (g *Group) GuestGetById(id int64) (*Guest, error) {
 	return guest, postgres.QueryRow(guest, query, g.Id, id)
 }
 
-func (g *Group) Guests() ([]Guest, error) {
+type ApiGuest struct {
+	Id       int64   `json:"id"`
+	Rate     int     `json:"rate"`
+	Admin    bool    `json:"admin"`
+	Email    string  `json:"email"`
+	FullName *string `json:"full_name,omitempty"`
+}
+
+func (g *ApiGuest) Scan(scanFn func(dest ...interface{}) error) error {
+	return scanFn(
+		&g.Id,
+		&g.Rate,
+		&g.Admin,
+		&g.Email,
+		&g.FullName)
+}
+
+func (g *Group) ApiGuests() ([]ApiGuest, error) {
 	const query = `
-    select * from guests
-    where active = true and group_id = $1`
+    select
+		g.id, g.rate, g.admin, g.email,
+		u.full_name
+	from
+		guests g left outer join users u on (g.user_id = u.id)
+    where
+			g.active = true
+		and group_id = $1`
 
 	rows, err := postgres.DB().Query(query, g.Id)
 	if err != nil {
@@ -151,9 +174,9 @@ func (g *Group) Guests() ([]Guest, error) {
 	}
 	defer rows.Close()
 
-	results := []Guest{}
+	results := []ApiGuest{}
 	for rows.Next() {
-		i := &Guest{}
+		i := &ApiGuest{}
 		if err := i.Scan(rows.Scan); err != nil {
 			return nil, err
 		}

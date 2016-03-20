@@ -77,7 +77,7 @@ func (g *Group) ApiDetail(admin bool) (interface{}, error) {
 		Name      string     `json:"name"`
 		Tasks     []Task     `json:"tasks"`
 		Customers []Customer `json:"customers"`
-		Guests    []Guest    `json:"guests,omitempty"`
+		Guests    []ApiGuest `json:"guests,omitempty"`
 	}
 	d.Url = g.Url
 	d.Created = g.Created
@@ -97,7 +97,7 @@ func (g *Group) ApiDetail(admin bool) (interface{}, error) {
 	}
 
 	if admin {
-		if guests, err := g.Guests(); err != nil {
+		if guests, err := g.ApiGuests(); err != nil {
 			return nil, err
 		} else {
 			d.Guests = guests

@@ -14,11 +14,11 @@
         </md-select>
       </md-input-container>
 
-      <md-input-container flex="25">
+      <md-input-container ng-if="isOwner" flex="25">
         <label>Utilisateur</label>
         <md-select ng-model="search.guest">
-          <md-option ng-repeat="u in users" value="{{ u.email }}">
-            {{ u.name }}
+          <md-option ng-repeat="u in group.guests" ng-if="u.full_name" value="{{ u.id }}">
+            {{ u.full_name }}
           </md-option>
         </md-select>
       </md-input-container>

@@ -126,11 +126,11 @@ func (g *Group) JobApiList(begin, end time.Time, customer, creator *int64, reque
 	var rows *sql.Rows
 	var err error
 	if customer != nil && creator != nil {
-		rows, err = postgres.DB().Query(query, g.Id, begin, end, request.Size, request.Offset, customer, creator)
+		rows, err = postgres.DB().Query(query, g.Id, begin, end, request.Size, request.Offset, *customer, *creator)
 	} else if customer != nil {
-		rows, err = postgres.DB().Query(query, g.Id, begin, end, request.Size, request.Offset, customer)
+		rows, err = postgres.DB().Query(query, g.Id, begin, end, request.Size, request.Offset, *customer)
 	} else if creator != nil {
-		rows, err = postgres.DB().Query(query, g.Id, begin, end, request.Size, request.Offset, creator)
+		rows, err = postgres.DB().Query(query, g.Id, begin, end, request.Size, request.Offset, *creator)
 	} else {
 		rows, err = postgres.DB().Query(query, g.Id, begin, end, request.Size, request.Offset)
 	}
@@ -154,11 +154,11 @@ func (g *Group) JobApiList(begin, end time.Time, customer, creator *int64, reque
 
 	queryCount := jobApiGenQueryCount(customer, creator)
 	if customer != nil && creator != nil {
-		err = postgres.DB().QueryRow(queryCount, g.Id, begin, end, customer, creator).Scan(&result.Total)
+		err = postgres.DB().QueryRow(queryCount, g.Id, begin, end, *customer, creator).Scan(&result.Total)
 	} else if customer != nil {
-		err = postgres.DB().QueryRow(queryCount, g.Id, begin, end, customer).Scan(&result.Total)
+		err = postgres.DB().QueryRow(queryCount, g.Id, begin, end, *customer).Scan(&result.Total)
 	} else if creator != nil {
-		err = postgres.DB().QueryRow(queryCount, g.Id, begin, end, creator).Scan(&result.Total)
+		err = postgres.DB().QueryRow(queryCount, g.Id, begin, end, *creator).Scan(&result.Total)
 	} else {
 		err = postgres.DB().QueryRow(queryCount, g.Id, begin, end).Scan(&result.Total)
 	}
@@ -202,11 +202,11 @@ func jobApiGenQueryCount(customer, creator *int64) string {
 
 	cond := ""
 	if customer != nil && creator != nil {
-		cond = "and customer_id = $6 and creator_id = $7"
+		cond = "and customer_id = $4 and creator_id = $5"
 	} else if customer != nil {
-		cond = "and customer_id = $6"
+		cond = "and customer_id = $4"
 	} else if creator != nil {
-		cond = "and creator_id = $6"
+		cond = "and creator_id = $4"
 	}
 	return fmt.Sprintf(query, cond)
 }

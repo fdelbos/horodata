@@ -36,8 +36,8 @@ angular.module("horodata").controller("Group", [
       $http.get("#{apiService.get()}/groups/#{$routeParams.group}").then(
         (resp) ->
           $scope.group = resp.data.data
-          if $scope.group.owner.login == $scope.user.login
-            $scope.isOwner = true
+          $scope.isOwner = $scope.group.owner == $scope.user.id
+
           titleService.set($scope.group.name, true)
       )
 

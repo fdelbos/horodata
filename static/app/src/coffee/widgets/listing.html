@@ -7,44 +7,46 @@
     </p>
   </div>
 
-  <md-list class="md-body-1">
+  <div ng-if="listing.list">
 
-    <md-list-item class="md-body-2">
-      <div layout="row" layout-align="space-between center" flex>
-        <div flex="20">Jour</div>
-        <div flex="20">Utilisateur</div>
-        <div flex="20">Dossier</div>
-        <div flex="20">Tâche</div>
-        <div flex="10">Duree</div>
-      </div>
-      <md-divider></md-divider>
-    </md-list-item>
+    <md-list class="md-body-1">
 
-
-    <md-list-item ng-repeat="i in listing.list" class="secondary-button-padding" ng-click="alert($event)">
-
-      <div layout="row" layout-align="space-between center" flex>
-
-        <div flex="20">
-          {{ i.created | Day }}
+      <md-list-item class="md-body-2">
+        <div layout="row" layout-align="space-between center" flex>
+          <div flex="15">Jour</div>
+          <div ng-if="isOwner" flex="25">Utilisateur</div>
+          <div flex="25">Dossier</div>
+          <div flex="25">Tâche</div>
+          <div flex="10">Durée</div>
         </div>
-        <div flex="20">
-          {{ i.creator.full_name }}
-        </div>
-        <div flex="20">
-          {{ customers[i.customer_id] }}
-        </div>
-        <div flex="20">
-          {{ tasks[i.task_id] }}
-        </div>
-        <div flex="10">
-          {{ i.duration | Duration }}
-        </div>
+        <md-divider></md-divider>
+      </md-list-item>
 
-      </div>
-      <md-divider></md-divider>
-    </md-list-item>
-  </md-list>
+      <md-list-item ng-repeat="i in listing.list" class="secondary-button-padding" ng-click="alert($event)">
+        <div layout="row" layout-align="space-between center" flex hide show-gt-sm>
+          <div flex="15">
+            {{ i.created | Day }}
+          </div>
+          <div flex="25" ng-if="isOwner">
+            {{ i.creator.full_name }}
+          </div>
+          <div flex="25">
+            {{ customers[i.customer_id] }}
+          </div>
+          <div flex="25">
+            {{ tasks[i.task_id] }}
+          </div>
+          <div flex="10">
+            {{ i.duration | Duration }}
+          </div>
+        </div>
+        <md-divider></md-divider>
+      </md-list-item>
+    </md-list>
+
+  </div>
+
+
 
 
 </div>
