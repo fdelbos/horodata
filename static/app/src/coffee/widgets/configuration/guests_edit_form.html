@@ -3,7 +3,10 @@
 
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Mdifier l' utilisateur {{ guests.current.email }}</h2>
+        <h2>Mdifier l' utilisateur
+          <span ng-if="!guests.current.full_name">{{ guests.current.email }}</span>
+          <span ng-if="guests.current.full_name">{{ guests.current.full_name }}</span>
+        </h2>
         <span flex></span>
         <md-button class="md-icon-button" aria-label="Fermer" ng-click="close()">
           <md-icon class="md-24">close</md-icon>

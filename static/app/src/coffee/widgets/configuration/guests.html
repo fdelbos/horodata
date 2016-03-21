@@ -30,20 +30,20 @@
         <label>Selectionnez un utilisateur pour l'editer</label>
         <md-select ng-model="guests.selected">
           <md-option ng-repeat="g in group.guests" value="{{ g.id }}">
-            <span ng-if="!g.name">{{ g.email }}</span>
-            <span ng-if="g.name">
-              {{ g.name }}
+            <span ng-if="!g.full_name">{{ g.email }}</span>
+            <span ng-if="g.full_name">
+              {{ g.full_name }}
               <small>{{ g.email }}</small>
             </span>
           </md-option>
         </md-select>
       </md-input-container>
 
-        <md-button ng-if="guests.selected" ng-click="guests.edit($event)" class="md-fab md-accent" aria-label="Editer une tâche">
+        <md-button ng-if="guests.selected" ng-click="guests.edit($event)" class="md-fab md-mini md-accent" aria-label="Editer une tâche">
           <md-tooltip md-direction="top">
             Editer l'utilisateur
           </md-tooltip>
-          <md-icon class="md-36">edit</md-icon>
+          <md-icon class="md-24">edit</md-icon>
         </md-button>
 
     </div>
