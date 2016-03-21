@@ -11,9 +11,40 @@
         <span>{{ MainTitle().title }}</span>
       </h2>
       <span flex></span>
-      <md-button class="md-fab md-mini" aria-label="Favorite">
-        <md-icon class="md-24">account_circle</md-icon>
-      </md-button>
+
+      <md-menu>
+
+        <md-button ng-click="openMenu($mdOpenMenu, $event)" class="md-fab md-mini" aria-label="Favorite">
+          <md-icon class="md-24">account_circle</md-icon>
+          <md-tooltip md-direction="left">
+            Bonjour, {{ user.name }}
+          </md-tooltip>
+        </md-button>
+
+        <md-menu-content width="4">
+        <md-menu-item>
+          <md-button ng-click="ctrl.redial($event)">
+            <md-icon>trending_up</md-icon>
+            Plan et Quota
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button>
+            <md-icon>euro_symbol</md-icon>
+            Abonnement et Factures
+          </md-button>
+        </md-menu-item>
+        <md-menu-divider></md-menu-divider>
+        <md-menu-item>
+          <md-button ng-href="{{ home }}/account/logout">
+            <md-icon><i class="material-icons">directions_run</i></md-icon>
+            Quitter
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+
+      </md-menu>
+
     </div>
   </md-toolbar>
 
