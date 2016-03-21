@@ -84,7 +84,7 @@ angular.module("horodata").controller("groupNewTaskDialog", [
       $http.post("#{apiService.get()}/groups/#{$scope.group.url}/jobs",task).then(
         (resp) ->
           $mdDialog.hide()
-          $mdToast.showSimple("Nouvelle tâche saisie.")
+          $mdToast.showSimple("Nouvelle tâche saisie")
         (resp) -> $scope.errors = resp.data.errors
       )
 
