@@ -36,7 +36,7 @@ angular.module("horodata").controller("newGroupDialog", [
         (resp) ->
           group = resp.data.data
           $mdDialog.hide()
-          $mdToast.showSimple("Le nouveau groupe '#{group.name}' a été créé.")
+          $mdToast.showSimple("Nouveau groupe '#{group.name}' créé")
           $location.path("/#{group.url}")
           groupNewService.fetch()
         (resp) -> $scope.errors = resp.data.errors

@@ -51,9 +51,9 @@ angular.module("horodata").controller("appWidgetsConfigurationCustomersDialog", 
           $scope.$emit("group.reload")
           $mdDialog.hide()
           if total == 1
-            $mdToast.showSimple("1 nouveau dossier a été ajouté.")
+            $mdToast.showSimple("1 nouveau dossier ajouté")
           else
-            $mdToast.showSimple("#{total} nouveaux dossiers ont été ajoutés.")
+            $mdToast.showSimple("#{total} nouveaux dossiers ajoutés")
         (resp) -> $scope.errors = resp.data.errors
       )
 
@@ -61,7 +61,7 @@ angular.module("horodata").controller("appWidgetsConfigurationCustomersDialog", 
       $http.put("#{apiService.get()}/groups/#{$scope.group.url}/customers/#{ $scope.customers.selected }", $scope.customers.current).then(
         (resp) ->
           $mdDialog.hide()
-          $mdToast.showSimple("Le dossier: '#{$scope.customers.current.name}' a été modifié.")
+          $mdToast.showSimple("Dossier '#{$scope.customers.current.name}' modifié")
           update($scope.customers.current)
           $scope.customers.selected = null
         (resp) -> $scope.errors = resp.data.errors
@@ -71,7 +71,7 @@ angular.module("horodata").controller("appWidgetsConfigurationCustomersDialog", 
       $http.delete("#{apiService.get()}/groups/#{$scope.group.url}/customers/#{ $scope.customers.selected }", $scope.customers.current).then(
         (resp) ->
           $mdDialog.hide()
-          $mdToast.showSimple("Le dossier '#{$scope.customers.current.name}' a été supprimé.")
+          $mdToast.showSimple("Dossier '#{$scope.customers.current.name}' supprimé")
           $scope.group.customers.splice(_.findIndex($scope.group.customers, {id: parseInt $scope.customers.selected}), 1)
           $scope.customers.selected = null
         (resp) -> $scope.errors = resp.data.errors
