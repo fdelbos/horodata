@@ -58,7 +58,7 @@ func JobListing(c *gin.Context) {
 		jsend.Error(c, err)
 		return
 	} else {
-		*customerId = i
+		customerId = &i
 	}
 
 	var guestUserId *int64

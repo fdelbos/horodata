@@ -177,6 +177,7 @@ func jobApiGenQuery(customer, creator *int64) string {
 		and j.created > $2
 		and j.created < $3
 		%s
+	order by j.id desc
 	limit $4 offset $5;`
 
 	cond := ""

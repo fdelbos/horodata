@@ -24,6 +24,9 @@ md-sidenav {
 .input-error {
   color: #dd2c00;
 }
+.group-selected {
+  color: #2196f3;
+}
 .input-hint {
   position: absolute;
   left: 2px;

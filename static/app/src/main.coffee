@@ -26,7 +26,7 @@ angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages"])
       .when("/",
         templateUrl: "horodata/views/index.html"
         controller: "Index")
-      .when("/group/:group",
+      .when("/:group",
         templateUrl: "horodata/views/group.html"
         controller: "Group")
 

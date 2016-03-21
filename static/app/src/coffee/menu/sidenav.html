@@ -36,12 +36,11 @@
         </div>
       </md-subheader>
       <md-list flex layout="column" class="md-body-1">
-        <md-list-item ng-repeat="group in groups" ng-href="./group/{{ group.url}}" >
-          {{group.name}}
+        <md-list-item ng-repeat="group in groups" ng-click="changeGroup(group.url)">
+          <span class="md-subhead" ng-class="{'group-selected': currentGroupUrl == group.url}">{{group.name}}</span>
         </md-list-item>
       </md-list>
     <section>
   </md-content>
-
 
 </md-sidenav>

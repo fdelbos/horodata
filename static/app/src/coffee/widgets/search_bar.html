@@ -5,23 +5,39 @@
 
       <md-datepicker flex="25" ng-model="search.end" md-placeholder="Date fin" md-max-date="today"></md-datepicker>
 
-      <md-input-container flex="25">
-        <label>Dossier</label>
-        <md-select ng-model="search.customer">
-          <md-option ng-repeat="c in group.customers" value="{{ c.id }}">
-            {{ c.name }}
-          </md-option>
-        </md-select>
-      </md-input-container>
 
-      <md-input-container ng-if="isOwner" flex="25">
-        <label>Utilisateur</label>
-        <md-select ng-model="search.guest">
-          <md-option ng-repeat="u in group.guests" ng-if="u.full_name" value="{{ u.id }}">
-            {{ u.full_name }}
-          </md-option>
-        </md-select>
-      </md-input-container>
+      <div flex="25">
+        <div layout="row">
+          <md-input-container flex>
+            <label>Dossier</label>
+            <md-select ng-model="search.customer">
+              <md-option ng-repeat="c in group.customers" value="{{ c.id }}">
+                {{ c.name }}
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <md-button ng-click="search.customer = null" ng-if="search.customer" class="md-fab md-mini" aria-label="désélectionner">
+            <md-icon>close</md-icon>
+          </md-button>
+        </div>
+      </div>
+
+
+      <div flex="25" ng-if="isOwner">
+        <div layout="row">
+          <md-input-container flex>
+            <label>Utilisateur</label>
+            <md-select ng-model="search.guest">
+              <md-option ng-repeat="u in group.guests" ng-if="u.full_name" value="{{ u.id }}">
+                {{ u.full_name }}
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <md-button ng-click="search.guest = null" ng-if="search.guest" class="md-fab md-mini" aria-label="désélectionner">
+            <md-icon>close</md-icon>
+          </md-button>
+        </div>
+      </div>
 
   </div>
 
