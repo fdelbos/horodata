@@ -23,6 +23,7 @@ angular.module("horodata").controller("Group", [
     $scope.$watch("search", (v) ->
       if !v? then return
       listingService.search($routeParams.group, v)
+      listingService.listing().fetch(0)
       console.log "new search"
     , true)
 

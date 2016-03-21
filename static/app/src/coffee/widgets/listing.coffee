@@ -13,8 +13,8 @@ angular.module("horodata").directive("appWidgetsListing", [
       for i in scope.group.customers
         scope.customers[i.id] = i.name
 
-      scope.listing = listingService.listing()
-      scope.listing.fetch(0)
+      scope.listing = listingService
+      #scope.listing.fetch(0)
 
 
     return {

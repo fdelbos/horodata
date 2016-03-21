@@ -10,7 +10,7 @@ angular.module("horodata").filter("Duration", [
   -> return (input) ->
     d = moment.duration(input, 'seconds')
     minutes = d.minutes()
-    if minutes == 0 then minutes = "00"
+    if minutes < 10 then minutes = "0#{minutes}"
     hours = d.hours()
     return "#{hours}h#{minutes}"
 ])
