@@ -61,7 +61,7 @@ angular.module("horodata").controller("appWidgetsConfigurationCustomersDialog", 
       $http.put("#{apiService.get()}/groups/#{$scope.group.url}/customers/#{ $scope.customers.selected }", $scope.customers.current).then(
         (resp) ->
           $mdDialog.hide()
-          $mdToast.showSimple("Dossier: '#{$scope.customers.current.name}' mis a jour.")
+          $mdToast.showSimple("Le dossier: '#{$scope.customers.current.name}' a été modifié.")
           update($scope.customers.current)
           $scope.customers.selected = null
         (resp) -> $scope.errors = resp.data.errors
@@ -71,7 +71,7 @@ angular.module("horodata").controller("appWidgetsConfigurationCustomersDialog", 
       $http.delete("#{apiService.get()}/groups/#{$scope.group.url}/customers/#{ $scope.customers.selected }", $scope.customers.current).then(
         (resp) ->
           $mdDialog.hide()
-          $mdToast.showSimple("Dossier: '#{$scope.customers.current.name}' supprimé.")
+          $mdToast.showSimple("Le dossier '#{$scope.customers.current.name}' a été supprimé.")
           $scope.group.customers.splice(_.findIndex($scope.group.customers, {id: parseInt $scope.customers.selected}), 1)
           $scope.customers.selected = null
         (resp) -> $scope.errors = resp.data.errors

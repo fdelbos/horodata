@@ -10,5 +10,6 @@
 * raffraichissement de la page après création d'une tâche (pour affichage)
 * pb mot de passe non-enregistré dans le navigateur
 * appuyer sur touche "entrée" pour créer ou ajouter
-* supprimer un Groupe
+* supprimer un groupe
 * Si vide, ajouter texte dans liste "Aucune tâche saisie"
+* Corriger Horodata dans les objets de mails envoyés

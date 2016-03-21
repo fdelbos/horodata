@@ -45,7 +45,7 @@ func (u User) removeFromCache() error {
 func (u *User) SendWelcome() error {
 	m := &mail.Mail{
 		Dests:    []string{u.Email},
-		Subject:  "Bienvenue sur Horo Data",
+		Subject:  "Bienvenue sur Horodata",
 		Template: "welcome",
 		Data:     map[string]interface{}{},
 	}

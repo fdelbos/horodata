@@ -1,4 +1,4 @@
-<md-dialog aria-label="Nouvel Utilisateur" flex="40">
+<md-dialog aria-label="Modifier l'utilisateur" flex="40">
   <form name="newUserForm">
 
     <md-toolbar>
@@ -24,10 +24,10 @@
         </md-input-container>
 
         <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.admin}" >
-          <md-switch ng-model="guests.current.admin" aria-label="Administrateur">
+          <md-switch ng-model="guests.current.admin" aria-label="Droit administrateur">
             Droit administrateur
           </md-switch>
-          <div class="input-hint">Cochez la case, uniquement si vous souhaitez autoriser l'utilisateur, à accéder à la configuration du groupe.</div>
+          <div class="input-hint">Cochez la case, si vous souhaitez autoriser cet utilisateur, à accéder à la configuration et aux données de tous les utilisateurs du groupe.</div>
           <small ng-if="errors.admin" class="input-error">{{ errors.admin }}</small>
         </md-input-container>
 

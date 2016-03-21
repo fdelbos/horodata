@@ -96,7 +96,7 @@ func (g *Group) GuestAdd(email string, rate int, admin, sendMail bool) error {
 	}
 	m := mail.Mail{
 		Dests:    []string{email},
-		Subject:  "Nouvelle invitation sur Horo Data.",
+		Subject:  "Nouvelle invitation sur Horodata",
 		Template: "invitation",
 		Data: map[string]interface{}{
 			"ownerName": owner.FullName,

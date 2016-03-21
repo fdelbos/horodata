@@ -59,7 +59,7 @@ func (u *User) NewPasswordRequest() error {
 	}
 	m := mail.Mail{
 		Dests:    []string{u.Email},
-		Subject:  "Réinitialisation du mot de passe sur Horo Data",
+		Subject:  "Réinitialisation du mot de passe sur Horodata",
 		Template: "reset_password",
 		Data: map[string]interface{}{
 			"link": pr.Url,

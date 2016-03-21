@@ -1,19 +1,24 @@
-### Bienvenue sur Horo Data !
+### Bienvenue sur Horodata !
 
-Merci pour votre inscription!
+&nbsp;
 
-Vous pouvez acceder a votre compte a partir de l'adresse suivante:
-[https://horodata.com](https://horodata.com). Une fois connecte,
-vous pourrez creer un **Groupe** et le partager avec vos collaborateurs.
+Nous avons bien pris en compte votre inscription!
 
+&nbsp;
 
-Pour toute question ou commentaire, n'hesitez pas a nous
-contacter [contact@hyperboloide.com](mailto:contact@hyperboloide.com).
-Nous lirons avec attention tous vos messages et tacherons d'y repondre au
-mieux.
+Vous pouvez accéder à votre compte a partir de l'adresse suivante:
+[https://horodata.com](https://horodata.com).
 
+Une fois connecté, vous pourrez créer un **Groupe** et le partager avec vos collaborateurs.
 
+&nbsp;
+
+Pour toute question ou commentaire, écrivez-nous à [contact@hyperboloide.com](mailto:contact@hyperboloide.com).
+
+Nous lirons votre message avec attention et tâcherons d'y repondre au mieux.
+
+&nbsp;
 
 Cordialement,
 
-L'equipe d'Horo Data.
+L'équipe Horodata

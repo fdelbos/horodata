@@ -1,9 +1,9 @@
-<md-dialog aria-label="Ajouter un nouveau dossier" flex="40">
+<md-dialog aria-label="Ajouter de nouveaux dossiers" flex="40">
   <form name="newCustomerForm">
 
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Ajouter un ou des nouveaux dossiers</h2>
+        <h2>Ajouter de nouveaux dossiers</h2>
         <span flex></span>
         <md-button class="md-icon-button" aria-label="Fermer" ng-click="close()">
           <md-icon class="md-24">close</md-icon>
@@ -15,7 +15,7 @@
       <div class="md-dialog-content">
 
         <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.customers}" >
-          <label>Nom du ou des dossiers à ajouter (pour ajouter plusieurs dossiers à la fois, saisissez un dossier par ligne, ou, copier-coller une liste depuis un tableau).</label>
+          <label>Nom des dossiers (un dossier par ligne)</label>
           <textarea md-no-autogrow ng-model="customers.current.customers" rows="5" md-select-on-focus></textarea>
           <small ng-if="errors.customers" class="input-error">{{ errors.customers }}</small>
         </md-input-container>

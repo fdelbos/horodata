@@ -52,7 +52,7 @@ angular.module("horodata").controller("appWidgetsConfigurationGuestsDialog", [
         (resp) ->
           $scope.$emit("group.reload")
           $mdDialog.hide()
-          $mdToast.showSimple("Nouvel utilisateur: '#{$scope.guests.current.email}' ajouté.")
+          $mdToast.showSimple("Le nouvel utilisateur '#{$scope.guests.current.email}' a été ajouté.")
         (resp) -> $scope.errors = resp.data.errors
       )
 
@@ -60,7 +60,7 @@ angular.module("horodata").controller("appWidgetsConfigurationGuestsDialog", [
       $http.put("#{apiService.get()}/groups/#{$scope.group.url}/guests/#{ $scope.guests.selected }", $scope.guests.current).then(
         (resp) ->
           $mdDialog.hide()
-          $mdToast.showSimple("Utilisateur: '#{$scope.guests.current.email}' modifié.")
+          $mdToast.showSimple("L'utilisateur '#{$scope.guests.current.email}' a été modifié.")
           update($scope.guests.current)
           $scope.guests.selected = null
         (resp) -> $scope.errors = resp.data.errors
@@ -70,7 +70,7 @@ angular.module("horodata").controller("appWidgetsConfigurationGuestsDialog", [
       $http.delete("#{apiService.get()}/groups/#{$scope.group.url}/guests/#{ $scope.guests.selected }", $scope.guests.current).then(
         (resp) ->
           $mdDialog.hide()
-          $mdToast.showSimple("Utilisateur: '#{$scope.guests.current.email}' supprimé.")
+          $mdToast.showSimple("L'utilisateur '#{$scope.guests.current.email}' a été supprimé.")
           $scope.group.guests.splice(_.findIndex($scope.group.guests, {id: parseInt $scope.guests.selected}), 1)
           $scope.task.selected = null
         (resp) -> $scope.errors = resp.data.errors
