@@ -17,13 +17,18 @@ func JobListing(c *gin.Context) {
 	guest := middlewares.GetGuest(c)
 
 	const datefmt = "2006-01-02"
+	loc, err := time.LoadLocation("Europe/Paris")
+	if err != nil {
+		jsend.Error(c, err)
+		return
+	}
 
 	errors := map[string]string{}
 
 	var end time.Time
 	if c.Query("end") == "" {
 		errors["end"] = "Ce champ est obligatoire."
-	} else if t, err := time.Parse(datefmt, c.Query("end")); err != nil {
+	} else if t, err := time.ParseInLocation(datefmt, c.Query("end"), loc); err != nil {
 		errors["end"] = "Ce champ n'est pas valide."
 	} else if t.After(time.Now()) {
 		errors["end"] = "Ce champ ne peut être supérieur à la date du jour."
@@ -37,7 +42,7 @@ func JobListing(c *gin.Context) {
 		return
 	} else if c.Query("begin") == "" {
 		errors["begin"] = "Ce champ est obligatoire."
-	} else if t, err := time.Parse(datefmt, c.Query("begin")); err != nil {
+	} else if t, err := time.ParseInLocation(datefmt, c.Query("begin"), loc); err != nil {
 		errors["begin"] = "Ce champ n'est pas valide."
 	} else if t.After(time.Now()) {
 		errors["begin"] = "Ce champ ne peut être supérieur à la date du jour."
