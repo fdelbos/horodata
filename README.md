@@ -12,4 +12,4 @@
 * appuyer sur touche "entrée" pour créer ou ajouter
 * supprimer un groupe
 * Si vide, ajouter texte dans liste "Aucune tâche saisie"
-* Corriger Horodata dans les objets de mails envoyés
+* Corriger Horodata dans les objets de mails envoyés.
