@@ -27,7 +27,10 @@
           <md-switch ng-model="guests.current.admin" aria-label="Droit administrateur">
             Droit administrateur
           </md-switch>
-          <div class="input-hint">Cochez la case, si vous souhaitez autoriser cet utilisateur, à accéder à la configuration et aux données de tous les utilisateurs du groupe.</div>
+          <div class="input-hint">
+            Cochez la case, si vous souhaitez autoriser cet utilisateur,
+            à accéder à la configuration et aux données de tous les utilisateurs du groupe.
+          </div>
           <small ng-if="errors.admin" class="input-error">{{ errors.admin }}</small>
         </md-input-container>
 
