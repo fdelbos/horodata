@@ -52,12 +52,12 @@ func PostRegister(c *gin.Context) {
 
 	recaptcha := c.PostForm("g-recaptcha-response")
 	if recaptcha == "" {
-		errors["recaptcha"] = "Ce champs est obligatoire."
+		errors["recaptcha"] = "Ce champ est obligatoire."
 	} else if ok, err := captcha.Validate(recaptcha); err != nil {
 		GetError(c, err)
 		return
 	} else if !ok {
-		errors["recaptcha"] = "Ce champs est invalide."
+		errors["recaptcha"] = "Ce champ est n'est pas valide."
 	}
 
 	if len(errors) != 0 {

@@ -42,7 +42,7 @@ func JobListing(c *gin.Context) {
 	} else if t.After(time.Now()) {
 		errors["begin"] = "Ce champ ne peut être supérieur à la date du jour."
 	} else if t.After(end) {
-		errors["begin"] = "Ce champs ne peut être supérieur à la date de fin."
+		errors["begin"] = "Ce champ ne peut être supérieur à la date de fin."
 	} else {
 		begin = t
 	}

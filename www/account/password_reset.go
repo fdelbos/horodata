@@ -35,7 +35,7 @@ func PostResetStart(c *gin.Context) {
 		GetError(c, err)
 		return
 	} else if !ok {
-		errors["recaptcha"] = "Ce champs est invalide."
+		errors["recaptcha"] = "Ce champ n'est pas valide."
 	}
 
 	if len(errors) != 0 {
