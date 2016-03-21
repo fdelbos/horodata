@@ -37,7 +37,7 @@
       </md-subheader>
       <md-list flex layout="column" class="md-body-1">
         <md-list-item ng-repeat="group in groups" ng-click="changeGroup(group.url)">
-          <span ng-class="{'group-selected md-body-2': currentGroupUrl == group.url}">{{group.name}}</span>
+          <span class="md-subhead" ng-class="{'group-selected': currentGroupUrl == group.url}">{{group.name}}</span>
         </md-list-item>
       </md-list>
     <section>
