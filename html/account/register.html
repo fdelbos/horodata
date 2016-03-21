@@ -4,13 +4,13 @@
 
 {% block content %}
 
-<p class="center-align">Utiliser un compte deja existant</p>
+<p class="center-align">Utilisez un compte existant :</p>
 
 {% include "account/social.html" %}
 
 <br>
 
-<p class="center-align">Ou creer un compte avec un mot de passe</p>
+<p class="center-align">ou créez un nouveau compte avec mot de passe :</p>
 
 <div class="row">
   <form method="post" class="col s12">
@@ -52,12 +52,11 @@
 
     <div class="row">
       <div class="input-field col s12">
-        <label for="full_name">Nom</label>
+        <label for="full_name">Nom (ex : Jean Dupont)</label>
 
         <input
           type="text"
           id="full_name"
-          placeholder="Jean Dupont"
           class="form-control {% if errors.full_name %}invalid{% endif %}"
           name="full_name"
           maxlength="50"

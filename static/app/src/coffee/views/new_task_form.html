@@ -1,4 +1,4 @@
-<md-dialog aria-label="Nouvelle Tâche" flex="40">
+<md-dialog aria-label="Saisir une tâche" flex="40">
 
   <div ng-if="group.tasks.length == 0 || group.customers.length == 0">
     <md-dialog-content>
@@ -14,7 +14,7 @@
 
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Nouvelle Tâche</h2>
+        <h2>Saisir une tâche</h2>
         <span flex></span>
         <md-button class="md-icon-button" aria-label="Fermer" ng-click="close()">
           <md-icon class="md-24">close</md-icon>
@@ -28,7 +28,7 @@
         <div layout="column">
 
           <md-input-container flex>
-            <label>Selectionnez un dossier</label>
+            <label>Sélectionnez un dossier</label>
             <md-select ng-model="task.customer">
               <md-option ng-repeat="c in group.customers" value="{{ c.id }}">
                 {{ c.name }}
@@ -38,7 +38,7 @@
           </md-input-container>
 
           <md-input-container flex>
-            <label>Selectionnez une tâche</label>
+            <label>Sélectionnez une tâche</label>
             <md-select ng-model="task.task">
               <md-option ng-repeat="t in group.tasks" value="{{ t.id }}">
                 {{ t.name }}
@@ -50,7 +50,7 @@
           <div layout="row" layout-align="space-between center">
 
             <md-input-container flex>
-              <label>Temps en heures</label>
+              <label>Durée en heures</label>
               <md-select ng-model="task.hours">
                 <md-option ng-repeat="h in hours" value="{{ h }}">
                   {{ h }}
@@ -62,7 +62,7 @@
             </md-input-container>
 
             <md-input-container flex>
-              <label>Temps en minutes</label>
+              <label>Durée en minutes</label>
               <md-select ng-model="task.minutes">
                 <md-option ng-repeat="m in minutes" value="{{ m }}">
                   {{ m }}
@@ -87,7 +87,7 @@
     </md-dialog-content>
 
     <md-dialog-actions>
-      <md-button ng-click="send()" class="md-primary md-raised">Creer</md-button>
+      <md-button ng-click="send()" class="md-primary md-raised">Ajouter</md-button>
       <md-button ng-click="close()" class="md-raised">Annuler</md-button>
     </md-dialog-actions>
   </form>

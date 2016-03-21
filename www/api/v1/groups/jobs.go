@@ -24,9 +24,9 @@ func JobListing(c *gin.Context) {
 	if c.Query("end") == "" {
 		errors["end"] = "Ce champ est obligatoire."
 	} else if t, err := time.Parse(datefmt, c.Query("end")); err != nil {
-		errors["end"] = "Ce champ est invalide."
+		errors["end"] = "Ce champ n'est pas valide."
 	} else if t.After(time.Now()) {
-		errors["end"] = "Ce champ ne peut être supérieur a la date du jour."
+		errors["end"] = "Ce champ ne peut être supérieur à la date du jour."
 	} else {
 		end = t.Add(24 * time.Hour)
 	}
@@ -38,11 +38,11 @@ func JobListing(c *gin.Context) {
 	} else if c.Query("begin") == "" {
 		errors["begin"] = "Ce champ est obligatoire."
 	} else if t, err := time.Parse(datefmt, c.Query("begin")); err != nil {
-		errors["begin"] = "Ce champ est invalide."
+		errors["begin"] = "Ce champ n'est pas valide."
 	} else if t.After(time.Now()) {
-		errors["begin"] = "Ce champ ne peut être supérieur a la date du jour."
+		errors["begin"] = "Ce champ ne peut être supérieur à la date du jour."
 	} else if t.After(end) {
-		errors["begin"] = "Ce champs ne peut être supérieur a la date de fin."
+		errors["begin"] = "Ce champs ne peut être supérieur à la date de fin."
 	} else {
 		begin = t
 	}
@@ -51,9 +51,9 @@ func JobListing(c *gin.Context) {
 	if str := c.Query("customer"); str == "" {
 		customerId = nil
 	} else if i, err := strconv.ParseInt(str, 10, 64); err != nil {
-		errors["customer"] = "Ce champ est invalide."
+		errors["customer"] = "Ce champ n'est pas valide."
 	} else if _, err := g.CustomerGet(i); err == sqlerrors.NotFound {
-		errors["customer"] = "Ce champ est invalide."
+		errors["customer"] = "Ce champ n'est pas valide."
 	} else if err != nil {
 		jsend.Error(c, err)
 		return
@@ -67,9 +67,9 @@ func JobListing(c *gin.Context) {
 	} else if str := c.Query("guest"); str == "" {
 		guestUserId = nil
 	} else if i, err := strconv.ParseInt(str, 10, 64); err != nil {
-		errors["guest"] = "Ce champ est invalide."
+		errors["guest"] = "Ce champ n'est pas valide."
 	} else if guestObj, err := g.GuestGetById(i); err == sqlerrors.NotFound {
-		errors["guest"] = "Ce champ est invalide."
+		errors["guest"] = "Ce champ n'est pas valide."
 	} else if err != nil {
 		jsend.Error(c, err)
 		return
@@ -81,9 +81,9 @@ func JobListing(c *gin.Context) {
 	if str := c.Query("offset"); str == "" {
 		offset = 0
 	} else if i, err := strconv.ParseInt(str, 10, 32); err != nil {
-		errors["offset"] = "Ce champ est invalide."
+		errors["offset"] = "Ce champ n'est pas valide."
 	} else if i < 0 {
-		errors["offset"] = "Ce champ est invalide."
+		errors["offset"] = "Ce champ n'est pas valide."
 	} else {
 		offset = int(i)
 	}
@@ -92,11 +92,11 @@ func JobListing(c *gin.Context) {
 	if str := c.Query("size"); str == "" {
 		size = 10
 	} else if i, err := strconv.ParseInt(str, 10, 32); err != nil {
-		errors["size"] = "Ce champ est invalide."
+		errors["size"] = "Ce champ n'est pas valide."
 	} else if i < 0 {
-		errors["size"] = "Ce champ est invalide."
+		errors["size"] = "Ce champ n'est pas valide."
 	} else if i > 100 {
-		errors["size"] = "La valeure de ce champ ne peut depasser 100."
+		errors["size"] = "La valeur de ce champ ne peut depasser 100."
 	} else {
 		size = int(i)
 	}
@@ -137,7 +137,7 @@ func JobAdd(c *gin.Context) {
 	if data.Task == 0 {
 		errors["task"] = "Ce champ est obligatoire."
 	} else if task, err = g.TaskGet(data.Task); err == sqlerrors.NotFound {
-		errors["task"] = "Ce champ est invalide."
+		errors["task"] = "Ce champ n'est pas valide."
 	} else if err != nil {
 		jsend.Error(c, err)
 		return
@@ -146,18 +146,18 @@ func JobAdd(c *gin.Context) {
 	if data.Customer == 0 {
 		errors["customer"] = "Ce champ est obligatoire."
 	} else if _, err := g.CustomerGet(data.Customer); err == sqlerrors.NotFound {
-		errors["customer"] = "Ce champ est invalide."
+		errors["customer"] = "Ce champ n'est pas valide."
 	} else if err != nil {
 		jsend.Error(c, err)
 		return
 	}
 
 	if data.Duration == 0 {
-		errors["duration"] = "La duree de la tâche ne peut être nulle."
+		errors["duration"] = "La durée de la tâche ne peut être nulle."
 	} else if data.Duration > 13*3600 { // more than 13 hours...
-		errors["duration"] = "Ce champ est invalide."
+		errors["duration"] = "Ce champ n'est pas valide."
 	} else if data.Duration < 0 {
-		errors["duration"] = "Ce champ est invalide."
+		errors["duration"] = "Ce champ n'est pas valide."
 	}
 
 	if len(errors) > 0 {
@@ -166,7 +166,7 @@ func JobAdd(c *gin.Context) {
 	} else if data.Comment == "" && task.CommentMandatory {
 		errors["comment"] = "Ce champ est obligatoire."
 	} else if len(data.Comment) > 1500 {
-		errors["comment"] = "Ce champ ne doit pas depasser 1500 caractères."
+		errors["comment"] = "Ce champ ne doit pas depasser plus de 1500 caractères."
 	}
 
 	if len(errors) > 0 {

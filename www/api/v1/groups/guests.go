@@ -28,13 +28,13 @@ func GuestAdd(c *gin.Context) {
 	if data.Email == "" {
 		errors["email"] = "Ce champs est obligatoire."
 	} else if len(data.Email) > 100 {
-		errors["email"] = "Ce champ ne doit pas dépasser 100 caractères."
+		errors["email"] = "Ce champ ne doit pas dépasser plus de 100 caractères."
 	} else if valid.IsEmail(data.Email) == false {
 		errors["email"] = "Cette adresse email n'est pas valide."
 	}
 
 	if data.Rate < 0 {
-		errors["rate"] = "Ce champ doit être supérieur ou égal a 0."
+		errors["rate"] = "Ce champ doit être supérieur ou égal à 0."
 	}
 
 	if len(errors) > 0 {
@@ -78,7 +78,7 @@ func GuestUpdate(c *gin.Context) {
 
 	errors := map[string]string{}
 	if data.Rate < 0 {
-		errors["rate"] = "Ce champ doit être supérieur ou égal a 0."
+		errors["rate"] = "Ce champ doit être supérieur ou égal à 0."
 	}
 
 	if len(errors) > 0 {

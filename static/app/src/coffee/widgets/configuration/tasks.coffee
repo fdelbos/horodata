@@ -51,7 +51,7 @@ angular.module("horodata").controller("appWidgetsConfigurationTasksDialog", [
         (resp) ->
           $scope.$emit("group.reload")
           $mdDialog.hide()
-          $mdToast.showSimple("Nouveau type de tâche: '#{$scope.tasks.current.name}' ajouté.")
+          $mdToast.showSimple("Nouveau type de tâche '#{$scope.tasks.current.name}' ajouté.")
         (resp) -> $scope.errors = resp.data.errors
       )
 

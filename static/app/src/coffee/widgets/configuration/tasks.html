@@ -4,7 +4,7 @@
 
     <div layout="row" layout-align="space-between center">
       <div class="md-display-1">
-        Types de Tâches
+        Types de tâche
       </div>
 
       <md-button ng-click="tasks.create($event)" class="md-raised md-primary" hide show-gt-sm>
@@ -12,27 +12,26 @@
         Ajouter
       </md-button>
 
-      <md-button ng-click="tasks.create($event)" class="md-fab md-primary" hide-gt-sm aria-label="Ajouter une tâche">
+      <md-button ng-click="tasks.create($event)" class="md-fab md-primary" hide-gt-sm aria-label="Ajouter un type de tâche">
         <md-tooltip md-direction="top">
-          Ajouter une tâche
+          Ajouter un type de tâche
         </md-tooltip>
         <md-icon class="md-36">add</md-icon>
       </md-button>
     </div>
 
     <p class="md-body-1">
-      Pour categoriser chaque tâche, les utilisateurs doivent choisir un "type de tâche".
-      Chaque type de tâche peut etre associe a un commentaire pour plus de precisions.
+      Listez les types de tâche qu'accomplissent vos collaborateurs.
     </p>
 
     <md-whiteframe ng-if="group.tasks.length == 0" class="md-whiteframe-1dp md-accent" layout-padding layout="column" layout-align="center center">
-      <div class="md-headline input-error">Aucune tâches definie</div>
-      <div>Vous devez definir des tâches pour la saisie.</div>
+      <div class="md-headline input-error">Aucun type de tâche</div>
+      <div>Ajouter des types pour permettre la saisie de tâches.</div>
     </md-whiteframe>
 
     <div layout="row" ng-if="group.tasks.length > 0">
       <md-input-container flex>
-        <label>Selectionnez un type de tâche pour l'editer</label>
+        <label>Sélectionnez un type de tâche pour le modifier</label>
         <md-select ng-model="tasks.selected">
           <md-option ng-repeat="t in group.tasks" value="{{ t.id }}">
             {{ t.name }}
@@ -43,7 +42,7 @@
 
       <md-button ng-if="tasks.selected" ng-click="tasks.edit($event)" class="md-fab md-accent" aria-label="Editer une tâche">
         <md-tooltip md-direction="top">
-          Editer la tâche
+          Modifier la tâche
         </md-tooltip>
         <md-icon class="md-36">edit</md-icon>
       </md-button>

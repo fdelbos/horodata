@@ -2,21 +2,21 @@
 
   <div ng-if="group.tasks.length == 0 && group.customers.length == 0">
     <div class="md-headline input-error">
-      Aucune tâches ni aucun dossier enregistre
+      Le groupe ne présente aucun dossier et aucun type de tâche
     </div>
     <p>
-      Vous devez definir des tâches et des dossiers pour la saisie.
-      Cliquez sur l'onglet configuration et ajoutez les.
+      Vous devez ajouter des dossiers et des types de tâche pour permettre la saisie.
+      Cliquez sur l'onglet "Configuration" pour en ajouter.
     </p>
   </div>
 
   <div ng-if="group.tasks.length > 0 && group.customers.length == 0">
     <div class="md-headline input-error">
-      Aucun dossier enregistre
+      Le groupe ne présente aucun dossier
     </div>
     <p>
-      Vous devez definir des dossiers pour la saisie.
-      Cliquez sur l'onglet configuration et ajoutez les.
+      Vous devez ajouter des dossiers pour permettre la saisie.
+      Cliquez sur l'onglet "Configuration" pour en ajouter.
     </p>
   </div>
 
@@ -25,8 +25,8 @@
       Aucune tâches definie
     </div>
     <p>
-      Vous devez definir des tâches pour la saisie.
-      Cliquez sur l'onglet configuration et ajoutez les.
+      Vous devez ajouter des types de tâche pour permettre la saisie.
+      Cliquez sur l'onglet "Configuration" pour en ajouter.
     </p>
   </div>
 

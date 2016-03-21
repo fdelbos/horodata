@@ -34,9 +34,9 @@ func Create(c *gin.Context) {
 	name := data.Name
 	errors := map[string]string{}
 	if name == "" {
-		errors["name"] = "Ce champs est obligatoire."
+		errors["name"] = "Ce champ est obligatoire."
 	} else if len(name) > 30 {
-		errors["name"] = "Ce champ ne doit pas depasser 30 caractères."
+		errors["name"] = "Ce champ ne doit pas depasser plus de 30 caractères."
 	}
 	if len(errors) > 0 {
 		jsend.BadRequest(c, errors)

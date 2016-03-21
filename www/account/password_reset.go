@@ -21,21 +21,21 @@ func PostResetStart(c *gin.Context) {
 
 	email := c.PostForm("email")
 	if email == "" {
-		errors["email"] = "Ce champs est obligatoire."
+		errors["email"] = "Ce champ est obligatoire."
 	} else if len(email) > 100 {
-		errors["email"] = "Ce champ ne doit pas dépasser 100 caractères."
+		errors["email"] = "Ce champ ne doit pas dépasser plus de 100 caractères."
 	} else if valid.IsEmail(email) == false {
 		errors["email"] = "Cette adresse email n'est pas valide."
 	}
 
 	recaptcha := c.PostForm("g-recaptcha-response")
 	if recaptcha == "" {
-		errors["recaptcha"] = "Ce champs est obligatoire."
+		errors["recaptcha"] = "Ce champ est obligatoire."
 	} else if ok, err := captcha.Validate(recaptcha); err != nil {
 		GetError(c, err)
 		return
 	} else if !ok {
-		errors["recaptcha"] = "Ce champs est invalid."
+		errors["recaptcha"] = "Ce champs est invalide."
 	}
 
 	if len(errors) != 0 {
@@ -97,22 +97,22 @@ func PostResetInput(c *gin.Context) {
 
 	password1 := c.PostForm("password1")
 	if password1 == "" {
-		errors["password1"] = "Ce champs est obligatoire."
+		errors["password1"] = "Ce champ est obligatoire."
 	} else if len(password1) < 6 {
 		errors["password1"] = "Ce champ doit faire au moins 6 caractères."
 	} else if len(password1) > 100 {
-		errors["password1"] = "Ce champ ne doit pas dépasser 100 caractères."
+		errors["password1"] = "Ce champ ne doit pas dépasser plus de 100 caractères."
 	}
 
 	password2 := c.PostForm("password2")
 	if password2 == "" {
-		errors["password2"] = "Ce champs est obligatoire."
+		errors["password2"] = "Ce champ est obligatoire."
 	} else if len(password2) < 6 {
 		errors["password2"] = "Ce champ doit faire au moins 6 caractères."
 	} else if len(password2) > 100 {
-		errors["password2"] = "Ce champ ne doit pas dépasser 100 caractères."
+		errors["password2"] = "Ce champ ne doit pas dépasser plus de 100 caractères."
 	} else if password1 != password2 {
-		errors["password2"] = "Ce champs ne correspond pas au nouveau mot de passe."
+		errors["password2"] = "Ce champ ne correspond pas au nouveau mot de passe."
 	}
 
 	if len(errors) != 0 {

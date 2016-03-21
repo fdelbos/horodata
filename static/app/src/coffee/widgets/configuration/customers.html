@@ -12,27 +12,28 @@
         Ajouter
       </md-button>
 
-      <md-button ng-click="customers.create($event)" class="md-fab md-primary" hide-gt-sm aria-label="Ajouter un dossier">
+      <md-button ng-click="customers.create($event)" class="md-fab md-primary" hide-gt-sm aria-label="Ajouter un nouveau dossier">
         <md-tooltip md-direction="top">
-          Ajouter un Dossier
+          Ajouter un nouveau dossier
         </md-tooltip>
         <md-icon class="md-36">add</md-icon>
       </md-button>
     </div>
 
     <p class="md-body-1">
-      Un dossier peut representer un client ou un projet.
-      Chaque nouvelle tache est attachee a un dossier.
+      Listez l'ensemble des dossiers sur lesquels travaillent vos collaborateurs.
+      <br>
+      Les dossiers peuvent représenter vos client ou diverses projets.
     </p>
 
     <md-whiteframe ng-if="group.customers.length == 0" class="md-whiteframe-1dp md-accent" layout-padding layout="column" layout-align="center center">
-      <div class="md-headline input-error">Aucune dossier enregistre</div>
-      <div>Vous devez definir des dossiers pour la saisie.</div>
+      <div class="md-headline input-error">Aucun dossier</div>
+      <div>Ajouter des dossiers pour permettre la saisie de tâches.</div>
     </md-whiteframe>
 
     <div layout="row" ng-if="group.customers.length > 0">
       <md-input-container flex>
-        <label>Selectionnez un dossiers pour l'editer</label>
+        <label>Sélectionnez un dossier pour le modifier</label>
         <md-select ng-model="customers.selected">
           <md-option ng-repeat="c in group.customers" value="{{ c.id }}">
             {{ c.name }}
@@ -40,7 +41,7 @@
         </md-select>
       </md-input-container>
 
-      <md-button ng-if="customers.selected" ng-click="customers.edit($event)" class="md-fab md-accent" aria-label="Editer un dossier">
+      <md-button ng-if="customers.selected" ng-click="customers.edit($event)" class="md-fab md-accent" aria-label="Editer le dossier">
         <md-tooltip md-direction="top">
           Modifier le dossier
         </md-tooltip>

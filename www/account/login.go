@@ -18,18 +18,18 @@ func PostLogin(c *gin.Context) {
 
 	email := c.PostForm("email")
 	if email == "" {
-		errors["email"] = "Ce champs est obligatoire."
+		errors["email"] = "Ce champ est obligatoire."
 	} else if len(email) > 100 {
-		errors["email"] = "Ce champ ne doit pas dépasser 100 caractères."
+		errors["email"] = "Ce champ ne doit pas dépasser plus de 100 caractères."
 	} else if valid.IsEmail(email) == false {
 		errors["email"] = "Cette adresse email n'est pas valide."
 	}
 
 	password := c.PostForm("password")
 	if password == "" {
-		errors["password"] = "Ce champs est obligatoire."
+		errors["password"] = "Ce champ est obligatoire."
 	} else if len(password) > 100 {
-		errors["password"] = "Ce champ ne doit pas dépasser 100 caractères."
+		errors["password"] = "Ce champ ne doit pas dépasser plus de 100 caractères."
 	}
 
 	if len(errors) == 0 {

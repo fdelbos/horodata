@@ -23,7 +23,7 @@ func CustomerAdd(c *gin.Context) {
 
 	errors := map[string]string{}
 	if data.Customers == "" {
-		errors["customers"] = "Ce champs est obligatoire."
+		errors["customers"] = "Ce champ est obligatoire."
 	}
 	if len(errors) > 0 {
 		jsend.BadRequest(c, errors)
@@ -31,14 +31,14 @@ func CustomerAdd(c *gin.Context) {
 	}
 	customers := strings.Split(data.Customers, "\n")
 	if len(customers) > 100 {
-		errors["customers"] = "Vous ne pouvez pas importer plus de 100 dossiers par requête."
+		errors["customers"] = "Vous ne pouvez pas ajouter plus de 100 dossiers à la fois."
 		jsend.BadRequest(c, errors)
 		return
 	}
 	clean := []string{}
 	for _, name := range customers {
 		if len(name) > 200 {
-			errors["customers"] = "Le nom d'un dossier ne doit pas dépasser 100 caractères."
+			errors["customers"] = "Le nom d'un dossier ne doit pas dépasser plus de 200 caractères."
 			jsend.BadRequest(c, errors)
 			return
 		} else if strings.TrimSpace(name) != "" {
@@ -76,9 +76,9 @@ func CustomerUpdate(c *gin.Context) {
 
 	errors := map[string]string{}
 	if data.Name == "" {
-		errors["name"] = "Ce champs est obligatoire."
+		errors["name"] = "Ce champ est obligatoire."
 	} else if len(data.Name) > 200 {
-		errors["name"] = "Ce champ ne doit pas depasser 200 caractères."
+		errors["name"] = "Ce champ ne doit pas dépasser plus de 200 caractères."
 	}
 	if len(errors) > 0 {
 		jsend.BadRequest(c, errors)

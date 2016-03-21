@@ -1,9 +1,9 @@
-<md-dialog aria-label="Nouvel Utilisateur" flex="40">
+<md-dialog aria-label="Ajouter un nouvel Utilisateur" flex="40">
   <form name="newUserForm">
 
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Nouvel Utilisateur</h2>
+        <h2>Ajouter un nouvel Utilisateur</h2>
         <span flex></span>
         <md-button class="md-icon-button" aria-label="Fermer" ng-click="close()">
           <md-icon class="md-24">close</md-icon>
@@ -15,22 +15,22 @@
       <div class="md-dialog-content">
 
         <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.email}" >
-          <label>Adresse Email</label>
+          <label>Adresse email</label>
           <input type="text" md-maxlength="100" ng-model="guests.current.email">
           <small ng-if="errors.email" class="input-error">{{ errors.email }}</small>
         </md-input-container>
 
         <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.rate}" >
-          <label>Taux Horraire</label>
+          <label>Taux horaire</label>
           <input type="number" ng-model="guests.current.rate" ng-value="0">
           <small ng-if="errors.rate" class="input-error">{{ errors.rate }}</small>
         </md-input-container>
 
         <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.admin}" >
-          <md-switch ng-model="guests.current.admin" aria-label="Administrateur">
-            Administrateur
+          <md-switch ng-model="guests.current.admin" aria-label="Droit administrateur">
+            Droit administrateur
           </md-switch>
-          <div class="input-hint">Cochez cette case si vous souhaitez deleguer la gestion de ce group a cet utilisateur.</div>
+          <div class="input-hint">Cochez la case, uniquement si vous souhaitez autoriser l'utilisateur, à accéder à la configuration du groupe.</div>
           <small ng-if="errors.admin" class="input-error">{{ errors.admin }}</small>
         </md-input-container>
 
