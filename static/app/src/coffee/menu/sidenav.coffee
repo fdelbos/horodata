@@ -20,13 +20,10 @@ angular.module("horodata").directive("appMenuSidenav", [
       groupNewService.fetch()
       scope.groups = -> groupNewService.listing()
 
-      # $http.get("#{apiService.get()}/groups").then(
-      #   (resp) ->
-      #     scope.groups = resp.data.data.results
-      # )
-      # scope.groups = -> groupNewService.listing()
+      scope.changeGroup = (url) ->
+        scope.toggleSidenav()
+        $location.path(url)
 
-      scope.changeGroup = (url) -> $location.path(url)
       scope.$on("$routeChangeSuccess", ->
         scope.currentGroupUrl = $routeParams.group
       )

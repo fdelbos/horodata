@@ -59,7 +59,7 @@ angular.module("horodata").controller("appWidgetsConfigurationTasksDialog", [
       $http.put("#{apiService.get()}/groups/#{$scope.group.url}/tasks/#{ $scope.tasks.selected }", $scope.tasks.current).then(
         (resp) ->
           $mdDialog.hide()
-          $mdToast.showSimple(Le type de tâche '#{$scope.tasks.current.name}' a été modifié.")
+          $mdToast.showSimple("Le type de tâche '#{$scope.tasks.current.name}' a été modifié.")
           update($scope.tasks.current)
           $scope.tasks.selected = null
         (resp) -> $scope.errors = resp.data.errors
