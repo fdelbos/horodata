@@ -35,6 +35,7 @@ func ApiByUser(user_id int64, request *listing.Request) (*listing.Result, error)
 				from guests
 				where user_id = $1 and active = true
 		)
+	order by g.name asc
     limit $2 offset $3;`
 
 	rows, err := postgres.DB().Query(query, user_id, request.Size, request.Offset)

@@ -52,6 +52,14 @@ func (u *User) SendWelcome() error {
 	return m.Send()
 }
 
+func (u *User) Update() error {
+	const query = `
+	update guests
+	set active = $2, full_name = $3
+	where id = $1;`
+	return postgres.Exec(query, u.Id, u.Active, u.FullName)
+}
+
 func (u *User) Insert() error {
 	const query = `SELECT * from "user_new"($1, $2);`
 
