@@ -110,97 +110,6 @@ angular.module("horodata").directive("appMenuToolbar", [
   }
 ]);
 
-angular.module("horodata").controller("Group", [
-  "$http", "$routeParams", "$scope", "titleService", "userService", "apiService", "groupNewService", "popupService", "listingService", function($http, $routeParams, $scope, titleService, userService, apiService, groupNewService, popupService, listingService) {
-    var fetchUsers, getGroup;
-    $scope.isGroupView = true;
-    $scope.search = {
-      begin: moment().subtract(1, 'months').toDate(),
-      end: new Date(),
-      customer: null,
-      guest: null
-    };
-    $scope.$watch("search", function(v) {
-      if (v == null) {
-        return;
-      }
-      listingService.search($routeParams.group, v);
-      return listingService.listing().fetch(0);
-    }, true);
-    fetchUsers = function() {
-      return $http.get((apiService.get()) + "/groups/" + $routeParams.group + "/users").then(function(resp) {
-        return $scope.users = resp.data.data;
-      });
-    };
-    $scope.isOwner = false;
-    getGroup = function() {
-      return $http.get((apiService.get()) + "/groups/" + $routeParams.group).then(function(resp) {
-        $scope.group = resp.data.data;
-        $scope.isOwner = $scope.group.owner === $scope.user.id;
-        return titleService.set($scope.group.name, true);
-      });
-    };
-    userService.get(function(u) {
-      $scope.user = u;
-      getGroup();
-      if ($scope.isOwner) {
-        return fetchUsers();
-      }
-    });
-    $scope.$on("group.reload", function(e) {
-      e.stopPropagation();
-      return getGroup();
-    });
-    return groupNewService.set(function(ev) {
-      return popupService("horodata/views/new_task_form.html", "groupNewTaskDialog", $scope, ev);
-    });
-  }
-]);
-
-angular.module("horodata").controller("groupNewTaskDialog", [
-  "$scope", "$mdDialog", "$mdToast", "$http", "$location", "apiService", function($scope, $mdDialog, $mdToast, $http, $location, apiService) {
-    var x;
-    $scope.task = {
-      minutes: 0,
-      hours: 0
-    };
-    $scope.errors = null;
-    $scope.hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    $scope.minutes = (function() {
-      var i, results;
-      results = [];
-      for (x = i = 0; i <= 55; x = i += 5) {
-        results.push(x);
-      }
-      return results;
-    })();
-    $scope.close = function() {
-      return $mdDialog.hide();
-    };
-    return $scope.send = function() {
-      var task;
-      task = {
-        duration: $scope.task.hours * 3600 + $scope.task.minutes * 60,
-        task: parseInt($scope.task.task),
-        customer: parseInt($scope.task.customer),
-        comment: $scope.task.comment
-      };
-      return $http.post((apiService.get()) + "/groups/" + $scope.group.url + "/jobs", task).then(function(resp) {
-        $mdDialog.hide();
-        return $mdToast.showSimple("Nouvelle tâche ajoutée.");
-      }, function(resp) {
-        return $scope.errors = resp.data.errors;
-      });
-    };
-  }
-]);
-
-angular.module("horodata").controller("Index", [
-  "$http", "$scope", "userService", "titleService", function($http, $scope, userService, titleService) {
-    return titleService.set("Bienvenu");
-  }
-]);
-
 angular.module('horodata').factory("apiService", [
   function() {
     var root;
@@ -474,6 +383,97 @@ angular.module('horodata').factory("userService", [
       get: get,
       update: update
     };
+  }
+]);
+
+angular.module("horodata").controller("Group", [
+  "$http", "$routeParams", "$scope", "titleService", "userService", "apiService", "groupNewService", "popupService", "listingService", function($http, $routeParams, $scope, titleService, userService, apiService, groupNewService, popupService, listingService) {
+    var fetchUsers, getGroup;
+    $scope.isGroupView = true;
+    $scope.search = {
+      begin: moment().subtract(1, 'months').toDate(),
+      end: new Date(),
+      customer: null,
+      guest: null
+    };
+    $scope.$watch("search", function(v) {
+      if (v == null) {
+        return;
+      }
+      listingService.search($routeParams.group, v);
+      return listingService.listing().fetch(0);
+    }, true);
+    fetchUsers = function() {
+      return $http.get((apiService.get()) + "/groups/" + $routeParams.group + "/users").then(function(resp) {
+        return $scope.users = resp.data.data;
+      });
+    };
+    $scope.isOwner = false;
+    getGroup = function() {
+      return $http.get((apiService.get()) + "/groups/" + $routeParams.group).then(function(resp) {
+        $scope.group = resp.data.data;
+        $scope.isOwner = $scope.group.owner === $scope.user.id;
+        return titleService.set($scope.group.name, true);
+      });
+    };
+    userService.get(function(u) {
+      $scope.user = u;
+      getGroup();
+      if ($scope.isOwner) {
+        return fetchUsers();
+      }
+    });
+    $scope.$on("group.reload", function(e) {
+      e.stopPropagation();
+      return getGroup();
+    });
+    return groupNewService.set(function(ev) {
+      return popupService("horodata/views/new_task_form.html", "groupNewTaskDialog", $scope, ev);
+    });
+  }
+]);
+
+angular.module("horodata").controller("groupNewTaskDialog", [
+  "$scope", "$mdDialog", "$mdToast", "$http", "$location", "apiService", function($scope, $mdDialog, $mdToast, $http, $location, apiService) {
+    var x;
+    $scope.task = {
+      minutes: 0,
+      hours: 0
+    };
+    $scope.errors = null;
+    $scope.hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    $scope.minutes = (function() {
+      var i, results;
+      results = [];
+      for (x = i = 0; i <= 55; x = i += 5) {
+        results.push(x);
+      }
+      return results;
+    })();
+    $scope.close = function() {
+      return $mdDialog.hide();
+    };
+    return $scope.send = function() {
+      var task;
+      task = {
+        duration: $scope.task.hours * 3600 + $scope.task.minutes * 60,
+        task: parseInt($scope.task.task),
+        customer: parseInt($scope.task.customer),
+        comment: $scope.task.comment
+      };
+      return $http.post((apiService.get()) + "/groups/" + $scope.group.url + "/jobs", task).then(function(resp) {
+        $mdDialog.hide();
+        return $mdToast.showSimple("Nouvelle tâche ajoutée.");
+      }, function(resp) {
+        return $scope.errors = resp.data.errors;
+      });
+    };
+  }
+]);
+
+angular.module("horodata").controller("Index", [
+  "$http", "$scope", "userService", "titleService", function($http, $scope, userService, titleService) {
+    return titleService.set("Bienvenu");
   }
 ]);
 
