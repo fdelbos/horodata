@@ -33,7 +33,7 @@
 
     <div layout="row" ng-if="group.customers.length > 0">
       <md-input-container flex>
-        <label>Sélectionnez un dossier pour le modifier</label>
+        <label>Sélectionnez un dossier</label>
         <md-select ng-model="customers.selected">
           <md-option ng-repeat="c in group.customers" value="{{ c.id }}">
             {{ c.name }}

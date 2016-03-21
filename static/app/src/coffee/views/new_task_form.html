@@ -54,8 +54,8 @@
               <md-select ng-model="task.hours">
                 <md-option ng-repeat="h in hours" value="{{ h }}">
                   {{ h }}
-                  <span ng-if="h > 1">Heures</span>
-                  <span ng-if="h <= 1">Heure</span>
+                  <span ng-if="h > 1">heures</span>
+                  <span ng-if="h <= 1">heure</span>
                 </md-option>
               </md-select>
               <small ng-if="errors.duration" class="input-error">{{ errors.duration }}</small>
@@ -66,8 +66,8 @@
               <md-select ng-model="task.minutes">
                 <md-option ng-repeat="m in minutes" value="{{ m }}">
                   {{ m }}
-                  <span ng-if="m > 1">Minutes</span>
-                  <span ng-if="m <= 1">Minute</span>
+                  <span ng-if="m > 1">minutes</span>
+                  <span ng-if="m <= 1">minute</span>
                 </md-option>
               </md-select>
               <small ng-if="errors.duration" class="input-error">{{ errors.duration }}</small>

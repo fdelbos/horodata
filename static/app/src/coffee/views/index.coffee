@@ -5,6 +5,6 @@ angular.module("horodata").controller("Index", [
   "titleService"
   ($http, $scope, userService, titleService)->
 
-    titleService.set("Bienvenue - Sélectionnez un groupe")
+    titleService.set("Accueil")
 
 ])

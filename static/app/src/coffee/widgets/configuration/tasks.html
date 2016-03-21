@@ -31,7 +31,7 @@
 
     <div layout="row" ng-if="group.tasks.length > 0">
       <md-input-container flex>
-        <label>Sélectionnez un type de tâche pour le modifier</label>
+        <label>Sélectionnez un type de tâche</label>
         <md-select ng-model="tasks.selected">
           <md-option ng-repeat="t in group.tasks" value="{{ t.id }}">
             {{ t.name }}

@@ -27,7 +27,7 @@
 
     <div layout="row" ng-if="group.guests.length > 0">
       <md-input-container flex>
-        <label>Selectionnez un utilisateur pour le modifier</label>
+        <label>Selectionnez un utilisateur</label>
         <md-select ng-model="guests.selected">
           <md-option ng-repeat="g in group.guests" value="{{ g.id }}">
             <span ng-if="!g.full_name">{{ g.email }}</span>

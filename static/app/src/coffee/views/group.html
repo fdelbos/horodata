@@ -4,7 +4,7 @@
   <md-content>
     <md-tabs md-dynamic-height md-border-bottom>
 
-      <md-tab label="Heures">
+      <md-tab label="Saisies">
         <app-widgets-empty-group-boxed ng-if="group.tasks.length == 0 || group.customers.length == 0" group="group"></app-widgets-empty-group-boxed>
         <app-widgets-listing ng-if="group.tasks.length > 0 && group.customers.length > 0"></app-widgets-listing>
       </md-tab>
