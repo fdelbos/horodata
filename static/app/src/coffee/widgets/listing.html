@@ -22,8 +22,8 @@
         <md-divider></md-divider>
       </md-list-item>
 
-      <md-list-item ng-repeat="i in listing.data()" class="secondary-button-padding" ng-click="alert($event)">
-        <div layout="row" layout-align="space-between center" flex hide show-gt-sm>
+      <md-list-item ng-repeat="i in listing.data()" ng-click="alert($event)" hide show-gt-md>
+        <div layout="row" layout-align="space-between center" flex>
           <div flex="15">
             {{ i.created | Day }}
           </div>
@@ -39,6 +39,22 @@
           <div flex="10">
             {{ i.duration | Duration }}
           </div>
+        </div>
+        <md-divider></md-divider>
+      </md-list-item>
+
+      <md-list-item  ng-repeat="i in listing.data()" class="md-2-line" hide-gt-md>
+        <div class="md-list-item-text" layout="column">
+          <div layout="row" layout-align="space-between center">
+            <h3>
+              {{ customers[i.customer_id] }}
+            </h3>
+            <h4>
+              {{ i.created | Day }} - <span class="text-primary">{{ i.duration | Duration }}</span>
+            </h4>
+          </div>
+          <h4>{{ tasks[i.task_id] }}</h4>
+          <span class="text-accent">{{ i.creator.full_name }}</span>
         </div>
         <md-divider></md-divider>
       </md-list-item>

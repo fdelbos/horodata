@@ -11,7 +11,6 @@
 * supprimer un groupe
 * Supprimer "www" de l'adresse
 * Si vide, ajouter texte dans liste "Aucune tâche saisie"
-* Bug affichage listing des tâches sur mobile
 * Réduire police sur mobile
 * Bloquer les boutons sur mobile (éviter le double-clic)
 * Désactiver les tool-tips
@@ -22,3 +21,5 @@
 * Pagination du listing
 * Statistiques
 * Facturation et plans
+* remplacer "isOwner" par "isAdmin"
+* export csv
