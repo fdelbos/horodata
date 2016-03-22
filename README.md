@@ -11,7 +11,6 @@
 * supprimer un groupe
 * Supprimer "www" de l'adresse
 * Si vide, ajouter texte dans liste "Aucune tâche saisie"
-* Bug affichage listing des tâches sur mobile
 * Réduire police sur mobile
 * Bloquer les boutons sur mobile (éviter le double-clic)
 * Désactiver les tool-tips
@@ -24,3 +23,6 @@
 * Facturation et plans
 * Ajouter "Profil" dans menu + options photo et changement nom
 * Pb affichage Internet Explorer (dossiers et types crées non-affichés)
+* remplacer "isOwner" par "isAdmin"
+* export csv
+* Rapport ?

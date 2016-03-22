@@ -27,6 +27,12 @@ md-sidenav {
 .group-selected {
   color: #2196f3;
 }
+.text-primary {
+  color: #2196f3;
+}
+.text-accent {
+  color: #ff4081;
+}
 .input-hint {
   position: absolute;
   left: 2px;
