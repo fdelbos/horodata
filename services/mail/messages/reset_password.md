@@ -1,7 +1,5 @@
 ## Réinitialisation du mot de passe Horodata
 
-&nbsp;
-
 Vous recevez ce message en réponse à votre demande de réinitialisation de mot de passe sur [https://horodata.com](https://horodata.com).
 
 &nbsp;

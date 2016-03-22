@@ -1,6 +1,4 @@
-### Vous avez recu une invitation sur Horodata !
-
-&nbsp;
+### Vous avez reçu une invitation sur Horodata !
 
 L'utilisateur **{{ .ownerName }}** vous invite à rejoindre le groupe **{{ .groupName}}**
 sur le site [https://horodata.com](https://horodata.com).

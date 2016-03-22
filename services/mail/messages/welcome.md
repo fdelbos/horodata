@@ -1,7 +1,5 @@
 ### Bienvenue sur Horodata !
 
-&nbsp;
-
 Nous avons bien pris en compte votre inscription!
 
 &nbsp;
@@ -9,7 +7,7 @@ Nous avons bien pris en compte votre inscription!
 Vous pouvez accéder à votre compte a partir de l'adresse suivante:
 [https://horodata.com](https://horodata.com).
 
-Une fois connecté, vous pourrez créer un **Groupe** et le partager avec vos collaborateurs.
+Une fois connecté, vous pourrez créer un nouveau groupe et le partager avec d'autres utilisateurs.
 
 &nbsp;
 
