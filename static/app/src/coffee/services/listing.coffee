@@ -5,7 +5,8 @@ angular.module('horodata').factory("listingService", [
 
     class Listing
       constructor: (@groupUrl, begin, end, customer, guest)->
-        @size = 50
+        @size = 100
+        @page = 1
         @list = null
         @loading = false
         @total = -1
@@ -15,14 +16,22 @@ angular.module('horodata').factory("listingService", [
           customer: customer
           guest: guest
 
-      pages: (page) ->
-        if @total == -1 then return []
+      pages: ->
+        if @total == -1 then return null
+        res =
+          page: @page
+          prev: if @page == 1 then null else @page - 1
+          next: if @page * @size > @total then null else @page + 1
+        return res
+
 
       fetch: (page) =>
         if @loading then return
         @loading = true
         params = _.cloneDeep(@params)
-        params.offset = page * @size
+        if !page? then page = @page
+        @page = page
+        params.offset = (page - 1) * @size
         params.size = @size
         $http.get("#{apiService.get()}/groups/#{@groupUrl}/jobs", {params: params}).then(
           (resp) =>
@@ -43,5 +52,6 @@ angular.module('horodata').factory("listingService", [
         listing: -> listing
         search: (groupUrl, params) ->
           listing = new Listing(groupUrl, params.begin, params.end, params.customer, params.guest)
+        pages: -> listing.pages()
     }
 ])
