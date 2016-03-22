@@ -158,7 +158,7 @@ func JobAdd(c *gin.Context) {
 	}
 
 	if data.Duration == 0 {
-		errors["duration"] = "La durée de la tâche ne peut être égale à 0."
+		errors["duration"] = "La durée ne peut être égale à 0."
 	} else if data.Duration > 13*3600 { // more than 13 hours...
 		errors["duration"] = "Ce champ n'est pas valide."
 	} else if data.Duration < 0 {

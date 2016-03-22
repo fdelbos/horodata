@@ -38,6 +38,7 @@ angular.module("horodata").controller("appWidgetsConfigurationTasksDialog", [
   "apiService"
   ($scope, $mdDialog, $mdToast, $http, $location, apiService)->
     $scope.errors = null
+    $scope.loading = false
 
     $scope.close = -> $mdDialog.hide()
 
@@ -47,32 +48,41 @@ angular.module("horodata").controller("appWidgetsConfigurationTasksDialog", [
       $scope.group.tasks = _.sortBy($scope.group.tasks, ["name"])
 
     $scope.create = ->
+      $scope.loading = true
       $http.post("#{apiService.get()}/groups/#{$scope.group.url}/tasks", $scope.tasks.current).then(
         (resp) ->
           $scope.$emit("group.reload")
           $mdDialog.hide()
           $mdToast.showSimple("Nouveau type de tâche '#{$scope.tasks.current.name}' ajouté")
-        (resp) -> $scope.errors = resp.data.errors
+        (resp) ->
+          $scope.loading = false
+          $scope.errors = resp.data.errors
       )
 
     $scope.edit = ->
+      $scope.loading = true
       $http.put("#{apiService.get()}/groups/#{$scope.group.url}/tasks/#{ $scope.tasks.selected }", $scope.tasks.current).then(
         (resp) ->
           $mdDialog.hide()
           $mdToast.showSimple("Type de tâche '#{$scope.tasks.current.name}' modifié")
           update($scope.tasks.current)
           $scope.tasks.selected = null
-        (resp) -> $scope.errors = resp.data.errors
+        (resp) ->
+          $scope.loading = false
+          $scope.errors = resp.data.errors
       )
 
     $scope.delete = ->
+      $scope.loading = true
       $http.delete("#{apiService.get()}/groups/#{$scope.group.url}/tasks/#{ $scope.tasks.selected }", $scope.tasks.current).then(
         (resp) ->
           $mdDialog.hide()
           $mdToast.showSimple("Type de tâche '#{$scope.tasks.current.name}' supprimé")
           $scope.group.tasks.splice(_.findIndex($scope.group.tasks, {id: parseInt $scope.tasks.selected}), 1)
           $scope.tasks.selected = null
-        (resp) -> $scope.errors = resp.data.errors
+        (resp) ->
+          $scope.loading = false
+          $scope.errors = resp.data.errors
       )
 
 

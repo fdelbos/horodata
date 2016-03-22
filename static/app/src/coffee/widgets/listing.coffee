@@ -1,7 +1,8 @@
 angular.module("horodata").directive("appWidgetsListing", [
   "listingService"
   "$timeout"
-  (listingService, $timeout) ->
+  "$location"
+  (listingService, $timeout, $location) ->
 
     l = (scope) ->
 
@@ -16,6 +17,9 @@ angular.module("horodata").directive("appWidgetsListing", [
       scope.listing = listingService
       #scope.listing.fetch(0)
 
+      scope.goTo = (page) ->
+        $location.search("page", page)
+        listingService.listing().fetch(page)
 
     return {
       link: l

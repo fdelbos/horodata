@@ -36,7 +36,7 @@ angular.module("horodata").controller("appWidgetsConfigurationCustomersDialog", 
   "apiService"
   ($scope, $mdDialog, $mdToast, $http, $location, apiService)->
     $scope.errors = null
-
+    $scope.loading = false
     $scope.close = -> $mdDialog.hide()
 
     update = (t) ->
@@ -45,6 +45,7 @@ angular.module("horodata").controller("appWidgetsConfigurationCustomersDialog", 
       $scope.group.customers = _.sortBy($scope.group.customers, ["name"])
 
     $scope.create = ->
+      $scope.loading = true
       $http.post("#{apiService.get()}/groups/#{$scope.group.url}/customers", $scope.customers.current).then(
         (resp) ->
           total = resp.data.data.total
@@ -54,27 +55,35 @@ angular.module("horodata").controller("appWidgetsConfigurationCustomersDialog", 
             $mdToast.showSimple("1 nouveau dossier ajouté")
           else
             $mdToast.showSimple("#{total} nouveaux dossiers ajoutés")
-        (resp) -> $scope.errors = resp.data.errors
+        (resp) ->
+          $scope.errors = resp.data.errors
+          $scope.loading = false
       )
 
     $scope.edit = ->
+      $scope.loading = true
       $http.put("#{apiService.get()}/groups/#{$scope.group.url}/customers/#{ $scope.customers.selected }", $scope.customers.current).then(
         (resp) ->
           $mdDialog.hide()
           $mdToast.showSimple("Dossier '#{$scope.customers.current.name}' modifié")
           update($scope.customers.current)
           $scope.customers.selected = null
-        (resp) -> $scope.errors = resp.data.errors
+        (resp) ->
+          $scope.errors = resp.data.errors
+          $scope.loading = false
       )
 
     $scope.delete = ->
+      $scope.loading = true
       $http.delete("#{apiService.get()}/groups/#{$scope.group.url}/customers/#{ $scope.customers.selected }", $scope.customers.current).then(
         (resp) ->
           $mdDialog.hide()
           $mdToast.showSimple("Dossier '#{$scope.customers.current.name}' supprimé")
           $scope.group.customers.splice(_.findIndex($scope.group.customers, {id: parseInt $scope.customers.selected}), 1)
           $scope.customers.selected = null
-        (resp) -> $scope.errors = resp.data.errors
+        (resp) ->
+          $scope.errors = resp.data.errors
+          $scope.loading = false
       )
 
 ])

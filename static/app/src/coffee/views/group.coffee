@@ -23,7 +23,7 @@ angular.module("horodata").controller("Group", [
     $scope.$watch("search", (v) ->
       if !v? then return
       listingService.search($routeParams.group, v)
-      listingService.listing().fetch(0)
+      listingService.listing().fetch(1)
     , true)
 
     fetchUsers = ->
@@ -65,11 +65,14 @@ angular.module("horodata").controller("groupNewTaskDialog", [
   "$http",
   "$location",
   "apiService"
-  ($scope, $mdDialog, $mdToast, $http, $location, apiService)->
+  "listingService"
+  ($scope, $mdDialog, $mdToast, $http, $location, apiService, listingService)->
     $scope.task =
       minutes: 0
       hours: 0
     $scope.errors = null
+    $scope.loading = false
+
     $scope.hours = [0..12]
     $scope.minutes = (x for x in [0..55] by 5)
 
@@ -81,11 +84,15 @@ angular.module("horodata").controller("groupNewTaskDialog", [
         task: parseInt $scope.task.task
         customer:  parseInt $scope.task.customer
         comment:  $scope.task.comment
+      $scope.loading = true
       $http.post("#{apiService.get()}/groups/#{$scope.group.url}/jobs",task).then(
         (resp) ->
           $mdDialog.hide()
           $mdToast.showSimple("Nouvelle tâche saisie")
-        (resp) -> $scope.errors = resp.data.errors
+          listingService.listing().fetch()
+        (resp) ->
+          $scope.loading = false 
+          $scope.errors = resp.data.errors
       )
 
 ])

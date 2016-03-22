@@ -86,9 +86,13 @@
       </div>
     </md-dialog-content>
 
-    <md-dialog-actions>
+    <md-dialog-actions ng-if="!loading">
       <md-button ng-click="send()" class="md-primary md-raised">Ajouter</md-button>
       <md-button ng-click="close()" class="md-raised">Annuler</md-button>
+    </md-dialog-actions>
+
+    <md-dialog-actions ng-if="loading">
+      <md-progress-linear md-mode="indeterminate"></md-progress-linear>
     </md-dialog-actions>
   </form>
 </md-dialog>
