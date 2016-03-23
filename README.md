@@ -28,3 +28,4 @@
 * google analytics
 * cookies cnil
 * crypter les backups
+* stat sur feuille de l'export XLS
