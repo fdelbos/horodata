@@ -142,6 +142,7 @@ func (g *Group) GuestGetById(id int64) (*Guest, error) {
 
 type ApiGuest struct {
 	Id       int64   `json:"id"`
+	Active   bool    `json:"active"`
 	Rate     int     `json:"rate"`
 	Admin    bool    `json:"admin"`
 	Email    string  `json:"email"`
@@ -151,6 +152,7 @@ type ApiGuest struct {
 func (g *ApiGuest) Scan(scanFn func(dest ...interface{}) error) error {
 	return scanFn(
 		&g.Id,
+		&g.Active,
 		&g.Rate,
 		&g.Admin,
 		&g.Email,
@@ -160,13 +162,12 @@ func (g *ApiGuest) Scan(scanFn func(dest ...interface{}) error) error {
 func (g *Group) ApiGuests() ([]ApiGuest, error) {
 	const query = `
     select
-		g.id, g.rate, g.admin, g.email,
+		g.id, g.active, g.rate, g.admin, g.email,
 		u.full_name
 	from
 		guests g left outer join users u on (g.user_id = u.id)
     where
-			g.active = true
-		and group_id = $1`
+		group_id = $1`
 
 	rows, err := postgres.DB().Query(query, g.Id)
 	if err != nil {

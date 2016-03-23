@@ -1,0 +1,19 @@
+<div layout="column">
+
+  <app-widgets-loading ng-if="stats.loading()"></app-widgets-loading>
+
+  <div ng-if="!stats.loading()" flex>
+
+    <div id="chart"></div>
+
+    <c3chart bindto-id="chart" ng-if="data">
+      <chart-column
+        ng-repeat="i in data"
+        column-id="{{ customers[i.customer_id].name }}"
+        column-values="{{ i.duration }}"
+        column-type="pie"/>
+    </c3chart>
+
+  </div>
+
+</div>

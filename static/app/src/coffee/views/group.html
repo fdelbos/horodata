@@ -11,7 +11,7 @@
 
       <md-tab label="Statistiques">
         <app-widgets-empty-group-boxed ng-if="group.tasks.length == 0 || group.customers.length == 0" group="group"></app-widgets-empty-group-boxed>
-
+        <app-widgets-stats ng-if="group.tasks.length > 0 && group.customers.length > 0"></app-widgets-stats>
       </md-tab>
 
       <md-tab ng-if="isOwner" label="Configuration" layout="column" layout-margin>

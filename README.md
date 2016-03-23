@@ -22,9 +22,11 @@
 * Ajouter "Profil" dans menu + options photo et changement nom
 * Pb affichage Internet Explorer (dossiers et types crées non-affichés)
 * remplacer "isOwner" par "isAdmin"
-* export csv
 * Rapport ?
 * zopim
 * google analytics
 * cookies cnil
 * crypter les backups
+* login facebook
+* admin doit pouvoir modifier son taux horraire
+* csrf (x-request-with)
