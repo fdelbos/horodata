@@ -2,7 +2,8 @@ angular.module("horodata").directive("appWidgetsListing", [
   "listingService"
   "$timeout"
   "$location"
-  (listingService, $timeout, $location) ->
+  "popupService"
+  (listingService, $timeout, $location, popupService) ->
 
     l = (scope) ->
 
@@ -11,6 +12,14 @@ angular.module("horodata").directive("appWidgetsListing", [
       scope.goTo = (page) ->
         $location.search("page", page)
         listingService.listing().fetch(page)
+
+      scope.showDetail = (ev, job) ->
+        scope.detailJob = _.cloneDeep job
+        console.log job
+        popupService(
+          "horodata/widgets/detail.html"
+          "detailDialog"
+          scope, ev)
 
     return {
       link: l

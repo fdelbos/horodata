@@ -1,10 +1,15 @@
 <div>
   <div layout="row" layout-align="space-around center" hide show-gt-md layout-padding>
 
-      <md-datepicker  flex="25" ng-model="search.begin" md-placeholder="Date début" md-max-date="search.end"></md-datepicker>
+      <div layout="row" flex="25" layout-align="center center" >
+        <span>du</span>
+        <md-datepicker  ng-model="search.begin" md-placeholder="Date début" md-max-date="search.end"></md-datepicker>
+      </div>
 
-      <md-datepicker flex="25" ng-model="search.end" md-placeholder="Date fin" md-max-date="today"></md-datepicker>
-
+      <div layout="row" flex="25" layout-align="center center" >
+        <span>au</span>
+        <md-datepicker ng-model="search.end" md-placeholder="Date fin" md-max-date="today"></md-datepicker>
+      </div>
 
       <div flex="25">
         <div layout="row">
@@ -23,7 +28,7 @@
       </div>
 
 
-      <div flex="25" ng-if="isOwner">
+      <div flex="25" ng-if="isAdmin">
         <div layout="row">
           <md-input-container flex>
             <label>Utilisateur</label>

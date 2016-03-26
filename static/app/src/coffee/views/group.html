@@ -14,7 +14,7 @@
         <app-widgets-stats ng-if="group.tasks.length > 0 && group.customers.length > 0"></app-widgets-stats>
       </md-tab>
 
-      <md-tab ng-if="isOwner" label="Configuration" layout="column" layout-margin>
+      <md-tab ng-if="isAdmin" label="Configuration" layout="column" layout-margin>
         <app-widgets-configuration-guests></app-widgets-configuration-guests>
         <md-divider></md-divider>
         <app-widgets-configuration-customers></app-widgets-configuration-customers>

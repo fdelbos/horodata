@@ -21,7 +21,6 @@
 * Facturation et plans
 * Ajouter "Profil" dans menu + options photo et changement nom
 * Pb affichage Internet Explorer (dossiers et types crées non-affichés)
-* remplacer "isOwner" par "isAdmin"
 * Rapport ?
 * zopim
 * google analytics
@@ -31,4 +30,8 @@
 * login facebook
 * admin doit pouvoir modifier son taux horraire
 * csrf (x-request-with)
+<<<<<<< HEAD
+* format date search francais
+=======
 * push (ajout tâche à la liste & notif lors de création de tâche par un collaborateur)
+>>>>>>> fc157b92e6aaffac4e506b943790d083b62a8426
