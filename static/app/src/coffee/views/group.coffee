@@ -31,10 +31,15 @@ angular.module("horodata").controller("Group", [
       $http.get("#{apiService.get()}/groups/#{$routeParams.group}").then(
         (resp) ->
           $scope.group = resp.data.data
+<<<<<<< HEAD
           $scope.isAdmin = $scope.group.guests?
           $scope.tasks = _.keyBy($scope.group.tasks, 'id')
           $scope.customers = _.keyBy($scope.group.customers, 'id')
           $scope.guests = _.keyBy($scope.group.guests, 'id')
+=======
+          $scope.isOwner = $scope.group.owner == $scope.user.id
+
+>>>>>>> fc157b92e6aaffac4e506b943790d083b62a8426
           titleService.set($scope.group.name, true)
       )
 
@@ -87,7 +92,7 @@ angular.module("horodata").controller("groupNewTaskDialog", [
           $mdToast.showSimple("Nouvelle tâche saisie")
           listingService.listing().fetch()
         (resp) ->
-          $scope.loading = false
+          $scope.loading = false 
           $scope.errors = resp.data.errors
       )
 

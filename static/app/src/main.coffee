@@ -1,4 +1,4 @@
-angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages", "gridshore.c3js.chart"])
+angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages"])
 
 .config([
   "$mdDateLocaleProvider"

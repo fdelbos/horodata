@@ -26,7 +26,12 @@
 * google analytics
 * cookies cnil
 * crypter les backups
+* stat sur feuille de l'export XLS
 * login facebook
 * admin doit pouvoir modifier son taux horraire
 * csrf (x-request-with)
+<<<<<<< HEAD
 * format date search francais
+=======
+* push (ajout tâche à la liste & notif lors de création de tâche par un collaborateur)
+>>>>>>> fc157b92e6aaffac4e506b943790d083b62a8426

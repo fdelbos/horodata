@@ -1,10 +1,10 @@
 ### Bienvenue sur Horodata !
 
-Nous avons bien pris en compte votre inscription!
+Nous avons bien pris en compte votre inscription !
 
 &nbsp;
 
-Vous pouvez accéder à votre compte a partir de l'adresse suivante:
+Vous pouvez accéder à votre compte à partir de l'adresse suivante :
 [https://horodata.com](https://horodata.com).
 
 Une fois connecté, vous pourrez créer un nouveau groupe et le partager avec d'autres utilisateurs.

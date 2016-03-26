@@ -27,14 +27,19 @@
           <div flex="15">
             {{ i.created | Day }}
           </div>
+<<<<<<< HEAD
           <div flex="25" ng-if="isAdmin">
             {{ guests[i.creator_id].full_name }}
+=======
+          <div flex="25" ng-if="isOwner">
+            {{ i.creator.full_name }}
+>>>>>>> fc157b92e6aaffac4e506b943790d083b62a8426
           </div>
           <div flex="25">
-            {{ customers[i.customer_id].name }}
+            {{ customers[i.customer_id] }}
           </div>
           <div flex="25">
-            {{ tasks[i.task_id].name }}
+            {{ tasks[i.task_id] }}
           </div>
           <div flex="10">
             {{ i.duration | Duration }}
@@ -43,18 +48,22 @@
         <md-divider></md-divider>
       </md-list-item>
 
+<<<<<<< HEAD
       <md-list-item  ng-repeat="i in listing.data()" class="md-2-line" ng-click="showDetail($event, i)" hide-gt-md>
+=======
+      <md-list-item  ng-repeat="i in listing.data()" class="md-2-line" hide-gt-md>
+>>>>>>> fc157b92e6aaffac4e506b943790d083b62a8426
         <div class="md-list-item-text" layout="column">
           <div layout="row" layout-align="space-between center">
             <h3>
-              {{ customers[i.customer_id].name }}
+              {{ customers[i.customer_id] }}
             </h3>
             <h4>
               {{ i.created | Day }} - <span class="text-primary">{{ i.duration | Duration }}</span>
             </h4>
           </div>
-          <h4>{{ tasks[i.task_id].name }}</h4>
-          <span class="text-accent">{{ guests[i.creator_id].full_name }}</span>
+          <h4>{{ tasks[i.task_id] }}</h4>
+          <span class="text-accent">{{ i.creator.full_name }}</span>
         </div>
         <md-divider></md-divider>
       </md-list-item>

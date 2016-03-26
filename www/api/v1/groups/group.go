@@ -11,6 +11,7 @@ func Group(r *gin.RouterGroup) {
 		groups.GET("", Listing)
 		groups.POST("", Create)
 
+<<<<<<< HEAD
 		gr := groups.Group("/:group")
 		gr.Use(middlewares.GroupFilter())
 		{
@@ -34,5 +35,64 @@ func Group(r *gin.RouterGroup) {
 				stats.GET("/customer_time", StatsCustomerTime)
 			}
 		}
+=======
+		groups.GET("/:group",
+			middlewares.GroupFilter(),
+			Get)
+
+		groups.POST("/:group/tasks",
+			middlewares.GroupFilter(),
+			middlewares.GroupAdminFilter(),
+			TaskAdd)
+
+		groups.PUT("/:group/tasks/:taskId",
+			middlewares.GroupFilter(),
+			middlewares.GroupAdminFilter(),
+			TaskUpdate)
+
+		groups.DELETE("/:group/tasks/:taskId",
+			middlewares.GroupFilter(),
+			middlewares.GroupAdminFilter(),
+			TaskDelete)
+
+		groups.POST("/:group/customers",
+			middlewares.GroupFilter(),
+			middlewares.GroupAdminFilter(),
+			CustomerAdd)
+
+		groups.PUT("/:group/customers/:customerId",
+			middlewares.GroupFilter(),
+			middlewares.GroupAdminFilter(),
+			CustomerUpdate)
+
+		groups.DELETE("/:group/customers/:customerId",
+			middlewares.GroupFilter(),
+			middlewares.GroupAdminFilter(),
+			CustomerDelete)
+
+		groups.POST("/:group/guests",
+			middlewares.GroupFilter(),
+			middlewares.GroupAdminFilter(),
+			GuestAdd)
+
+		groups.PUT("/:group/guests/:guestId",
+			middlewares.GroupFilter(),
+			middlewares.GroupAdminFilter(),
+			GuestUpdate)
+
+		groups.DELETE("/:group/guests/:guestId",
+			middlewares.GroupFilter(),
+			middlewares.GroupAdminFilter(),
+			GuestDelete)
+
+		groups.GET("/:group/jobs",
+			middlewares.GroupFilter(),
+			JobListing)
+
+		groups.POST("/:group/jobs",
+			middlewares.GroupFilter(),
+			JobAdd)
+
+>>>>>>> fc157b92e6aaffac4e506b943790d083b62a8426
 	}
 }

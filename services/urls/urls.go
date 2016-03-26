@@ -31,7 +31,7 @@ func Configure() {
 	ApiVisit = ApiRoot + "/visit"
 
 	WWWRoot = viper.GetString("www_root")
-	WWWApp = WWWRoot + "/app/"
+	WWWApp = WWWRoot + "/app"
 	WWWAccount = WWWRoot + "/account"
 	WWWLogin = WWWAccount + "/login"
 	WWWComplete = WWWRoot + "/account/complete_registration"

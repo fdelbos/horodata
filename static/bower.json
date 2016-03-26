@@ -1,11 +1,12 @@
 {
   "name": "ud",
   "authors": [
-    "Frederic Delbos <fred@hyperboloide.com>"
+    "Frederic Delbos <fred.delbos@gmail.com>"
   ],
   "description": "Horodata website",
   "main": "",
   "moduleType": [],
+  "license": "MIT",
   "homepage": "",
   "private": true,
   "ignore": [
@@ -21,9 +22,7 @@
     "angular-material": "~1.0.6",
     "angular-route": "~1.5.0",
     "lodash": "~4.6.1",
-    "moment": "^2.12.0",
-    "c3": "^0.4.10",
-    "c3-angular": "^1.1.0"
+    "moment": "^2.12.0"
   },
   "resolutions": {
     "angular": "1.5.0"
