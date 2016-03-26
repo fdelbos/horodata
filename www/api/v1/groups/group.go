@@ -26,7 +26,8 @@ func Group(r *gin.RouterGroup) {
 			gr.DELETE("/guests/:guestId", middlewares.GroupAdminFilter(), GuestDelete)
 			gr.GET("/jobs", JobListing)
 			gr.POST("/jobs", JobAdd)
-			gr.GET("/export", Export)
+			gr.GET("/export_csv", ExportCSV)
+			gr.GET("/export_xlsx", ExportXLSX)
 
 			stats := gr.Group("/stats")
 			{

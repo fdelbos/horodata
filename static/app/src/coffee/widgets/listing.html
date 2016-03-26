@@ -14,7 +14,7 @@
       <md-list-item class="md-body-2" hide show-gt-md>
         <div layout="row" layout-align="space-between center" flex>
           <div flex="15">Jour</div>
-          <div ng-if="isOwner" flex="25">Utilisateur</div>
+          <div ng-if="isAdmin" flex="25">Utilisateur</div>
           <div flex="25">Dossier</div>
           <div flex="25">Tâche</div>
           <div flex="10">Durée</div>
@@ -22,12 +22,12 @@
         <md-divider></md-divider>
       </md-list-item>
 
-      <md-list-item ng-repeat="i in listing.data()" ng-click="alert($event)" hide show-gt-md>
+      <md-list-item ng-repeat="i in listing.data()" ng-click="showDetail($event, i)" hide show-gt-md>
         <div layout="row" layout-align="space-between center" flex>
           <div flex="15">
             {{ i.created | Day }}
           </div>
-          <div flex="25" ng-if="isOwner">
+          <div flex="25" ng-if="isAdmin">
             {{ guests[i.creator_id].full_name }}
           </div>
           <div flex="25">
@@ -43,7 +43,7 @@
         <md-divider></md-divider>
       </md-list-item>
 
-      <md-list-item  ng-repeat="i in listing.data()" class="md-2-line" ng-click="alert($event)" hide-gt-md>
+      <md-list-item  ng-repeat="i in listing.data()" class="md-2-line" ng-click="showDetail($event, i)" hide-gt-md>
         <div class="md-list-item-text" layout="column">
           <div layout="row" layout-align="space-between center">
             <h3>
@@ -59,22 +59,6 @@
         <md-divider></md-divider>
       </md-list-item>
     </md-list>
-
-    <!-- <div layout="row" layout-align="space-around center">
-
-      {{listing.pages()}}
-
-      <md-button ng-if="listing.pages().prev" class="md-raised">
-        <md-icon class="md-36">navigate_before</md-icon>
-        <span>page {{ pagination.prev }}</span>
-      </md-button>
-
-      <md-button ng-if="listing.pages().next" ng-click="goTo(listing.pages().next)" class="md-raised">
-        <span>page {{ listing.pages().next }}</span>
-        <md-icon class="md-36">navigate_next</md-icon>
-      </md-button>
-
-    </div> -->
 
   </div>
 

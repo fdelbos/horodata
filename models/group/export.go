@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"encoding/csv"
 	"fmt"
+	"github.com/tealeg/xlsx"
 	"io"
 	"time"
 )
@@ -58,7 +59,7 @@ func (el *ExportLine) Scan(scanFn func(dest ...interface{}) error) error {
 		&el.Creator)
 }
 
-func (el *ExportLine) ToLine() []string {
+func (el *ExportLine) ToCSVLine() []string {
 	return []string{
 		el.Created.Format("2006-01-02"),
 		el.Creator,
@@ -70,7 +71,7 @@ func (el *ExportLine) ToLine() []string {
 	}
 }
 
-func (g *Group) Export(w io.Writer, begin, end time.Time, customer, creator *int64) error {
+func (g *Group) exportMakeQuery(begin, end time.Time, customer, creator *int64) (*sql.Rows, error) {
 	query := exportGenQuery(customer, creator)
 
 	var rows *sql.Rows
@@ -84,7 +85,11 @@ func (g *Group) Export(w io.Writer, begin, end time.Time, customer, creator *int
 	} else {
 		rows, err = postgres.DB().Query(query, g.Id, begin, end)
 	}
+	return rows, err
+}
 
+func (g *Group) ExportCSV(w io.Writer, begin, end time.Time, customer, creator *int64) error {
+	rows, err := g.exportMakeQuery(begin, end, customer, creator)
 	if err != nil {
 		return err
 	}
@@ -104,7 +109,7 @@ func (g *Group) Export(w io.Writer, begin, end time.Time, customer, creator *int
 		el := &ExportLine{}
 		if err := el.Scan(rows.Scan); err != nil {
 			return err
-		} else if err := cw.Write(el.ToLine()); err != nil {
+		} else if err := cw.Write(el.ToCSVLine()); err != nil {
 			return err
 		}
 	}
@@ -113,4 +118,46 @@ func (g *Group) Export(w io.Writer, begin, end time.Time, customer, creator *int
 	}
 	cw.Flush()
 	return nil
+}
+
+func (g *Group) ExportXLSX(w io.Writer, begin, end time.Time, customer, creator *int64) error {
+	rows, err := g.exportMakeQuery(begin, end, customer, creator)
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+
+	file := xlsx.NewFile()
+	sheet, err := file.AddSheet("Saisies")
+	if err != nil {
+		return err
+	}
+
+	header := sheet.AddRow()
+	header.AddCell().SetString("Date")
+	header.AddCell().SetString("Utilisateur")
+	header.AddCell().SetString("Dossier")
+	header.AddCell().SetString("Tâche")
+	header.AddCell().SetString("Durée (en heures)")
+	header.AddCell().SetString("Durée (en minutes)")
+	header.AddCell().SetString("Commentaire")
+
+	for rows.Next() {
+		el := &ExportLine{}
+		if err := el.Scan(rows.Scan); err != nil {
+			return err
+		}
+		line := sheet.AddRow()
+		line.AddCell().SetDate(el.Created)
+		line.AddCell().SetString(el.Creator)
+		line.AddCell().SetString(el.Customer)
+		line.AddCell().SetString(el.Task)
+		line.AddCell().SetFloatWithFormat(float64(el.Duration)/3600.0, "0.00")
+		line.AddCell().SetInt64(el.Duration / 60)
+		line.AddCell().SetString(el.Comment)
+	}
+	if err := rows.Err(); err != nil {
+		return err
+	}
+	return file.Write(w)
 }

@@ -1,0 +1,99 @@
+<md-dialog aria-label="Saisir une tâche" flex="40">
+
+  <div ng-if="group.tasks.length == 0 || group.customers.length == 0">
+    <md-dialog-content>
+      <app-widgets-empty-group><app-widgets-empty-group>
+    </md-dialog-content>
+    <md-dialog-actions>
+      <md-button ng-click="close()" class="md-raised">Fermer</md-button>
+    </md-dialog-actions>
+  </div>
+
+
+  <form ng-if="group.tasks.length > 0 && group.customers.length > 0" name="newTaskForm">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Detail de la tâche</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Fermer" ng-click="close()">
+          <md-icon class="md-24">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+
+        <div layout="column">
+
+
+          <md-input-container flex>
+            <label>Sélectionnez un dossier</label>
+            <md-select ng-model="detailJob.customer_id">
+              <md-option ng-repeat="c in group.customers" value="{{ c.id }}">
+                {{ c.name }}
+              </md-option>
+            </md-select>
+            <small ng-if="errors.customer" class="input-error">{{ errors.customer }}</small>
+          </md-input-container>
+
+          <md-input-container flex>
+            <label>Sélectionnez une tâche</label>
+            <md-select ng-model="detailJob.task_id">
+              <md-option ng-repeat="t in group.tasks" value="{{ t.id }}">
+                {{ t.name }}
+              </md-option>
+            </md-select>
+            <small ng-if="errors.task" class="input-error">{{ errors.task }}</small>
+          </md-input-container>
+
+          <div layout="row" layout-align="space-between center">
+
+            <md-input-container flex>
+              <label>Durée en heures</label>
+              <md-select ng-model="task.hours">
+                <md-option ng-repeat="h in hours" value="{{ h }}">
+                  {{ h }}
+                  <span ng-if="h > 1">heures</span>
+                  <span ng-if="h <= 1">heure</span>
+                </md-option>
+              </md-select>
+              <small ng-if="errors.duration" class="input-error">{{ errors.duration }}</small>
+            </md-input-container>
+
+            <md-input-container flex>
+              <label>Durée en minutes</label>
+              <md-select ng-model="task.minutes">
+                <md-option ng-repeat="m in minutes" value="{{ m }}">
+                  {{ m }}
+                  <span ng-if="m > 1">minutes</span>
+                  <span ng-if="m <= 1">minute</span>
+                </md-option>
+              </md-select>
+              <small ng-if="errors.duration" class="input-error">{{ errors.duration }}</small>
+            </md-input-container>
+          </div>
+
+          <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.comment}" >
+            <label>Commentaire</label>
+            <textarea md-no-autogrow ng-model="detailJob.comment" rows="3" md-select-on-focus></textarea>
+            <small ng-if="errors.comment" class="input-error">{{ errors.comment }}</small>
+          </md-input-container>
+
+        </div>
+
+
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions ng-if="!loading">
+      <md-button ng-click="send()" class="md-primary md-raised">Editer</md-button>
+      <md-button ng-click="close()" class="md-raised">Fermer</md-button>
+    </md-dialog-actions>
+
+    <md-dialog-actions ng-if="loading">
+      <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
