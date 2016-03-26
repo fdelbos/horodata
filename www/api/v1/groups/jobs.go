@@ -12,20 +12,16 @@ import (
 	"time"
 )
 
-func JobListing(c *gin.Context) {
-	g := middlewares.GetGroup(c)
-	guest := middlewares.GetGuest(c)
+func extractTime(c *gin.Context) (begin, end time.Time, errors map[string]string, err error) {
+	errors = map[string]string{}
 
 	const datefmt = "2006-01-02"
+
 	loc, err := time.LoadLocation("Europe/Paris")
 	if err != nil {
-		jsend.Error(c, err)
 		return
 	}
 
-	errors := map[string]string{}
-
-	var end time.Time
 	if c.Query("end") == "" {
 		errors["end"] = "Ce champ est obligatoire."
 	} else if t, err := time.ParseInLocation(datefmt, c.Query("end"), loc); err != nil {
@@ -36,9 +32,7 @@ func JobListing(c *gin.Context) {
 		end = t.Add(24 * time.Hour)
 	}
 
-	var begin time.Time
 	if len(errors) > 0 {
-		jsend.BadRequest(c, errors)
 		return
 	} else if c.Query("begin") == "" {
 		errors["begin"] = "Ce champ est obligatoire."
@@ -50,6 +44,52 @@ func JobListing(c *gin.Context) {
 		errors["begin"] = "Ce champ ne peut être supérieur à la date de fin."
 	} else {
 		begin = t
+	}
+	return
+}
+
+func extractGuestId(c *gin.Context) (guestId *int64, errors map[string]string, err error) {
+	errors = map[string]string{}
+
+	g := middlewares.GetGroup(c)
+	guest := middlewares.GetGuest(c)
+
+	if !guest.Admin {
+		guestId = &guest.Id
+	} else if str := c.Query("guest"); str == "" {
+		guestId = nil
+	} else if i, errConv := strconv.ParseInt(str, 10, 64); errConv != nil {
+		errors["guest"] = "Ce champ n'est pas valide."
+	} else if guestObj, errSql := g.GuestGetById(i); errSql == sqlerrors.NotFound {
+		errors["guest"] = "Ce champ n'est pas valide."
+	} else if errSql != nil {
+		err = errSql
+		return
+	} else {
+		guestId = &guestObj.Id
+	}
+	return
+}
+
+func JobListing(c *gin.Context) {
+	g := middlewares.GetGroup(c)
+
+	begin, end, errors, err := extractTime(c)
+	if err != nil {
+		jsend.Error(c, err)
+		return
+	} else if len(errors) > 0 {
+		jsend.BadRequest(c, errors)
+		return
+	}
+
+	guestId, errors, err := extractGuestId(c)
+	if err != nil {
+		jsend.Error(c, err)
+		return
+	} else if len(errors) > 0 {
+		jsend.BadRequest(c, errors)
+		return
 	}
 
 	var customerId *int64
@@ -64,22 +104,6 @@ func JobListing(c *gin.Context) {
 		return
 	} else {
 		customerId = &i
-	}
-
-	var guestUserId *int64
-	if !guest.Admin {
-		guestUserId = guest.UserId
-	} else if str := c.Query("guest"); str == "" {
-		guestUserId = nil
-	} else if i, err := strconv.ParseInt(str, 10, 64); err != nil {
-		errors["guest"] = "Ce champ n'est pas valide."
-	} else if guestObj, err := g.GuestGetById(i); err == sqlerrors.NotFound {
-		errors["guest"] = "Ce champ n'est pas valide."
-	} else if err != nil {
-		jsend.Error(c, err)
-		return
-	} else {
-		guestUserId = guestObj.UserId
 	}
 
 	offset := 0
@@ -112,7 +136,7 @@ func JobListing(c *gin.Context) {
 	}
 
 	request := &listing.Request{offset, size}
-	if res, err := g.JobApiList(begin, end, customerId, guestUserId, request); err != nil {
+	if res, err := g.JobApiList(begin, end, customerId, guestId, request); err != nil {
 		jsend.Error(c, err)
 	} else {
 		jsend.Ok(c, res)
@@ -122,7 +146,7 @@ func JobListing(c *gin.Context) {
 
 func JobAdd(c *gin.Context) {
 	g := middlewares.GetGroup(c)
-	u := middlewares.GetUser(c)
+	guest := middlewares.GetGuest(c)
 
 	var data struct {
 		Task     int64  `json:"task"`
@@ -177,7 +201,7 @@ func JobAdd(c *gin.Context) {
 	if len(errors) > 0 {
 		jsend.BadRequest(c, errors)
 		return
-	} else if err := g.JobAdd(data.Task, data.Customer, u.Id, data.Duration, data.Comment); err != nil {
+	} else if err := g.JobAdd(data.Task, data.Customer, guest.Id, data.Duration, data.Comment); err != nil {
 		jsend.Error(c, err)
 	} else {
 		jsend.Ok(c, nil)

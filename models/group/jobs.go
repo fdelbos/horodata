@@ -83,13 +83,9 @@ type JobApi struct {
 	Created    time.Time `json:"created"`
 	TaskId     int64     `json:"task_id"`
 	CustomerId int64     `json:"customer_id"`
-	Creator    struct {
-		Id       int64  `json:"id"`
-		FullName string `json:"full_name"`
-		Email    string `json:"email"`
-	} `json:"creator"`
-	Duration int64  `json:"duration"`
-	Comment  string `json:"comment,omitempty"`
+	CreatorId  int64     `json:"creator_id"`
+	Duration   int64     `json:"duration"`
+	Comment    string    `json:"comment,omitempty"`
 }
 
 func (j *JobApi) Scan(scanFn func(dest ...interface{}) error) error {
@@ -100,21 +96,18 @@ func (j *JobApi) Scan(scanFn func(dest ...interface{}) error) error {
 		&j.CustomerId,
 		&j.Duration,
 		&j.Comment,
-		&j.Creator.Id,
-		&j.Creator.FullName,
-		&j.Creator.Email)
+		&j.CreatorId)
 }
 
 func (g *Group) JobApiGet(id int64) (*JobApi, error) {
 	j := &JobApi{}
 	const query = `
     select
-		j.id, j.created, j.task_id, j.customer_id, j.duration, j.comment,
-		u.id, u.full_name, u.email
+		id, created, task_id, customer_id, duration, comment, creator_id
     from
-		jobs j join users u on (j.creator_id = u.id)
+		jobs
     where
-		j.group_id = $1 and j.id = $2;`
+		group_id = $1 and id = $2;`
 	return j, postgres.QueryRow(j, query, g.Id, id)
 }
 
@@ -168,16 +161,14 @@ func (g *Group) JobApiList(begin, end time.Time, customer, creator *int64, reque
 func jobApiGenQuery(customer, creator *int64) string {
 	const query = `
 	select
-		j.id, j.created, j.task_id, j.customer_id, j.duration, j.comment,
-		u.id, u.full_name, u.email
-	from
-		jobs j join users u on (j.creator_id = u.id)
+		id, created, task_id, customer_id, duration, comment, creator_id
+	from jobs
 	where
-			j.group_id = $1
-		and j.created > $2
-		and j.created < $3
+			group_id = $1
+		and created > $2
+		and created < $3
 		%s
-	order by j.id desc
+	order by id desc
 	limit $4 offset $5;`
 
 	cond := ""
@@ -194,11 +185,11 @@ func jobApiGenQuery(customer, creator *int64) string {
 func jobApiGenQueryCount(customer, creator *int64) string {
 	const query = `
 		select count(id)
-		from jobs j
+		from jobs
 		where
-				j.group_id = $1
-			and j.created > $2
-			and j.created < $3
+				group_id = $1
+			and created > $2
+			and created < $3
 			%s;`
 
 	cond := ""
