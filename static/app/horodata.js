@@ -6,7 +6,6 @@
 angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages", "gridshore.c3js.chart"]).config([
   "$mdDateLocaleProvider", "$mdThemingProvider", "$locationProvider", "$routeProvider", function($mdDateLocaleProvider, $mdThemingProvider, $locationProvider, $routeProvider) {
     var months;
-    moment.locale('fr');
     $mdThemingProvider.theme('default').primaryPalette('blue').accentPalette('pink');
     $mdThemingProvider.setDefaultTheme('default');
     $locationProvider.html5Mode(true);
@@ -17,6 +16,7 @@ angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages", "gridshore.c3
       templateUrl: "horodata/views/group.html",
       controller: "Group"
     });
+    moment.locale('fr');
     months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
     $mdDateLocaleProvider.month = months;
     $mdDateLocaleProvider.days = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'venredi', 'samedi'];
@@ -24,8 +24,18 @@ angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages", "gridshore.c3
     $mdDateLocaleProvider.firstDayOfWeek = 1;
     $mdDateLocaleProvider.msgCalendar = 'Calendrier';
     $mdDateLocaleProvider.msgOpenCalendar = 'Ouvrir le calendrier';
-    return $mdDateLocaleProvider.monthHeaderFormatter = function(date) {
+    $mdDateLocaleProvider.monthHeaderFormatter = function(date) {
       return months[date.getMonth()] + ' ' + date.getFullYear();
+    };
+    $mdDateLocaleProvider.parseDate = function(dateString) {
+      if (moment(dateString, 'L', true).isValid()) {
+        return m.toDate();
+      } else {
+        return new Date(NaN);
+      }
+    };
+    return $mdDateLocaleProvider.formatDate = function(date) {
+      return moment(date).format('L');
     };
   }
 ]).run([

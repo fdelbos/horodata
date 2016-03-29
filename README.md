@@ -29,5 +29,4 @@
 * login facebook
 * admin doit pouvoir modifier son taux horraire
 * csrf (x-request-with)
-* format date search francais
 * push (ajout tâche à la liste & notif lors de création de tâche par un collaborateur)

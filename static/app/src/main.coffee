@@ -12,8 +12,6 @@ angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages", "gridshore.c3
     $routeProvider
   ) ->
 
-    moment.locale('fr')
-
     $mdThemingProvider.theme('default')
       .primaryPalette('blue')
       .accentPalette('pink')
@@ -30,6 +28,10 @@ angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages", "gridshore.c3
         templateUrl: "horodata/views/group.html"
         controller: "Group")
 
+    # Dates and calendar
+
+    moment.locale('fr')
+
     months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
     $mdDateLocaleProvider.month = months
     $mdDateLocaleProvider.days = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'venredi', 'samedi']
@@ -39,6 +41,14 @@ angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages", "gridshore.c3
     $mdDateLocaleProvider.msgOpenCalendar = 'Ouvrir le calendrier';
     $mdDateLocaleProvider.monthHeaderFormatter = (date) ->
       months[date.getMonth()] + ' ' + date.getFullYear()
+    $mdDateLocaleProvider.parseDate = (dateString) ->
+      if moment(dateString, 'L', true).isValid()
+        return m.toDate()
+      else return new Date(NaN)
+    $mdDateLocaleProvider.formatDate = (date) -> moment(date).format('L')
+
+
+
 ])
 
 .run([
