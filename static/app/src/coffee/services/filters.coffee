@@ -6,6 +6,10 @@ angular.module("horodata").filter("Ago", [
   -> return (input) -> moment(input).fromNow()
 ])
 
+angular.module("horodata").filter("Date", [
+  -> return (input) -> moment(input).format('LLLL')
+])
+
 angular.module("horodata").filter("Duration", [
   -> return (input) ->
     d = moment.duration(input, 'seconds')

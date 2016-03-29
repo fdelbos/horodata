@@ -17,7 +17,7 @@ angular.module("horodata").directive("appWidgetsListing", [
         scope.detailJob = _.cloneDeep job
         console.log job
         popupService(
-          "horodata/widgets/detail.html"
+          "horodata/widgets/detail/dialog.html"
           "detailDialog"
           scope, ev)
 

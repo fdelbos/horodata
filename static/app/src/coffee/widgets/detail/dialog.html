@@ -1,16 +1,6 @@
-<md-dialog aria-label="Saisir une tâche" flex="40">
+<md-dialog aria-label="Detail de la tâche" flex="40">
 
-  <div ng-if="group.tasks.length == 0 || group.customers.length == 0">
-    <md-dialog-content>
-      <app-widgets-empty-group><app-widgets-empty-group>
-    </md-dialog-content>
-    <md-dialog-actions>
-      <md-button ng-click="close()" class="md-raised">Fermer</md-button>
-    </md-dialog-actions>
-  </div>
-
-
-  <form ng-if="group.tasks.length > 0 && group.customers.length > 0" name="newTaskForm">
+  <form  name="editTaskForm">
 
     <md-toolbar>
       <div class="md-toolbar-tools">
@@ -27,6 +17,7 @@
 
         <div layout="column">
 
+          <app-widgets-detail-meta></app-widgets-detail-meta>
 
           <md-input-container flex>
             <label>Sélectionnez un dossier</label>
@@ -52,7 +43,7 @@
 
             <md-input-container flex>
               <label>Durée en heures</label>
-              <md-select ng-model="task.hours">
+              <md-select ng-model="detailJob.hours">
                 <md-option ng-repeat="h in hours" value="{{ h }}">
                   {{ h }}
                   <span ng-if="h > 1">heures</span>
@@ -64,7 +55,7 @@
 
             <md-input-container flex>
               <label>Durée en minutes</label>
-              <md-select ng-model="task.minutes">
+              <md-select ng-model="detailJob.minutes">
                 <md-option ng-repeat="m in minutes" value="{{ m }}">
                   {{ m }}
                   <span ng-if="m > 1">minutes</span>
@@ -83,12 +74,11 @@
 
         </div>
 
-
       </div>
     </md-dialog-content>
 
     <md-dialog-actions ng-if="!loading">
-      <md-button ng-click="send()" class="md-primary md-raised">Editer</md-button>
+      <md-button ng-click="send()" ng-if="canEdit" class="md-primary md-raised">Editer</md-button>
       <md-button ng-click="close()" class="md-raised">Fermer</md-button>
     </md-dialog-actions>
 

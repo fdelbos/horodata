@@ -1,0 +1,20 @@
+<div>
+
+  <div layout="row">
+
+    <div ng-if="isAdmin" layout="column" flex>
+      <span class="md-caption">Utilisateur</span>
+      <div>{{ guests[detailJob.creator_id].full_name }}</div>
+    </div>
+
+    <div layout="column" flex>
+      <span class="md-caption">Cree le</span>
+      <div>{{ detailJob.created | Date }}</div>
+    </div>
+
+
+
+
+  </div>
+
+</div>

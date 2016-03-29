@@ -8,7 +8,6 @@
 * pb mot de passe non-enregistré dans le navigateur
 * appuyer sur touche "entrée" pour créer ou ajouter
 * supprimer un groupe
-* Supprimer "www" de l'adresse
 * Si vide, ajouter texte dans liste "Aucune tâche saisie"
 * Réduire police sur mobile
 * Désactiver les tool-tips
@@ -30,8 +29,5 @@
 * login facebook
 * admin doit pouvoir modifier son taux horraire
 * csrf (x-request-with)
-<<<<<<< HEAD
 * format date search francais
-=======
 * push (ajout tâche à la liste & notif lors de création de tâche par un collaborateur)
->>>>>>> fc157b92e6aaffac4e506b943790d083b62a8426
