@@ -79,6 +79,7 @@
 
     <md-dialog-actions ng-if="!loading">
       <md-button ng-click="send()" ng-if="canEdit" class="md-primary md-raised">Editer</md-button>
+      <md-button ng-click="delete()" ng-if="canEdit" class="md-raised md-warn">Supprimer</md-button>
       <md-button ng-click="close()" class="md-raised">Fermer</md-button>
     </md-dialog-actions>
 

@@ -11,7 +11,7 @@ angular.module("horodata").controller("Group", [
   ($http, $routeParams, $scope, titleService, userService, apiService, groupNewService, popupService, listingService)->
 
     $scope.isGroupView = true
-
+    $scope.selectedTab = 0
 
     $scope.search =
       begin: moment().subtract(1, 'months').toDate()
@@ -51,6 +51,8 @@ angular.module("horodata").controller("Group", [
         "horodata/views/new_task_form.html"
         "groupNewTaskDialog"
         $scope, ev)
+
+    $scope.selectTab = (i)-> $scope.selectedTab = i
 
 ])
 

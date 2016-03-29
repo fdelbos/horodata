@@ -15,15 +15,12 @@ angular.module("horodata").controller("detailDialog", [
     if $scope.isAdmin then $scope.canEdit = true
     else if moment($scope.detailJob.created).isSame(new Date(), "day")
       $scope.canEdit = true
-    console.log "$scope.canEdit #{$scope.canEdit}"
 
     $scope.hours = [0..12]
     $scope.minutes = (x for x in [0..55] by 5)
 
     $scope.detailJob.hours = Math.floor($scope.detailJob.duration / 3600)
-    $scope.detailJob.minutes = Math.floor($scope.detailJob.duration / 60)
-    console.log $scope.detailJob.minutes
-
+    $scope.detailJob.minutes = Math.floor(($scope.detailJob.duration % 3600) / 60)
 
     $scope.close = -> $mdDialog.hide()
 

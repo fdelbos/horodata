@@ -1,25 +1,32 @@
-<div>
+<div flex layout="column">
   <app-widgets-search-bar></app-widgets-search-bar>
 
-  <md-content>
-    <md-tabs md-dynamic-height md-border-bottom>
+  <md-content flex>
+    <md-tabs md-selected="selectedTab" md-dynamic-height md-border-bottom>
 
-      <md-tab label="Saisies">
-        <app-widgets-empty-group-boxed ng-if="group.tasks.length == 0 || group.customers.length == 0" group="group"></app-widgets-empty-group-boxed>
-        <app-widgets-listing ng-if="group.tasks.length > 0 && group.customers.length > 0"></app-widgets-listing>
+      <md-tab label="Saisies" layout="row">
+        <md-content md-swipe-left="selectTab(1)" flex>
+          <app-widgets-empty-group-boxed ng-if="group.tasks.length == 0 || group.customers.length == 0" group="group"></app-widgets-empty-group-boxed>
+          <app-widgets-listing ng-if="group.tasks.length > 0 && group.customers.length > 0"></app-widgets-listing>
+        </md-content>
       </md-tab>
 
+
       <md-tab label="Statistiques">
-        <app-widgets-empty-group-boxed ng-if="group.tasks.length == 0 || group.customers.length == 0" group="group"></app-widgets-empty-group-boxed>
-        <app-widgets-stats ng-if="group.tasks.length > 0 && group.customers.length > 0"></app-widgets-stats>
+        <div md-swipe-left="selectTab(2)" md-swipe-right="selectTab(0)" layout=column>
+          <app-widgets-empty-group-boxed ng-if="group.tasks.length == 0 || group.customers.length == 0" group="group"></app-widgets-empty-group-boxed>
+          <app-widgets-stats ng-if="group.tasks.length > 0 && group.customers.length > 0"></app-widgets-stats>
+        <div>
       </md-tab>
 
       <md-tab ng-if="isAdmin" label="Configuration" layout="column" layout-margin>
-        <app-widgets-configuration-guests></app-widgets-configuration-guests>
-        <md-divider></md-divider>
-        <app-widgets-configuration-customers></app-widgets-configuration-customers>
-        <md-divider></md-divider>
-        <app-widgets-configuration-tasks></app-widgets-configuration-tasks>
+        <div md-swipe-right="selectTab(1)">
+          <app-widgets-configuration-guests></app-widgets-configuration-guests>
+          <md-divider></md-divider>
+          <app-widgets-configuration-customers></app-widgets-configuration-customers>
+          <md-divider></md-divider>
+          <app-widgets-configuration-tasks></app-widgets-configuration-tasks>
+        </div>
       </md-tab>
 
     </md-tabs>
