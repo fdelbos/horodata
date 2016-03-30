@@ -76,18 +76,21 @@ create table usages (
     files bigint default 0  not null
 );
 
-create function user_new(email citext, full_name text)
+create function user_new(user_email citext, user_full_name text)
 returns void as $$
 declare
-  user_id bigint;
+  new_id bigint;
 begin
-    insert into users (email, full_name) values (email, full_name);
+    insert into users (email, full_name) values (user_email, user_full_name);
 
-    user_id := lastval();
+    new_id := lastval();
 
-    insert into quotas (user_id) values (user_id);
+    insert into quotas (user_id) values (new_id);
 
-    insert into usages (user_id) values (user_id);
+    insert into usages (user_id) values (new_id);
+
+    update guests set user_id = new_id where email = user_email;
+
 end;
 $$ language plpgsql;
 
@@ -240,7 +243,7 @@ create table guests (
     rate int default 0 not null,
     admin boolean default false not null,
     email citext not null,
-    unique(group_id, user_id)
+    unique(group_id, user_id, email)
 );
 
 create table jobs (

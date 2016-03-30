@@ -3,7 +3,6 @@
 
 ## Todo:
 * api query for quota bonus
-* merge invitations with new users
 * check maximum number of user one can import.
 * pb mot de passe non-enregistré dans le navigateur
 * appuyer sur touche "entrée" pour créer ou ajouter

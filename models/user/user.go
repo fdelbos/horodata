@@ -1,13 +1,14 @@
 package user
 
 import (
+	"database/sql"
+	"fmt"
+	"time"
+
 	"bitbucket.com/hyperboloide/horo/services/cache"
 	"bitbucket.com/hyperboloide/horo/services/mail"
 	"bitbucket.com/hyperboloide/horo/services/postgres"
-	"database/sql"
-	"fmt"
 	"golang.org/x/crypto/bcrypt"
-	"time"
 )
 
 type User struct {
