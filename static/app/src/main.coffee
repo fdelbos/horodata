@@ -47,8 +47,6 @@ angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages", "gridshore.c3
       else return new Date(NaN)
     $mdDateLocaleProvider.formatDate = (date) -> moment(date).format('L')
 
-
-
 ])
 
 .run([

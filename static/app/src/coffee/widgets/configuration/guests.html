@@ -1,22 +1,25 @@
-<div  layout-margin layout-padding>
+<div  layout-padding>
 
   <div layout="column" flex-sm="70" flex-md="80" flex-gt-md="60">
 
     <div layout="row" layout-align="space-between center">
-      <div class="md-display-1">
+      <div class="md-display-1" hide show-gt-sm>
+        Utilisateurs
+      </div>
+      <div class="md-headline" hide-gt-sm>
         Utilisateurs
       </div>
 
       <md-button ng-click="guests.create($event)" class="md-raised md-primary" hide show-gt-sm>
+        <md-tooltip md-direction="top">
+          Ajouter un nouvel utilisateur
+        </md-tooltip>
         <md-icon class="md-18">add</md-icon>
         Ajouter
       </md-button>
 
-      <md-button ng-click="guests.create($event)" class="md-fab md-primary" hide-gt-sm aria-label="Ajouter un nouvel utilisateur">
-        <md-tooltip md-direction="top">
-          Ajouter un nouvel utilisateur
-        </md-tooltip>
-        <md-icon class="md-36">add</md-icon>
+      <md-button ng-click="guests.create($event)" class="md-fab md-mini md-primary" hide-gt-sm aria-label="Ajouter un nouvel utilisateur">
+        <md-icon class="md-24">add</md-icon>
       </md-button>
     </div>
 
