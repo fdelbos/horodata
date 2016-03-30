@@ -1,0 +1,53 @@
+<md-dialog aria-label="Supprimer le groupe" flex="40">
+
+    <md-toolbar class="md-warn">
+      <div class="md-toolbar-tools">
+        <h2>Supprimer le groupe</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Fermer" ng-click="close()">
+          <md-icon class="md-24">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+
+        <div class="md-headline input-error" layout="row" layout-align="center center" flex>
+          <span>Cette operation est irreversible!</span>
+        </div>
+
+        <br>
+        <br>
+
+        <div>
+          Toutes les donnees seront definitivement effacees!
+          <br>
+          Cela inclus:
+          <ul>
+            <li>Les saisies</li>
+            <li>Les exports</li>
+            <li>Les statistiques</li>
+            <li>Les utilisateurs</li>
+            <li>Les dossiers</li>
+            <li>Les taches</li>
+          </ul>
+          <br>
+
+          Pensez a exporter les saisies avant de realiser cette operation!
+
+        </div>
+
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions ng-if="!loading">
+      <md-button ng-click="delete()" class="md-primary md-raised md-warn">Supprimer</md-button>
+      <md-button ng-click="close()" class="md-raised">Annuler</md-button>
+    </md-dialog-actions>
+
+    <md-dialog-actions ng-if="loading">
+      <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+    </md-dialog-actions>
+
+</md-dialog>

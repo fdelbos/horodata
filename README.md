@@ -7,7 +7,6 @@
 * check maximum number of user one can import.
 * pb mot de passe non-enregistré dans le navigateur
 * appuyer sur touche "entrée" pour créer ou ajouter
-* supprimer un groupe
 * Si vide, ajouter texte dans liste "Aucune tâche saisie"
 * Désactiver les tool-tips
 * Message dans zone blanche page d'accueil "Sélectionnez ou créez un groupe" /Différent PC et mobile ?
@@ -29,3 +28,10 @@
 * csrf (x-request-with)
 * push (ajout tâche à la liste & notif lors de création de tâche par un collaborateur)
 * quota par owner/jour -> total des taches
+* force mdp : https://github.com/dropbox/zxcvbn + captcha si + 10 dans la journee.
+
+
+## Later:
+* Pointage avec « heure temps-réel »
+* Multi-langues
+* Transférer la possession du compte vers un autre compte (ex : qq1 qui s’en va de l’entreprise)

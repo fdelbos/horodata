@@ -1,10 +1,11 @@
 package group
 
 import (
+	"time"
+
 	"bitbucket.com/hyperboloide/horo/helpers"
 	"bitbucket.com/hyperboloide/horo/models/user"
 	"bitbucket.com/hyperboloide/horo/services/postgres"
-	"time"
 )
 
 type Group struct {
@@ -46,6 +47,11 @@ func (g *Group) Insert() error {
 	values ($1, $2, $3);`
 
 	return postgres.Exec(query, g.OwnerId, g.Name, g.Url)
+}
+
+func (g *Group) Delete() error {
+	const query = `delete from groups where id = $1`
+	return postgres.Exec(query, g.Id)
 }
 
 func ByUrl(url string) (*Group, error) {

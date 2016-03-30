@@ -1,13 +1,15 @@
 package group_test
 
 import (
+	"time"
+
 	"bitbucket.com/hyperboloide/horo/helpers/tests"
+	"bitbucket.com/hyperboloide/horo/models/errors"
 	. "bitbucket.com/hyperboloide/horo/models/group"
 	"bitbucket.com/hyperboloide/horo/models/types/listing"
 	"github.com/davecgh/go-spew/spew"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"time"
 )
 
 var _ = Describe("Group", func() {
@@ -131,13 +133,17 @@ var _ = Describe("Group", func() {
 		Ω(err).To(BeNil())
 
 		Ω(group.GuestAdd(guestUser.Email, 4242, false, true)).To(BeNil())
-		guests, err := group.Guests()
+		guests, err := group.ApiGuests()
 		Ω(err).To(BeNil())
-		Ω(len(guests)).To(Equal(1))
-		g := guests[0]
-		Ω(g.Email).To(Equal(guestUser.Email))
-		Ω(*g.UserId).To(Equal(guestUser.Id))
-		Ω(g.Admin).To(BeFalse())
+		Ω(len(guests)).To(Equal(2))
+
+		guestApi, err := group.GuestGetByEmail(guestUser.Email)
+		Ω(err).To(BeNil())
+		Ω(guestApi.Email).To(Equal(guestUser.Email))
+		Ω(guestApi.Admin).To(BeFalse())
+
+		g, err := group.GuestGetById(guestApi.Id)
+		Ω(err).To(BeNil())
 
 		g.Admin = true
 		Ω(g.Update()).To(BeNil())
@@ -201,5 +207,11 @@ var _ = Describe("Group", func() {
 		Ω(err).To(BeNil())
 		Ω(res.Size).To(Equal(1))
 		Ω(res.Total).To(Equal(int64(1)))
+	})
+
+	It("should delete group", func() {
+		Ω(group.Delete()).To(BeNil())
+		_, err := ByUrl(group.Url)
+		Ω(err).To(Equal(errors.NotFound))
 	})
 })

@@ -1,11 +1,12 @@
 package group
 
 import (
+	"time"
+
 	"bitbucket.com/hyperboloide/horo/models/errors"
 	"bitbucket.com/hyperboloide/horo/models/user"
 	"bitbucket.com/hyperboloide/horo/services/mail"
 	"bitbucket.com/hyperboloide/horo/services/postgres"
-	"time"
 )
 
 type Guest struct {
@@ -167,7 +168,7 @@ func (g *Group) ApiGuests() ([]ApiGuest, error) {
 	from
 		guests g left outer join users u on (g.user_id = u.id)
     where
-		group_id = $1`
+		g.group_id = $1`
 
 	rows, err := postgres.DB().Query(query, g.Id)
 	if err != nil {

@@ -1,0 +1,34 @@
+<div  layout-padding>
+
+  <div layout="column" flex-sm="70" flex-md="80" flex-gt-md="60">
+
+    <div layout="row" layout-align="space-between center">
+      <div class="md-display-1 input-error" hide show-gt-sm>
+        Supprimer le groupe
+      </div>
+      <div class="md-headline input-error" hide-gt-sm>
+        Supprimer le groupe
+      </div>
+
+      <md-button ng-click="deleteGroup($event)" class="md-raised md-warn" hide show-gt-sm>
+        <md-tooltip md-direction="top">
+          Supprimer le groupe
+        </md-tooltip>
+        <md-icon class="md-18">delete</md-icon>
+        Supprimer
+      </md-button>
+
+      <md-button ng-click="deleteGroup($event)" class="md-fab md-mini md-warn" hide-gt-sm aria-label="Supprimer le groupe">
+        <md-icon class="md-24">delete</md-icon>
+      </md-button>
+    </div>
+
+    <p class="md-body-1">
+      Toutes les donnees seront definitivement effacees. Cette operation est irreversible.
+      <br>
+      Pensez a exporter les saisies avant de realiser cette operation.
+      <br>
+    </p>
+
+  </div>
+</div>

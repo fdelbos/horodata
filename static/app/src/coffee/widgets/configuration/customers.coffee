@@ -75,7 +75,7 @@ angular.module("horodata").controller("appWidgetsConfigurationCustomersDialog", 
 
     $scope.delete = ->
       $scope.loading = true
-      $http.delete("#{apiService.get()}/groups/#{$scope.group.url}/customers/#{ $scope.customers.selected }", $scope.customers.current).then(
+      $http.delete("#{apiService.get()}/groups/#{$scope.group.url}/customers/#{ $scope.customers.selected }").then(
         (resp) ->
           $mdDialog.hide()
           $mdToast.showSimple("Dossier '#{$scope.customers.current.name}' supprimé")

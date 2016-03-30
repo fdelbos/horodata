@@ -1,0 +1,12 @@
+<div>
+  <app-widgets-configuration-guests></app-widgets-configuration-guests>
+  <md-divider></md-divider>
+  <app-widgets-configuration-customers></app-widgets-configuration-customers>
+  <md-divider></md-divider>
+  <app-widgets-configuration-tasks></app-widgets-configuration-tasks>
+
+  <md-divider ng-if="group.owner == user.id"></md-divider>
+  <app-widgets-configuration-delete ng-if="group.owner == user.id"></app-widgets-configuration-delete>
+
+  <div class="free-space"></div>
+</div>

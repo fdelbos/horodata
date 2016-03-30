@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Group for Groups package urls
 func Group(r *gin.RouterGroup) {
 	groups := r.Group("/groups")
 	{
@@ -15,6 +16,7 @@ func Group(r *gin.RouterGroup) {
 		gr.Use(middlewares.GroupFilter())
 		{
 			gr.GET("", Get)
+			gr.DELETE("", middlewares.GroupOwnerFilter(), Delete)
 			gr.POST("/tasks", middlewares.GroupAdminFilter(), TaskAdd)
 			gr.PUT("/tasks/:taskId", middlewares.GroupAdminFilter(), TaskUpdate)
 			gr.DELETE("/tasks/:taskId", middlewares.GroupAdminFilter(), TaskDelete)

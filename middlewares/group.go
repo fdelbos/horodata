@@ -1,13 +1,15 @@
 package middlewares
 
 import (
+	"net/http"
+
 	"bitbucket.com/hyperboloide/horo/models/errors"
 	"bitbucket.com/hyperboloide/horo/models/group"
 	log "github.com/Sirupsen/logrus"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
+// GroupFilter makes sure group exists and that the user is part of this group
 func GroupFilter() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
@@ -39,6 +41,7 @@ func GroupFilter() gin.HandlerFunc {
 	}
 }
 
+// GroupAdminFilter makes sure that the user is a group admin
 func GroupAdminFilter() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		guest := GetGuest(c)
@@ -51,10 +54,26 @@ func GroupAdminFilter() gin.HandlerFunc {
 	}
 }
 
+// GroupOwnerFilter makes sure the user is the owner of the group
+func GroupOwnerFilter() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		guest := GetGuest(c)
+		group := GetGroup(c)
+		if *guest.UserId != group.OwnerId {
+			c.JSON(403, http.StatusText(403))
+			c.Abort()
+		} else {
+			c.Next()
+		}
+	}
+}
+
+// GetGroup returns the Group
 func GetGroup(c *gin.Context) *group.Group {
 	return c.MustGet("group").(*group.Group)
 }
 
+// GetGuest returns the Guest
 func GetGuest(c *gin.Context) *group.Guest {
 	return c.MustGet("guest").(*group.Guest)
 }

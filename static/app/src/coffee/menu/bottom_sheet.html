@@ -1,30 +1,55 @@
 <md-bottom-sheet class="md-list md-has-header" ng-cloak>
 
-  <md-subheader>Menu</md-subheader>
+  <!-- <md-subheader>Menu</md-subheader> -->
 
-  <md-list>
+  <div layout="row" hide show-sm layout-padding layout-align="space-around center">
 
-    <md-list-item>
-      <md-button class="md-list-item-content">
-        <md-icon>trending_up</md-icon>
-        <span class="md-inline-list-icon-label">Plan et Quota</span>
+    <div layout="column" layout-align="center center">
+      <md-button class="md-fab md-primary">
+        <md-icon class="md-36">trending_up</md-icon>
       </md-button>
-    </md-list-item>
+      <div>Plan et Quota</div>
+    </div>
 
-    <md-list-item>
-      <md-button class="md-list-item-content">
-        <md-icon>euro_symbol</md-icon>
-        <span class="md-inline-list-icon-label">Abonnement et Factures</span>
+    <div layout="column" layout-align="center center">
+      <md-button class="md-fab md-primary">
+        <md-icon class="md-36">euro_symbol</md-icon>
       </md-button>
-    </md-list-item>
+      <div>Abonnement et Factures</div>
+    </div>
 
-    <md-list-item>
-      <md-button class="md-list-item-content" ng-href="{{ home }}/account/logout">
-        <md-icon>directions_run</md-icon>
-        <span class="md-inline-list-icon-label">Quitter</span>
+    <div layout="column" layout-align="center center">
+      <md-button class="md-fab md-warn" ng-href="{{ home }}/account/logout">
+        <md-icon class="md-36">directions_run</md-icon>
       </md-button>
-    </md-list-item>
+      <div>Quitter</div>
+    </div>
 
-  </md-list>
+  </div>
+
+  <div layout="column" hide show-xs layout-padding layout-align="start start">
+
+    <div layout="row" layout-align="center center">
+      <md-button class="md-fab md-mini md-primary">
+        <md-icon class="md-24">trending_up</md-icon>
+      </md-button>
+      <div>Plan et Quota</div>
+    </div>
+
+    <div layout="row" layout-align="center center">
+      <md-button class="md-fab md-mini md-primary">
+        <md-icon class="md-24">euro_symbol</md-icon>
+      </md-button>
+      <div>Abonnement et Factures</div>
+    </div>
+
+    <div layout="row" layout-align="center center">
+      <md-button class="md-fab md-mini md-warn" ng-href="{{ home }}/account/logout">
+        <md-icon class="md-24">directions_run</md-icon>
+      </md-button>
+      <div>Quitter</div>
+    </div>
+
+  </div>
 
 </md-bottom-sheet>

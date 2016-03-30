@@ -1,14 +1,16 @@
 package groups
 
 import (
+	"encoding/json"
+
 	"bitbucket.com/hyperboloide/horo/middlewares"
 	"bitbucket.com/hyperboloide/horo/models/group"
 	"bitbucket.com/hyperboloide/horo/models/types/listing"
 	"bitbucket.com/hyperboloide/horo/www/api/jsend"
-	"encoding/json"
 	"github.com/gin-gonic/gin"
 )
 
+// Listing lists groups available to the user
 func Listing(c *gin.Context) {
 	u := middlewares.GetUser(c)
 	if request, errs := listing.NewRequest(c); errs != nil {
@@ -22,6 +24,7 @@ func Listing(c *gin.Context) {
 	}
 }
 
+// Create a new group
 func Create(c *gin.Context) {
 	u := middlewares.GetUser(c)
 	var data struct {
@@ -49,15 +52,16 @@ func Create(c *gin.Context) {
 	}
 	if err := g.Insert(); err != nil {
 		jsend.Error(c, err)
-	} else if g, err := group.ByUrl(g.Url); err != nil {
+	} else if newG, err := group.ByUrl(g.Url); err != nil {
 		jsend.Error(c, err)
-	} else if err := g.GuestAdd(u.Email, 0, true, false); err != nil {
+	} else if err := newG.GuestAdd(u.Email, 0, true, false); err != nil {
 		jsend.Error(c, err)
 	} else {
-		jsend.Ok(c, g)
+		jsend.Ok(c, newG)
 	}
 }
 
+// Get the group from url
 func Get(c *gin.Context) {
 	guest := middlewares.GetGuest(c)
 	group := middlewares.GetGroup(c)
@@ -66,5 +70,16 @@ func Get(c *gin.Context) {
 		jsend.Error(c, err)
 	} else {
 		jsend.Ok(c, detail)
+	}
+}
+
+// Delete the group from url
+func Delete(c *gin.Context) {
+	group := middlewares.GetGroup(c)
+
+	if err := group.Delete(); err != nil {
+		jsend.Error(c, err)
+	} else {
+		jsend.Ok(c, nil)
 	}
 }

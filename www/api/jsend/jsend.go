@@ -1,9 +1,10 @@
 package jsend
 
 import (
+	"net/http"
+
 	log "github.com/Sirupsen/logrus"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 type Response struct {
