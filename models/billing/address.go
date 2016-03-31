@@ -1,8 +1,9 @@
 package billing
 
 import (
-	"bitbucket.com/hyperboloide/ud/services/postgres"
 	"time"
+
+	"dev.hyperboloide.com/fred/horodata/services/postgres"
 )
 
 type Address struct {

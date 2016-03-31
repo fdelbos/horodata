@@ -1,7 +1,7 @@
 package billing_test
 
 import (
-	. "bitbucket.com/hyperboloide/ud/models/billing"
+	. "dev.hyperboloide.com/fred/horodata/models/billing"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"

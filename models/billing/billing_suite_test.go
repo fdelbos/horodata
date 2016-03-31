@@ -1,12 +1,13 @@
 package billing_test
 
 import (
-	"bitbucket.com/hyperboloide/ud/config"
-	"bitbucket.com/hyperboloide/ud/helpers/tests"
-	"bitbucket.com/hyperboloide/ud/models/user"
+	"testing"
+
+	"dev.hyperboloide.com/fred/horodata/config"
+	"dev.hyperboloide.com/fred/horodata/helpers/tests"
+	"dev.hyperboloide.com/fred/horodata/models/user"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"testing"
 )
 
 var Owner *user.User

@@ -1,4 +1,4 @@
-package: bitbucket.com/hyperboloide/ud
+package: dev.hyperboloide.com/fred/horodata
 import:
 - package: github.com/lib/pq
 - package: github.com/spf13/viper

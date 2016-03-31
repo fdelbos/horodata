@@ -1,12 +1,13 @@
 package billing
 
 import (
-	"bitbucket.com/hyperboloide/ud/models/user"
-	"bitbucket.com/hyperboloide/ud/services/postgres"
+	"time"
+
+	"dev.hyperboloide.com/fred/horodata/models/user"
+	"dev.hyperboloide.com/fred/horodata/services/postgres"
 	"github.com/stripe/stripe-go"
 	"github.com/stripe/stripe-go/card"
 	"github.com/stripe/stripe-go/customer"
-	"time"
 )
 
 type Customer struct {
