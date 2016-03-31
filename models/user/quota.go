@@ -1,9 +1,9 @@
 package user
 
 import (
-	"bitbucket.com/hyperboloide/horo/models/errors"
-	"bitbucket.com/hyperboloide/horo/services/cache"
-	"bitbucket.com/hyperboloide/horo/services/postgres"
+	"dev.hyperboloide.com/fred/horodata/models/errors"
+	"dev.hyperboloide.com/fred/horodata/services/cache"
+	"dev.hyperboloide.com/fred/horodata/services/postgres"
 	"database/sql"
 	"fmt"
 	"time"

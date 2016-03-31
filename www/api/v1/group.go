@@ -1,8 +1,8 @@
 package v1
 
 import (
-	"bitbucket.com/hyperboloide/horo/www/api/v1/groups"
-	"bitbucket.com/hyperboloide/horo/www/api/v1/users"
+	"dev.hyperboloide.com/fred/horodata/www/api/v1/groups"
+	"dev.hyperboloide.com/fred/horodata/www/api/v1/users"
 	"github.com/gin-gonic/gin"
 )
 

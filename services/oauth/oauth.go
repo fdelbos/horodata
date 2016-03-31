@@ -1,7 +1,7 @@
 package oauth
 
 import (
-	"bitbucket.com/hyperboloide/horo/services/cookies"
+	"dev.hyperboloide.com/fred/horodata/services/cookies"
 	"fmt"
 	"github.com/markbates/goth"
 	"github.com/markbates/goth/gothic"

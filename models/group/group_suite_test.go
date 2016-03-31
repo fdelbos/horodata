@@ -1,9 +1,9 @@
 package group_test
 
 import (
-	"bitbucket.com/hyperboloide/horo/config"
-	"bitbucket.com/hyperboloide/horo/helpers/tests"
-	"bitbucket.com/hyperboloide/horo/models/user"
+	"dev.hyperboloide.com/fred/horodata/config"
+	"dev.hyperboloide.com/fred/horodata/helpers/tests"
+	"dev.hyperboloide.com/fred/horodata/models/user"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"testing"

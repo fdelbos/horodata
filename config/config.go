@@ -1,13 +1,13 @@
 package config
 
 import (
-	"bitbucket.com/hyperboloide/horo/services/cache"
-	"bitbucket.com/hyperboloide/horo/services/captcha"
-	"bitbucket.com/hyperboloide/horo/services/cookies"
-	"bitbucket.com/hyperboloide/horo/services/oauth"
-	"bitbucket.com/hyperboloide/horo/services/payment"
-	"bitbucket.com/hyperboloide/horo/services/postgres"
-	"bitbucket.com/hyperboloide/horo/services/urls"
+	"dev.hyperboloide.com/fred/horodata/services/cache"
+	"dev.hyperboloide.com/fred/horodata/services/captcha"
+	"dev.hyperboloide.com/fred/horodata/services/cookies"
+	"dev.hyperboloide.com/fred/horodata/services/oauth"
+	"dev.hyperboloide.com/fred/horodata/services/payment"
+	"dev.hyperboloide.com/fred/horodata/services/postgres"
+	"dev.hyperboloide.com/fred/horodata/services/urls"
 	log "github.com/Sirupsen/logrus"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"

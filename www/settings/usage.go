@@ -1,9 +1,9 @@
 package settings
 
 import (
-	"bitbucket.com/hyperboloide/horo/html"
-	"bitbucket.com/hyperboloide/horo/middlewares"
-	"bitbucket.com/hyperboloide/horo/models/user"
+	"dev.hyperboloide.com/fred/horodata/html"
+	"dev.hyperboloide.com/fred/horodata/middlewares"
+	"dev.hyperboloide.com/fred/horodata/models/user"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )

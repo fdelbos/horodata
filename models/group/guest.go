@@ -3,10 +3,10 @@ package group
 import (
 	"time"
 
-	"bitbucket.com/hyperboloide/horo/models/errors"
-	"bitbucket.com/hyperboloide/horo/models/user"
-	"bitbucket.com/hyperboloide/horo/services/mail"
-	"bitbucket.com/hyperboloide/horo/services/postgres"
+	"dev.hyperboloide.com/fred/horodata/models/errors"
+	"dev.hyperboloide.com/fred/horodata/models/user"
+	"dev.hyperboloide.com/fred/horodata/services/mail"
+	"dev.hyperboloide.com/fred/horodata/services/postgres"
 )
 
 type Guest struct {

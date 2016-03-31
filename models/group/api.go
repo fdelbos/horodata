@@ -1,8 +1,8 @@
 package group
 
 import (
-	"bitbucket.com/hyperboloide/horo/models/types/listing"
-	"bitbucket.com/hyperboloide/horo/services/postgres"
+	"dev.hyperboloide.com/fred/horodata/models/types/listing"
+	"dev.hyperboloide.com/fred/horodata/services/postgres"
 	"time"
 )
 

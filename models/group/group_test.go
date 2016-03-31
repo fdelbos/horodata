@@ -3,10 +3,10 @@ package group_test
 import (
 	"time"
 
-	"bitbucket.com/hyperboloide/horo/helpers/tests"
-	"bitbucket.com/hyperboloide/horo/models/errors"
-	. "bitbucket.com/hyperboloide/horo/models/group"
-	"bitbucket.com/hyperboloide/horo/models/types/listing"
+	"dev.hyperboloide.com/fred/horodata/helpers/tests"
+	"dev.hyperboloide.com/fred/horodata/models/errors"
+	. "dev.hyperboloide.com/fred/horodata/models/group"
+	"dev.hyperboloide.com/fred/horodata/models/types/listing"
 	"github.com/davecgh/go-spew/spew"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"

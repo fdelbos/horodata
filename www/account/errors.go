@@ -1,7 +1,7 @@
 package account
 
 import (
-	"bitbucket.com/hyperboloide/horo/html"
+	"dev.hyperboloide.com/fred/horodata/html"
 	log "github.com/Sirupsen/logrus"
 	"github.com/gin-gonic/gin"
 	"net/http"

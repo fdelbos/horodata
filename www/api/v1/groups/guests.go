@@ -1,9 +1,9 @@
 package groups
 
 import (
-	"bitbucket.com/hyperboloide/horo/middlewares"
-	sqlerrors "bitbucket.com/hyperboloide/horo/models/errors"
-	"bitbucket.com/hyperboloide/horo/www/api/jsend"
+	"dev.hyperboloide.com/fred/horodata/middlewares"
+	sqlerrors "dev.hyperboloide.com/fred/horodata/models/errors"
+	"dev.hyperboloide.com/fred/horodata/www/api/jsend"
 	"encoding/json"
 	valid "github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"

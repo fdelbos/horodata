@@ -1,8 +1,8 @@
 package tests
 
 import (
-	"bitbucket.com/hyperboloide/horo/models/user"
-	"bitbucket.com/hyperboloide/horo/services/postgres"
+	"dev.hyperboloide.com/fred/horodata/models/user"
+	"dev.hyperboloide.com/fred/horodata/services/postgres"
 	"github.com/dchest/uniuri"
 )
 

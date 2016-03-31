@@ -1,8 +1,8 @@
 package user
 
 import (
-	"bitbucket.com/hyperboloide/horo/services/cache"
-	"bitbucket.com/hyperboloide/horo/services/postgres"
+	"dev.hyperboloide.com/fred/horodata/services/cache"
+	"dev.hyperboloide.com/fred/horodata/services/postgres"
 	"fmt"
 	"strconv"
 	"time"

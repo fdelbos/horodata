@@ -1,7 +1,7 @@
 package helpers
 
 import (
-	"bitbucket.com/hyperboloide/horo/models/errors"
+	"dev.hyperboloide.com/fred/horodata/models/errors"
 	"fmt"
 	"github.com/dchest/uniuri"
 	neturl "net/url"

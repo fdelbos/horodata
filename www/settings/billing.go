@@ -1,11 +1,11 @@
 package settings
 
 import (
-	"bitbucket.com/hyperboloide/horo/html"
-	"bitbucket.com/hyperboloide/horo/middlewares"
-	"bitbucket.com/hyperboloide/horo/models/billing"
-	"bitbucket.com/hyperboloide/horo/models/errors"
-	"bitbucket.com/hyperboloide/horo/services/payment"
+	"dev.hyperboloide.com/fred/horodata/html"
+	"dev.hyperboloide.com/fred/horodata/middlewares"
+	"dev.hyperboloide.com/fred/horodata/models/billing"
+	"dev.hyperboloide.com/fred/horodata/models/errors"
+	"dev.hyperboloide.com/fred/horodata/services/payment"
 	valid "github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"net/http"

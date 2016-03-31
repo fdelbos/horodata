@@ -1,8 +1,8 @@
 package groups
 
 import (
-	"bitbucket.com/hyperboloide/horo/middlewares"
-	"bitbucket.com/hyperboloide/horo/www/api/jsend"
+	"dev.hyperboloide.com/fred/horodata/middlewares"
+	"dev.hyperboloide.com/fred/horodata/www/api/jsend"
 	"github.com/gin-gonic/gin"
 )
 

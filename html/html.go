@@ -1,10 +1,10 @@
 package html
 
 import (
-	"bitbucket.com/hyperboloide/horo/middlewares"
-	"bitbucket.com/hyperboloide/horo/models/user"
-	"bitbucket.com/hyperboloide/horo/services/cookies"
-	"bitbucket.com/hyperboloide/horo/services/urls"
+	"dev.hyperboloide.com/fred/horodata/middlewares"
+	"dev.hyperboloide.com/fred/horodata/models/user"
+	"dev.hyperboloide.com/fred/horodata/services/cookies"
+	"dev.hyperboloide.com/fred/horodata/services/urls"
 	"bytes"
 	"fmt"
 	log "github.com/Sirupsen/logrus"

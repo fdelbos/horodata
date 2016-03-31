@@ -1,9 +1,9 @@
 package account
 
 import (
-	"bitbucket.com/hyperboloide/horo/html"
-	sqlerrors "bitbucket.com/hyperboloide/horo/models/errors"
-	"bitbucket.com/hyperboloide/horo/models/user"
+	"dev.hyperboloide.com/fred/horodata/html"
+	sqlerrors "dev.hyperboloide.com/fred/horodata/models/errors"
+	"dev.hyperboloide.com/fred/horodata/models/user"
 	valid "github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"net/http"

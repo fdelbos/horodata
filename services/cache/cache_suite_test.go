@@ -1,8 +1,8 @@
 package cache_test
 
 import (
-	_ "bitbucket.com/hyperboloide/horo/config"
-	"bitbucket.com/hyperboloide/horo/services/cache"
+	_ "dev.hyperboloide.com/fred/horodata/config"
+	"dev.hyperboloide.com/fred/horodata/services/cache"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"testing"

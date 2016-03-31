@@ -1,8 +1,8 @@
 package api
 
 import (
-	"bitbucket.com/hyperboloide/horo/middlewares"
-	"bitbucket.com/hyperboloide/horo/www/api/v1"
+	"dev.hyperboloide.com/fred/horodata/middlewares"
+	"dev.hyperboloide.com/fred/horodata/www/api/v1"
 	"github.com/gin-gonic/gin"
 )
 

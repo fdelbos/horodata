@@ -1,7 +1,7 @@
 package cache
 
 import (
-	"bitbucket.com/hyperboloide/horo/models/errors"
+	"dev.hyperboloide.com/fred/horodata/models/errors"
 	"encoding/json"
 	"fmt"
 	"gopkg.in/redis.v3"

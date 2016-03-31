@@ -1,7 +1,7 @@
 package mail_test
 
 import (
-	. "bitbucket.com/hyperboloide/horo/services/mail"
+	. "dev.hyperboloide.com/fred/horodata/services/mail"
 	"fmt"
 	"github.com/dchest/uniuri"
 	. "github.com/onsi/ginkgo"

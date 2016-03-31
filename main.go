@@ -1,9 +1,10 @@
 package main
 
 import (
-	"bitbucket.com/hyperboloide/horo/config"
-	"bitbucket.com/hyperboloide/horo/www"
 	"fmt"
+
+	"dev.hyperboloide.com/fred/horodata/config"
+	"dev.hyperboloide.com/fred/horodata/www"
 	log "github.com/Sirupsen/logrus"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"

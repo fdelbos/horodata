@@ -1,9 +1,9 @@
 package account
 
 import (
-	"bitbucket.com/hyperboloide/horo/models/user"
-	"bitbucket.com/hyperboloide/horo/services/cookies"
-	"bitbucket.com/hyperboloide/horo/services/urls"
+	"dev.hyperboloide.com/fred/horodata/models/user"
+	"dev.hyperboloide.com/fred/horodata/services/cookies"
+	"dev.hyperboloide.com/fred/horodata/services/urls"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )

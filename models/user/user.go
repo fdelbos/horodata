@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"bitbucket.com/hyperboloide/horo/services/cache"
-	"bitbucket.com/hyperboloide/horo/services/mail"
-	"bitbucket.com/hyperboloide/horo/services/postgres"
+	"dev.hyperboloide.com/fred/horodata/services/cache"
+	"dev.hyperboloide.com/fred/horodata/services/mail"
+	"dev.hyperboloide.com/fred/horodata/services/postgres"
 	"golang.org/x/crypto/bcrypt"
 )
 

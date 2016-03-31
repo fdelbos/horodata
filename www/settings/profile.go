@@ -1,8 +1,8 @@
 package settings
 
 import (
-	"bitbucket.com/hyperboloide/horo/html"
-	"bitbucket.com/hyperboloide/horo/middlewares"
+	"dev.hyperboloide.com/fred/horodata/html"
+	"dev.hyperboloide.com/fred/horodata/middlewares"
 	validator "github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"net/http"

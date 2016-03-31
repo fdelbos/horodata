@@ -1,7 +1,7 @@
 package cookies
 
 import (
-	"bitbucket.com/hyperboloide/horo/models/errors"
+	"dev.hyperboloide.com/fred/horodata/models/errors"
 	"encoding/base64"
 	log "github.com/Sirupsen/logrus"
 	"github.com/gin-gonic/gin"

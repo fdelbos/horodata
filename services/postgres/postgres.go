@@ -1,7 +1,7 @@
 package postgres
 
 import (
-	"bitbucket.com/hyperboloide/horo/models/errors"
+	"dev.hyperboloide.com/fred/horodata/models/errors"
 	"database/sql"
 )
 

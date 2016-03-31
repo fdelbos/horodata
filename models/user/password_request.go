@@ -1,8 +1,8 @@
 package user
 
 import (
-	"bitbucket.com/hyperboloide/horo/services/mail"
-	"bitbucket.com/hyperboloide/horo/services/postgres"
+	"dev.hyperboloide.com/fred/horodata/services/mail"
+	"dev.hyperboloide.com/fred/horodata/services/postgres"
 	"github.com/dchest/uniuri"
 	"time"
 )

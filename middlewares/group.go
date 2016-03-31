@@ -3,8 +3,8 @@ package middlewares
 import (
 	"net/http"
 
-	"bitbucket.com/hyperboloide/horo/models/errors"
-	"bitbucket.com/hyperboloide/horo/models/group"
+	"dev.hyperboloide.com/fred/horodata/models/errors"
+	"dev.hyperboloide.com/fred/horodata/models/group"
 	log "github.com/Sirupsen/logrus"
 	"github.com/gin-gonic/gin"
 )

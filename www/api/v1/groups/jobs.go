@@ -1,11 +1,11 @@
 package groups
 
 import (
-	"bitbucket.com/hyperboloide/horo/middlewares"
-	sqlerrors "bitbucket.com/hyperboloide/horo/models/errors"
-	"bitbucket.com/hyperboloide/horo/models/group"
-	"bitbucket.com/hyperboloide/horo/models/types/listing"
-	"bitbucket.com/hyperboloide/horo/www/api/jsend"
+	"dev.hyperboloide.com/fred/horodata/middlewares"
+	sqlerrors "dev.hyperboloide.com/fred/horodata/models/errors"
+	"dev.hyperboloide.com/fred/horodata/models/group"
+	"dev.hyperboloide.com/fred/horodata/models/types/listing"
+	"dev.hyperboloide.com/fred/horodata/www/api/jsend"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"strconv"

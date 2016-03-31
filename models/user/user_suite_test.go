@@ -1,7 +1,7 @@
 package user_test
 
 import (
-	"bitbucket.com/hyperboloide/horo/config"
+	"dev.hyperboloide.com/fred/horodata/config"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"testing"

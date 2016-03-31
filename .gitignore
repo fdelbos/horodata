@@ -6,3 +6,4 @@ utils/sgen/sgen
 horo
 services/mail/messages/bin.go
 html/bin.go
+horodata

@@ -3,9 +3,9 @@ package group
 import (
 	"time"
 
-	"bitbucket.com/hyperboloide/horo/helpers"
-	"bitbucket.com/hyperboloide/horo/models/user"
-	"bitbucket.com/hyperboloide/horo/services/postgres"
+	"dev.hyperboloide.com/fred/horodata/helpers"
+	"dev.hyperboloide.com/fred/horodata/models/user"
+	"dev.hyperboloide.com/fred/horodata/services/postgres"
 )
 
 type Group struct {

@@ -1,7 +1,7 @@
 package mail_test
 
 import (
-	_ "bitbucket.com/hyperboloide/horo/config"
+	_ "dev.hyperboloide.com/fred/horodata/config"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"testing"

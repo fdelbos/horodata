@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"bitbucket.com/hyperboloide/horo/services/cookies"
+	"dev.hyperboloide.com/fred/horodata/services/cookies"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )

@@ -1,7 +1,7 @@
 package groups
 
 import (
-	"bitbucket.com/hyperboloide/horo/middlewares"
+	"dev.hyperboloide.com/fred/horodata/middlewares"
 	"github.com/gin-gonic/gin"
 )
 

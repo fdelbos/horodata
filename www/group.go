@@ -1,11 +1,11 @@
 package www
 
 import (
-	"bitbucket.com/hyperboloide/horo/html"
-	"bitbucket.com/hyperboloide/horo/middlewares"
-	"bitbucket.com/hyperboloide/horo/services/urls"
-	"bitbucket.com/hyperboloide/horo/www/account"
-	"bitbucket.com/hyperboloide/horo/www/api"
+	"dev.hyperboloide.com/fred/horodata/html"
+	"dev.hyperboloide.com/fred/horodata/middlewares"
+	"dev.hyperboloide.com/fred/horodata/services/urls"
+	"dev.hyperboloide.com/fred/horodata/www/account"
+	"dev.hyperboloide.com/fred/horodata/www/api"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )

@@ -1,7 +1,7 @@
 package mail
 
 import (
-	"bitbucket.com/hyperboloide/horo/services/mail/messages"
+	"dev.hyperboloide.com/fred/horodata/services/mail/messages"
 	"bytes"
 	"fmt"
 	mailgun "github.com/mailgun/mailgun-go"

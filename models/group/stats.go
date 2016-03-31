@@ -1,7 +1,7 @@
 package group
 
 import (
-	"bitbucket.com/hyperboloide/horo/services/postgres"
+	"dev.hyperboloide.com/fred/horodata/services/postgres"
 	"database/sql"
 	"fmt"
 	"time"
