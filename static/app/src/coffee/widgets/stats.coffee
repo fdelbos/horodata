@@ -7,6 +7,14 @@ angular.module("horodata").directive("appWidgetsStats", [
           id: "customer_time"
           label: "Repartition du temps par dossier."
         }
+        {
+          id: "task_time"
+          label: "Repartition du temps par tâche."
+        }
+        {
+          id: "guest_time"
+          label: "Repartition du temps par utilisateur."
+        }
       ]
 
       scope.selected = null
