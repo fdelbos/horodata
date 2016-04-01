@@ -2,9 +2,10 @@ angular.module("horodata").directive("appMenuToolbar", [
   "titleService"
   "userService"
   "homeService"
+  "popupService"
   "$mdMedia"
   "$mdBottomSheet"
-  (titleService, userService, homeService, $mdMedia, $mdBottomSheet) ->
+  (titleService, userService, homeService, popupService, $mdMedia, $mdBottomSheet) ->
 
     l = (scope, elem) ->
       scope.MainTitle = titleService.get
@@ -16,6 +17,12 @@ angular.module("horodata").directive("appMenuToolbar", [
           $mdBottomSheet.show
             templateUrl: "horodata/menu/bottom_sheet.html"
         else $mdOpenMenu($event)
+
+      scope.showProfile = (ev) ->
+        popupService(
+          "horodata/views/profile.html"
+          "Profile"
+          scope, ev)
 
     return {
       link: l

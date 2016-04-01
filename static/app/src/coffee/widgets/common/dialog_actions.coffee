@@ -1,4 +1,4 @@
-angular.module("horodata").directive("appWidgetsCommonDialogToolbar", [
+angular.module("horodata").directive("appWidgetsCommonDialogActions", [
   "$mdDialog"
   ($mdDialog)->
 
@@ -7,11 +7,9 @@ angular.module("horodata").directive("appWidgetsCommonDialogToolbar", [
 
     return {
       link: l
-      scope:
-        warn: "="
       transclude: true
       replace: true
       restrict: "E"
-      templateUrl: "horodata/widgets/common/dialog_toolbar.html"
+      templateUrl: "horodata/widgets/common/dialog_actions.html"
     }
 ])

@@ -1,8 +1,13 @@
 <md-bottom-sheet class="md-list md-has-header" ng-cloak>
 
-  <!-- <md-subheader>Menu</md-subheader> -->
-
   <div layout="row" hide show-sm layout-padding layout-align="space-around center">
+
+    <div layout="column" layout-align="center center">
+      <md-button class="md-fab md-primary" ng-click="showProfile($event)">
+        <md-icon class="md-36">account_box</md-icon>
+      </md-button>
+      <div>Profile</div>
+    </div>
 
     <div layout="column" layout-align="center center">
       <md-button class="md-fab md-primary">
@@ -15,7 +20,7 @@
       <md-button class="md-fab md-primary">
         <md-icon class="md-36">euro_symbol</md-icon>
       </md-button>
-      <div>Abonnement et Factures</div>
+      <div>Abonnement</div>
     </div>
 
     <div layout="column" layout-align="center center">
@@ -30,6 +35,13 @@
   <div layout="column" hide show-xs layout-padding layout-align="start start">
 
     <div layout="row" layout-align="center center">
+      <md-button class="md-fab md-mini md-primary" ng-click="showProfile($event)">
+        <md-icon class="md-24">account_box</md-icon>
+      </md-button>
+      <div>Profile</div>
+    </div>
+
+    <div layout="row" layout-align="center center">
       <md-button class="md-fab md-mini md-primary">
         <md-icon class="md-24">trending_up</md-icon>
       </md-button>
@@ -40,7 +52,7 @@
       <md-button class="md-fab md-mini md-primary">
         <md-icon class="md-24">euro_symbol</md-icon>
       </md-button>
-      <div>Abonnement et Factures</div>
+      <div>Abonnement</div>
     </div>
 
     <div layout="row" layout-align="center center">

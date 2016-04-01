@@ -25,15 +25,11 @@
       </div>
     </md-dialog-content>
 
-    <md-dialog-actions ng-if="!loading">
+    <app-widgets-common-dialog-actions>
       <md-button ng-if="!tasks.current.id" ng-click="create()" class="md-primary md-raised">Ajouter</md-button>
       <md-button ng-if="tasks.current.id" ng-click="edit()" class="md-primary md-raised">Modifier</md-button>
       <md-button ng-if="tasks.current.id" ng-click="delete()" class="md-warn md-raised">Supprimer</md-button>
-      <md-button ng-click="close()" class="md-raised">Annuler</md-button>
-    </md-dialog-actions>
+    </app-widgets-common-dialog-actions>
 
-    <md-dialog-actions ng-if="loading">
-      <md-progress-linear md-mode="indeterminate"></md-progress-linear>
-    </md-dialog-actions>
   </form>
 </md-dialog>

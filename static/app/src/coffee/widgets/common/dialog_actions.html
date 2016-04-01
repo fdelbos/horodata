@@ -1,0 +1,5 @@
+<md-dialog-actions>
+  <ng-transclude ng-if="!loading"></ng-transclude>
+  <md-button ng-if="!loading" ng-click="hide()" class="md-raised">Annuler</md-button>
+  <md-progress-linear ng-if="loading" md-mode="indeterminate"></md-progress-linear>
+</md-dialog-actions>

@@ -23,6 +23,12 @@
 
         <md-menu-content width="4">
           <md-menu-item>
+            <md-button ng-click="showProfile($event)">
+              <md-icon>account_box</md-icon>
+              Profile
+            </md-button>
+          </md-menu-item>
+          <md-menu-item>
             <md-button ng-click="ctrl.redial($event)">
               <md-icon>trending_up</md-icon>
               Plan et Quota
@@ -31,7 +37,7 @@
           <md-menu-item>
             <md-button>
               <md-icon>euro_symbol</md-icon>
-              Abonnement et Factures
+              Abonnement
             </md-button>
           </md-menu-item>
           <md-menu-divider></md-menu-divider>
