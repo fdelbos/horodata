@@ -40,8 +40,6 @@ angular.module("horodata").controller("appWidgetsConfigurationTasksDialog", [
     $scope.errors = null
     $scope.loading = false
 
-    $scope.close = -> $mdDialog.hide()
-
     update = (t) ->
       idx = _.findIndex($scope.group.tasks, {id: t.id})
       $scope.group.tasks[idx] = $scope.tasks.current

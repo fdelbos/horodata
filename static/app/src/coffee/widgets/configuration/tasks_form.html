@@ -1,15 +1,10 @@
 <md-dialog aria-label="Ajouter un nouveau type de tâche" flex="40">
   <form name="newTaskForm">
 
-    <md-toolbar>
-      <div class="md-toolbar-tools">
-        <h2>Ajouter un nouveau type de tâche</h2>
-        <span flex></span>
-        <md-button class="md-icon-button" aria-label="Fermer" ng-click="close()">
-          <md-icon class="md-24">close</md-icon>
-        </md-button>
-      </div>
-    </md-toolbar>
+    <app-widgets-common-dialog-toolbar>
+      <span ng-if="!tasks.current.id">Ajouter un nouveau type de tâche</span>
+      <span ng-if="tasks.current.id">Modifier la tâche {{ tasks.current.name }}</span>
+    </app-widgets-common-dialog-toolbar>
 
     <md-dialog-content>
       <div class="md-dialog-content">

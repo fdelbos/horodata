@@ -41,8 +41,6 @@ angular.module("horodata").controller("appWidgetsConfigurationGuestsDialog", [
     $scope.errors = null
     $scope.loading = false
 
-    $scope.close = -> $mdDialog.hide()
-
     update = (t) ->
       idx = _.findIndex($scope.group.guests, {id: t.id})
       $scope.group.guests[idx] = $scope.guests.current

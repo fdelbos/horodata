@@ -30,8 +30,6 @@ angular.module("horodata").controller("newGroupDialog", [
     $scope.errors = null
     $scope.loading = false
 
-    $scope.close = -> $mdDialog.hide()
-
     $scope.send = ->
       $scope.loading = true
       $http.post("#{apiService.get()}/groups", {name: $scope.name}).then(

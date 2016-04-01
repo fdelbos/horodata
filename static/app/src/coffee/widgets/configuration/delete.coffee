@@ -27,7 +27,6 @@ angular.module("horodata").controller("appWidgetsConfigurationDeleteConfirm", [
   "groupNewService"
   ($scope, $mdDialog, $mdToast, $http, $location, apiService, groupNewService)->
     $scope.loading = false
-    $scope.close = -> $mdDialog.hide()
 
     $scope.delete = ->
       $scope.loading = true

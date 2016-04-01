@@ -1,18 +1,11 @@
 <md-dialog aria-label="Modifier l'utilisateur" flex="40">
   <form name="newUserForm">
 
-    <md-toolbar>
-      <div class="md-toolbar-tools">
-        <h2>Modifier l'utilisateur
-          <span ng-if="!guests.current.full_name">{{ guests.current.email }}</span>
-          <span ng-if="guests.current.full_name">{{ guests.current.full_name }}</span>
-        </h2>
-        <span flex></span>
-        <md-button class="md-icon-button" aria-label="Fermer" ng-click="close()">
-          <md-icon class="md-24">close</md-icon>
-        </md-button>
-      </div>
-    </md-toolbar>
+    <app-widgets-common-dialog-toolbar>
+      Modifier l'utilisateur
+      <span ng-if="!guests.current.full_name">{{ guests.current.email }}</span>
+      <span ng-if="guests.current.full_name">{{ guests.current.full_name }}</span>
+    </app-widgets-common-dialog-toolbar>
 
     <md-dialog-content>
       <div class="md-dialog-content">
@@ -46,6 +39,6 @@
     <md-dialog-actions ng-if="loading">
       <md-progress-linear md-mode="indeterminate"></md-progress-linear>
     </md-dialog-actions>
-    
+
   </form>
 </md-dialog>

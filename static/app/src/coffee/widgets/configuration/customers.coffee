@@ -37,7 +37,6 @@ angular.module("horodata").controller("appWidgetsConfigurationCustomersDialog", 
   ($scope, $mdDialog, $mdToast, $http, $location, apiService)->
     $scope.errors = null
     $scope.loading = false
-    $scope.close = -> $mdDialog.hide()
 
     update = (t) ->
       idx = _.findIndex($scope.group.customers, {id: t.id})

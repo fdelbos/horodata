@@ -9,7 +9,8 @@
     <c3chart bindto-id="chart" ng-if="data">
       <chart-column
         ng-repeat="i in data"
-        column-id="{{ customers[i.customer_id].name }}"
+        column-id="{{ i.customer_id }}"
+        column-name="{{ customers[i.customer_id].name }}"
         column-values="{{ i.duration }}"
         column-type="pie"/>
     </c3chart>
