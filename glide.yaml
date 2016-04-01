@@ -20,3 +20,4 @@ import:
 - package: github.com/russross/blackfriday
 - package: github.com/microcosm-cc/bluemonday
 - package: github.com/flosch/pongo2-addons
+- package: gopkg.in/gomail.v2

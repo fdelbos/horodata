@@ -96,3 +96,6 @@ md-input-container textarea[md-no-autogrow].md-input {
   width: 48px;
   height: 48px;
 }
+.no-margin {
+  margin: 0;
+}

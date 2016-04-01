@@ -80,7 +80,7 @@ angular.module("horodata").controller("appWidgetsConfigurationGuestsDialog", [
           $mdDialog.hide()
           $mdToast.showSimple("Utilisateur '#{$scope.guests.current.email}' supprimé")
           $scope.group.guests.splice(_.findIndex($scope.group.guests, {id: parseInt $scope.guests.selected}), 1)
-          $scope.task.selected = null
+          $scope.guests.selected = null
         (resp) ->
           $scope.loading = false
           $scope.errors = resp.data.errors

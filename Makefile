@@ -1,7 +1,6 @@
 NAME = horodata.www
 DOCKERID = 392789183703.dkr.ecr.us-east-1.amazonaws.com
 
-
 all: bindata
 	go build
 

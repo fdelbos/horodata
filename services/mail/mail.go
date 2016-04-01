@@ -1,34 +1,41 @@
 package mail
 
 import (
-	"dev.hyperboloide.com/fred/horodata/services/mail/messages"
 	"bytes"
 	"fmt"
-	mailgun "github.com/mailgun/mailgun-go"
+	"text/template"
+
+	"dev.hyperboloide.com/fred/horodata/services/mail/messages"
 	"github.com/russross/blackfriday"
 	"github.com/spf13/viper"
-	"text/template"
+	"gopkg.in/gomail.v2"
 )
 
-func newMailer() mailgun.Mailgun {
-	return mailgun.NewMailgun(
-		viper.GetString("mail_domain"),
-		viper.GetString("mail_key"),
-		"")
+var (
+	sender       string
+	smtpHost     string
+	smtpPort     int
+	smtpUser     string
+	smtpPassword string
+)
+
+func Configure() {
+	sender = viper.GetString("mail_sender")
+	smtpHost = viper.GetString("mail_smtp_host")
+	smtpPort = viper.GetInt("mail_smtp_port")
+	smtpUser = viper.GetString("mail_smtp_user")
+	smtpPassword = viper.GetString("mail_smtp_password")
 }
 
-func NewMessage(subject, text, html string, to ...string) error {
-	mailer := newMailer()
-	msg := mailer.NewMessage(
-		viper.GetString("mail_sender"),
-		subject,
-		text,
-		to...)
-	if html != "" {
-		msg.SetHtml(html)
-	}
-	_, _, err := mailer.Send(msg)
-	return err
+func NewMessage(subject, text, html string, to string) error {
+	m := gomail.NewMessage()
+	m.SetHeader("From", sender)
+	m.SetHeader("To", to)
+	m.SetHeader("Subject", subject)
+	m.SetBody("text/plain", text)
+	m.AddAlternative("text/html", html)
+	d := gomail.NewDialer(smtpHost, smtpPort, smtpUser, smtpPassword)
+	return d.DialAndSend(m)
 }
 
 type File struct {
@@ -37,7 +44,7 @@ type File struct {
 }
 
 type Mail struct {
-	Dests    []string    `json:"dest"`
+	Dest     string      `json:"dest"`
 	Subject  string      `json:"subject"`
 	Template string      `json:"template"`
 	Data     interface{} `json:"data"`
@@ -56,10 +63,12 @@ func (m Mail) Send() error {
 	}
 
 	html := blackfriday.MarkdownCommon(textBuff.Bytes())
+
 	return NewMessage(
 		m.Subject,
 		string(textBuff.Bytes()[:]),
 		string(html[:]),
-		m.Dests...)
+		m.Dest)
+	return nil
 
 }

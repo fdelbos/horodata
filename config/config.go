@@ -4,6 +4,7 @@ import (
 	"dev.hyperboloide.com/fred/horodata/services/cache"
 	"dev.hyperboloide.com/fred/horodata/services/captcha"
 	"dev.hyperboloide.com/fred/horodata/services/cookies"
+	"dev.hyperboloide.com/fred/horodata/services/mail"
 	"dev.hyperboloide.com/fred/horodata/services/oauth"
 	"dev.hyperboloide.com/fred/horodata/services/payment"
 	"dev.hyperboloide.com/fred/horodata/services/postgres"
@@ -110,20 +111,30 @@ func init() {
 	// MailGun
 	//
 
-	viper.BindEnv("mail_key")
-	viper.SetDefault(
-		"mail_key",
-		"key-5nz98-8e6edsuw3gr9jphc1x8l2vpri4")
-
-	viper.BindEnv("mail_domain")
-	viper.SetDefault(
-		"mail_domain",
-		"sandboxf4743199e9ba4a069d656b6e4fe40b19.mailgun.org")
+	// viper.BindEnv("mail_key")
+	// viper.SetDefault(
+	// 	"mail_key",
+	// 	"key-5nz98-8e6edsuw3gr9jphc1x8l2vpri4")
+	//
+	// viper.BindEnv("mail_domain")
+	// viper.SetDefault(
+	// 	"mail_domain",
+	// 	"sandboxf4743199e9ba4a069d656b6e4fe40b19.mailgun.org")
 
 	viper.BindEnv("mail_sender")
-	viper.SetDefault(
-		"mail_sender",
-		"Test User <me@sandboxf4743199e9ba4a069d656b6e4fe40b19.mailgun.org>")
+	viper.SetDefault("mail_sender", "Test User <me@sandboxf4743199e9ba4a069d656b6e4fe40b19.mailgun.org>")
+
+	viper.BindEnv("mail_smtp_host")
+	viper.SetDefault("mail_smtp_host", "smtp.mailgun.org")
+
+	viper.BindEnv("mail_smtp_port")
+	viper.SetDefault("mail_smtp_port", "465")
+
+	viper.BindEnv("mail_smtp_user")
+	viper.SetDefault("mail_smtp_user", "postmaster@sandboxf4743199e9ba4a069d656b6e4fe40b19.mailgun.org")
+
+	viper.BindEnv("mail_smtp_password")
+	viper.SetDefault("mail_smtp_password", "73pqshr0qlc1")
 
 	//
 	// oauth
@@ -200,6 +211,7 @@ func Configure() {
 	cache.Configure()
 	captcha.Configure()
 	cookies.Configure()
+	mail.Configure()
 	oauth.Configure()
 	payment.Configure()
 	postgres.Configure()

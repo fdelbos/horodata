@@ -12,8 +12,8 @@
       </div>
 
       <div flex="25">
-        <div layout="row">
-          <md-input-container flex>
+        <div layout="row" layout-align="space-between center">
+          <md-input-container class="no-margin" flex>
             <label>Dossier</label>
             <md-select ng-model="search.customer">
               <md-option ng-repeat="c in group.customers" value="{{ c.id }}">
@@ -29,8 +29,8 @@
 
 
       <div flex="25" ng-if="isAdmin">
-        <div layout="row">
-          <md-input-container flex>
+        <div layout="row" layout-align="space-between center">
+          <md-input-container class="no-margin" flex>
             <label>Utilisateur</label>
             <md-select ng-model="search.guest">
               <md-option ng-repeat="u in group.guests" ng-if="u.full_name" value="{{ u.id }}">

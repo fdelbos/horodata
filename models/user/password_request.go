@@ -1,10 +1,11 @@
 package user
 
 import (
+	"time"
+
 	"dev.hyperboloide.com/fred/horodata/services/mail"
 	"dev.hyperboloide.com/fred/horodata/services/postgres"
 	"github.com/dchest/uniuri"
-	"time"
 )
 
 type PasswordRequest struct {
@@ -58,7 +59,7 @@ func (u *User) NewPasswordRequest() error {
 		return err
 	}
 	m := mail.Mail{
-		Dests:    []string{u.Email},
+		Dest:     u.Email,
 		Subject:  "Réinitialisation du mot de passe sur Horodata",
 		Template: "reset_password",
 		Data: map[string]interface{}{

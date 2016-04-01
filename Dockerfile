@@ -9,6 +9,6 @@ RUN apk --update upgrade && \
     update-ca-certificates && \
     rm -rf /var/cache/apk/*
 
-ADD horo /
+ADD horodata /
 EXPOSE 3000
-CMD ["/horo"]
+CMD ["/horodata"]

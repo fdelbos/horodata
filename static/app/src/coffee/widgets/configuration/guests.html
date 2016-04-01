@@ -32,7 +32,7 @@
       <md-input-container flex>
         <label>Selectionnez un utilisateur</label>
         <md-select ng-model="guests.selected">
-          <md-option ng-repeat="g in group.guests" value="{{ g.id }}">
+          <md-option ng-repeat="g in group.guests" ng-if="g.active" value="{{ g.id }}">
             <span ng-if="!g.full_name">{{ g.email }}</span>
             <span ng-if="g.full_name">
               {{ g.full_name }}
@@ -42,7 +42,7 @@
         </md-select>
       </md-input-container>
 
-        <md-button ng-if="guests.selected" ng-click="guests.edit($event)" class="md-fab md-mini md-accent" aria-label="Editer une tâche">
+        <md-button ng-if="guests.selected" ng-click="guests.edit($event)" class="md-fab md-mini md-accent" aria-label="Editer une utilisateur">
           <md-tooltip md-direction="top">
             Modifier l'utilisateur
           </md-tooltip>

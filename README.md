@@ -28,7 +28,7 @@
 * push (ajout tâche à la liste & notif lors de création de tâche par un collaborateur)
 * quota par owner/jour -> total des taches
 * force mdp : https://github.com/dropbox/zxcvbn + captcha si + 10 dans la journee.
-
+* quitter un groupe
 
 ## Later:
 * Pointage avec « heure temps-réel »
