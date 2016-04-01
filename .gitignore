@@ -7,3 +7,4 @@ horo
 services/mail/messages/bin.go
 html/bin.go
 horodata
+glide.lock
