@@ -1,6 +1,8 @@
 package account
 
 import (
+	"net/http"
+
 	"dev.hyperboloide.com/fred/horodata/models/errors"
 	sqlerrors "dev.hyperboloide.com/fred/horodata/models/errors"
 	"dev.hyperboloide.com/fred/horodata/models/user"
@@ -10,10 +12,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/markbates/goth"
 	"github.com/markbates/goth/gothic"
-	"net/http"
 )
 
-func Provider(c *gin.Context) {
+func ProviderConnect(c *gin.Context) {
 	gothic.BeginAuthHandler(c.Writer, c.Request)
 }
 

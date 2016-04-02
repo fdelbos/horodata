@@ -148,6 +148,15 @@ func init() {
 	viper.BindEnv("oauth_provider_google_secret")
 	viper.SetDefault("oauth_provider_google_secret", "q-cA7pU5KENQT5ImkmfVMsEG")
 
+	// viper.BindEnv("oauth_provider_facebook_id")
+	// viper.SetDefault("oauth_provider_facebook_id", "583120675198213")
+
+	viper.BindEnv("oauth_provider_facebook_key")
+	viper.SetDefault("oauth_provider_facebook_key", "583125351864412")
+
+	viper.BindEnv("oauth_provider_facebook_secret")
+	viper.SetDefault("oauth_provider_facebook_secret", "6f398a76151645884bb85a21589130db")
+
 	//
 	// log
 	//

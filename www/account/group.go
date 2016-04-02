@@ -1,11 +1,12 @@
 package account
 
 import (
+	"net/http"
+
 	"dev.hyperboloide.com/fred/horodata/models/user"
 	"dev.hyperboloide.com/fred/horodata/services/cookies"
 	"dev.hyperboloide.com/fred/horodata/services/urls"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func Group(r *gin.RouterGroup) {
@@ -25,8 +26,8 @@ func Group(r *gin.RouterGroup) {
 		account.GET("/password_reset/:url", GetResetInput)
 		account.POST("/password_reset/:url", PostResetInput)
 
-		account.GET("provider/:provider", Provider)
-		account.GET("provider/:provider/callback", ProviderCallback)
+		account.GET("provider/connect/:provider", ProviderConnect)
+		account.GET("provider/callback/:provider", ProviderCallback)
 		account.GET("/complete_registration", ProviderComplete)
 	}
 }
@@ -37,6 +38,7 @@ func LogUser(u *user.User, c *gin.Context) {
 	} else if err := cookies.NewSession(id, c); err != nil {
 		GetError(c, err)
 	} else {
-		c.Redirect(http.StatusTemporaryRedirect, urls.WWWApp)
+		// the hashtag is necessary to remove fb crap...
+		c.Redirect(http.StatusTemporaryRedirect, urls.WWWApp+"#")
 	}
 }
