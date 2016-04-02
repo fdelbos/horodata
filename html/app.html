@@ -32,6 +32,7 @@
   <base href="{{ base }}" />
   <api href="{{ api }}"></api>
   <home href="{{ ctx.WWWRoot }}"></home>
+  <static href="{{ ctx.StaticRoot }}"></static>
 
 </head>
 <body>
@@ -44,7 +45,7 @@
         <md-content flex>
           <div layout="column" layout-fill>
             <div ng-view></div>
-            
+
           </div>
         </md-content>
       </div>

@@ -9,6 +9,7 @@ import (
 	"dev.hyperboloide.com/fred/horodata/services/cookies"
 	"dev.hyperboloide.com/fred/horodata/services/oauth"
 	"dev.hyperboloide.com/fred/horodata/services/urls"
+	log "github.com/Sirupsen/logrus"
 	"github.com/gin-gonic/gin"
 	"github.com/markbates/goth"
 	"github.com/markbates/goth/gothic"
@@ -45,6 +46,9 @@ func ProviderCallback(c *gin.Context) {
 	} else if !u.Active {
 		c.Redirect(http.StatusTemporaryRedirect, urls.WWWLogin)
 	} else {
+		if err := u.PictureSetFromOrigin(ru.AvatarURL); err != nil {
+			log.Print(err)
+		}
 		LogUser(u, c)
 	}
 }
@@ -72,6 +76,9 @@ func ProviderComplete(c *gin.Context) {
 	} else if err := cookies.Delete("session", "provider", c); err != nil {
 		GetError(c, err)
 	} else {
+		if err := u.PictureSetFromOrigin(guser.AvatarURL); err != nil {
+			log.Print(err)
+		}
 		LogUser(u, c)
 	}
 }

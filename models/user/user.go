@@ -17,6 +17,7 @@ type User struct {
 	Active   bool      `json:"active"`
 	Email    string    `json:"email,omitempty"`
 	FullName string    `json:"name"`
+	Picture  *string   `json:"picture,omitempty"`
 }
 
 const (
@@ -30,7 +31,8 @@ func (u *User) Scan(scanFn func(dest ...interface{}) error) error {
 		&u.Created,
 		&u.Active,
 		&u.Email,
-		&u.FullName)
+		&u.FullName,
+		&u.Picture)
 }
 
 func (u User) saveInCache() error {

@@ -1,13 +1,15 @@
 package www
 
 import (
+	"net/http"
+
 	"dev.hyperboloide.com/fred/horodata/html"
 	"dev.hyperboloide.com/fred/horodata/middlewares"
 	"dev.hyperboloide.com/fred/horodata/services/urls"
 	"dev.hyperboloide.com/fred/horodata/www/account"
 	"dev.hyperboloide.com/fred/horodata/www/api"
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"github.com/spf13/viper"
 )
 
 func Group(r *gin.RouterGroup) {
@@ -16,6 +18,10 @@ func Group(r *gin.RouterGroup) {
 		account.Group(www)
 		api.Group(www)
 		www.Any("/app/*all", middlewares.UserFilter(), GetApp)
+
+		if gin.IsDebugging() {
+			www.Static("/profiles", viper.GetString("profile_pictures"))
+		}
 	}
 }
 

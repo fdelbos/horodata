@@ -8,5 +8,6 @@ ADD roboto                  roboto
 ADD material_icons          material_icons
 ADD app/horodata.css        app/horodata.css
 ADD app/horodata.min.js     app/horodata.js
+ADD profile-default.png     profile-default.png
 
 CMD ["true"]

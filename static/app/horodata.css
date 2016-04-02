@@ -99,3 +99,11 @@ md-input-container textarea[md-no-autogrow].md-input {
 .no-margin {
   margin: 0;
 }
+.profile-icon {
+  margin: 0px auto auto;
+  margin-left: -6px;
+  padding: 0;
+  display: inline-block;
+  background-repeat: no-repeat no-repeat;
+  pointer-events: none;
+}

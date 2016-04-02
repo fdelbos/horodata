@@ -7,6 +7,7 @@ import (
 	"dev.hyperboloide.com/fred/horodata/services/mail"
 	"dev.hyperboloide.com/fred/horodata/services/oauth"
 	"dev.hyperboloide.com/fred/horodata/services/payment"
+	"dev.hyperboloide.com/fred/horodata/services/picture"
 	"dev.hyperboloide.com/fred/horodata/services/postgres"
 	"dev.hyperboloide.com/fred/horodata/services/urls"
 	log "github.com/Sirupsen/logrus"
@@ -108,18 +109,8 @@ func init() {
 	viper.SetDefault("pg_pool_idle", "10")
 
 	//
-	// MailGun
+	// Email
 	//
-
-	// viper.BindEnv("mail_key")
-	// viper.SetDefault(
-	// 	"mail_key",
-	// 	"key-5nz98-8e6edsuw3gr9jphc1x8l2vpri4")
-	//
-	// viper.BindEnv("mail_domain")
-	// viper.SetDefault(
-	// 	"mail_domain",
-	// 	"sandboxf4743199e9ba4a069d656b6e4fe40b19.mailgun.org")
 
 	viper.BindEnv("mail_sender")
 	viper.SetDefault("mail_sender", "Test User <me@sandboxf4743199e9ba4a069d656b6e4fe40b19.mailgun.org>")
@@ -148,9 +139,6 @@ func init() {
 	viper.BindEnv("oauth_provider_google_secret")
 	viper.SetDefault("oauth_provider_google_secret", "q-cA7pU5KENQT5ImkmfVMsEG")
 
-	// viper.BindEnv("oauth_provider_facebook_id")
-	// viper.SetDefault("oauth_provider_facebook_id", "583120675198213")
-
 	viper.BindEnv("oauth_provider_facebook_key")
 	viper.SetDefault("oauth_provider_facebook_key", "583125351864412")
 
@@ -176,6 +164,13 @@ func init() {
 
 	viper.BindEnv("payment_secret_key")
 	viper.SetDefault("payment_secret_key", "sk_test_ANrSNC5Yy2xAenilHrdGW9Lw")
+
+	//
+	// Profile Pictures
+	//
+
+	viper.BindEnv("profile_pictures")
+	viper.SetDefault("profile_pictures", "/tmp/horodata/profiles")
 
 }
 
@@ -223,6 +218,7 @@ func Configure() {
 	mail.Configure()
 	oauth.Configure()
 	payment.Configure()
+	picture.Configure()
 	postgres.Configure()
 	urls.Configure()
 }

@@ -15,10 +15,18 @@ create table users (
     hash_version integer
 );
 
+create table user_pictures (
+    id varchar(32) primary key,
+    created timestamp default now()  not null,
+    user_id bigint unique not null references users on delete cascade,
+    origin text
+);
+
 create view users_view as
     select
-        id, created, active, email, full_name
-    from users;
+        u.id, u.created, u.active, u.email, u.full_name, p.id as picture
+    from
+        users u left outer join user_pictures p on u.id = p.user_id;
 
 create view users_active as
     select * from users_view where active = true;

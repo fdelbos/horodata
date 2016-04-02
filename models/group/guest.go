@@ -148,6 +148,7 @@ type ApiGuest struct {
 	Admin    bool    `json:"admin"`
 	Email    string  `json:"email"`
 	FullName *string `json:"full_name,omitempty"`
+	Picture  *string `json:"picture,omitempty"`
 }
 
 func (g *ApiGuest) Scan(scanFn func(dest ...interface{}) error) error {
@@ -157,16 +158,20 @@ func (g *ApiGuest) Scan(scanFn func(dest ...interface{}) error) error {
 		&g.Rate,
 		&g.Admin,
 		&g.Email,
-		&g.FullName)
+		&g.FullName,
+		&g.Picture)
 }
 
 func (g *Group) ApiGuests() ([]ApiGuest, error) {
 	const query = `
     select
 		g.id, g.active, g.rate, g.admin, g.email,
-		u.full_name
+		u.full_name,
+		p.id
 	from
-		guests g left outer join users u on (g.user_id = u.id)
+		guests g
+			left outer join users u on (g.user_id = u.id)
+			left outer join user_pictures p on (g.user_id = p.user_id)
     where
 		g.group_id = $1`
 
