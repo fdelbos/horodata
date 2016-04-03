@@ -1,0 +1,19 @@
+<div>
+
+  <div class="md-body-1" layout="row" layout-align="space-between center">
+    <span flex="60">{{ label }}</span>
+
+    <span flex="30" style="text-align:right">
+      {{ current }}/{{ max }} &nbsp;
+    </span>
+
+    <span flex="10" style="text-align:right" ng-class="{'input-error': percent >= 80}">{{ percent }}%</span>
+
+  </div>
+
+  <md-progress-linear md-mode="determinate" ng-class="{'md-warn': percent >= 80}" value="{{ percent }}"></md-progress-linear>
+
+  <br>
+  <br>
+
+</div>

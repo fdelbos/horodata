@@ -14,7 +14,7 @@ const (
 	QuotaMedium = "medium"
 	QuotaLarge  = "large"
 
-	cacheQuota     = "models.users.quota"
+	cacheQuotas    = "models.users.quotas"
 	cacheJobsUsage = "models.users.jobs_usage"
 )
 
@@ -47,23 +47,23 @@ var PlansLimits = map[string]Limits{
 	},
 }
 
-type Quota struct {
+type Quotas struct {
 	Created *time.Time `json:"-"`
 	Plan    string     `json:"plan"`
 	Limits  Limits     `json:"limits"`
 }
 
-func (q *Quota) Scan(scanFn func(dest ...interface{}) error) error {
+func (q *Quotas) Scan(scanFn func(dest ...interface{}) error) error {
 	return scanFn(
 		&q.Created,
 		&q.Plan)
 }
 
-func (u User) Quota() (*Quota, error) {
-	quota := &Quota{}
+func (u User) Quotas() (*Quotas, error) {
+	quotas := &Quotas{}
 
-	if err := cache.GetPackage(cacheQuota, fmt.Sprintf("%d", u.Id), quota); err == nil {
-		return quota, nil
+	if err := cache.GetPackage(cacheQuotas, fmt.Sprintf("%d", u.Id), quotas); err == nil {
+		return quotas, nil
 	}
 
 	const query = `
@@ -71,16 +71,16 @@ func (u User) Quota() (*Quota, error) {
 	from quotas
 	where user_id = $1;`
 
-	if err := postgres.QueryRow(quota, query, u.Id); err != nil {
+	if err := postgres.QueryRow(quotas, query, u.Id); err != nil {
 		return nil, err
 	}
-	quota.Limits = PlansLimits[quota.Plan]
-	return quota, quota.saveInCache(u.Id)
+	quotas.Limits = PlansLimits[quotas.Plan]
+	return quotas, quotas.saveInCache(u.Id)
 }
 
-func (q *Quota) saveInCache(userId int64) error {
+func (q *Quotas) saveInCache(userId int64) error {
 	id := fmt.Sprintf("%d", userId)
-	return cache.SetPackage(cacheQuota, id, q, time.Hour*4)
+	return cache.SetPackage(cacheQuotas, id, q, time.Hour*4)
 }
 
 func (u User) UsageGroups() (int, error) {
@@ -91,12 +91,12 @@ func (u User) UsageGroups() (int, error) {
 }
 
 func (u User) QuotaCanAddGroup() (bool, error) {
-	quota, err := u.Quota()
+	quotas, err := u.Quotas()
 	if err != nil {
 		return false, err
 	}
 	usage, err := u.UsageGroups()
-	return usage < quota.Limits.Groups, err
+	return usage < quotas.Limits.Groups, err
 }
 
 func (u User) UsageGuests() (int, error) {
@@ -114,12 +114,12 @@ func (u User) UsageGuests() (int, error) {
 }
 
 func (u User) QuotaCanAddGuest() (bool, error) {
-	quota, err := u.Quota()
+	quotas, err := u.Quotas()
 	if err != nil {
 		return false, err
 	}
 	usage, err := u.UsageGuests()
-	return usage < quota.Limits.Guests, err
+	return usage < quotas.Limits.Guests, err
 }
 
 func (u User) usageJobsKey() string {
@@ -146,12 +146,12 @@ func (u User) UsageJobs() (int, error) {
 }
 
 func (u User) QuotaCanAddJob() (bool, error) {
-	quota, err := u.Quota()
+	quotas, err := u.Quotas()
 	if err != nil {
 		return false, err
 	}
 	usage, err := u.UsageJobs()
-	return usage < quota.Limits.Jobs, err
+	return usage < quotas.Limits.Jobs, err
 }
 
 func (u User) UsageJobsIncr() error {

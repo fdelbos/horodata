@@ -19,10 +19,10 @@ angular.module("horodata").directive("appMenuToolbar", [
         else $mdOpenMenu($event)
 
       scope.showProfile = (ev) ->
-        popupService(
-          "horodata/views/profile.html"
-          "Profile"
-          scope, ev)
+        popupService("horodata/views/profile.html", "Profile", scope, ev)
+
+      scope.showQuotas = (ev) ->
+        popupService("horodata/views/quotas.html", "Quotas", scope, ev)
 
     return {
       link: l

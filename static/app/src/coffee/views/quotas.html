@@ -1,0 +1,36 @@
+<md-dialog aria-label="Quota" flex="40">
+
+
+  <app-widgets-common-dialog-toolbar>Quotas</app-widgets-common-dialog-toolbar>
+
+  <md-dialog-content>
+    <div class="md-dialog-content">
+
+      <div layout="column">
+
+        <h3 class="md-headline">
+          Plan
+          <span ng-if="quotas.quotas.plan == 'free'">Gratuit</span>
+          <span ng-if="quotas.quotas.plan == 'small'">10 Utilisateurs</span>
+          <span ng-if="quotas.quotas.plan == 'medium'">30 Utilisateurs</span>
+          <span ng-if="quotas.quotas.plan == 'large'">100 Utilisateurs</span>
+        </h3>
+
+        <app-widgets-quota label="Groupes" current="quotas.usage.groups" max="quotas.quotas.limits.groups"></app-widgets-quota>
+
+        <app-widgets-quota label="Utilisateurs" current="quotas.usage.guests" max="quotas.quotas.limits.guests"></app-widgets-quota>
+
+        <app-widgets-quota label="Saisies (aujourd'hui)" current="quotas.usage.jobs" max="quotas.quotas.limits.jobs"></app-widgets-quota>
+
+        <p>
+          Pour modifier votre plan et changer vos quotas, rendez vous dans le menu <strong>Abonnement</strong>.
+        </p>
+
+
+      </div>
+    </div>
+  </md-dialog-content>
+
+  <app-widgets-common-dialog-actions></app-widgets-common-dialog-actions>
+
+</md-dialog>
