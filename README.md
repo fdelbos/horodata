@@ -2,7 +2,7 @@
 
 
 ## Todo:
-* api query for quota bonus
+* api quota
 * check maximum number of user one can import.
 * pb mot de passe non-enregistré dans le navigateur
 * appuyer sur touche "entrée" pour créer ou ajouter
@@ -26,8 +26,10 @@
 * quota par owner/jour -> total des taches
 * force mdp : https://github.com/dropbox/zxcvbn + captcha si + 10 dans la journee.
 * quitter un groupe
+* supprimer un job
 
 ## Later:
+* quota bonus / custom
 * Pointage avec « heure temps-réel »
 * Multi-langues
 * Transférer la possession du compte vers un autre compte (ex : qq1 qui s’en va de l’entreprise)

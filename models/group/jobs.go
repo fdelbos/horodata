@@ -1,11 +1,12 @@
 package group
 
 import (
-	"dev.hyperboloide.com/fred/horodata/models/types/listing"
-	"dev.hyperboloide.com/fred/horodata/services/postgres"
 	"database/sql"
 	"fmt"
 	"time"
+
+	"dev.hyperboloide.com/fred/horodata/models/types/listing"
+	"dev.hyperboloide.com/fred/horodata/services/postgres"
 )
 
 type Job struct {
@@ -54,6 +55,12 @@ func (j *Job) Update(updaterId int64) error {
 		j.Duration,
 		j.Comment,
 		updaterId)
+}
+
+func (j *Job) Remove() error {
+	const query = `
+    delete from jobs where id = $1`
+	return postgres.Exec(query, j.Id)
 }
 
 func (g *Group) JobGet(id int64) (*Job, error) {

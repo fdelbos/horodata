@@ -1,11 +1,12 @@
 package cache
 
 import (
-	"dev.hyperboloide.com/fred/horodata/models/errors"
 	"encoding/json"
 	"fmt"
-	"gopkg.in/redis.v3"
 	"time"
+
+	"dev.hyperboloide.com/fred/horodata/models/errors"
+	"gopkg.in/redis.v3"
 )
 
 func Ping() error {
@@ -49,4 +50,20 @@ func Del(key string) error {
 
 func DelPackage(pkg, key string) error {
 	return Del(mkPakage(pkg, key))
+}
+
+func Incr(key string) error {
+	return client.Incr(key).Err()
+}
+
+func IncrPackage(pkg, key string) error {
+	return Incr(mkPakage(pkg, key))
+}
+
+func Decr(key string) error {
+	return client.Decr(key).Err()
+}
+
+func DecrPackage(pkg, key string) error {
+	return Decr(mkPakage(pkg, key))
 }

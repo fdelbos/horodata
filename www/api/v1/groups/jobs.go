@@ -1,15 +1,16 @@
 package groups
 
 import (
+	"encoding/json"
+	"strconv"
+	"time"
+
 	"dev.hyperboloide.com/fred/horodata/middlewares"
 	sqlerrors "dev.hyperboloide.com/fred/horodata/models/errors"
 	"dev.hyperboloide.com/fred/horodata/models/group"
 	"dev.hyperboloide.com/fred/horodata/models/types/listing"
 	"dev.hyperboloide.com/fred/horodata/www/api/jsend"
-	"encoding/json"
 	"github.com/gin-gonic/gin"
-	"strconv"
-	"time"
 )
 
 func extractTime(c *gin.Context) (begin, end time.Time, errors map[string]string, err error) {
@@ -146,6 +147,19 @@ func JobListing(c *gin.Context) {
 
 func JobAdd(c *gin.Context) {
 	g := middlewares.GetGroup(c)
+
+	u, err := g.GetOwner()
+	if err != nil {
+		jsend.ErrorJson(c)
+		return
+	} else if ok, err := u.QuotaCanAddJob(); err != nil {
+		jsend.ErrorJson(c)
+		return
+	} else if !ok {
+		jsend.Quota(c, "jobs")
+		return
+	}
+
 	guest := middlewares.GetGuest(c)
 
 	var data struct {
@@ -161,7 +175,6 @@ func JobAdd(c *gin.Context) {
 
 	errors := map[string]string{}
 
-	var err error
 	var task *group.Task
 	if data.Task == 0 {
 		errors["task"] = "Ce champ est obligatoire."
@@ -202,6 +215,39 @@ func JobAdd(c *gin.Context) {
 		jsend.BadRequest(c, errors)
 		return
 	} else if err := g.JobAdd(data.Task, data.Customer, guest.Id, data.Duration, data.Comment); err != nil {
+		jsend.Error(c, err)
+	} else if err := u.UsageJobsIncr(); err != nil {
+		jsend.Error(c, err)
+	} else {
+		jsend.Ok(c, nil)
+	}
+}
+
+func isSameDay(a, b time.Time) bool {
+	aY, aM, aD := a.Date()
+	bY, bM, bD := b.Date()
+	return aY == bY && aM == bM && aD == bD
+}
+
+func JobDelete(c *gin.Context) {
+	g := middlewares.GetGroup(c)
+	guest := middlewares.GetGuest(c)
+
+	if id, err := strconv.ParseInt(c.Param("jobId"), 10, 64); err != nil {
+		jsend.BadRequest(c, nil)
+	} else if j, err := g.JobGet(id); err == sqlerrors.NotFound {
+		jsend.NotFound(c)
+	} else if err != nil {
+		jsend.Error(c, err)
+	} else if !guest.Admin && j.CreatorId != guest.Id {
+		jsend.Forbidden(c)
+	} else if !guest.Admin && !isSameDay(j.Created, time.Now()) {
+		jsend.Forbidden(c)
+	} else if err := g.JobRemove(id); err != nil {
+		jsend.Error(c, err)
+	} else if owner, err := g.GetOwner(); err != nil {
+		jsend.Error(c, err)
+	} else if err := owner.UsageJobsDecr(); err != nil {
 		jsend.Error(c, err)
 	} else {
 		jsend.Ok(c, nil)

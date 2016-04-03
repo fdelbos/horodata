@@ -1,220 +1,171 @@
 package user
 
 import (
-	"dev.hyperboloide.com/fred/horodata/models/errors"
-	"dev.hyperboloide.com/fred/horodata/services/cache"
-	"dev.hyperboloide.com/fred/horodata/services/postgres"
-	"database/sql"
 	"fmt"
 	"time"
+
+	"dev.hyperboloide.com/fred/horodata/services/cache"
+	"dev.hyperboloide.com/fred/horodata/services/postgres"
 )
 
 const (
 	QuotaFree   = "free"
 	QuotaSmall  = "small"
 	QuotaMedium = "medium"
-	QuotaCustom = "custom"
+	QuotaLarge  = "large"
 
-	cacheQuota = "models.users.quota"
-	cacheUsage = "models.users.usage"
+	cacheQuota     = "models.users.quota"
+	cacheJobsUsage = "models.users.jobs_usage"
 )
+
+type Limits struct {
+	Jobs   int `json:"jobs"`
+	Guests int `json:"guests"`
+	Groups int `json:"groups"`
+}
 
 var PlansLimits = map[string]Limits{
 	QuotaFree: {
-		Instances: 100,
-		Forms:     10,
-		Roles:     5,
-		Files:     100 << 20, // 100 MO
+		Jobs:   15,
+		Guests: 2,
+		Groups: 1,
 	},
 	QuotaSmall: {
-		Instances: 2000,
-		Forms:     50,
-		Roles:     25,
-		Files:     25 << 30, // 25 GO
+		Jobs:   500,
+		Guests: 10,
+		Groups: 2,
 	},
 	QuotaMedium: {
-		Instances: 10000,
-		Forms:     100,
-		Roles:     50,
-		Files:     100 << 30, // 100 GO
+		Jobs:   1500,
+		Guests: 30,
+		Groups: 5,
 	},
-}
-
-type Limits struct {
-	Instances int64 `json:"instances"`
-	Forms     int64 `json:"forms"`
-	Roles     int64 `json:"roles"`
-	Files     int64 `json:"files"`
-}
-
-func (l *Limits) Scan(scanFn func(dest ...interface{}) error) error {
-	return scanFn(
-		&l.Instances,
-		&l.Forms,
-		&l.Roles,
-		&l.Files,
-	)
-}
-
-type Bonus struct {
-	Id          int64      `json:"id"`
-	Created     *time.Time `json:"created"`
-	Description string     `json:"description"`
-	Limits
+	QuotaLarge: {
+		Jobs:   5000,
+		Guests: 100,
+		Groups: 15,
+	},
 }
 
 type Quota struct {
 	Created *time.Time `json:"-"`
 	Plan    string     `json:"plan"`
-	Limits
+	Limits  Limits     `json:"limits"`
 }
 
-func (q *Quota) saveInCache(userId int64) error {
-	id := fmt.Sprintf("%d", userId)
-	return cache.SetPackage(cacheQuota, id, q, time.Hour*2)
+func (q *Quota) Scan(scanFn func(dest ...interface{}) error) error {
+	return scanFn(
+		&q.Created,
+		&q.Plan)
 }
 
-type Usage struct {
-	Limits
-}
-
-func (u *Usage) saveInCache(userId int64) error {
-	id := fmt.Sprintf("%d", userId)
-	return cache.SetPackage(cacheUsage, id, u, time.Hour*2)
-}
-
-func (u *User) Bonus() ([]Bonus, error) {
-	bonus := make([]Bonus, 0)
-	query := `
-    SELECT id, created, description, instances, forms, roles, files
-    FROM quotas_bonus WHERE user_id = $1`
-
-	rows, err := postgres.DB().Query(query, u.Id)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		var b Bonus
-		if err := rows.Scan(
-			&b.Id,
-			&b.Created,
-			&b.Description,
-			&b.Instances,
-			&b.Forms,
-			&b.Roles,
-			&b.Files); err != nil {
-			return nil, err
-		}
-		bonus = append(bonus, b)
-	}
-	return bonus, rows.Err()
-}
-
-func (u *User) GetQuota() (*Quota, error) {
+func (u User) Quota() (*Quota, error) {
 	quota := &Quota{}
+
 	if err := cache.GetPackage(cacheQuota, fmt.Sprintf("%d", u.Id), quota); err == nil {
 		return quota, nil
 	}
 
-	query := `SELECT created, plan FROM quotas WHERE user_id = $1`
-	err := postgres.DB().QueryRow(query, u.Id).Scan(&quota.Created, &quota.Plan)
-	if err == sql.ErrNoRows {
-		return nil, errors.NotFound
-	} else if err != nil {
+	const query = `
+	select created, plan
+	from quotas
+	where user_id = $1;`
+
+	if err := postgres.QueryRow(quota, query, u.Id); err != nil {
 		return nil, err
 	}
-
-	if quota.Plan != QuotaCustom {
-		quota.Limits = PlansLimits[quota.Plan]
-	} else {
-		var l Limits
-		query := `SELECT instances, forms roles, files FROM quotas_custom WHERE user_id = $1`
-		if err := postgres.QueryRow(&l, query, u.Id); err != nil {
-			return nil, err
-		}
-		quota.Limits = l
-	}
-	bonus, err := u.Bonus()
-	if err != nil {
-		return nil, err
-	}
-
-	for _, b := range bonus {
-		quota.Instances += b.Instances
-		quota.Forms += b.Forms
-		quota.Roles += b.Roles
-		quota.Files += b.Files
-	}
-
+	quota.Limits = PlansLimits[quota.Plan]
 	return quota, quota.saveInCache(u.Id)
 }
 
-func (u *User) GetUsage() (*Usage, error) {
-	usage := &Usage{}
-	if err := cache.GetPackage(cacheUsage, fmt.Sprintf("%d", u.Id), usage); err == nil {
-		return usage, nil
-	}
-	query := `SELECT instances, forms, roles, files FROM usages WHERE user_id = $1`
-	if err := postgres.QueryRow(usage, query, u.Id); err != nil {
-		return nil, err
-	}
-	return usage, usage.saveInCache(u.Id)
+func (q *Quota) saveInCache(userId int64) error {
+	id := fmt.Sprintf("%d", userId)
+	return cache.SetPackage(cacheQuota, id, q, time.Hour*4)
 }
 
-func (u *User) AddBonus(desc string, l *Limits) error {
-	query := `
-    INSERT INTO quotas_bonus
-    (user_id, description, instances, forms, roles, files)
-    VALUES ($1, $2, $3, $4, $5, $6);`
-	if stmt, err := postgres.DB().Prepare(query); err != nil {
-		return err
-	} else if _, err := stmt.Exec(
+func (u User) UsageGroups() (int, error) {
+	const query = `
+	select count(id) from groups_active where owner_id = $1;`
+	var count int
+	return count, postgres.DB().QueryRow(query, u.Id).Scan(&count)
+}
+
+func (u User) QuotaCanAddGroup() (bool, error) {
+	quota, err := u.Quota()
+	if err != nil {
+		return false, err
+	}
+	usage, err := u.UsageGroups()
+	return usage < quota.Limits.Groups, err
+}
+
+func (u User) UsageGuests() (int, error) {
+	const query = `
+	select count(*)
+	from (
+		select distinct email
+		from guests
+		where active = true and group_id in (
+			select id from groups_active where owner_id = $1
+		)
+	) as temp;`
+	var count int
+	return count, postgres.DB().QueryRow(query, u.Id).Scan(&count)
+}
+
+func (u User) QuotaCanAddGuest() (bool, error) {
+	quota, err := u.Quota()
+	if err != nil {
+		return false, err
+	}
+	usage, err := u.UsageGuests()
+	return usage < quota.Limits.Guests, err
+}
+
+func (u User) usageJobsKey() string {
+	return fmt.Sprintf("%d.%d",
 		u.Id,
-		desc,
-		l.Instances,
-		l.Forms,
-		l.Roles,
-		l.Files); err != nil {
-		return err
-	}
-	return cache.DelPackage(cacheQuota, fmt.Sprintf("%d", u.Id))
+		time.Now().YearDay())
 }
 
-func (u *User) CanAddUsage(l *Limits) (bool, error) {
-	if quota, err := u.GetQuota(); err != nil {
-		return false, err
-	} else if usage, err := u.GetUsage(); err != nil {
-		return false, err
-	} else {
-		switch {
-		case l.Instances+usage.Instances > quota.Instances:
-			return false, nil
-		case l.Forms+usage.Forms > quota.Forms:
-			return false, nil
-		case l.Roles+usage.Roles > quota.Roles:
-			return false, nil
-		case l.Files+usage.Files > quota.Files:
-			return false, nil
-		default:
-			return true, nil
-		}
+func (u User) UsageJobs() (int, error) {
+	var count int
+	if err := cache.GetPackage(cacheJobsUsage, u.usageJobsKey(), &count); err == nil {
+		return count, nil
 	}
+	const query = `
+	select count(id) from jobs
+	where created > current_date and group_id in (
+		select id from groups_active where owner_id = $1
+	);`
+
+	if err := postgres.DB().QueryRow(query, u.Id).Scan(&count); err != nil {
+		return count, err
+	}
+	return count, cache.SetPackage(cacheJobsUsage, u.usageJobsKey(), count, time.Hour)
 }
 
-func (u *User) AddUsage(l *Limits) error {
-	query := `
-    UPDATE usages
-    SET
-        instances = instances + $2,
-        forms = forms + $3,
-        roles = roles + $4,
-        files = files + $5
-    WHERE user_id = $1`
+func (u User) QuotaCanAddJob() (bool, error) {
+	quota, err := u.Quota()
+	if err != nil {
+		return false, err
+	}
+	usage, err := u.UsageJobs()
+	return usage < quota.Limits.Jobs, err
+}
 
-	if err := postgres.Exec(query, u.Id, l.Instances, l.Forms, l.Roles, l.Files); err != nil {
+func (u User) UsageJobsIncr() error {
+	return cache.IncrPackage(cacheJobsUsage, u.usageJobsKey())
+}
+
+func (u User) UsageJobsDecr() error {
+	// for side effect in case not in cache
+	if _, err := u.UsageJobs(); err != nil {
 		return err
 	}
-	return cache.DelPackage(cacheUsage, fmt.Sprintf("%d", u.Id))
+	return cache.DecrPackage(cacheJobsUsage, u.usageJobsKey())
+}
+
+func (u User) UsageJobsReset() error {
+	return cache.DelPackage(cacheJobsUsage, u.usageJobsKey())
 }

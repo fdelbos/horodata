@@ -30,6 +30,14 @@ func Create(c *gin.Context) {
 	var data struct {
 		Name string `json:"name"`
 	}
+	if ok, err := u.QuotaCanAddGroup(); err != nil {
+		jsend.ErrorJson(c)
+		return
+	} else if !ok {
+		jsend.Quota(c, "groups")
+		return
+	}
+
 	if err := json.NewDecoder(c.Request.Body).Decode(&data); err != nil {
 		jsend.ErrorJson(c)
 		return
@@ -77,7 +85,11 @@ func Get(c *gin.Context) {
 func Delete(c *gin.Context) {
 	group := middlewares.GetGroup(c)
 
-	if err := group.Delete(); err != nil {
+	if u, err := group.GetOwner(); err != nil {
+		jsend.Error(c, err)
+	} else if err := u.UsageJobsReset(); err != nil {
+		jsend.Error(c, err)
+	} else if err := group.Delete(); err != nil {
 		jsend.Error(c, err)
 	} else {
 		jsend.Ok(c, nil)

@@ -14,6 +14,17 @@ import (
 func GuestAdd(c *gin.Context) {
 	g := middlewares.GetGroup(c)
 
+	if u, err := g.GetOwner(); err != nil {
+		jsend.ErrorJson(c)
+		return
+	} else if ok, err := u.QuotaCanAddGuest(); err != nil {
+		jsend.ErrorJson(c)
+		return
+	} else if !ok {
+		jsend.Quota(c, "guests")
+		return
+	}
+
 	var data struct {
 		Email string `json:"email"`
 		Admin bool   `json:"admin"`

@@ -58,8 +58,12 @@ func Forbidden(c *gin.Context) {
 	Fail(c, http.StatusForbidden, http.StatusText(http.StatusForbidden))
 }
 
-func Quota(c *gin.Context) {
-	Fail(c, http.StatusForbidden, "quota exceeded.")
+func Quota(c *gin.Context, limit string) {
+	Fail(c, 429, struct {
+		Message string `json:"message"`
+		Type    string `json:"type"`
+		Limit   string `json:"limit"`
+	}{"Quota exceeded", "quota", limit})
 }
 
 func Created(c *gin.Context, data interface{}) {

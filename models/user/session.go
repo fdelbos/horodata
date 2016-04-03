@@ -1,11 +1,12 @@
 package user
 
 import (
-	"dev.hyperboloide.com/fred/horodata/services/cache"
-	"dev.hyperboloide.com/fred/horodata/services/postgres"
 	"fmt"
 	"strconv"
 	"time"
+
+	"dev.hyperboloide.com/fred/horodata/services/cache"
+	"dev.hyperboloide.com/fred/horodata/services/postgres"
 )
 
 type Session struct {
@@ -55,7 +56,7 @@ func (s *Session) GetUser() (*User, error) {
 
 func (s *Session) Close() error {
 	s.Active = false
-	const query = `UPDATE sessions SET active = false WHERE id = $1;`
+	const query = `update sessions set active = false where id = $1;`
 	if err := postgres.Exec(query, s.Id); err != nil {
 		return err
 	}
@@ -66,8 +67,8 @@ func NewSession(u *User, host string) (string, error) {
 	var id string
 
 	const req = `
-	INSERT INTO sessions (user_id, host)
-	VALUES ($1, $2) RETURNING id`
+	insert into sessions (user_id, host)
+	values ($1, $2) returning id`
 
 	var tmp int64
 	err := postgres.DB().QueryRow(req, u.Id, host).Scan(&tmp)
@@ -88,6 +89,9 @@ func GetSession(id string) (*Session, error) {
 	if err != nil {
 		return nil, err
 	}
-	query := `SELECT id, created, user_id, active, host FROM sessions WHERE id = $1;`
+	query := `
+	select id, created, user_id, active, host
+	from sessions
+	where id = $1;`
 	return session, postgres.QueryRow(session, query, key)
 }

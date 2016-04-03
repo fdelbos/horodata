@@ -47,41 +47,12 @@ create table password_requests (
     url varchar(40) unique not null
 );
 
-create type quota_plan as enum ('free', 'small', 'medium', 'large', 'custom');
+create type quota_plan as enum ('free', 'small', 'medium', 'large');
 
 create table quotas (
     user_id bigint primary key references users on delete cascade,
     created timestamp default now()  not null,
     plan quota_plan default 'free'  not null
-);
-
-create table quotas_custom (
-    user_id bigint primary key  references users on delete cascade,
-    created timestamp default now()  not null,
-    instances bigint default 0  not null,
-    forms bigint default 0  not null,
-    roles bigint default 0  not null,
-    files bigint default 0  not null
-);
-
-create table quotas_bonus (
-    id bigserial primary key,
-    created timestamp default now()  not null,
-    user_id bigint not null references users on delete cascade,
-    description text not null,
-    instances bigint default 0  not null,
-    forms bigint default 0  not null,
-    roles bigint default 0  not null,
-    files bigint default 0  not null
-);
-
-create table usages (
-    user_id bigint primary key references users on delete cascade,
-    created timestamp default now() not null,
-    instances bigint default 0  not null,
-    forms bigint default 0  not null,
-    roles bigint default 0  not null,
-    files bigint default 0  not null
 );
 
 create function user_new(user_email citext, user_full_name text)
@@ -94,8 +65,6 @@ begin
     new_id := lastval();
 
     insert into quotas (user_id) values (new_id);
-
-    insert into usages (user_id) values (new_id);
 
     update guests set user_id = new_id where email = user_email;
 
@@ -222,6 +191,9 @@ create table groups (
     name varchar(30) not null,
     url varchar(200) unique not null
 );
+
+create view groups_active as
+    select * from groups where active = true;
 
 create table tasks (
     id bigserial primary key,
