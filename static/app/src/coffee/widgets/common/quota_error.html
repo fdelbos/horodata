@@ -1,0 +1,35 @@
+<div layout="column" layout-fill>
+
+  <br>
+  <br>
+
+  <md-whiteframe
+    ng-if="quotaError"
+    class="md-whiteframe-1dp"
+    layout-padding
+    flex
+    layout-align="center center"
+    class="md-body-1"
+    style="text-align:center">
+
+    <div ng-switch="quotaError.limit" class="md-title input-error">
+      <span ng-switch-when="groups">Vous ne pouvez pas créer de nouveau groupe.</span>
+      <span ng-switch-when="guests">Vous ne pouvez pas inviter un nouvel utilisateur.</span>
+      <span ng-switch-when="jobs">Vous ne pouvez pas saisir une nouvelle tache.</span>
+    </div>
+
+    <p ng-if="quotaError.limit == 'groups'">
+      Pour modifier votre plan et changer vos quotas, rendez vous dans le menu <strong>Abonnement</strong>.
+    </p>
+
+    <div ng-if="quotaError.limit != 'groups'">
+      <p ng-if-"isOwner == true">
+        Pour modifier votre plan et changer vos quotas, rendez vous dans le menu <strong>Abonnement</strong>.
+      </p>
+      <p ng-if="isOwner == false">
+        Contactez le proprietaire de ce groupe pour ajouter des utilisateurs.
+      </p>
+    </div>
+
+  </md-whiteframe>
+</div>

@@ -40,6 +40,8 @@ angular.module("horodata").controller("appWidgetsConfigurationGuestsDialog", [
   ($scope, $mdDialog, $mdToast, $http, $location, apiService)->
     $scope.errors = null
     $scope.loading = false
+    $scope.quotaError = null
+
 
     update = (t) ->
       idx = _.findIndex($scope.group.guests, {id: t.id})
@@ -55,7 +57,9 @@ angular.module("horodata").controller("appWidgetsConfigurationGuestsDialog", [
           $mdToast.showSimple("Nouvel utilisateur '#{$scope.guests.current.email}' ajouté")
         (resp) ->
           $scope.loading = false
-          $scope.errors = resp.data.errors
+          if resp.status == 429 && _.get(resp, "data.errors.type") == "quota"
+            $scope.quotaError = resp.data.errors
+          else $scope.errors = resp.data.errors
       )
 
     $scope.edit = ->

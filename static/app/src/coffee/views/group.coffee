@@ -32,6 +32,7 @@ angular.module("horodata").controller("Group", [
         (resp) ->
           $scope.group = resp.data.data
           $scope.isAdmin = $scope.group.guests?
+          $scope.isOwner = $scope.user.id == $scope.group.owner
           $scope.tasks = _.keyBy($scope.group.tasks, 'id')
           $scope.customers = _.keyBy($scope.group.customers, 'id')
           $scope.guests = _.keyBy($scope.group.guests, 'id')

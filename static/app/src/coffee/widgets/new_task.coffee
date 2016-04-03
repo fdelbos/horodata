@@ -27,6 +27,7 @@ angular.module("horodata").controller("newTaskDialog", [
       hours: 0
     $scope.errors = null
     $scope.loading = false
+    $scope.quotaError = null
 
     $scope.hours = [0..12]
     $scope.minutes = (x for x in [0..55] by 5)
@@ -45,7 +46,9 @@ angular.module("horodata").controller("newTaskDialog", [
           listingService.listing().fetch()
         (resp) ->
           $scope.loading = false
-          $scope.errors = resp.data.errors
+          if resp.status == 429 && _.get(resp, "data.errors.type") == "quota"
+            $scope.quotaError = resp.data.errors
+          else $scope.errors = resp.data.errors
       )
 
 ])

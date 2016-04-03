@@ -2,6 +2,7 @@
 
 
 ## Todo:
+* check urls zarbi...
 * check maximum number of user one can import.
 * pb mot de passe non-enregistré dans le navigateur
 * appuyer sur touche "entrée" pour créer ou ajouter

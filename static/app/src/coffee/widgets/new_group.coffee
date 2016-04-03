@@ -27,8 +27,9 @@ angular.module("horodata").controller("newGroupDialog", [
   "groupNewService"
   ($scope, $mdDialog, $mdToast, $http, $location, apiService, groupNewService)->
     $scope.name = ""
-    $scope.errors = null
     $scope.loading = false
+    $scope.errors = null
+    $scope.quotaError = null
 
     $scope.send = ->
       $scope.loading = true
@@ -41,7 +42,8 @@ angular.module("horodata").controller("newGroupDialog", [
           groupNewService.fetch()
         (resp) ->
           $scope.loading = false
-          $scope.errors = resp.data.errors
+          if resp.status == 429 && _.get(resp, "data.errors.type") == "quota"
+            $scope.quotaError = resp.data.errors
+          else $scope.errors = resp.data.errors
       )
-
 ])
