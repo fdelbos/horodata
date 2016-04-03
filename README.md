@@ -20,9 +20,7 @@
 * zopim
 * google analytics
 * cookies cnil
-* crypter les backups
 * stat sur feuille de l'export XLS
-* admin doit pouvoir modifier son taux horraire
 * csrf (x-request-with)
 * push (ajout tâche à la liste & notif lors de création de tâche par un collaborateur)
 * quota par owner/jour -> total des taches

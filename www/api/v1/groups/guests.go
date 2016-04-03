@@ -1,13 +1,14 @@
 package groups
 
 import (
+	"encoding/json"
+	"strconv"
+
 	"dev.hyperboloide.com/fred/horodata/middlewares"
 	sqlerrors "dev.hyperboloide.com/fred/horodata/models/errors"
 	"dev.hyperboloide.com/fred/horodata/www/api/jsend"
-	"encoding/json"
 	valid "github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
-	"strconv"
 )
 
 func GuestAdd(c *gin.Context) {
@@ -69,7 +70,7 @@ func GuestUpdate(c *gin.Context) {
 
 	var data struct {
 		Admin bool `json:"admin"`
-		Rate  int  `json:"admin"`
+		Rate  int  `json:"rate"`
 	}
 	if err := json.NewDecoder(c.Request.Body).Decode(&data); err != nil {
 		jsend.ErrorJson(c)
@@ -85,7 +86,7 @@ func GuestUpdate(c *gin.Context) {
 		jsend.BadRequest(c, errors)
 	} else {
 		// IMPORTANT
-		if *guest.UserId != g.OwnerId {
+		if guest.UserId != nil && *guest.UserId != g.OwnerId {
 			guest.Admin = data.Admin
 		}
 		guest.Rate = data.Rate

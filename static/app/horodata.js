@@ -60,6 +60,8 @@ $templateCache.put("horodata/widgets/new_task.html","<md-button ng-if=MainTitle(
 $templateCache.put("horodata/widgets/new_task_form.html","<md-dialog aria-label=\"Saisir une tâche\" flex=40><div ng-if=\"group.tasks.length == 0 || group.customers.length == 0\"><md-dialog-content><app-widgets-empty-group><app-widgets-empty-group></app-widgets-empty-group></app-widgets-empty-group></md-dialog-content><md-dialog-actions><md-button ng-click=close() class=md-raised>Fermer</md-button></md-dialog-actions></div><form ng-if=\"group.tasks.length > 0 && group.customers.length > 0\" name=newTaskForm><md-toolbar><div class=md-toolbar-tools><h2>Saisir une tâche</h2><span flex></span><md-button class=md-icon-button aria-label=Fermer ng-click=close()><md-icon class=md-24>close</md-icon></md-button></div></md-toolbar><md-dialog-content><div class=md-dialog-content><div layout=column><md-input-container flex><label>Sélectionnez un dossier</label><md-select ng-model=task.customer><md-option ng-repeat=\"c in group.customers\" value=\"{{ c.id }}\">{{ c.name }}</md-option></md-select><small ng-if=errors.customer class=input-error>{{ errors.customer }}</small></md-input-container><md-input-container flex><label>Sélectionnez une tâche</label><md-select ng-model=task.task><md-option ng-repeat=\"t in group.tasks\" value=\"{{ t.id }}\">{{ t.name }}</md-option></md-select><small ng-if=errors.task class=input-error>{{ errors.task }}</small></md-input-container><div layout=row layout-align=\"space-between center\"><md-input-container flex><label>Durée en heures</label><md-select ng-model=task.hours><md-option ng-repeat=\"h in hours\" value=\"{{ h }}\">{{ h }} <span ng-if=\"h > 1\">heures</span> <span ng-if=\"h <= 1\">heure</span></md-option></md-select><small ng-if=errors.duration class=input-error>{{ errors.duration }}</small></md-input-container><md-input-container flex><label>Durée en minutes</label><md-select ng-model=task.minutes><md-option ng-repeat=\"m in minutes\" value=\"{{ m }}\">{{ m }} <span ng-if=\"m > 1\">minutes</span> <span ng-if=\"m <= 1\">minute</span></md-option></md-select><small ng-if=errors.duration class=input-error>{{ errors.duration }}</small></md-input-container></div><md-input-container class=md-block ng-class=\"{\'md-input-invalid\': errors.comment}\"><label>Commentaire</label> <textarea md-no-autogrow ng-model=task.comment rows=3 md-select-on-focus></textarea> <small ng-if=errors.comment class=input-error>{{ errors.comment }}</small></md-input-container></div></div></md-dialog-content><app-widgets-common-dialog-actions><md-button ng-click=send() class=\"md-primary md-raised\">Ajouter</md-button></app-widgets-common-dialog-actions></form></md-dialog>");
 $templateCache.put("horodata/widgets/search_bar.html","<div><div layout=row layout-align=\"space-around center\" hide show-gt-md layout-padding><div layout=row flex=25 layout-align=\"center center\"><span>du</span><md-datepicker ng-model=search.begin md-placeholder=\"Date début\" md-max-date=search.end></md-datepicker></div><div layout=row flex=25 layout-align=\"center center\"><span>au</span><md-datepicker ng-model=search.end md-placeholder=\"Date fin\" md-max-date=today></md-datepicker></div><div flex=25><div layout=row layout-align=\"space-between center\"><md-input-container class=no-margin flex><label>Dossier</label><md-select ng-model=search.customer><md-option ng-repeat=\"c in group.customers\" value=\"{{ c.id }}\">{{ c.name }}</md-option></md-select></md-input-container><md-button ng-click=\"search.customer = null\" ng-if=search.customer class=\"md-fab md-mini\" aria-label=désélectionner><md-icon>close</md-icon></md-button></div></div><div flex=25 ng-if=isAdmin><div layout=row layout-align=\"space-between center\"><md-input-container class=no-margin flex><label>Utilisateur</label><md-select ng-model=search.guest><md-option ng-repeat=\"u in group.guests\" ng-if=u.full_name value=\"{{ u.id }}\">{{ u.full_name }}</md-option></md-select></md-input-container><md-button ng-click=\"search.guest = null\" ng-if=search.guest class=\"md-fab md-mini\" aria-label=désélectionner><md-icon>close</md-icon></md-button></div></div></div><md-divider></md-divider></div>");
 $templateCache.put("horodata/widgets/stats.html","<div layout=column layout-padding><div layout=row><md-input-container flex><md-select ng-model=selected placeholder=\"Choisissez une statistique\"><md-option ng-value=s.id ng-repeat=\"s in availableStats\">{{ s.label }}</md-option></md-select></md-input-container></div><div ng-switch=selected flex><app-widgets-stats-customer-time ng-switch-when=customer_time></app-widgets-stats-customer-time><app-widgets-stats-task-time ng-switch-when=task_time></app-widgets-stats-task-time><app-widgets-stats-guest-time ng-switch-when=guest_time></app-widgets-stats-guest-time></div></div>");
+$templateCache.put("horodata/widgets/common/dialog_actions.html","<md-dialog-actions><ng-transclude ng-if=!loading></ng-transclude><md-button ng-if=!loading ng-click=hide() class=md-raised>Annuler</md-button><md-progress-linear ng-if=loading md-mode=indeterminate></md-progress-linear></md-dialog-actions>");
+$templateCache.put("horodata/widgets/common/dialog_toolbar.html","<md-toolbar ng-class=\"{\'md-warn\': warn}\"><div class=md-toolbar-tools><h2><ng-transclude></ng-transclude></h2><span flex></span><md-button class=md-icon-button aria-label=Fermer ng-click=hide()><md-icon class=md-24>close</md-icon></md-button></div></md-toolbar>");
 $templateCache.put("horodata/widgets/detail/dialog.html","<md-dialog aria-label=\"Detail de la tâche\" flex=40><form name=editTaskForm><md-toolbar><div class=md-toolbar-tools><h2>Detail de la tâche</h2><span flex></span><md-button class=md-icon-button aria-label=Fermer ng-click=close()><md-icon class=md-24>close</md-icon></md-button></div></md-toolbar><md-dialog-content><div class=md-dialog-content><div layout=column><app-widgets-detail-meta></app-widgets-detail-meta><md-input-container flex><label>Sélectionnez un dossier</label><md-select ng-model=detailJob.customer_id><md-option ng-repeat=\"c in group.customers\" value=\"{{ c.id }}\">{{ c.name }}</md-option></md-select><small ng-if=errors.customer class=input-error>{{ errors.customer }}</small></md-input-container><md-input-container flex><label>Sélectionnez une tâche</label><md-select ng-model=detailJob.task_id><md-option ng-repeat=\"t in group.tasks\" value=\"{{ t.id }}\">{{ t.name }}</md-option></md-select><small ng-if=errors.task class=input-error>{{ errors.task }}</small></md-input-container><div layout=row layout-align=\"space-between center\"><md-input-container flex><label>Durée en heures</label><md-select ng-model=detailJob.hours><md-option ng-repeat=\"h in hours\" value=\"{{ h }}\">{{ h }} <span ng-if=\"h > 1\">heures</span> <span ng-if=\"h <= 1\">heure</span></md-option></md-select><small ng-if=errors.duration class=input-error>{{ errors.duration }}</small></md-input-container><md-input-container flex><label>Durée en minutes</label><md-select ng-model=detailJob.minutes><md-option ng-repeat=\"m in minutes\" value=\"{{ m }}\">{{ m }} <span ng-if=\"m > 1\">minutes</span> <span ng-if=\"m <= 1\">minute</span></md-option></md-select><small ng-if=errors.duration class=input-error>{{ errors.duration }}</small></md-input-container></div><md-input-container class=md-block ng-class=\"{\'md-input-invalid\': errors.comment}\"><label>Commentaire</label> <textarea md-no-autogrow ng-model=detailJob.comment rows=3 md-select-on-focus></textarea> <small ng-if=errors.comment class=input-error>{{ errors.comment }}</small></md-input-container></div></div></md-dialog-content><app-widgets-common-dialog-actions><md-button ng-click=send() ng-if=canEdit class=\"md-primary md-raised\">Editer</md-button><md-button ng-click=delete() ng-if=canEdit class=\"md-raised md-warn\">Supprimer</md-button></app-widgets-common-dialog-actions></form></md-dialog>");
 $templateCache.put("horodata/widgets/detail/meta.html","<div><div layout=row><div ng-if=isAdmin layout=column flex><span class=md-caption>Utilisateur</span><div>{{ guests[detailJob.creator_id].full_name }}</div></div><div layout=column flex><span class=md-caption>Cree le</span><div>{{ detailJob.created | Date }}</div></div><br><br><br></div></div>");
 $templateCache.put("horodata/widgets/configuration/customers.html","<div layout-padding><div layout=column flex-sm=70 flex-md=80 flex-gt-md=60><div layout=row layout-align=\"space-between center\"><div class=md-display-1 hide show-gt-sm>Dossiers</div><div class=md-headline hide-gt-sm>Dossiers</div><md-button ng-click=customers.create($event) class=\"md-raised md-primary\" hide show-gt-sm><md-tooltip md-direction=top>Ajouter de nouveaux dossiers</md-tooltip><md-icon class=md-18>add</md-icon>Ajouter</md-button><md-button ng-click=customers.create($event) class=\"md-fab md-mini md-primary\" hide-gt-sm aria-label=\"Ajouter de nouveaux dossiers\"><md-icon class=md-24>add</md-icon></md-button></div><p class=md-body-1>Listez l\'ensemble des dossiers sur lesquels travaillent vos collaborateurs.<br>Les dossiers peuvent représenter vos clients ou divers projets.</p><md-whiteframe ng-if=\"group.customers.length == 0\" class=\"md-whiteframe-1dp md-accent\" layout-padding layout=column layout-align=\"center center\"><div class=\"md-headline input-error\">Aucun dossier</div><div>Ajouter des dossiers pour permettre la saisie de tâches.</div></md-whiteframe><div layout=row ng-if=\"group.customers.length > 0\"><md-input-container flex><label>Sélectionnez un dossier</label><md-select ng-model=customers.selected><md-option ng-repeat=\"c in group.customers\" value=\"{{ c.id }}\">{{ c.name }}</md-option></md-select></md-input-container><md-button ng-if=customers.selected ng-click=customers.edit($event) class=\"md-fab md-mini md-accent\" aria-label=\"Modifier le dossier\"><md-tooltip md-direction=top>Modifier le dossier</md-tooltip><md-icon class=md-24>edit</md-icon></md-button></div></div></div>");
@@ -73,8 +75,6 @@ $templateCache.put("horodata/widgets/configuration/guests_edit_form.html","<md-d
 $templateCache.put("horodata/widgets/configuration/root.html","<div><app-widgets-configuration-guests></app-widgets-configuration-guests><md-divider></md-divider><app-widgets-configuration-customers></app-widgets-configuration-customers><md-divider></md-divider><app-widgets-configuration-tasks></app-widgets-configuration-tasks><md-divider ng-if=\"group.owner == user.id\"></md-divider><app-widgets-configuration-delete ng-if=\"group.owner == user.id\"></app-widgets-configuration-delete><div class=free-space></div></div>");
 $templateCache.put("horodata/widgets/configuration/tasks.html","<div layout-padding><div layout=column flex-sm=70 flex-md=80 flex-gt-md=60><div layout=row layout-align=\"space-between center\"><div class=md-display-1 hide show-gt-sm>Types de tâche</div><div class=md-headline hide-gt-sm>Types de tâche</div><md-button ng-click=tasks.create($event) class=\"md-raised md-primary\" hide show-gt-sm><md-tooltip md-direction=top>Ajouter un type de tâche</md-tooltip><md-icon class=md-18>add</md-icon>Ajouter</md-button><md-button ng-click=tasks.create($event) class=\"md-fab md-primary md-mini\" hide-gt-sm aria-label=\"Ajouter un type de tâche\"><md-icon class=md-24>add</md-icon></md-button></div><p class=md-body-1>Listez les types de tâche qu\'accomplissent vos collaborateurs.</p><md-whiteframe ng-if=\"group.tasks.length == 0\" class=\"md-whiteframe-1dp md-accent\" layout-padding layout=column layout-align=\"center center\"><div class=\"md-headline input-error\">Aucun type de tâche</div><div>Ajouter des types pour permettre la saisie de tâches.</div></md-whiteframe><div layout=row ng-if=\"group.tasks.length > 0\"><md-input-container flex><label>Sélectionnez un type de tâche</label><md-select ng-model=tasks.selected><md-option ng-repeat=\"t in group.tasks\" value=\"{{ t.id }}\">{{ t.name }} <small ng-if=t.comment_mandatory>(Commentaire obligatoire)</small></md-option></md-select></md-input-container><md-button ng-if=tasks.selected ng-click=tasks.edit($event) class=\"md-fab md-mini md-accent\" aria-label=\"Editer une tâche\"><md-tooltip md-direction=top>Modifier la tâche</md-tooltip><md-icon class=md-24>edit</md-icon></md-button></div></div></div>");
 $templateCache.put("horodata/widgets/configuration/tasks_form.html","<md-dialog aria-label=\"Ajouter un nouveau type de tâche\" flex=40><form name=newTaskForm><app-widgets-common-dialog-toolbar><span ng-if=!tasks.current.id>Ajouter un nouveau type de tâche</span> <span ng-if=tasks.current.id>Modifier la tâche {{ tasks.current.name }}</span></app-widgets-common-dialog-toolbar><md-dialog-content><div class=md-dialog-content><md-input-container class=md-block ng-class=\"{\'md-input-invalid\': errors.name}\"><label>Nom de la tâche</label> <input md-maxlength=30 type=text ng-model=tasks.current.name> <small ng-if=errors.name class=input-error>{{ errors.name }}</small></md-input-container><md-input-container class=md-block ng-class=\"{\'md-input-invalid\': errors.admin}\"><md-switch ng-model=tasks.current.comment_mandatory aria-label=\"Commentaire obligatoire\">Commentaire obligatoire</md-switch><div class=input-hint>Cochez la case, si vous souhaitez rendre le commentaire obligatoire.</div></md-input-container></div></md-dialog-content><app-widgets-common-dialog-actions><md-button ng-if=!tasks.current.id ng-click=create() class=\"md-primary md-raised\">Ajouter</md-button><md-button ng-if=tasks.current.id ng-click=edit() class=\"md-primary md-raised\">Modifier</md-button><md-button ng-if=tasks.current.id ng-click=delete() class=\"md-warn md-raised\">Supprimer</md-button></app-widgets-common-dialog-actions></form></md-dialog>");
-$templateCache.put("horodata/widgets/common/dialog_actions.html","<md-dialog-actions><ng-transclude ng-if=!loading></ng-transclude><md-button ng-if=!loading ng-click=hide() class=md-raised>Annuler</md-button><md-progress-linear ng-if=loading md-mode=indeterminate></md-progress-linear></md-dialog-actions>");
-$templateCache.put("horodata/widgets/common/dialog_toolbar.html","<md-toolbar ng-class=\"{\'md-warn\': warn}\"><div class=md-toolbar-tools><h2><ng-transclude></ng-transclude></h2><span flex></span><md-button class=md-icon-button aria-label=Fermer ng-click=hide()><md-icon class=md-24>close</md-icon></md-button></div></md-toolbar>");
 $templateCache.put("horodata/widgets/stats/customer_time.html","<div layout=column><app-widgets-loading ng-if=stats.loading()></app-widgets-loading><div ng-if=\"!stats.loading() && data.length > 0\" flex><div id=chart></div><c3chart bindto-id=chart ng-if=data><chart-column ng-repeat=\"i in data\" column-id=\"{{ i.customer_id }}\" column-name=\"{{ customers[i.customer_id].name }}\" column-values=\"{{ i.duration }}\" column-type=pie></chart-column></c3chart></div><app-widgets-stats-no-data ng-if=\"!stats.loading() && data.length == 0\"></app-widgets-stats-no-data></div>");
 $templateCache.put("horodata/widgets/stats/guest_time.html","<div layout=column><app-widgets-loading ng-if=stats.loading()></app-widgets-loading><div ng-if=\"!stats.loading() && data.length > 0\" flex><div id=chart></div><c3chart bindto-id=chart ng-if=data><chart-column ng-repeat=\"i in data\" column-id=\"{{ i.guest_id }}\" column-name=\"{{ guests[i.guest_id].full_name }}\" column-values=\"{{ i.duration }}\" column-type=pie></chart-column></c3chart></div><app-widgets-stats-no-data ng-if=\"!stats.loading() && data.length == 0\"></app-widgets-stats-no-data></div>");
 $templateCache.put("horodata/widgets/stats/no_data.html","<div layout=row flex layout-align=\"center center\"><md-whiteframe class=\"md-whiteframe-1dp md-accent\" flex=100 flex-sm=70 flex-md=60 flex-gt-md=50 layout-padding layout-margin layout=column><div layout-padding layout-margin layout=column layout-align=\"center center\"><div><div class=md-headline>Aucune donnee pour la periode</div><p>La periode du {{ search.begin | Day }} au {{ search.end | Day }} ne comporte aucune saisie.</p></div></div></md-whiteframe></div>");
@@ -142,69 +142,6 @@ angular.module("horodata").directive("appMenuToolbar", [
   }
 ]);
 
-angular.module("horodata").controller("Group", [
-  "$http", "$routeParams", "$scope", "titleService", "userService", "apiService", "groupNewService", "popupService", "listingService", function($http, $routeParams, $scope, titleService, userService, apiService, groupNewService, popupService, listingService) {
-    var getGroup;
-    $scope.isGroupView = true;
-    $scope.selectedTab = 0;
-    $scope.search = {
-      begin: moment().subtract(1, 'months').toDate(),
-      end: new Date(),
-      customer: null,
-      guest: null
-    };
-    $scope.$watch("search", function(v) {
-      if (v == null) {
-        return;
-      }
-      listingService.search($routeParams.group, v);
-      return listingService.listing().fetch(1);
-    }, true);
-    $scope.isAdmin = false;
-    getGroup = function() {
-      return $http.get((apiService.get()) + "/groups/" + $routeParams.group).then(function(resp) {
-        $scope.group = resp.data.data;
-        $scope.isAdmin = $scope.group.guests != null;
-        $scope.tasks = _.keyBy($scope.group.tasks, 'id');
-        $scope.customers = _.keyBy($scope.group.customers, 'id');
-        $scope.guests = _.keyBy($scope.group.guests, 'id');
-        return titleService.set($scope.group.name, true);
-      });
-    };
-    userService.get(function(u) {
-      $scope.user = u;
-      return getGroup();
-    });
-    $scope.$on("group.reload", function(e) {
-      e.stopPropagation();
-      return getGroup();
-    });
-    groupNewService.set(function(ev) {
-      return popupService("horodata/widgets/new_task_form.html", "newTaskDialog", $scope, ev);
-    });
-    return $scope.selectTab = function(i) {
-      return $scope.selectedTab = i;
-    };
-  }
-]);
-
-angular.module("horodata").controller("Index", [
-  "$http", "$scope", "userService", "titleService", function($http, $scope, userService, titleService) {
-    return titleService.set("Accueil");
-  }
-]);
-
-angular.module("horodata").controller("Profile", [
-  "$scope", "$mdDialog", "$mdToast", "$http", "apiService", "userService", function($scope, $mdDialog, $mdToast, $http, apiService, userService) {
-    $scope.errors = null;
-    $scope.loading = false;
-    $scope.name = $scope.user.name;
-    return $scope.send = function() {
-      return $scope.loading = true;
-    };
-  }
-]);
-
 angular.module('horodata').factory("apiService", [
   function() {
     var root;
@@ -259,7 +196,6 @@ angular.module("horodata").filter("Duration", [
 angular.module("horodata").filter("Profile", [
   "homeService", "staticService", function(homeService, staticService) {
     return function(id) {
-      console.log(id);
       if ((id != null) && id !== "") {
         return (homeService.get()) + "/profiles/" + id + ".jpg";
       } else {
@@ -565,6 +501,69 @@ angular.module('horodata').factory("userService", [
   }
 ]);
 
+angular.module("horodata").controller("Group", [
+  "$http", "$routeParams", "$scope", "titleService", "userService", "apiService", "groupNewService", "popupService", "listingService", function($http, $routeParams, $scope, titleService, userService, apiService, groupNewService, popupService, listingService) {
+    var getGroup;
+    $scope.isGroupView = true;
+    $scope.selectedTab = 0;
+    $scope.search = {
+      begin: moment().subtract(1, 'months').toDate(),
+      end: new Date(),
+      customer: null,
+      guest: null
+    };
+    $scope.$watch("search", function(v) {
+      if (v == null) {
+        return;
+      }
+      listingService.search($routeParams.group, v);
+      return listingService.listing().fetch(1);
+    }, true);
+    $scope.isAdmin = false;
+    getGroup = function() {
+      return $http.get((apiService.get()) + "/groups/" + $routeParams.group).then(function(resp) {
+        $scope.group = resp.data.data;
+        $scope.isAdmin = $scope.group.guests != null;
+        $scope.tasks = _.keyBy($scope.group.tasks, 'id');
+        $scope.customers = _.keyBy($scope.group.customers, 'id');
+        $scope.guests = _.keyBy($scope.group.guests, 'id');
+        return titleService.set($scope.group.name, true);
+      });
+    };
+    userService.get(function(u) {
+      $scope.user = u;
+      return getGroup();
+    });
+    $scope.$on("group.reload", function(e) {
+      e.stopPropagation();
+      return getGroup();
+    });
+    groupNewService.set(function(ev) {
+      return popupService("horodata/widgets/new_task_form.html", "newTaskDialog", $scope, ev);
+    });
+    return $scope.selectTab = function(i) {
+      return $scope.selectedTab = i;
+    };
+  }
+]);
+
+angular.module("horodata").controller("Index", [
+  "$http", "$scope", "userService", "titleService", function($http, $scope, userService, titleService) {
+    return titleService.set("Accueil");
+  }
+]);
+
+angular.module("horodata").controller("Profile", [
+  "$scope", "$mdDialog", "$mdToast", "$http", "apiService", "userService", function($scope, $mdDialog, $mdToast, $http, apiService, userService) {
+    $scope.errors = null;
+    $scope.loading = false;
+    $scope.name = $scope.user.name;
+    return $scope.send = function() {
+      return $scope.loading = true;
+    };
+  }
+]);
+
 angular.module("horodata").directive("appWidgetsEmptyGroup", [
   function() {
     return {
@@ -749,6 +748,45 @@ angular.module("horodata").directive("appWidgetsStats", [
       replace: true,
       restrict: "E",
       templateUrl: "horodata/widgets/stats.html"
+    };
+  }
+]);
+
+angular.module("horodata").directive("appWidgetsCommonDialogActions", [
+  "$mdDialog", function($mdDialog) {
+    var l;
+    l = function(scope) {
+      return scope.hide = function() {
+        return $mdDialog.hide();
+      };
+    };
+    return {
+      link: l,
+      transclude: true,
+      replace: true,
+      restrict: "E",
+      templateUrl: "horodata/widgets/common/dialog_actions.html"
+    };
+  }
+]);
+
+angular.module("horodata").directive("appWidgetsCommonDialogToolbar", [
+  "$mdDialog", function($mdDialog) {
+    var l;
+    l = function(scope) {
+      return scope.hide = function() {
+        return $mdDialog.hide();
+      };
+    };
+    return {
+      link: l,
+      scope: {
+        warn: "="
+      },
+      transclude: true,
+      replace: true,
+      restrict: "E",
+      templateUrl: "horodata/widgets/common/dialog_toolbar.html"
     };
   }
 ]);
@@ -1103,45 +1141,6 @@ angular.module("horodata").controller("appWidgetsConfigurationTasksDialog", [
         $scope.loading = false;
         return $scope.errors = resp.data.errors;
       });
-    };
-  }
-]);
-
-angular.module("horodata").directive("appWidgetsCommonDialogActions", [
-  "$mdDialog", function($mdDialog) {
-    var l;
-    l = function(scope) {
-      return scope.hide = function() {
-        return $mdDialog.hide();
-      };
-    };
-    return {
-      link: l,
-      transclude: true,
-      replace: true,
-      restrict: "E",
-      templateUrl: "horodata/widgets/common/dialog_actions.html"
-    };
-  }
-]);
-
-angular.module("horodata").directive("appWidgetsCommonDialogToolbar", [
-  "$mdDialog", function($mdDialog) {
-    var l;
-    l = function(scope) {
-      return scope.hide = function() {
-        return $mdDialog.hide();
-      };
-    };
-    return {
-      link: l,
-      scope: {
-        warn: "="
-      },
-      transclude: true,
-      replace: true,
-      restrict: "E",
-      templateUrl: "horodata/widgets/common/dialog_toolbar.html"
     };
   }
 ]);

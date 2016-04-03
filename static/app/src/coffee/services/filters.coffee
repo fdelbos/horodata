@@ -24,7 +24,6 @@ angular.module("horodata").filter("Profile", [
   "staticService"
   (homeService, staticService) ->
     return (id) ->
-      console.log id
       if id? and id != "" then "#{homeService.get()}/profiles/#{id}.jpg"
       else "#{staticService.get()}/profile-default.png"
 ])
