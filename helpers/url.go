@@ -1,10 +1,11 @@
 package helpers
 
 import (
-	"dev.hyperboloide.com/fred/horodata/models/errors"
 	"fmt"
+	"strings"
+
+	"dev.hyperboloide.com/fred/horodata/models/errors"
 	"github.com/dchest/uniuri"
-	neturl "net/url"
 )
 
 var (
@@ -38,8 +39,16 @@ func RandomDigits(n int) string {
 	return uniuri.NewLenChars(n, digitChar)
 }
 
+var replacer = strings.NewReplacer(
+	"<", "-", ">", "-", "#", "-", "%", "-", "\"", "-", "{", "-", "}", "-", "|", "-", "\\", "-", "^", "-", "[", "-", "]", "-", "`", "-", "?", "-", "&", "-", "=", "-", "+", "-", "/", "-", " ", "-")
+
+func EscapeUrl(str string) string {
+	return replacer.Replace(str)
+}
+
 func Gen(str string, checkFn func(string) (interface{}, error)) (string, error) {
-	url := neturl.QueryEscape(str)
+	url := EscapeUrl(str)
+
 	if url == "" {
 		return Gen(RandomDigits(4), checkFn)
 	}

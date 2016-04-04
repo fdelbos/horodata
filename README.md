@@ -2,7 +2,6 @@
 
 
 ## Todo:
-* check urls zarbi...
 * check maximum number of user one can import.
 * pb mot de passe non-enregistré dans le navigateur
 * appuyer sur touche "entrée" pour créer ou ajouter
@@ -26,6 +25,7 @@
 * force mdp : https://github.com/dropbox/zxcvbn + captcha si + 10 dans la journee.
 * quitter un groupe
 * supprimer un job
+* envoyer un rappel si rien saisi.
 
 ## Later:
 * quota bonus / custom ?
