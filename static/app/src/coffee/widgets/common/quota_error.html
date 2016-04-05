@@ -1,8 +1,5 @@
 <div layout="column" layout-fill>
 
-  <br>
-  <br>
-
   <md-whiteframe
     ng-if="quotaError"
     class="md-whiteframe-1dp"
@@ -23,10 +20,10 @@
     </p>
 
     <div ng-if="quotaError.limit != 'groups'">
-      <p ng-if-"isOwner == true">
+      <p ng-if="isOwner">
         Pour modifier votre plan et changer vos quotas, rendez vous dans le menu <strong>Abonnement</strong>.
       </p>
-      <p ng-if="isOwner == false">
+      <p ng-if="!isOwner">
         Contactez le proprietaire de ce groupe pour ajouter des utilisateurs.
       </p>
     </div>

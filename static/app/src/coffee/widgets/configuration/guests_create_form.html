@@ -6,6 +6,9 @@
     <md-dialog-content>
       <div class="md-dialog-content">
 
+        <app-widgets-common-quota-error></app-widgets-common-quota-error>
+        
+
         <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.email}" >
           <label>Adresse email</label>
           <input type="text" md-maxlength="100" ng-model="guests.current.email">
@@ -28,8 +31,6 @@
           </div>
           <small ng-if="errors.admin" class="input-error">{{ errors.admin }}</small>
         </md-input-container>
-
-        <app-widgets-common-quota-error></app-widgets-common-quota-error>
 
       </div>
     </md-dialog-content>
