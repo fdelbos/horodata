@@ -1,19 +1,18 @@
 angular.module('horodata').factory("statsService", [
   "apiService"
   "$http"
-   (apiService, $http)->
+  "statsFilterService"
+  (apiService, $http, statsFilterService)->
 
     loading = false
 
-    fetch = (group, stat, params, cb)->
-      p =
-        begin: moment(params.begin).format('YYYY-MM-DD')
-        end: moment(params.end).format('YYYY-MM-DD')
-        guest: params.guest
+    fetch = (group, stat, cb)->
 
+      begin = moment(statsFilterService.begin).format('YYYY-MM-DD')
+      end = moment(statsFilterService.end).format('YYYY-MM-DD')
 
       loading = true
-      $http.get("#{apiService.get()}/groups/#{group}/stats/#{stat}", {params: p}).then(
+      $http.get("#{apiService.get()}/groups/#{group}/stats/#{stat}", {params: {begin: begin, end: end}}).then(
         (resp) ->
           loading = false
           cb(resp.data.data)

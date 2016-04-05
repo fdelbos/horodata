@@ -70,7 +70,6 @@ angular.module("horodata").controller("newTaskDialog", [
             $scope.quotaError = resp.data.errors
           else $scope.errors = resp.data.errors
       )
-
 ])
 
 
@@ -79,16 +78,13 @@ angular.module("horodata").controller("exportDialog", [
   "$mdDialog"
   "apiService"
   "groupService"
-  ($scope, $mdDialog, apiService, groupService)->
+  "statsFilterService"
+  ($scope, $mdDialog, apiService, groupService, statsFilterService)->
 
-    console.log "titi"
-
+    $scope.filter = statsFilterService
     $scope.group = groupService.get()
     $scope.export =
       fileType: "xlsx"
 
     $scope.url = "#{apiService.get()}/groups/#{$scope.group.url}/export"
-
-    $scope.$watch("export.fileType", (v) -> console.log v)
-
 ])

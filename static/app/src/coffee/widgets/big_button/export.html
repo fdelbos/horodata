@@ -1,4 +1,4 @@
-<md-dialog aria-label="Saisir une tâche" flex="40">
+<md-dialog aria-label="Exporter les tâches" flex="40">
 
   <div ng-if="group.tasks.length == 0 || group.customers.length == 0">
     <app-widgets-common-dialog-toolbar>Exporter les tâches</app-widgets-common-dialog-toolbar>
@@ -13,7 +13,11 @@
     <app-widgets-common-dialog-toolbar>Exporter les tâches</app-widgets-common-dialog-toolbar>
 
     <md-dialog-content>
-      <div class="md-dialog-content">
+      <div class="md-dialog-content md-body-1">
+
+        <p class="md-subhead">
+          Saisies du {{ filter.begin | Day }} au {{ filter.end | Day }}
+        </p>
 
         Format d'export:
 
@@ -32,7 +36,8 @@
 
     <app-widgets-common-dialog-actions>
       <md-button
-        ng-href="{{ url }}_{{ export.fileType }}"
+        ng-click="hide()"
+        ng-href="{{ url }}_{{ export.fileType }}{{ filter.urlParams() }}"
         class="md-primary md-raised">
         Telecharger
       </md-button>

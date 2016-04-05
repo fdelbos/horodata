@@ -1,7 +1,12 @@
 angular.module("horodata").directive("appWidgetsStats", [
-  ->
+  "statsFilterService"
+  (statsFilterService)->
 
     l = (scope) ->
+
+      scope.filter = statsFilterService
+      scope.today = new Date()
+
       scope.availableStats = [
         {
           id: "customer_time"
@@ -23,6 +28,6 @@ angular.module("horodata").directive("appWidgetsStats", [
       link: l
       replace: true
       restrict: "E"
-      templateUrl: "horodata/widgets/stats.html"
+      templateUrl: "horodata/widgets/stats/root.html"
     }
 ])

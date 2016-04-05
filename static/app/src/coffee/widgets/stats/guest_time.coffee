@@ -1,13 +1,21 @@
 angular.module("horodata").directive("appWidgetsStatsGuestTime", [
   "statsService"
-  (statsService)->
+  "statsFilterService"
+  (statsService, statsFilterService)->
 
     l = (scope) ->
       scope.stats = statsService
+      scope.filter = statsFilterService
 
-      statsService.fetch(scope.group.url, "guest_time", scope.search, (data) =>
-        scope.data = data
-      )
+      update = ->
+        statsService.fetch(scope.group.url, "guest_time", (data) =>
+          scope.data = data)
+      update()
+
+      scope.$watch("filter", (v, o) ->
+        if v.begin == o.begin and v.end == o.end then return
+        update()
+      , true)
 
     return {
       link: l
