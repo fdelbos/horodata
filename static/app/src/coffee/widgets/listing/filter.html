@@ -16,7 +16,7 @@
           <md-input-container class="no-margin" flex>
             <label>Dossier</label>
             <md-select ng-model="search.customer">
-              <md-option ng-repeat="c in group.customers" value="{{ c.id }}">
+              <md-option ng-repeat="c in group.customers" ng-if="c.active" value="{{ c.id }}">
                 {{ c.name }}
               </md-option>
             </md-select>
@@ -33,7 +33,7 @@
           <md-input-container class="no-margin" flex>
             <label>Utilisateur</label>
             <md-select ng-model="search.guest">
-              <md-option ng-repeat="u in group.guests" ng-if="u.full_name" value="{{ u.id }}">
+              <md-option ng-repeat="u in group.guests" ng-if="u.full_name && u.active" value="{{ u.id }}">
                 {{ u.full_name }}
               </md-option>
             </md-select>

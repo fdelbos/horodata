@@ -38,7 +38,7 @@
         <md-input-container flex>
           <label>Sélectionnez un type de tâche</label>
           <md-select ng-model="tasks.selected">
-            <md-option ng-repeat="t in group.tasks" value="{{ t.id }}">
+            <md-option ng-repeat="t in group.tasks" ng-if="t.active" value="{{ t.id }}">
               {{ t.name }}
               <small ng-if="t.comment_mandatory">(Commentaire obligatoire)</small>
             </md-option>

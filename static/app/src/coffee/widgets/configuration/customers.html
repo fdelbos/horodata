@@ -35,7 +35,7 @@
         <md-input-container flex>
           <label>Sélectionnez un dossier</label>
           <md-select ng-model="customers.selected">
-            <md-option ng-repeat="c in group.customers" value="{{ c.id }}">
+            <md-option ng-repeat="c in group.customers" ng-if="c.active" value="{{ c.id }}">
               {{ c.name }}
             </md-option>
           </md-select>

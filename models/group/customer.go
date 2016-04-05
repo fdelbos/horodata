@@ -1,15 +1,16 @@
 package group
 
 import (
+	"time"
+
 	"dev.hyperboloide.com/fred/horodata/models/errors"
 	"dev.hyperboloide.com/fred/horodata/services/postgres"
-	"time"
 )
 
 type Customer struct {
 	Id      int64     `json:"id"`
 	Created time.Time `json:"-"`
-	Active  bool      `json:"-"`
+	Active  bool      `json:"active"`
 	GroupId int64     `json:"-"`
 	Name    string    `json:"name"`
 }
@@ -45,6 +46,7 @@ func (g *Group) CustomerAdd(name string) error {
 
 	if err := postgres.QueryRow(customer, findQuery, g.Id, name); err == nil {
 		customer.Active = true
+		customer.Name = name
 		return customer.Update()
 	} else if err != errors.NotFound {
 		return err
@@ -60,7 +62,7 @@ func (g *Group) CustomerAdd(name string) error {
 func (g *Group) Customers() ([]Customer, error) {
 	const query = `
     select * from customers
-    where group_id = $1 and active = true
+    where group_id = $1
     order by name, id;`
 
 	rows, err := postgres.DB().Query(query, g.Id)

@@ -24,8 +24,8 @@ angular.module("horodata").controller("newGroupDialog", [
   "$http",
   "$location",
   "apiService"
-  "groupNewService"
-  ($scope, $mdDialog, $mdToast, $http, $location, apiService, groupNewService)->
+  "groupService"
+  ($scope, $mdDialog, $mdToast, $http, $location, apiService, groupService)->
     $scope.name = ""
     $scope.loading = false
     $scope.errors = null
@@ -39,7 +39,7 @@ angular.module("horodata").controller("newGroupDialog", [
           $mdDialog.hide()
           $mdToast.showSimple("Nouveau groupe '#{group.name}' créé")
           $location.path("/#{group.url}")
-          groupNewService.fetch()
+          groupService.fetch()
         (resp) ->
           $scope.loading = false
           if resp.status == 429 && _.get(resp, "data.errors.type") == "quota"

@@ -1,15 +1,16 @@
 package group
 
 import (
+	"time"
+
 	"dev.hyperboloide.com/fred/horodata/models/errors"
 	"dev.hyperboloide.com/fred/horodata/services/postgres"
-	"time"
 )
 
 type Task struct {
 	Id               int64     `json:"id"`
 	Created          time.Time `json:"-"`
-	Active           bool      `json:"-"`
+	Active           bool      `json:"active"`
 	GroupId          int64     `json:"-"`
 	Name             string    `json:"name"`
 	CommentMandatory bool      `json:"comment_mandatory"`
@@ -48,6 +49,7 @@ func (g *Group) TaskAdd(name string, cm bool) error {
 
 	if err := postgres.QueryRow(task, findQuery, g.Id, name); err == nil {
 		task.Active = true
+		task.Name = name
 		task.CommentMandatory = cm
 		return task.Update()
 	} else if err != errors.NotFound {
@@ -64,7 +66,7 @@ func (g *Group) TaskAdd(name string, cm bool) error {
 func (g *Group) Tasks() ([]Task, error) {
 	const query = `
     select * from tasks
-    where group_id = $1 and active = true
+    where group_id = $1
 	order by name;`
 
 	rows, err := postgres.DB().Query(query, g.Id)

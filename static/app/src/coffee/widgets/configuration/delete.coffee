@@ -24,8 +24,8 @@ angular.module("horodata").controller("appWidgetsConfigurationDeleteConfirm", [
   "$http",
   "$location",
   "apiService"
-  "groupNewService"
-  ($scope, $mdDialog, $mdToast, $http, $location, apiService, groupNewService)->
+  "groupService"
+  ($scope, $mdDialog, $mdToast, $http, $location, apiService, groupService)->
     $scope.loading = false
 
     $scope.delete = ->
@@ -35,7 +35,7 @@ angular.module("horodata").controller("appWidgetsConfigurationDeleteConfirm", [
           $mdDialog.hide()
           $mdToast.showSimple("Groupe '#{$scope.group.name}' supprimé")
           $location.path("/")
-          groupNewService.fetch()
+          groupService.fetch()
         (resp) ->
           $scope.errors = resp.data.errors
           $scope.loading = false

@@ -7,8 +7,6 @@
 * Si vide, ajouter texte dans liste "Aucune tâche saisie"
 * Désactiver les tool-tips
 * Message dans zone blanche page d'accueil "Sélectionnez ou créez un groupe" /Différent PC et mobile ?
-* Zone filtre + Tabs à figer ?
-* Réduire zone de filtre sur mobile / Comment ?
 * Pagination du listing / infinit scroll ???
 * Statistiques
 * Facturation et plans
@@ -20,7 +18,7 @@
 * stat sur feuille de l'export XLS
 * csrf (x-request-with)
 * quitter un groupe
-* supprimer un job
+* supprimer un job / editer avec task ou customer innactif
 * envoyer un rappel si rien saisi.
 * saisie j+1 passer en mode txt
 * CGV / CGU
