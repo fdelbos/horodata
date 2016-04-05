@@ -32,25 +32,28 @@
       <div>Ajouter des types pour permettre la saisie de tâches.</div>
     </md-whiteframe>
 
-    <div layout="row" ng-if="group.tasks.length > 0">
-      <md-input-container flex>
-        <label>Sélectionnez un type de tâche</label>
-        <md-select ng-model="tasks.selected">
-          <md-option ng-repeat="t in group.tasks" value="{{ t.id }}">
-            {{ t.name }}
-            <small ng-if="t.comment_mandatory">(Commentaire obligatoire)</small>
-          </md-option>
-        </md-select>
-      </md-input-container>
+    <md-whiteframe class="md-whiteframe-1dp" flex layout-padding layout="space-around center" ng-if="group.tasks.length > 0">
 
-      <md-button ng-if="tasks.selected" ng-click="tasks.edit($event)" class="md-fab md-mini md-accent" aria-label="Editer une tâche">
-        <md-tooltip md-direction="top">
-          Modifier la tâche
-        </md-tooltip>
-        <md-icon class="md-24">edit</md-icon>
-      </md-button>
+      <div layout="row" flex>
+        <md-input-container flex>
+          <label>Sélectionnez un type de tâche</label>
+          <md-select ng-model="tasks.selected">
+            <md-option ng-repeat="t in group.tasks" value="{{ t.id }}">
+              {{ t.name }}
+              <small ng-if="t.comment_mandatory">(Commentaire obligatoire)</small>
+            </md-option>
+          </md-select>
+        </md-input-container>
 
-    </div>
+        <md-button ng-if="tasks.selected" ng-click="tasks.edit($event)" class="md-fab md-mini md-accent" aria-label="Editer une tâche">
+          <md-tooltip md-direction="top">
+            Modifier la tâche
+          </md-tooltip>
+          <md-icon class="md-24">edit</md-icon>
+        </md-button>
+      </div>
+
+    </md-whiteframe>
 
   </div>
 

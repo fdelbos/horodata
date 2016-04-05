@@ -28,28 +28,30 @@
       <br>
     </p>
 
-    <div layout="row" ng-if="group.guests.length > 0">
-      <md-input-container flex>
-        <label>Selectionnez un utilisateur</label>
-        <md-select ng-model="guests.selected">
-          <md-option ng-repeat="g in group.guests" ng-if="g.active" value="{{ g.id }}">
-            <span ng-if="!g.full_name">{{ g.email }}</span>
-            <span ng-if="g.full_name">
-              {{ g.full_name }}
-              <small>{{ g.email }}</small>
-            </span>
-          </md-option>
-        </md-select>
-      </md-input-container>
 
-        <md-button ng-if="guests.selected" ng-click="guests.edit($event)" class="md-fab md-mini md-accent" aria-label="Editer une utilisateur">
-          <md-tooltip md-direction="top">
-            Modifier l'utilisateur
-          </md-tooltip>
-          <md-icon class="md-24">edit</md-icon>
-        </md-button>
+    <md-whiteframe class="md-whiteframe-1dp" flex layout-padding layout="space-around center" ng-if="group.guests.length > 0">
+      <div layout="row" flex>
+        <md-input-container flex>
+          <label>Selectionnez un utilisateur</label>
+          <md-select ng-model="guests.selected">
+            <md-option ng-repeat="g in group.guests" ng-if="g.active" value="{{ g.id }}">
+              <span ng-if="!g.full_name">{{ g.email }}</span>
+              <span ng-if="g.full_name">
+                {{ g.full_name }}
+                <small>{{ g.email }}</small>
+              </span>
+            </md-option>
+          </md-select>
+        </md-input-container>
 
-    </div>
+          <md-button ng-if="guests.selected" ng-click="guests.edit($event)" class="md-fab md-mini md-accent" aria-label="Editer une utilisateur">
+            <md-tooltip md-direction="top">
+              Modifier l'utilisateur
+            </md-tooltip>
+            <md-icon class="md-24">edit</md-icon>
+          </md-button>
+      </div>
+    </md-whiteframe>
 
   </div>
 

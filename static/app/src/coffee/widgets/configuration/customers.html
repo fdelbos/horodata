@@ -3,12 +3,8 @@
   <div layout="column" flex-sm="70" flex-md="80" flex-gt-md="60">
 
     <div layout="row" layout-align="space-between center">
-      <div class="md-display-1" hide show-gt-sm>
-        Dossiers
-      </div>
-      <div class="md-headline" hide-gt-sm>
-        Dossiers
-      </div>
+      <div class="md-display-1" hide show-gt-sm>Dossiers</div>
+      <div class="md-headline" hide-gt-sm>Dossiers</div>
 
       <md-button ng-click="customers.create($event)" class="md-raised md-primary" hide show-gt-sm>
         <md-tooltip md-direction="top">
@@ -34,25 +30,25 @@
       <div>Ajouter des dossiers pour permettre la saisie de tâches.</div>
     </md-whiteframe>
 
-    <div layout="row" ng-if="group.customers.length > 0">
-      <md-input-container flex>
-        <label>Sélectionnez un dossier</label>
-        <md-select ng-model="customers.selected">
-          <md-option ng-repeat="c in group.customers" value="{{ c.id }}">
-            {{ c.name }}
-          </md-option>
-        </md-select>
-      </md-input-container>
+    <md-whiteframe class="md-whiteframe-1dp" flex layout-padding layout="space-around center" ng-if="group.customers.length > 0">
+      <div layout="row" flex>
+        <md-input-container flex>
+          <label>Sélectionnez un dossier</label>
+          <md-select ng-model="customers.selected">
+            <md-option ng-repeat="c in group.customers" value="{{ c.id }}">
+              {{ c.name }}
+            </md-option>
+          </md-select>
+        </md-input-container>
 
-
-      <md-button ng-if="customers.selected" ng-click="customers.edit($event)" class="md-fab md-mini md-accent" aria-label="Modifier le dossier">
-        <md-tooltip md-direction="top">
-          Modifier le dossier
-        </md-tooltip>
-        <md-icon class="md-24">edit</md-icon>
-      </md-button>
-
-    </div>
+        <md-button ng-if="customers.selected" ng-click="customers.edit($event)" class="md-fab md-mini md-accent" aria-label="Modifier le dossier">
+          <md-tooltip md-direction="top">
+            Modifier le dossier
+          </md-tooltip>
+          <md-icon class="md-24">edit</md-icon>
+        </md-button>
+      </div>
+    </md-whiteframe>
 
   </div>
 
