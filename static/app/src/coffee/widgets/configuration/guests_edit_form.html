@@ -17,7 +17,7 @@
         </md-input-container>
 
         <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.admin}" >
-          <md-switch ng-model="guests.current.admin" aria-label="Droit administrateur">
+          <md-switch ng-model="guests.current.admin" aria-label="Droit administrateur" ng-disabled="guests.current.user_id == group.owner">
             Droit administrateur
           </md-switch>
           <div class="input-hint">
@@ -32,7 +32,7 @@
 
     <app-widgets-common-dialog-actions>
       <md-button ng-click="edit()" class="md-primary md-raised">Modifier</md-button>
-      <md-button ng-click="delete()" class="md-warn md-raised">Supprimer</md-button>
+      <md-button ng-click="delete()" ng-if="guests.current.user_id != group.owner" class="md-warn md-raised">Supprimer</md-button>
     </app-widgets-common-dialog-actions>
 
   </form>

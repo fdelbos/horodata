@@ -35,11 +35,14 @@
           <label>Selectionnez un utilisateur</label>
           <md-select ng-model="guests.selected">
             <md-option ng-repeat="g in group.guests" ng-if="g.active" value="{{ g.id }}">
-              <span ng-if="!g.full_name">{{ g.email }}</span>
-              <span ng-if="g.full_name">
-                {{ g.full_name }}
-                <small>{{ g.email }}</small>
-              </span>
+
+                <span ng-if="g.full_name">
+                  {{ g.full_name }}&nbsp;
+                </span>
+                <span ng-class="{'md-caption': g.full_name}">{{ g.email }} &nbsp;</span>
+                <strong ng-if="g.admin && g.user_id != group.owner" class="md-caption text-accent">(Admin) &nbsp;</strong>
+                <strong ng-if="g.user_id == group.owner" class="md-caption text-accent">(Porprietaire) &nbsp;</strong>
+
             </md-option>
           </md-select>
         </md-input-container>
