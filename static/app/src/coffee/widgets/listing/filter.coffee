@@ -1,4 +1,4 @@
-angular.module("horodata").directive("appWidgetsSearchBar", [
+angular.module("horodata").directive("appWidgetsListingFilter", [
   ->
 
     l = (scope) ->
@@ -8,6 +8,6 @@ angular.module("horodata").directive("appWidgetsSearchBar", [
       link: l
       replace: true
       restrict: "E"
-      templateUrl: "horodata/widgets/search_bar.html"
+      templateUrl: "horodata/widgets/listing/filter.html"
     }
 ])

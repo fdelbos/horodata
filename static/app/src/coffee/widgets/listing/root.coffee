@@ -24,6 +24,6 @@ angular.module("horodata").directive("appWidgetsListing", [
       link: l
       replace: true
       restrict: "E"
-      templateUrl: "horodata/widgets/listing.html"
+      templateUrl: "horodata/widgets/listing/root.html"
     }
 ])
