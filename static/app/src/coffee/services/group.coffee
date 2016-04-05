@@ -1,10 +1,9 @@
-angular.module('horodata').factory("groupNewService", [
+angular.module('horodata').factory("groupService", [
   "apiService"
   "$http"
    (apiService, $http)->
 
-    callback = null
-
+    current = null
     groups = []
 
     fetchListing = ->
@@ -14,8 +13,8 @@ angular.module('horodata').factory("groupNewService", [
       )
 
     return {
-      set: (fn) -> callback = fn
-      open: (ev) -> callback(ev)
+      set: (group) -> current = group
+      get: -> current
       listing: ->
         groups
       fetch: ->

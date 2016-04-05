@@ -1,0 +1,42 @@
+<md-dialog aria-label="Saisir une tâche" flex="40">
+
+  <div ng-if="group.tasks.length == 0 || group.customers.length == 0">
+    <app-widgets-common-dialog-toolbar>Exporter les tâches</app-widgets-common-dialog-toolbar>
+    <md-dialog-content>
+      <app-widgets-empty-group><app-widgets-empty-group>
+    </md-dialog-content>
+    <app-widgets-common-dialog-actions></app-widgets-common-dialog-actions>
+  </div>
+
+  <form ng-if="group.tasks.length > 0 && group.customers.length > 0" name="newTaskForm">
+
+    <app-widgets-common-dialog-toolbar>Exporter les tâches</app-widgets-common-dialog-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+
+        Format d'export:
+
+        <br>
+        <br>
+
+        <div layout="column">
+          <md-radio-group ng-model="export.fileType" class="md-primary">
+            <md-radio-button value="xlsx">XLSX</md-radio-button>
+            <md-radio-button value="csv">CSV</md-radio-button>
+          </md-radio-group>
+        </div>
+
+      </div>
+    </md-dialog-content>
+
+    <app-widgets-common-dialog-actions>
+      <md-button
+        ng-href="{{ url }}_{{ export.fileType }}"
+        class="md-primary md-raised">
+        Telecharger
+      </md-button>
+    </app-widgets-common-dialog-actions>
+
+  </form>
+</md-dialog>

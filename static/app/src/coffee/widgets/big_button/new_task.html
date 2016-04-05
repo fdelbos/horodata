@@ -1,26 +1,17 @@
 <md-dialog aria-label="Saisir une tâche" flex="40">
-
+  
   <div ng-if="group.tasks.length == 0 || group.customers.length == 0">
+    <app-widgets-common-dialog-toolbar>Saisir une tâche</app-widgets-common-dialog-toolbar>
     <md-dialog-content>
       <app-widgets-empty-group><app-widgets-empty-group>
     </md-dialog-content>
-    <md-dialog-actions>
-      <md-button ng-click="close()" class="md-raised">Fermer</md-button>
-    </md-dialog-actions>
+    <app-widgets-common-dialog-actions></app-widgets-common-dialog-actions>
   </div>
 
 
   <form ng-if="group.tasks.length > 0 && group.customers.length > 0" name="newTaskForm">
 
-    <md-toolbar>
-      <div class="md-toolbar-tools">
-        <h2>Saisir une tâche</h2>
-        <span flex></span>
-        <md-button class="md-icon-button" aria-label="Fermer" ng-click="close()">
-          <md-icon class="md-24">close</md-icon>
-        </md-button>
-      </div>
-    </md-toolbar>
+    <app-widgets-common-dialog-toolbar>Saisir une tâche</app-widgets-common-dialog-toolbar>
 
     <md-dialog-content>
       <div class="md-dialog-content">

@@ -4,22 +4,22 @@ angular.module("horodata").directive("appMenuSidenav", [
   "$location"
   "apiService"
   "$routeParams"
-  "groupNewService"
+  "groupService"
   (
     $mdSidenav
     $http
     $location
     apiService
     $routeParams
-    groupNewService
+    groupService
   )->
 
     l = (scope, elem) ->
       scope.toggleSidenav = -> $mdSidenav("sidenav").toggle()
       scope.closeSidenav = -> $mdSidenav("sidenav").close()
 
-      groupNewService.fetch()
-      scope.groups = -> groupNewService.listing()
+      groupService.fetch()
+      scope.groups = -> groupService.listing()
 
       scope.changeGroup = (url) ->
         scope.closeSidenav()
