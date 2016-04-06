@@ -466,9 +466,7 @@ angular.module('horodata').factory("statsFilterService", [
     begin = moment().subtract(1, 'months').toDate();
     end = new Date();
     urlParams = function() {
-      var p;
-      p = params();
-      return "?begin=" + p.begin + "&end=" + p.end;
+      return "?begin=" + (moment(begin).format('YYYY-MM-DD')) + "&end=" + (moment(end).format('YYYY-MM-DD'));
     };
     return {
       begin: begin,

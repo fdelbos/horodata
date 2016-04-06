@@ -5,8 +5,8 @@ angular.module('horodata').factory("statsFilterService", [
     end = new Date()
 
     urlParams = ->
-      p = params()
-      "?begin=#{p.begin}&end=#{p.end}"
+
+      "?begin=#{moment(begin).format('YYYY-MM-DD')}&end=#{moment(end).format('YYYY-MM-DD')}"
 
     return {
       begin: begin

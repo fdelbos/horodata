@@ -2,12 +2,11 @@
 
 
 ## Todo:
-* check maximum number of user one can import.
+* page not found
 * pb mot de passe non-enregistré dans le navigateur
 * Si vide, ajouter texte dans liste "Aucune tâche saisie"
 * Désactiver les tool-tips
 * Message dans zone blanche page d'accueil "Sélectionnez ou créez un groupe" /Différent PC et mobile ?
-* Pagination du listing / infinit scroll ???
 * Statistiques
 * Facturation et plans
 * Ajouter "Profil" dans menu + options photo et changement nom
