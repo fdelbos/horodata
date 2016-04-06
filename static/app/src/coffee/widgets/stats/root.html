@@ -1,6 +1,6 @@
 <div layout="column" layout-padding>
 
-  <div hide-lg layout="row">
+  <div hide-md hide-lg layout="row">
     <md-input-container flex>
       <md-select ng-model="selected" placeholder="Choisissez une statistique">
         <md-option ng-value="s.id" ng-repeat="s in availableStats">{{ s.label }}</md-option>
@@ -20,18 +20,18 @@
 
   <div hide-xs layout="row">
 
-    <md-input-container hide show-gt-md flex>
+    <md-input-container hide show-gt-sm flex>
       <md-select ng-model="selected" placeholder="Choisissez une statistique">
         <md-option ng-value="s.id" ng-repeat="s in availableStats">{{ s.label }}</md-option>
       </md-select>
     </md-input-container>
 
-    <div layout="row" flex="50" flex-lg="25" layout-align="center center" >
+    <div layout="row" flex="50" flex-gt-sm="25" layout-align="center center" >
       <span>du</span>
       <md-datepicker  ng-model="filter.begin" md-placeholder="Date début" md-max-date="filter.end"></md-datepicker>
     </div>
 
-    <div layout="row" flex="50" flex-lg="25" layout-align="center center" >
+    <div layout="row" flex="50" flex-gt-sm="25" layout-align="center center" >
       <span>au</span>
       <md-datepicker ng-model="filter.end" md-placeholder="Date fin" md-max-date="today" flex></md-datepicker>
     </div>
