@@ -2,14 +2,7 @@
 
   <app-widgets-listing-filter></app-widgets-listing-filter>
 
-  <div ng-if="!listing.data()" layout="column" layout-align="center center">
-    <md-progress-circular md-mode="indeterminate" md-diameter="150"></md-progress-circular>
-    <p>
-      Chargement, veuillez patienter.
-    </p>
-  </div>
-
-  <div ng-if="listing.data()">
+  <div ng-if="listing.list.length > 0">
 
     <md-list class="md-body-1">
 
@@ -24,7 +17,7 @@
         <md-divider></md-divider>
       </md-list-item>
 
-      <md-list-item ng-repeat="i in listing.data()" ng-click="showDetail($event, i)" hide show-gt-md>
+      <md-list-item ng-repeat="i in listing.list" ng-click="showDetail($event, i)" hide show-gt-md>
         <div layout="row" layout-align="space-between center" flex>
           <div flex="15">
             {{ i.created | Day }}
@@ -54,7 +47,7 @@
         <md-divider></md-divider>
       </md-list-item>
 
-      <md-list-item  ng-repeat="i in listing.data()" class="md-2-line" ng-click="showDetail($event, i)" hide-gt-md>
+      <md-list-item  ng-repeat="i in listing.list" class="md-2-line" ng-click="showDetail($event, i)" hide-gt-md>
         <div class="md-list-item-text" layout="column">
           <div layout="row" layout-align="space-between center">
             <h3>
@@ -73,7 +66,24 @@
 
   </div>
 
+  <div ng-if="!listing.loading && listing.hasMore()" layout-padding layout="row" layout-align="center center">
+    <md-button ng-click="listing.next()" class="md-raised md-primary">
+      <md-icon>arrow_downward</md-icon>
+      <span>Resultats suivants</span>
+      <md-icon>arrow_downward</md-icon>
+    </md-button>
+  </div>
 
+  <div ng-if="listing.loading" layout="column" layout-align="center center">
+    <md-progress-circular md-mode="indeterminate" md-diameter="150"></md-progress-circular>
+    <p>
+      Chargement, veuillez patienter.
+    </p>
+  </div>
+
+  <div ng-if="!listing.loading && listing.list.length > 0" layout-padding  layout-align="center center" layout="row" flex>
+    <span class="md-body-1">total: {{ listing.total }}</span>
+  </div>
 
 
 </div>

@@ -7,7 +7,18 @@ angular.module("horodata").directive("appWidgetsListing", [
 
     l = (scope) ->
 
-      scope.listing = listingService
+      scope.search =
+        begin: moment().subtract(1, 'months').toDate()
+        end: new Date()
+        customer: null
+        guest: null
+
+      scope.$watch("search", (v) ->
+        if !v? then return
+        listingService.search(scope.group.url, v)
+        scope.listing = listingService.get()
+        scope.listing.fetch(1)
+      , true)
 
       scope.goTo = (page) ->
         $location.search("page", page)

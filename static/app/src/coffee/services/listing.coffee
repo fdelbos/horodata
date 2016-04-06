@@ -5,9 +5,9 @@ angular.module('horodata').factory("listingService", [
 
     class Listing
       constructor: (@groupUrl, begin, end, customer, guest)->
-        @size = 100
+        @size = 5
         @page = 1
-        @list = null
+        @list = []
         @loading = false
         @total = -1
         @params =
@@ -16,14 +16,9 @@ angular.module('horodata').factory("listingService", [
           customer: customer
           guest: guest
 
-      pages: ->
-        if @total == -1 then return null
-        res =
-          page: @page
-          prev: if @page == 1 then null else @page - 1
-          next: if @page * @size > @total then null else @page + 1
-        return res
+      hasMore: -> (@page * @size) < @total
 
+      next: -> if @hasMore() then @fetch(@page + 1)
 
       fetch: (page) =>
         if @loading then return
@@ -35,7 +30,7 @@ angular.module('horodata').factory("listingService", [
         params.size = @size
         $http.get("#{apiService.get()}/groups/#{@groupUrl}/jobs", {params: params}).then(
           (resp) =>
-            @list = resp.data.data.results
+            @list.push(i)  for i in resp.data.data.results
             @loading = false
             @total = resp.data.data.total
           (resp) =>
@@ -43,15 +38,14 @@ angular.module('horodata').factory("listingService", [
             @loading = false
         )
 
-    listing = {}
+    listingInstance = {}
 
     return {
         data: ->
           if !listing.list? || listing.loading then null
           listing.list
-        listing: -> listing
+        get: -> listingInstance
         search: (groupUrl, params) ->
-          listing = new Listing(groupUrl, params.begin, params.end, params.customer, params.guest)
-        pages: -> listing.pages()
+          listingInstance = new Listing(groupUrl, params.begin, params.end, params.customer, params.guest)
     }
 ])

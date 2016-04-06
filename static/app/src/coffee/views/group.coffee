@@ -13,18 +13,6 @@ angular.module("horodata").controller("Group", [
 
     $scope.isGroupView = true
 
-    $scope.search =
-      begin: moment().subtract(1, 'months').toDate()
-      end: new Date()
-      customer: null
-      guest: null
-
-
-    $scope.$watch("search", (v) ->
-      if !v? then return
-      listingService.search($routeParams.group, v)
-      listingService.listing().fetch(1)
-    , true)
     $scope.isAdmin = false
 
     getGroup = ->
@@ -47,12 +35,6 @@ angular.module("horodata").controller("Group", [
     $scope.$on("group.reload", (e) ->
       e.stopPropagation()
       getGroup())
-
-    # groupService.set (ev)->
-    #   popupService(
-    #     "horodata/widgets/new_task_form.html"
-    #     "newTaskDialog"
-    #     $scope, ev)
 
     $scope.selectTab = (i)->
       $scope.selectedTab = i
