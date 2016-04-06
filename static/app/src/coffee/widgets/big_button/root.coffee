@@ -63,7 +63,7 @@ angular.module("horodata").controller("newTaskDialog", [
         (resp) ->
           $mdDialog.hide()
           $mdToast.showSimple("Nouvelle tâche saisie")
-          listingService.listing().fetch()
+          listingService.get().reload()
         (resp) ->
           $scope.loading = false
           if resp.status == 429 && _.get(resp, "data.errors.type") == "quota"

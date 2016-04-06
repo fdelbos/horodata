@@ -5,7 +5,7 @@ angular.module('horodata').factory("listingService", [
 
     class Listing
       constructor: (@groupUrl, begin, end, customer, guest)->
-        @size = 5
+        @size = 100
         @page = 1
         @list = []
         @loading = false
@@ -18,9 +18,14 @@ angular.module('horodata').factory("listingService", [
 
       hasMore: -> (@page * @size) < @total
 
-      next: -> if @hasMore() then @fetch(@page + 1)
+      next: -> if @hasMore() then @_fetch(@page + 1)
 
-      fetch: (page) =>
+      reload: ->
+        @page = 1
+        @list = []
+        @_fetch(1)
+
+      _fetch: (page) =>
         if @loading then return
         @loading = true
         params = _.cloneDeep(@params)

@@ -259,8 +259,8 @@ angular.module('horodata').factory("listingService", [
     Listing = (function() {
       function Listing(groupUrl1, begin, end, customer, guest) {
         this.groupUrl = groupUrl1;
-        this.fetch = bind(this.fetch, this);
-        this.size = 5;
+        this._fetch = bind(this._fetch, this);
+        this.size = 100;
         this.page = 1;
         this.list = [];
         this.loading = false;
@@ -279,11 +279,17 @@ angular.module('horodata').factory("listingService", [
 
       Listing.prototype.next = function() {
         if (this.hasMore()) {
-          return this.fetch(this.page + 1);
+          return this._fetch(this.page + 1);
         }
       };
 
-      Listing.prototype.fetch = function(page) {
+      Listing.prototype.reload = function() {
+        this.page = 1;
+        this.list = [];
+        return this._fetch(1);
+      };
+
+      Listing.prototype._fetch = function(page) {
         var params;
         if (this.loading) {
           return;
@@ -775,7 +781,7 @@ angular.module("horodata").controller("newTaskDialog", [
       return $http.post((apiService.get()) + "/groups/" + $scope.group.url + "/jobs", task).then(function(resp) {
         $mdDialog.hide();
         $mdToast.showSimple("Nouvelle tâche saisie");
-        return listingService.listing().fetch();
+        return listingService.get().reload();
       }, function(resp) {
         $scope.loading = false;
         if (resp.status === 429 && _.get(resp, "data.errors.type") === "quota") {
@@ -1241,7 +1247,7 @@ angular.module("horodata").directive("appWidgetsListing", [
         }
         listingService.search(scope.group.url, v);
         scope.listing = listingService.get();
-        return scope.listing.fetch(1);
+        return scope.listing.reload();
       }, true);
       scope.goTo = function(page) {
         $location.search("page", page);

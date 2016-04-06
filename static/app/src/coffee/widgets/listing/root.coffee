@@ -17,7 +17,7 @@ angular.module("horodata").directive("appWidgetsListing", [
         if !v? then return
         listingService.search(scope.group.url, v)
         scope.listing = listingService.get()
-        scope.listing.fetch(1)
+        scope.listing.reload()
       , true)
 
       scope.goTo = (page) ->
