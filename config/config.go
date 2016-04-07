@@ -172,6 +172,13 @@ func init() {
 	viper.BindEnv("profile_pictures")
 	viper.SetDefault("profile_pictures", "/tmp/horodata/profiles")
 
+	//
+	// Export
+	//
+
+	viper.BindEnv("export_service")
+	viper.SetDefault("export_service", "http://localhost:5000")
+
 }
 
 func Configure() {

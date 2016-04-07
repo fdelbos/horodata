@@ -1,14 +1,34 @@
 package group
 
 import (
-	"dev.hyperboloide.com/fred/horodata/services/postgres"
 	"database/sql"
 	"encoding/csv"
 	"fmt"
-	"github.com/tealeg/xlsx"
 	"io"
 	"time"
+
+	"dev.hyperboloide.com/fred/horodata/services/postgres"
+	"github.com/tealeg/xlsx"
 )
+
+const query = `
+select
+   jobs.created, jobs.duration, jobs.comment,
+   tasks.name,
+   customers.name,
+   users.full_name,
+   ((jobs.duration * guests.rate) / 360000::float)::numeric(9,2) as cost
+from
+	jobs
+	join tasks on jobs.task_id = tasks.id
+	join customers on jobs.customer_id = customers.id
+	join guests on jobs.creator_id = guests.id
+	join users on guests.user_id = users.id
+where
+		jobs.group_id = $1
+	and jobs.created > $2
+	and jobs.created < $3
+order by jobs.id desc;`
 
 func exportGenQuery(customer, creator *int64) string {
 	const query = `
@@ -16,7 +36,8 @@ func exportGenQuery(customer, creator *int64) string {
 	   jobs.created, jobs.duration, jobs.comment,
        tasks.name,
        customers.name,
-       users.full_name
+       users.full_name,
+	   ((jobs.duration * guests.rate) / 360000::float)::numeric(9,2) as cost
 	from
         jobs
         join tasks on jobs.task_id = tasks.id
@@ -41,12 +62,13 @@ func exportGenQuery(customer, creator *int64) string {
 }
 
 type ExportLine struct {
-	Created  time.Time
-	Duration int64
-	Comment  string
-	Task     string
-	Customer string
-	Creator  string
+	Created  time.Time `json:"created"`
+	Duration int64     `json:"duration"`
+	Comment  string    `json:"comment"`
+	Task     string    `json:"task"`
+	Customer string    `json:"customer"`
+	Creator  string    `json:"creator"`
+	Cost     float64   `json:"cost"`
 }
 
 func (el *ExportLine) Scan(scanFn func(dest ...interface{}) error) error {
@@ -56,7 +78,8 @@ func (el *ExportLine) Scan(scanFn func(dest ...interface{}) error) error {
 		&el.Comment,
 		&el.Task,
 		&el.Customer,
-		&el.Creator)
+		&el.Creator,
+		&el.Cost)
 }
 
 func (el *ExportLine) ToCSVLine() []string {
@@ -67,6 +90,7 @@ func (el *ExportLine) ToCSVLine() []string {
 		el.Task,
 		fmt.Sprintf("%.2f", float64(el.Duration)/3600.0),
 		fmt.Sprintf("%d", el.Duration/60),
+		fmt.Sprintf("%.2f", el.Cost),
 		el.Comment,
 	}
 }
@@ -96,7 +120,6 @@ func (g *Group) ExportCSV(w io.Writer, begin, end time.Time, customer, creator *
 	defer rows.Close()
 
 	cw := csv.NewWriter(w)
-	cw.UseCRLF = true
 	cw.Write([]string{
 		"Date",
 		"Utilisateur",
@@ -104,6 +127,7 @@ func (g *Group) ExportCSV(w io.Writer, begin, end time.Time, customer, creator *
 		"Tâche",
 		"Durée (en heures)",
 		"Durée (en minutes)",
+		"Coût",
 		"Commentaire"})
 	for rows.Next() {
 		el := &ExportLine{}
@@ -118,6 +142,25 @@ func (g *Group) ExportCSV(w io.Writer, begin, end time.Time, customer, creator *
 	}
 	cw.Flush()
 	return nil
+}
+
+func (g *Group) ExportStruct(begin, end time.Time) ([]ExportLine, error) {
+	result := make([]ExportLine, 0)
+
+	rows, err := postgres.DB().Query(query, g.Id, begin, end)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		el := &ExportLine{}
+		if err := el.Scan(rows.Scan); err != nil {
+			return nil, err
+		}
+		result = append(result, *el)
+	}
+	return result, rows.Err()
 }
 
 func (g *Group) ExportXLSX(w io.Writer, begin, end time.Time, customer, creator *int64) error {
@@ -140,6 +183,7 @@ func (g *Group) ExportXLSX(w io.Writer, begin, end time.Time, customer, creator 
 	header.AddCell().SetString("Tâche")
 	header.AddCell().SetString("Durée (en heures)")
 	header.AddCell().SetString("Durée (en minutes)")
+	header.AddCell().SetString("Coût")
 	header.AddCell().SetString("Commentaire")
 
 	for rows.Next() {
@@ -154,6 +198,7 @@ func (g *Group) ExportXLSX(w io.Writer, begin, end time.Time, customer, creator 
 		line.AddCell().SetString(el.Task)
 		line.AddCell().SetFloatWithFormat(float64(el.Duration)/3600.0, "0.00")
 		line.AddCell().SetInt64(el.Duration / 60)
+		line.AddCell().SetFloatWithFormat(el.Cost, "0.00")
 		line.AddCell().SetString(el.Comment)
 	}
 	if err := rows.Err(); err != nil {

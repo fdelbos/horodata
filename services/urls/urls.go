@@ -2,6 +2,7 @@ package urls
 
 import (
 	"fmt"
+
 	"github.com/spf13/viper"
 )
 
@@ -20,6 +21,8 @@ var (
 	WWWComplete string
 
 	AngularBase string
+
+	ExportService string
 )
 
 func Configure() {
@@ -37,6 +40,8 @@ func Configure() {
 	WWWComplete = WWWRoot + "/account/complete_registration"
 
 	AngularBase = viper.GetString("www_angular_base")
+
+	ExportService = viper.GetString("export_service")
 }
 
 func ApiGroup(url string) string {

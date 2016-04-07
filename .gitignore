@@ -8,3 +8,5 @@ services/mail/messages/bin.go
 html/bin.go
 horodata
 glide.lock
+export/venv/
+export.pyc
