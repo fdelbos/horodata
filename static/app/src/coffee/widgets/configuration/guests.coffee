@@ -42,7 +42,6 @@ angular.module("horodata").controller("appWidgetsConfigurationGuestsDialog", [
     $scope.loading = false
     $scope.quotaError = null
 
-
     update = (t) ->
       idx = _.findIndex($scope.group.guests, {id: t.id})
       $scope.group.guests[idx] = $scope.guests.current
@@ -64,6 +63,10 @@ angular.module("horodata").controller("appWidgetsConfigurationGuestsDialog", [
 
     $scope.edit = ->
       $scope.loading = true
+      # data =
+      #   email: $scope.guests.current.email
+      #   admin: $scope.guests.current.admin
+      #   rate: $scope.guests.current.rate * 100
       $http.put("#{apiService.get()}/groups/#{$scope.group.url}/guests/#{ $scope.guests.selected }", $scope.guests.current).then(
         (resp) ->
           $mdDialog.hide()
@@ -87,7 +90,37 @@ angular.module("horodata").controller("appWidgetsConfigurationGuestsDialog", [
           $scope.loading = false
           $scope.errors = resp.data.errors
       )
+])
 
+angular.module("horodata").directive("validDecimal", [
+  ->
 
+    l = (scope, element, attrs, ngModelCtrl) ->
+      if !ngModelCtrl? then return
 
+      ngModelCtrl.$parsers.push (v) ->
+        if !v? then v = ''
+
+        clean = v.replace(",", ".")
+        clean = clean.replace(/[^0-9\.]/g, '')
+        decimalCheck = clean.split('.')
+
+        if decimalCheck[1]?
+          decimalCheck[1] = decimalCheck[1].slice(0,2)
+          clean = "#{decimalCheck[0]}.#{decimalCheck[1]}"
+
+        if v != clean
+          ngModelCtrl.$setViewValue(clean)
+          ngModelCtrl.$render()
+
+        return clean
+
+      element.bind('keypress', (ev) ->
+        if ev.keyCode == 32 then event.preventDefault()
+      )
+
+    return {
+      link: l
+      require: '?ngModel'
+    }
 ])

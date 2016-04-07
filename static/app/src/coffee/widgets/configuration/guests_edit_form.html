@@ -12,7 +12,7 @@
 
         <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.rate}" >
           <label>Taux horaire</label>
-          <input type="number" ng-model="guests.current.rate" ng-value="0">
+          <input type="text" ng-model="guests.current.rate" valid-decimal>
           <small ng-if="errors.rate" class="input-error">{{ errors.rate }}</small>
         </md-input-container>
 

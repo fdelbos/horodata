@@ -1,6 +1,8 @@
 package group
 
 import (
+	"encoding/json"
+	"fmt"
 	"time"
 
 	"dev.hyperboloide.com/fred/horodata/models/errors"
@@ -15,7 +17,7 @@ type Guest struct {
 	Active  bool      `json:"-"`
 	GroupId int64     `json:"-"`
 	UserId  *int64    `json:"-"`
-	Rate    int       `json:"rate"`
+	Rate    int       `json:"-"`
 	Admin   bool      `json:"admin"`
 	Email   string    `json:"email"`
 }
@@ -30,6 +32,18 @@ func (g *Guest) Scan(scanFn func(dest ...interface{}) error) error {
 		&g.Rate,
 		&g.Admin,
 		&g.Email)
+}
+
+func (g *Guest) MarshalJSON() ([]byte, error) {
+	type alias Guest
+	rate := fmt.Sprintf("%d.%d", g.Rate/100, g.Rate%100)
+	if g.Rate%100 < 10 {
+		rate = fmt.Sprintf("%d.0%d", g.Rate/100, g.Rate%100)
+	}
+	return json.Marshal(&struct {
+		*alias
+		Rate string `json:"rate"`
+	}{(*alias)(g), rate})
 }
 
 func (g *Guest) Update() error {
@@ -145,7 +159,7 @@ type ApiGuest struct {
 	Id       int64   `json:"id"`
 	Active   bool    `json:"active"`
 	UserId   *int64  `json:"user_id"`
-	Rate     int     `json:"rate"`
+	Rate     int     `json:"-"`
 	Admin    bool    `json:"admin"`
 	Email    string  `json:"email"`
 	FullName *string `json:"full_name,omitempty"`
@@ -162,6 +176,18 @@ func (g *ApiGuest) Scan(scanFn func(dest ...interface{}) error) error {
 		&g.Email,
 		&g.FullName,
 		&g.Picture)
+}
+
+func (g *ApiGuest) MarshalJSON() ([]byte, error) {
+	type alias ApiGuest
+	rate := fmt.Sprintf("%d.%d", g.Rate/100, g.Rate%100)
+	if g.Rate%100 < 10 {
+		rate = fmt.Sprintf("%d.0%d", g.Rate/100, g.Rate%100)
+	}
+	return json.Marshal(&struct {
+		*alias
+		Rate string `json:"rate"`
+	}{(*alias)(g), rate})
 }
 
 func (g *Group) ApiGuests() ([]ApiGuest, error) {

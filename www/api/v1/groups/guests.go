@@ -3,6 +3,7 @@ package groups
 import (
 	"encoding/json"
 	"strconv"
+	"strings"
 
 	"dev.hyperboloide.com/fred/horodata/middlewares"
 	sqlerrors "dev.hyperboloide.com/fred/horodata/models/errors"
@@ -10,6 +11,30 @@ import (
 	valid "github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 )
+
+func stringDecimal2ToInt(str string) (int, bool) {
+	chk := strings.Split(str, ".")
+	if len(chk) > 2 {
+		return 0, false
+	} else if len(chk) == 1 {
+		nb, err := strconv.Atoi(chk[0])
+		return nb * 100, err == nil
+	}
+
+	if len(chk[1]) == 1 {
+		chk[1] = chk[1] + "0"
+	}
+
+	if begin, err := strconv.Atoi(chk[0]); err != nil {
+		return 0, false
+	} else if end, err := strconv.Atoi(chk[1]); err != nil {
+		return 0, false
+	} else if end >= 100 {
+		return 0, false
+	} else {
+		return (begin*100 + end), true
+	}
+}
 
 func GuestAdd(c *gin.Context) {
 	g := middlewares.GetGroup(c)
@@ -28,7 +53,7 @@ func GuestAdd(c *gin.Context) {
 	var data struct {
 		Email string `json:"email"`
 		Admin bool   `json:"admin"`
-		Rate  int    `json:"rate"`
+		Rate  string `json:"rate"`
 	}
 	if err := json.NewDecoder(c.Request.Body).Decode(&data); err != nil {
 		jsend.ErrorJson(c)
@@ -45,8 +70,13 @@ func GuestAdd(c *gin.Context) {
 		errors["email"] = "Cette adresse email n'est pas valide."
 	}
 
-	if data.Rate < 0 {
+	rate, ok := stringDecimal2ToInt(data.Rate)
+	if !ok {
+		errors["rate"] = "Ce champ n'est pas valide."
+	} else if rate < 0 {
 		errors["rate"] = "Ce champ doit être supérieur ou égal à 0."
+	} else if rate >= 1000000 {
+		errors["rate"] = "Ce champ doit être inférieur 10000.00 ."
 	}
 
 	if len(errors) > 0 {
@@ -54,7 +84,7 @@ func GuestAdd(c *gin.Context) {
 		return
 	}
 
-	if err := g.GuestAdd(data.Email, data.Rate, data.Admin, true); err != nil {
+	if err := g.GuestAdd(data.Email, rate, data.Admin, true); err != nil {
 		jsend.Error(c, err)
 	} else {
 		jsend.Ok(c, nil)
@@ -80,8 +110,8 @@ func GuestUpdate(c *gin.Context) {
 	}
 
 	var data struct {
-		Admin bool `json:"admin"`
-		Rate  int  `json:"rate"`
+		Admin bool   `json:"admin"`
+		Rate  string `json:"rate"`
 	}
 	if err := json.NewDecoder(c.Request.Body).Decode(&data); err != nil {
 		jsend.ErrorJson(c)
@@ -89,8 +119,13 @@ func GuestUpdate(c *gin.Context) {
 	}
 
 	errors := map[string]string{}
-	if data.Rate < 0 {
+	rate, ok := stringDecimal2ToInt(data.Rate)
+	if !ok {
+		errors["rate"] = "Ce champ n'est pas valide."
+	} else if rate < 0 {
 		errors["rate"] = "Ce champ doit être supérieur ou égal à 0."
+	} else if rate >= 1000000 {
+		errors["rate"] = "Ce champ doit être inférieur 10000.00 ."
 	}
 
 	if len(errors) > 0 {
@@ -100,7 +135,7 @@ func GuestUpdate(c *gin.Context) {
 		if guest.UserId != nil && *guest.UserId != g.OwnerId {
 			guest.Admin = data.Admin
 		}
-		guest.Rate = data.Rate
+		guest.Rate = rate
 		if err := guest.Update(); err != nil {
 			jsend.Error(c, err)
 		} else {
