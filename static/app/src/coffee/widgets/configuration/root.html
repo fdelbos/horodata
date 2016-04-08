@@ -5,6 +5,9 @@
   <md-divider ng-if="isAdmin"></md-divider>
   <app-widgets-configuration-guests ng-if="isAdmin"></app-widgets-configuration-guests>
 
+  <md-divider ng-if="!isOwner && isAdmin"></md-divider>
+  <app-widgets-configuration-leave ng-if="!isOwner"></app-widgets-configuration-leave>
+
   <md-divider ng-if="isOwner"></md-divider>
   <app-widgets-configuration-delete ng-if="isOwner"></app-widgets-configuration-delete>
 

@@ -1,0 +1,28 @@
+<md-dialog aria-label="Quitter le groupe" flex="40">
+
+  <app-widgets-common-dialog-toolbar warn=true>Quitter le groupe</app-widgets-common-dialog-toolbar>
+
+  <md-dialog-content>
+    <div class="md-dialog-content">
+
+      <div layout="column" layout-align="center center" flex>
+        <span class="md-headline input-error">Etes vous sure de vouloir quitter ce groupe ?</span>
+
+        <br>
+        <br>
+
+        <span>
+          Vous ne pourrez plus acceder a ce groupe.
+        </span>
+      </div>
+
+
+
+    </div>
+  </md-dialog-content>
+
+  <app-widgets-common-dialog-actions>
+    <md-button ng-click="leave()" class="md-primary md-raised md-warn">Quitter</md-button>
+  </app-widgets-common-dialog-actions>
+
+</md-dialog>

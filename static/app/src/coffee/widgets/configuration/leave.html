@@ -1,0 +1,31 @@
+<div  layout-padding>
+
+  <div layout="column" flex-md="70" flex-gt-md="60">
+
+    <div layout="row" layout-align="space-between center">
+      <div class="md-display-1 input-error" hide show-gt-sm>
+        Quitter le groupe
+      </div>
+      <div class="md-headline input-error" hide-gt-sm>
+        Quitter le groupe
+      </div>
+
+      <md-button ng-click="leaveGroup($event)" class="md-raised md-warn" hide show-gt-sm>
+        <md-tooltip md-direction="top">
+          Quitter le groupe
+        </md-tooltip>
+        <md-icon class="md-18">directions_run</md-icon>
+        Quitter
+      </md-button>
+
+      <md-button ng-click="leaveGroup($event)" class="md-fab md-mini md-warn" hide-gt-sm aria-label="Quitter le groupe">
+        <md-icon class="md-24">directions_run</md-icon>
+      </md-button>
+    </div>
+
+    <p class="md-body-1">
+      Vous ne pourrez plus acceder a ce groupe.
+    </p>
+
+  </div>
+</div>

@@ -4,11 +4,8 @@ angular.module("horodata").directive("appWidgetsBigButton", [
   (tabsService, popupService)->
 
     l = (scope) ->
-      scope.currentTab = ->
-        switch tabsService.get()
-          when 0 then "jobs"
-          when 1 then "export"
-          else null
+      scope.currentTab = -> tabsService.get()
+
 
       scope.newDialog = (ev) ->
         if scope.currentTab() == "jobs"

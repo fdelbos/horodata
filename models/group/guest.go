@@ -198,8 +198,8 @@ func (g *Group) ApiGuests() ([]ApiGuest, error) {
 		p.id
 	from
 		guests g
-			left outer join users u on (g.user_id = u.id)
-			left outer join user_pictures p on (g.user_id = p.user_id)
+		left outer join users u on (g.user_id = u.id)
+		left outer join user_pictures p on (g.user_id = p.user_id)
     where
 		g.group_id = $1`
 

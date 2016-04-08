@@ -2,6 +2,7 @@ package groups
 
 import (
 	"dev.hyperboloide.com/fred/horodata/middlewares"
+	"dev.hyperboloide.com/fred/horodata/www/api/jsend"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,6 +18,7 @@ func Group(r *gin.RouterGroup) {
 		{
 			gr.GET("", Get)
 			gr.DELETE("", middlewares.GroupOwnerFilter(), Delete)
+			gr.POST("/leave", LeaveGroup)
 			gr.POST("/tasks", middlewares.GroupAdminFilter(), TaskAdd)
 			gr.PUT("/tasks/:taskId", middlewares.GroupAdminFilter(), TaskUpdate)
 			gr.DELETE("/tasks/:taskId", middlewares.GroupAdminFilter(), TaskDelete)
@@ -39,5 +41,19 @@ func Group(r *gin.RouterGroup) {
 				stats.GET("/guest_time", StatsGuestTime)
 			}
 		}
+	}
+}
+
+func LeaveGroup(c *gin.Context) {
+	g := middlewares.GetGroup(c)
+	guest := middlewares.GetGuest(c)
+
+	guest.Active = false
+	if g.OwnerId == *guest.UserId {
+		jsend.Forbidden(c)
+	} else if err := guest.Update(); err != nil {
+		jsend.Error(c, err)
+	} else {
+		jsend.Ok(c, nil)
 	}
 }

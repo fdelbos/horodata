@@ -50,10 +50,12 @@ angular.module("horodata").controller("Group", [
 
     $scope.selectTab = (i)->
       $scope.selectedTab.id = i
-      tabsService.set(i)
+      if i == 0 then tabsService.set "jobs"
+      else if i == 1 and $scope.isAdmin == true then tabsService.set "export"
+      else tabsService.set null
 
     $scope.goLeft = -> $scope.selectTab($scope.selectedTab.id - 1)
-    $scope.goRight = -> $scope.selectTab($scope.selectedTab.id + 1) 
+    $scope.goRight = -> $scope.selectTab($scope.selectedTab.id + 1)
 
     $scope.$watch("selectedTab.id", (v, o) -> if v != o then $scope.selectTab(v))
 

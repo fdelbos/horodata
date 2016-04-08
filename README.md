@@ -13,7 +13,6 @@
 * google analytics
 * cookies cnil
 * csrf (x-request-with)
-* quitter un groupe
 * supprimer un job / editer avec task ou customer innactif
 * envoyer un rappel si rien saisi.
 * saisie j+1 passer en mode txt
