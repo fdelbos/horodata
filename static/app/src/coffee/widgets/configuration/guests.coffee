@@ -16,7 +16,7 @@ angular.module("horodata").directive("appWidgetsConfigurationGuests", [
           @current =
             email: ""
             admin: false
-            rate: 0
+            rate: "0"
           popupService(
             "horodata/widgets/configuration/guests_create_form.html",
             "appWidgetsConfigurationGuestsDialog"

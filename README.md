@@ -2,7 +2,6 @@
 
 
 ## Todo:
-* page not found
 * Si vide, ajouter texte dans liste "Aucune tâche saisie"
 * Désactiver les tool-tips
 * Message dans zone blanche page d'accueil "Sélectionnez ou créez un groupe" /Différent PC et mobile ?

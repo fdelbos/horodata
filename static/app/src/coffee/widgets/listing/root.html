@@ -74,16 +74,10 @@
     </md-button>
   </div>
 
-  <div ng-if="listing.loading" layout="column" layout-align="center center">
-    <md-progress-circular md-mode="indeterminate" md-diameter="150"></md-progress-circular>
-    <p>
-      Chargement, veuillez patienter.
-    </p>
-  </div>
+  <app-widgets-common-loading ng-if="listing.loading"></app-widgets-common-loading>
 
   <div ng-if="!listing.loading && listing.list.length > 0" layout-padding  layout-align="center center" layout="row" flex>
     <span class="md-body-1">resultats {{ listing.list.length }} / {{ listing.total }}</span>
   </div>
-
 
 </div>

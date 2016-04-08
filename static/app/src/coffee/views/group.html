@@ -1,6 +1,6 @@
 <div flex layout="column">
 
-  <md-content flex>
+  <md-content ng-if="!isLoading && group" flex>
     <md-tabs md-selected="selectedTab" md-dynamic-height md-border-bottom>
 
       <md-tab label="Saisies" layout="row">
@@ -11,7 +11,7 @@
       </md-tab>
 
 
-      <md-tab label="Statistiques">
+      <md-tab ng-if="isAdmin" label="Statistiques">
         <div md-swipe-left="selectTab(2)" md-swipe-right="selectTab(0)" layout=column>
           <app-widgets-empty-group-boxed ng-if="group.tasks.length == 0 || group.customers.length == 0" group="group"></app-widgets-empty-group-boxed>
           <app-widgets-stats ng-if="group.tasks.length > 0 && group.customers.length > 0"></app-widgets-stats>
@@ -24,7 +24,43 @@
         </div>
       </md-tab>
 
+      <md-tab ng-if="!isAdmin" label="Configuration" layout="column" layout-margin>
+        <div md-swipe-right="selectTab(0)">
+          <app-widgets-configuration> </app-widgets-configuration>
+        </div>
+      </md-tab>
+
     </md-tabs>
   </md-content>
+
+  <app-widgets-common-loading ng-if="isLoading"></app-widgets-common-loading>
+
+  <div ng-if="!isLoading && groupError == 'Forbidden'" layout-padding layout="row" layout-align="center center">
+    <div flex-gt-sm="50" >
+      <h3 class="md-display-1">Vous n'avez pas accès a ce groupe</h3>
+      <p class="md-subhead">
+        Si vous connaissez le proprietaire de ce groupe demandez lui de vous inviter.
+        Sinon vous vous êtes surement trompé de page...
+      </p>
+    </div>
+  </div>
+
+  <div ng-if="!isLoading && groupError == 'NotFound'" layout-padding layout="row" layout-align="center center">
+    <div flex-gt-sm="50" >
+      <h3 class="md-display-1">Aucun groupe a cette adresse</h3>
+      <p class="md-subhead">
+        Le groupe que vous recherchez n'existe pas.
+      </p>
+    </div>
+  </div>
+
+  <div ng-if="!isLoading && groupError == 'unknow'" layout-padding layout="row" layout-align="center center">
+    <div flex-gt-sm="50" >
+      <h3 class="md-display-1">Une erreure s'est produite!</h3>
+      <p class="md-subhead">
+        Nous sommes terriblement désolés...
+      </p>
+    </div>
+  </div>
 
 </div>

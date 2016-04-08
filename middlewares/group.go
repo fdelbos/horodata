@@ -27,10 +27,12 @@ func GroupFilter() gin.HandlerFunc {
 		} else if !g.Active {
 			c.JSON(404, http.StatusText(404))
 		} else if guest, err := g.GuestGetByUserId(u.Id); err == errors.NotFound {
-			c.JSON(404, http.StatusText(404))
+			c.JSON(403, http.StatusText(403))
 		} else if err != nil {
 			log.Error(err)
 			c.JSON(500, http.StatusText(500))
+		} else if !guest.Active {
+			c.JSON(403, http.StatusText(403))
 		} else {
 			c.Set("guest", guest)
 			c.Set("group", g)
