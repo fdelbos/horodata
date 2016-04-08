@@ -30,6 +30,40 @@ def gen_xlsx():
     customers_time = {}
     customers_cost = {}
 
+    def do_sheet(name, colName, times, costs):
+        sheet = workbook.add_worksheet(name)
+        sheet.set_column('A:A', 25)
+        sheet.set_column('B:B', 12)
+        sheet.set_column('C:C', 12)
+        sheet.set_column('D:D', 12)
+
+        sheet.write("A1", colName)
+        sheet.write("B1", u"Durée Totale (en heures)")
+        sheet.write("C1", u"Durée Totale (en minutes)")
+        sheet.write("D1", u"Coût Total")
+
+        line = 1
+        for i, duration in times.items():
+            line += 1
+            sheet.write("A%s" % line, i)
+            sheet.write("B%s" % line, duration / 3600.0, hourFormat)
+            sheet.write("C%s" % line, duration / 60)
+            sheet.write("D%s" % line, costs[i], currencyFormat)
+
+        sheet.write("A%s" % (line + 2), u"Total")
+        sheet.write_formula("B%s" % (line + 2),"=SUM(B2:B%s)" % line)
+        sheet.write_formula("C%s" % (line + 2),"=SUM(C2:C%s)" % line)
+        sheet.write_formula("D%s" % (line + 2),"=SUM(D2:D%s)" % line)
+
+        chart = workbook.add_chart({'type': 'pie'})
+        chart.add_series({
+            'name': 'Repartition du temps (en heures)',
+            'categories': '=%s!$A$2:$A$%s' % (name, line),
+            'values': '=%s!$B$2:$B$%s' % (name, line),
+        })
+        chart.set_title({'name': "Repartition du temps"})
+        sheet.insert_chart("A%s" % (line + 4), chart)
+
     try:
 
         saisies = workbook.add_worksheet("Saisies")
@@ -86,34 +120,9 @@ def gen_xlsx():
             customers_time[customer] += row["duration"]
             customers_cost[customer] += row["cost"]
 
-        def do_sheet(workbook, name, colName, times, costs):
-            sheet = workbook.add_worksheet(name)
-            sheet.set_column('A:A', 25)
-            sheet.set_column('B:B', 12)
-            sheet.set_column('C:C', 12)
-            sheet.set_column('D:D', 12)
-
-            sheet.write("A1", colName)
-            sheet.write("B1", u"Durée Totale (en heures)")
-            sheet.write("C1", u"Durée Totale (en minutes)")
-            sheet.write("D1", u"Coût Total")
-
-            line = 1
-            for i, duration in times.items():
-                line += 1
-                sheet.write("A%s" % line, i)
-                sheet.write("B%s" % line, duration / 3600.0, hourFormat)
-                sheet.write("C%s" % line, duration / 60)
-                sheet.write("D%s" % line, costs[i], currencyFormat)
-
-            sheet.write("A%s" % (line + 2), u"Total")
-            sheet.write_formula("B%s" % (line + 2),"=SUM(B2:B%s)" % line)
-            sheet.write_formula("C%s" % (line + 2),"=SUM(C2:C%s)" % line)
-            sheet.write_formula("D%s" % (line + 2),"=SUM(D2:D%s)" % line)
-
-        do_sheet(workbook, u"Utilisateurs", u"Utilisateur", guests_time, guests_cost)
-        do_sheet(workbook, u"Tâches", u"Tâche", tasks_time, tasks_cost)
-        do_sheet(workbook, u"Dossiers", u"Dossier", customers_time, customers_cost)
+        do_sheet(u"Utilisateurs", u"Utilisateur", guests_time, guests_cost)
+        do_sheet(u"Dossiers", u"Dossier", customers_time, customers_cost)
+        do_sheet(u"Tâches", u"Tâche", tasks_time, tasks_cost)
 
     finally:
         workbook.close()

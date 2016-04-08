@@ -3,7 +3,6 @@
 
 ## Todo:
 * page not found
-* pb mot de passe non-enregistré dans le navigateur
 * Si vide, ajouter texte dans liste "Aucune tâche saisie"
 * Désactiver les tool-tips
 * Message dans zone blanche page d'accueil "Sélectionnez ou créez un groupe" /Différent PC et mobile ?
@@ -14,7 +13,6 @@
 * zopim
 * google analytics
 * cookies cnil
-* stat sur feuille de l'export XLS
 * csrf (x-request-with)
 * quitter un groupe
 * supprimer un job / editer avec task ou customer innactif
