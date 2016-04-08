@@ -16,6 +16,8 @@ angular.module("horodata").controller("Group", [
     $scope.isLoading = false
     $scope.group = null
     $scope.groupError = null
+    $scope.selectedTab =
+      id: 0
 
     getGroup = ->
       $scope.isLoading = true
@@ -35,7 +37,7 @@ angular.module("horodata").controller("Group", [
           $scope.groupError = switch resp.status
             when 403 then "Forbidden"
             when 404 then "NotFound"
-            else "unknow" 
+            else "unknow"
       )
 
     userService.get((u) ->
@@ -47,10 +49,15 @@ angular.module("horodata").controller("Group", [
       getGroup())
 
     $scope.selectTab = (i)->
-      $scope.selectedTab = i
+      $scope.selectedTab.id = i
       tabsService.set(i)
 
-    $scope.$watch("selectedTab", (v, o) -> if v != o then $scope.selectTab(v))
+    $scope.goLeft = -> $scope.selectTab($scope.selectedTab.id - 1)
+    $scope.goRight = -> $scope.selectTab($scope.selectedTab.id + 1) 
+
+    $scope.$watch("selectedTab.id", (v, o) -> if v != o then $scope.selectTab(v))
+
+
     $scope.selectTab(0)
 
 ])

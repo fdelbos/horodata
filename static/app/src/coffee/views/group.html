@@ -1,10 +1,10 @@
 <div flex layout="column">
 
   <md-content ng-if="!isLoading && group" flex>
-    <md-tabs md-selected="selectedTab" md-dynamic-height md-border-bottom>
+    <md-tabs md-selected="selectedTab.id" md-stretch-tabs="auto" md-dynamic-height md-border-bottom>
 
       <md-tab label="Saisies" layout="row">
-        <md-content md-swipe-left="selectTab(1)" flex>
+        <md-content md-swipe-left="goRight()" flex>
           <app-widgets-empty-group-boxed ng-if="group.tasks.length == 0 || group.customers.length == 0" group="group"></app-widgets-empty-group-boxed>
           <app-widgets-listing ng-if="group.tasks.length > 0 && group.customers.length > 0"></app-widgets-listing>
         </md-content>
@@ -12,20 +12,14 @@
 
 
       <md-tab ng-if="isAdmin" label="Statistiques">
-        <div md-swipe-left="selectTab(2)" md-swipe-right="selectTab(0)" layout=column>
+        <div md-swipe-left="goRight()" md-swipe-right="goLeft()" layout=column>
           <app-widgets-empty-group-boxed ng-if="group.tasks.length == 0 || group.customers.length == 0" group="group"></app-widgets-empty-group-boxed>
           <app-widgets-stats ng-if="group.tasks.length > 0 && group.customers.length > 0"></app-widgets-stats>
         <div>
       </md-tab>
 
       <md-tab ng-if="isAdmin" label="Configuration" layout="column" layout-margin>
-        <div md-swipe-right="selectTab(1)">
-          <app-widgets-configuration> </app-widgets-configuration>
-        </div>
-      </md-tab>
-
-      <md-tab ng-if="!isAdmin" label="Configuration" layout="column" layout-margin>
-        <div md-swipe-right="selectTab(0)">
+        <div md-swipe-right="goLeft()">
           <app-widgets-configuration> </app-widgets-configuration>
         </div>
       </md-tab>

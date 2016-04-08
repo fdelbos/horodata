@@ -1,12 +1,12 @@
 <div>
-  <app-widgets-configuration-customers></app-widgets-configuration-customers>
-  <md-divider></md-divider>
-  <app-widgets-configuration-tasks></app-widgets-configuration-tasks>
-  <md-divider></md-divider>
-  <app-widgets-configuration-guests></app-widgets-configuration-guests>
+  <app-widgets-configuration-customers ng-if="isAdmin"></app-widgets-configuration-customers>
+  <md-divider ng-if="isAdmin"></md-divider>
+  <app-widgets-configuration-tasks ng-if="isAdmin"></app-widgets-configuration-tasks>
+  <md-divider ng-if="isAdmin"></md-divider>
+  <app-widgets-configuration-guests ng-if="isAdmin"></app-widgets-configuration-guests>
 
-  <md-divider ng-if="group.owner == user.id"></md-divider>
-  <app-widgets-configuration-delete ng-if="group.owner == user.id"></app-widgets-configuration-delete>
+  <md-divider ng-if="isOwner"></md-divider>
+  <app-widgets-configuration-delete ng-if="isOwner"></app-widgets-configuration-delete>
 
   <div class="free-space"></div>
 </div>
