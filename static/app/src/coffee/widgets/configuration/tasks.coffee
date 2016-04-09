@@ -51,7 +51,7 @@ angular.module("horodata").controller("appWidgetsConfigurationTasksDialog", [
         (resp) ->
           $scope.$emit("group.reload")
           $mdDialog.hide()
-          $mdToast.showSimple("Nouveau type de tâche '#{$scope.tasks.current.name}' ajouté")
+          $mdToast.showSimple("Nouvelle tâche '#{$scope.tasks.current.name}' ajoutée")
         (resp) ->
           $scope.loading = false
           $scope.errors = resp.data.errors
@@ -62,7 +62,7 @@ angular.module("horodata").controller("appWidgetsConfigurationTasksDialog", [
       $http.put("#{apiService.get()}/groups/#{$scope.group.url}/tasks/#{ $scope.tasks.selected }", $scope.tasks.current).then(
         (resp) ->
           $mdDialog.hide()
-          $mdToast.showSimple("Type de tâche '#{$scope.tasks.current.name}' modifié")
+          $mdToast.showSimple("Tâche '#{$scope.tasks.current.name}' modifiée")
           update($scope.tasks.current)
           $scope.tasks.selected = null
         (resp) ->
@@ -75,7 +75,7 @@ angular.module("horodata").controller("appWidgetsConfigurationTasksDialog", [
       $http.delete("#{apiService.get()}/groups/#{$scope.group.url}/tasks/#{ $scope.tasks.selected }", $scope.tasks.current).then(
         (resp) ->
           $mdDialog.hide()
-          $mdToast.showSimple("Type de tâche '#{$scope.tasks.current.name}' supprimé")
+          $mdToast.showSimple("Tâche '#{$scope.tasks.current.name}' supprimée")
           $scope.group.tasks.splice(_.findIndex($scope.group.tasks, {id: parseInt $scope.tasks.selected}), 1)
           $scope.tasks.selected = null
         (resp) ->

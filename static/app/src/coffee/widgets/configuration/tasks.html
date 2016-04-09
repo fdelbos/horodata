@@ -4,21 +4,21 @@
 
     <div layout="row" layout-align="space-between center">
       <div class="md-display-1" hide show-gt-sm>
-        Types de tâche
+        Tâche
       </div>
       <div class="md-headline" hide-gt-sm>
-        Types de tâche
+        Tâche
       </div>
 
       <md-button ng-click="tasks.create($event)" class="md-raised md-primary" hide show-gt-sm>
         <md-tooltip md-direction="top">
-          Ajouter un type de tâche
+          Ajouter une tâche
         </md-tooltip>
         <md-icon class="md-18">add</md-icon>
         Ajouter
       </md-button>
 
-      <md-button ng-click="tasks.create($event)" class="md-fab md-primary md-mini" hide-gt-sm aria-label="Ajouter un type de tâche">
+      <md-button ng-click="tasks.create($event)" class="md-fab md-primary md-mini" hide-gt-sm aria-label="Ajouter une tâche">
         <md-icon class="md-24">add</md-icon>
       </md-button>
     </div>
@@ -28,15 +28,15 @@
     </p>
 
     <md-whiteframe ng-if="group.tasks.length == 0" class="md-whiteframe-1dp md-accent" layout-padding layout="column" layout-align="center center">
-      <div class="md-headline input-error">Aucun type de tâche</div>
-      <div>Ajouter des types pour permettre la saisie de tâches.</div>
+      <div class="md-headline input-error">Aucune tâche</div>
+      <div>Ajouter des tâches pour rendre possible la saisie.</div>
     </md-whiteframe>
 
     <md-whiteframe class="md-whiteframe-1dp" flex layout-padding layout="space-around center" ng-if="group.tasks.length > 0">
 
       <div layout="row" flex>
         <md-input-container flex>
-          <label>Sélectionnez un type de tâche</label>
+          <label>Sélectionnez une tâche</label>
           <md-select ng-model="tasks.selected">
             <md-option ng-repeat="t in group.tasks" ng-if="t.active" value="{{ t.id }}">
               {{ t.name }}

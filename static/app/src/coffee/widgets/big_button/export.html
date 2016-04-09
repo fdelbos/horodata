@@ -1,7 +1,7 @@
-<md-dialog aria-label="Exporter les tâches" flex="40">
+<md-dialog aria-label="Exporter les saisies" flex="40">
 
   <div ng-if="group.tasks.length == 0 || group.customers.length == 0">
-    <app-widgets-common-dialog-toolbar>Exporter les tâches</app-widgets-common-dialog-toolbar>
+    <app-widgets-common-dialog-toolbar>Exporter les saisies</app-widgets-common-dialog-toolbar>
     <md-dialog-content>
       <app-widgets-empty-group><app-widgets-empty-group>
     </md-dialog-content>
@@ -10,7 +10,7 @@
 
   <form ng-if="group.tasks.length > 0 && group.customers.length > 0" name="newTaskForm">
 
-    <app-widgets-common-dialog-toolbar>Exporter les tâches</app-widgets-common-dialog-toolbar>
+    <app-widgets-common-dialog-toolbar>Exporter les saisies</app-widgets-common-dialog-toolbar>
 
     <md-dialog-content>
       <div class="md-dialog-content md-body-1">
@@ -19,7 +19,7 @@
           Saisies du {{ filter.begin | Day }} au {{ filter.end | Day }}
         </p>
 
-        Format d'export:
+        Format d'export :
 
         <br>
         <br>
