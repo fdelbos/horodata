@@ -1,0 +1,89 @@
+<md-dialog aria-label="Adresse de facturation" flex="50">
+  <form name="billingAddress">
+
+    <app-widgets-common-dialog-toolbar>
+      Adresse de facturation
+    </app-widgets-common-dialog-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+
+        <app-widgets-common-quota-error></app-widgets-common-quota-error>
+
+
+        <div layout-xs="column" layout="row">
+          <md-input-container flex-xs flex-gt-xs="50" class="md-block"  ng-class="{'md-input-invalid': errors.name}" >
+            <label>Nom</label>
+            <input type="text" md-maxlength="50" ng-model="addr.current.name">
+            <small ng-if="errors.name" class="input-error">{{ errors.name }}</small>
+          </md-input-container>
+
+          <md-input-container flex-xs flex-gt-xs="50" class="md-block"  ng-class="{'md-input-invalid': errors.email}" >
+            <label>
+              Email
+              <span class="md-caption">&nbsp;(Destinataire des factures)</span>
+            </label>
+            <input type="text" md-maxlength="100" ng-model="addr.current.email">
+            <small ng-if="errors.email" class="input-error">{{ errors.email }}</small>
+          </md-input-container>
+        </div>
+
+        <div layout-xs="column" layout="row">
+          <md-input-container flex="70" flex-xs="100" class="md-block"  ng-class="{'md-input-invalid': errors.company}" >
+            <label>
+              Raison sociale
+              <span class="md-caption">&nbsp;(si applicable)</span>
+            </label>
+            <input type="text" md-maxlength="100" ng-model="addr.current.company">
+            <small ng-if="errors.company" class="input-error">{{ errors.company }}</small>
+          </md-input-container>
+
+          <md-input-container flex="30" flex-xs="100" class="md-block"  ng-class="{'md-input-invalid': errors.vat}" >
+            <label>
+              TVA
+              <span class="md-caption">&nbsp;(si applicable)</span>
+            </label>
+            <input type="text" md-maxlength="25" ng-model="addr.current.vat">
+            <small ng-if="errors.vat" class="input-error">{{ errors.vat }}</small>
+          </md-input-container>
+        </div>
+
+        <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.addr1}" >
+          <label>Adresse (première ligne)</label>
+          <input type="text" md-maxlength="150" ng-model="addr.current.addr1">
+          <small ng-if="errors.addr1" class="input-error">{{ errors.addr1 }}</small>
+        </md-input-container>
+
+        <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.addr2}" >
+          <label>Adresse (seconde ligne)</label>
+          <input type="text" md-maxlength="150" ng-model="addr.current.addr2">
+          <small ng-if="errors.addr2" class="input-error">{{ errors.addr2 }}</small>
+        </md-input-container>
+
+        <div layout-xs="column" layout="row">
+          <md-input-container flex-xs flex-gt-xs="70" class="md-block"  ng-class="{'md-input-invalid': errors.city}" >
+            <label>Ville</label>
+            <input type="text" md-maxlength="100" ng-model="addr.current.city">
+            <small ng-if="errors.city" class="input-error">{{ errors.city }}</small>
+          </md-input-container>
+
+          <md-input-container flex-xs flex-gt-xs="30" class="md-block"  ng-class="{'md-input-invalid': errors.zip}" >
+            <label>Code Postal</label>
+            <input type="text" md-maxlength="6" ng-model="addr.current.zip">
+            <small ng-if="errors.zip" class="input-error">{{ errors.zip }}</small>
+          </md-input-container>
+        </div>
+
+        <div layout-align="center center" layout="column">
+          <span class="text-grey md-body-1">Le service Horodata n'est pas disponnible en dehors de la France Metropolitaine.</span>
+        </div>
+
+      </div>
+    </md-dialog-content>
+
+    <app-widgets-common-dialog-actions>
+      <md-button ng-click="update()" class="md-primary md-raised">Enregistrer</md-button>
+    </app-widgets-common-dialog-actions>
+
+  </form>
+</md-dialog>

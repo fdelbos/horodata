@@ -1,0 +1,39 @@
+<div>
+
+  <div flex-md="70" flex-gt-md="60" layout-padding>
+
+    <div layout="row">
+      <div layout="row" layout-align="center center" hide show-gt-sm>
+        <md-icon class="md-36 md-accent">euro_symbol</md-icon>&nbsp;
+        <span class="md-display-1">Plans</span>
+      </div>
+
+      <div layout="row" layout-align="center center" hide-gt-sm>
+        <md-icon class="md-accent">euro_symbol</md-icon>&nbsp;
+        <span class="md-headline">Plans<span>
+      </div>
+    </div>
+
+    <md-content class="md-padding" layout-xs="column" layout="row" >
+      <div flex-xs flex-gt-xs="50" layout="column">
+        <billing-plan plan="plans.free" current="plans.current"></billing-plan>
+        <billing-plan plan="plans.medium" current="plans.current"></billing-plan>
+      </div>
+      <div flex-xs flex-gt-xs="50" layout="column">
+        <billing-plan plan="plans.small" current="plans.current"></billing-plan>
+        <billing-plan plan="plans.large" current="plans.current"></billing-plan>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <md-divider></md-divider>
+
+  <billing-addr></billing-addr>
+  <md-divider></md-divider>
+
+  <billing-card></billing-card>
+
+</div>

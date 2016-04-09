@@ -24,6 +24,9 @@ angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages", "gridshore.c3
       .when("/",
         templateUrl: "horodata/views/index.html"
         controller: "Index")
+      .when("/billing",
+        templateUrl: "horodata/views/billing/root.html"
+        controller: "Billing")
       .when("/:group",
         templateUrl: "horodata/views/group.html"
         controller: "Group")

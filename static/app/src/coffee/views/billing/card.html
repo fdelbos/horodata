@@ -1,0 +1,39 @@
+<div  layout-padding>
+
+  <div layout="column" flex-md="70" flex-gt-md="60">
+
+    <div layout="row" layout-align="space-between center">
+
+      <div layout="row" layout-align="center center" hide show-gt-sm>
+        <md-icon class="md-36 md-accent">credit_card</md-icon>&nbsp;
+        <span class="md-display-1">Carte de crédit</span>
+      </div>
+
+      <div layout="row" layout-align="center center" hide-gt-sm>
+        <md-icon class="md-accent">credit_card</md-icon>&nbsp;
+        <span class="md-headline">Carte de crédit</span>
+      </div>
+
+      <md-button ng-click="guests.create($event)" class="md-raised md-primary" hide show-gt-sm>
+        <md-tooltip md-direction="top">
+          Editer la carte de crédit
+        </md-tooltip>
+        <md-icon class="md-18">edit</md-icon>
+        Editer
+      </md-button>
+
+      <md-button ng-click="guests.create($event)" class="md-fab md-mini md-primary" hide-gt-sm aria-label="Editer la carte de crédit">
+        <md-icon class="md-24">edit</md-icon>
+      </md-button>
+    </div>
+
+
+    <md-whiteframe class="md-whiteframe-1dp" flex layout-padding layout="space-around center">
+      <div layout="column" flex>
+        Vous n'avez pas saisi de carte de crédit.
+      </div>
+    </md-whiteframe>
+
+  </div>
+
+</div>

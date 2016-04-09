@@ -80,13 +80,13 @@ create table addresses (
     id bigserial primary key,
     created timestamp default now()  not null,
     user_id bigint not null references users on delete cascade,
-    full_name varchar(100) not null,
+    name varchar(100) not null,
     email citext not null,
     company varchar(100),
-    vat varchar(100),
+    vat varchar(25),
     address1 text not null,
     address2 text,
-    city varchar(150) not null,
+    city varchar(100) not null,
     zip varchar(15) not null
 );
 

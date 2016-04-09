@@ -1,0 +1,44 @@
+<div  layout-padding>
+
+  <div layout="column" flex-md="70" flex-gt-md="60">
+
+    <div layout="row" layout-align="space-between center">
+
+      <div layout="row" layout-align="center center" hide show-gt-sm>
+        <md-icon class="md-36 md-accent">account_balance</md-icon>&nbsp;
+        <span class="md-display-1">Adresse</span>
+      </div>
+
+      <div layout="row" layout-align="center center" hide-gt-sm>
+        <md-icon class="md-accent">account_balance</md-icon>&nbsp;
+        <span class="md-headline">Adresse<span>
+      </div>
+
+      <md-button ng-click="editAddr($event)" class="md-raised md-primary" hide show-gt-sm>
+        <md-tooltip md-direction="top">
+          Editer les informations de Facturation
+        </md-tooltip>
+        <md-icon class="md-18">edit</md-icon>
+        Editer
+      </md-button>
+
+      <md-button ng-click="editAddr($event)" class="md-fab md-mini md-primary" hide-gt-sm aria-label="Editer les informations de Facturation">
+        <md-icon class="md-24">edit</md-icon>
+      </md-button>
+    </div>
+
+    <p class="md-body-1">
+      Ces informations apparaitront sur votre facture.
+      <br>
+    </p>
+
+
+    <md-whiteframe class="md-whiteframe-1dp" flex layout-padding layout="space-around center" >
+      <div layout="column" flex>
+        Aucune information.
+      </div>
+    </md-whiteframe>
+
+  </div>
+
+</div>

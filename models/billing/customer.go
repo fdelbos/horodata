@@ -17,7 +17,9 @@ type Customer struct {
 }
 
 func (c *Customer) insert() error {
-	const query = `INSERT INTO customers (user_id, stripe_id) VALUES ($1, $2);`
+	const query = `
+	insert into customers (user_id, stripe_id)
+	values ($1, $2);`
 	return postgres.Exec(query, c.UserId, c.StripeId)
 }
 
@@ -32,7 +34,7 @@ func NewCustomer(userId int64, token string) error {
 	}
 
 	cp := &stripe.CustomerParams{
-		Desc:  u.Login,
+		Desc:  u.FullName,
 		Email: u.Email,
 	}
 	cp.SetSource(token)
