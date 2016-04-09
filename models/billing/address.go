@@ -11,13 +11,13 @@ type Address struct {
 	Created  time.Time `json:"created"`
 	UserId   int64     `json:"user_id"`
 	Name     string    `json:"name"`
-	Email    string    `json:"email,omitempty"`
+	Email    string    `json:"email"`
 	Company  string    `json:"company,omitempty"`
 	VAT      string    `json:"vat,omitempty"`
-	Address1 string    `json:"addr1,omitempty"`
+	Address1 string    `json:"addr1"`
 	Address2 string    `json:"addr2,omitempty"`
-	City     string    `json:"city,omitempty"`
-	Zip      string    `json:"zip,omitempty"`
+	City     string    `json:"city"`
+	Zip      string    `json:"zip"`
 }
 
 func (a *Address) Insert() error {

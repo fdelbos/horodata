@@ -23,7 +23,7 @@ angular.module("horodata").directive("billingAddr", [
             scope.addr.current = resp.data.data
           (resp) ->
             scope.loading = false
-            scope.addr.current = {}
+            scope.addr.current = null
         )
 
       get()

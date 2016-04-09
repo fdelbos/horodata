@@ -33,11 +33,81 @@
     </p>
 
 
-    <md-whiteframe class="md-whiteframe-1dp" flex layout-padding layout="space-around center" >
-      <div layout="column" flex>
-        Aucune information.
+    <app-widgets-common-loading ng-if="loading"></app-widgets-common-loading>
+
+    <md-whiteframe ng-if="!loading" class="md-whiteframe-1dp" flex layout-padding>
+
+      <div ng-if="!addr.current"  layout="row" layout-align="center center" flex>
+        <span>Aucune information.</span>
       </div>
+
+      <div ng-if="addr.current" layout="column">
+
+        <div layout-xs="column" layout="row">
+          <div layout="column" flex>
+            <span class="md-caption text-grey">Nom</span>
+            <div>{{ addr.current.name }}</div>
+          </div>
+
+          <br hide show-xs>
+
+          <div layout="column" flex>
+            <span class="md-caption text-grey">Email (desitinataire des factures)</span>
+            <div>{{ addr.current.email }}</div>
+          </div>
+        </div>
+
+        <br ng-if="addr.current.company || addr.current.vat">
+
+        <div layout-xs="column" layout="row">
+          <div layout="column" ng-if="addr.current.company" flex>
+            <span class="md-caption text-grey">Raison Sociale</span>
+            <div>{{ addr.current.company }}</div>
+          </div>
+
+          <br ng-if="addr.current.var" hide show-xs>
+
+          <div layout="column" ng-if="addr.current.vat" flex>
+            <span class="md-caption text-grey">TVA</span>
+            <div>{{ addr.current.vat }}</div>
+          </div>
+        </div>
+
+        <br>
+
+        <div layout="column" flex>
+          <span class="md-caption text-grey">Adresse (première ligne)</span>
+          <div>{{ addr.current.addr1 }}</div>
+        </div>
+
+        <br ng-if="addr.current.addr2">
+
+        <div layout="column" ng-if="addr.current.addr2" flex>
+          <span class="md-caption text-grey">Adresse (seconde ligne)</span>
+          <div>{{ addr.current.addr2 }}</div>
+        </div>
+
+        <br>
+
+        <div layout-xs="column" layout="row">
+          <div layout="column" flex>
+            <span class="md-caption text-grey">Ville</span>
+            <div>{{ addr.current.city }}</div>
+          </div>
+
+          <br hide show-xs>
+
+          <div layout="column" flex>
+            <span class="md-caption text-grey">Code Postal</span>
+            <div>{{ addr.current.zip }}</div>
+          </div>
+        </div>
+
+      </div>
+
     </md-whiteframe>
+
+
 
   </div>
 
