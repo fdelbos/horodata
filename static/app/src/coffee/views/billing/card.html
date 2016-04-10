@@ -14,7 +14,7 @@
         <span class="md-headline">Carte de crédit</span>
       </div>
 
-      <md-button ng-click="guests.create($event)" class="md-raised md-primary" hide show-gt-sm>
+      <md-button ng-click="editCard($event)" class="md-raised md-primary" hide show-gt-sm>
         <md-tooltip md-direction="top">
           Editer la carte de crédit
         </md-tooltip>
@@ -22,16 +22,47 @@
         Editer
       </md-button>
 
-      <md-button ng-click="guests.create($event)" class="md-fab md-mini md-primary" hide-gt-sm aria-label="Editer la carte de crédit">
+      <md-button ng-click="editCard($event)" class="md-fab md-mini md-primary" hide-gt-sm aria-label="Editer la carte de crédit">
         <md-icon class="md-24">edit</md-icon>
       </md-button>
     </div>
 
+    <p class="md-body-1">
+      Cette carte sera utilisee pour les prelevements mensuels.
+      <br>
+    </p>
 
-    <md-whiteframe class="md-whiteframe-1dp" flex layout-padding layout="space-around center" >
-      <div layout="row" layout-align="center center" flex>
+    <app-widgets-common-loading ng-if="loading"></app-widgets-common-loading>
+
+    <md-whiteframe ng-if="!loading" class="md-whiteframe-1dp" flex layout-padding>
+
+      <div ng-if="!card.current"  layout="row" layout-align="center center" flex>
         <span>Vous n'avez pas saisi de carte de crédit.</span>
       </div>
+
+      <div ng-if="card.current" layout="column">
+
+        <div layout="column" flex>
+          <span class="md-caption text-grey">Marque</span>
+          <div>{{ card.current.brand }}</div>
+        </div>
+
+        <br>
+
+        <div layout="column" flex>
+          <span class="md-caption text-grey">Numero</span>
+          <div>#### #### #### {{ card.current.last4 }}</div>
+        </div>
+
+        <br>
+
+        <div layout="column" flex>
+          <span class="md-caption text-grey">Expiration</span>
+          <div>{{ card.current.expiration | Month }}</div>
+        </div>
+
+      </div>
+
     </md-whiteframe>
 
   </div>

@@ -53,6 +53,7 @@ angular.module("horodata").controller("BillingAddrEdit", [
           $mdDialog.hide()
           $mdToast.showSimple("Nouvelle adresse enregistree.")
           $scope.addr.current = resp.data.data
+          $scope.loading = false
         (resp) ->
           $scope.errors = resp.data.errors
           $scope.loading = false

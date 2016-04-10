@@ -1,0 +1,62 @@
+<md-dialog aria-label="Carte de crédit" flex="50">
+  <form name="billingCard">
+
+    <app-widgets-common-dialog-toolbar>
+      Carte de crédit
+    </app-widgets-common-dialog-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+
+        <div layout-xs="column" layout="row">
+          <md-input-container flex-xs flex-gt-xs="80" class="md-block"  ng-class="{'md-input-invalid': errors.number}" >
+            <label>Numéro de carte</label>
+            <input type="text" md-maxlength="20" ng-model="card.new.number">
+            <small ng-if="errors.number" class="input-error">{{ errors.number }}</small>
+          </md-input-container>
+
+          <md-input-container flex-xs flex-gt-xs="20" class="md-block"  ng-class="{'md-input-invalid': errors.cvc}" >
+            <label>CVC</label>
+            <input type="text" md-maxlength="4" ng-model="card.new.cvc">
+            <small ng-if="errors.cvc" class="input-error">{{ errors.cvc }}</small>
+          </md-input-container>
+        </div>
+
+        <div layout-xs="column" layout="row">
+          <md-input-container flex="50" flex-xs="100" class="md-block"  ng-class="{'md-input-invalid': errors.exp_month}" >
+            <label>Mois d'expiration</label>
+            <md-select ng-model="card.new.exp_month">
+              <md-option ng-repeat="m in months" value="{{ m.id }}">
+                {{ m.label }}
+              </md-option>
+            </md-select>
+            <small ng-if="errors.exp_month" class="input-error">{{ errors.exp_month }}</small>
+          </md-input-container>
+
+          <md-input-container flex="50" flex-xs="100" class="md-block"  ng-class="{'md-input-invalid': errors.exp_year}" >
+            <label>Année d'expiration</label>
+            <md-select ng-model="card.new.exp_year">
+              <md-option ng-repeat="y in years" value="{{ y }}">
+                {{ y }}
+              </md-option>
+            </md-select>
+            <small ng-if="errors.exp_year" class="input-error">{{ errors.exp_year }}</small>
+          </md-input-container>
+        </div>
+
+        <div layout-align="center center" layout="column">
+          <p class="text-grey md-body-1">
+            Notez que le numero de votre carte de credit ne transite jamais par nos serveurs.
+            Le processus de paiement est entièrement géré par <a target="_blank" href="https://stripe.com">stripe.com</a>
+          </p>
+        </div>
+
+      </div>
+    </md-dialog-content>
+
+    <app-widgets-common-dialog-actions>
+      <md-button ng-click="update()" class="md-primary md-raised">Enregistrer</md-button>
+    </app-widgets-common-dialog-actions>
+
+  </form>
+</md-dialog>

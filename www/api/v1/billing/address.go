@@ -22,7 +22,6 @@ func GetAddress(c *gin.Context) {
 	} else {
 		jsend.Ok(c, addr)
 	}
-
 }
 
 func NewAddress(c *gin.Context) {

@@ -10,6 +10,12 @@ angular.module("horodata").filter("Date", [
   -> return (input) -> moment(input).format('LLLL')
 ])
 
+
+angular.module("horodata").filter("Month", [
+  -> return (input) -> moment(input).format('MMMM YYYY')
+])
+
+
 angular.module("horodata").filter("Duration", [
   -> return (input) ->
     d = moment.duration(input, 'seconds')

@@ -1,6 +1,7 @@
 package billing
 
 import (
+	"fmt"
 	"time"
 
 	"dev.hyperboloide.com/fred/horodata/models/user"
@@ -18,7 +19,7 @@ type Customer struct {
 
 func (c *Customer) insert() error {
 	const query = `
-	insert into customers (user_id, stripe_id)
+	insert into subscribers (user_id, stripe_id)
 	values ($1, $2);`
 	return postgres.Exec(query, c.UserId, c.StripeId)
 }
@@ -34,9 +35,10 @@ func NewCustomer(userId int64, token string) error {
 	}
 
 	cp := &stripe.CustomerParams{
-		Desc:  u.FullName,
+		Desc:  fmt.Sprintf("%s - %s", u.FullName, u.Email),
 		Email: u.Email,
 	}
+
 	cp.SetSource(token)
 	sc, err := customer.New(cp)
 	if err != nil {
@@ -69,7 +71,7 @@ func NewCustomer(userId int64, token string) error {
 
 func GetCustomer(userId int64) (*Customer, error) {
 	c := &Customer{}
-	const query = `select * from customers where user_id = $1`
+	const query = `select * from subscribers where user_id = $1`
 	return c, postgres.QueryRow(c, query, userId)
 }
 

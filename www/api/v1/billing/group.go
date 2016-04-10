@@ -9,13 +9,6 @@ func Group(r *gin.RouterGroup) {
 		billing.POST("/address", NewAddress)
 		billing.GET("/card", GetCard)
 		billing.POST("/card", NewCard)
+		billing.GET("/stripe_key", StripeKey)
 	}
-}
-
-func GetCard(c *gin.Context) {
-
-}
-
-func NewCard(c *gin.Context) {
-
 }

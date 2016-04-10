@@ -83,11 +83,11 @@ create table addresses (
     name varchar(100) not null,
     email citext not null,
     company varchar(100),
-    vat varchar(25),
+    vat citext,
     address1 text not null,
     address2 text,
     city varchar(100) not null,
-    zip varchar(15) not null
+    zip citext not null
 );
 
 create table address_current (
@@ -125,7 +125,7 @@ $keep_current$ language plpgsql;
 create trigger addresses_keep_current_trigger
 after insert on addresses for each row execute procedure addresses_keep_current();
 
-create table subscriber (
+create table subscribers (
     user_id bigint primary key references users on delete cascade,
     created timestamp default now()  not null,
     stripe_id text not null
