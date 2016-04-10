@@ -1,6 +1,6 @@
 ### Vous avez reçu une invitation sur Horodata !
 
-L'utilisateur **{{ .ownerName }}** vous invite à rejoindre le groupe **{{ .groupName}}**
+**{{ .ownerName }}** vous invite à rejoindre le groupe **{{ .groupName}}**
 sur le site [https://horodata.com](https://horodata.com).
 
 &nbsp;
@@ -9,7 +9,7 @@ Horodata est une plateforme de saisie et de suivi d'activités.
 
 &nbsp;
 
-Si vous ne possédez pas encore de compte sur [https://horodata.com](https://horodata.com),
+Si vous ne possédez pas encore de compte Horodata,
 vous pouvez vous inscrire gratuitement à l'addresse suivante :
 [https://horodata.com/account/register](https://horodata.com/account/register).
 

@@ -40,8 +40,8 @@
                   {{ g.full_name }}&nbsp;
                 </span>
                 <span ng-class="{'md-caption': g.full_name}">{{ g.email }} &nbsp;</span>
-                <strong ng-if="g.admin && g.user_id != group.owner" class="md-caption text-accent">(Admin) &nbsp;</strong>
-                <strong ng-if="g.user_id == group.owner" class="md-caption text-accent">(Porprietaire) &nbsp;</strong>
+                <strong ng-if="g.admin && g.user_id != group.owner" class="md-caption text-accent">(Administrateur) &nbsp;</strong>
+                <strong ng-if="g.user_id == group.owner" class="md-caption text-accent">(Propriétaire) &nbsp;</strong>
 
             </md-option>
           </md-select>
