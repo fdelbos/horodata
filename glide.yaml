@@ -16,7 +16,4 @@ import:
 - package: github.com/hyperboloide/pipe
 - package: github.com/flosch/pongo2
 - package: github.com/codahale/charlie
-- package: github.com/russross/blackfriday
-- package: github.com/microcosm-cc/bluemonday
 - package: github.com/flosch/pongo2-addons
-- package: gopkg.in/gomail.v2

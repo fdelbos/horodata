@@ -6,6 +6,7 @@ import (
 	"dev.hyperboloide.com/fred/horodata/services/mail"
 	"dev.hyperboloide.com/fred/horodata/services/postgres"
 	"github.com/dchest/uniuri"
+	"github.com/hyperboloide/qmail/client"
 )
 
 type PasswordRequest struct {
@@ -58,15 +59,15 @@ func (u *User) NewPasswordRequest() error {
 	if err := postgres.Exec(query, pr.Created, pr.UserId, pr.Active, pr.Url); err != nil {
 		return err
 	}
-	m := mail.Mail{
-		Dest:     u.Email,
+
+	return mail.Mailer().Send(client.Mail{
+		Dests:    []string{u.Email},
 		Subject:  "Réinitialisation du mot de passe sur Horodata",
 		Template: "reset_password",
 		Data: map[string]interface{}{
 			"link": pr.Url,
 		},
-	}
-	return m.Send()
+	})
 }
 
 func GetPasswordRequest(url string) (*PasswordRequest, error) {

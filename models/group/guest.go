@@ -9,6 +9,7 @@ import (
 	"dev.hyperboloide.com/fred/horodata/models/user"
 	"dev.hyperboloide.com/fred/horodata/services/mail"
 	"dev.hyperboloide.com/fred/horodata/services/postgres"
+	"github.com/hyperboloide/qmail/client"
 )
 
 type Guest struct {
@@ -109,8 +110,9 @@ func (g *Group) GuestAdd(email string, rate int, admin, sendMail bool) error {
 	if !sendMail {
 		return nil
 	}
-	m := mail.Mail{
-		Dest:     email,
+
+	return mail.Mailer().Send(client.Mail{
+		Dests:    []string{email},
 		Subject:  "Nouvelle invitation sur Horodata",
 		Template: "invitation",
 		Data: map[string]interface{}{
@@ -118,8 +120,7 @@ func (g *Group) GuestAdd(email string, rate int, admin, sendMail bool) error {
 			"groupName": g.Name,
 			"groupUrl":  g.Url,
 		},
-	}
-	return m.Send()
+	})
 
 }
 

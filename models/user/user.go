@@ -8,6 +8,7 @@ import (
 	"dev.hyperboloide.com/fred/horodata/services/cache"
 	"dev.hyperboloide.com/fred/horodata/services/mail"
 	"dev.hyperboloide.com/fred/horodata/services/postgres"
+	"github.com/hyperboloide/qmail/client"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -46,13 +47,12 @@ func (u User) removeFromCache() error {
 }
 
 func (u *User) SendWelcome() error {
-	m := &mail.Mail{
-		Dest:     u.Email,
+	return mail.Mailer().Send(client.Mail{
+		Dests:    []string{u.Email},
 		Subject:  "Bienvenue sur Horodata",
 		Template: "welcome",
 		Data:     map[string]interface{}{},
-	}
-	return m.Send()
+	})
 }
 
 func (u *User) Update() error {

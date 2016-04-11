@@ -1,0 +1,32 @@
+<md-dialog aria-label="Changer de plan" flex="50">
+  <form name="planChange">
+
+    <app-widgets-common-dialog-toolbar>
+      Changer de plan
+    </app-widgets-common-dialog-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+
+        <app-widgets-common-loading ng-if="preLoading"></app-widgets-common-loading>
+
+        <!-- <div layout-align="center center" layout="column">
+          <p class="text-grey md-body-1">
+            Notez que le numero de votre carte de credit ne transite jamais par nos serveurs.
+            Le processus de paiement est entièrement géré par
+            <a target="_blank" href="https://stripe.com">
+              stripe.com
+              <md-icon class="md-14">open_in_new</md-icon>
+            </a>
+          </p>
+        </div> -->
+
+      </div>
+    </md-dialog-content>
+
+    <app-widgets-common-dialog-actions ng-if="!preLoading">
+      <md-button ng-click="update()" class="md-primary md-raised">Modifier</md-button>
+    </app-widgets-common-dialog-actions>
+
+  </form>
+</md-dialog>

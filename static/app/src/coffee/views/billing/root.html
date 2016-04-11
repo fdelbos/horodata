@@ -1,5 +1,12 @@
 <div>
 
+
+  <billing-addr></billing-addr>
+  <md-divider></md-divider>
+
+  <billing-card></billing-card>
+  <md-divider></md-divider>
+
   <div flex-md="70" flex-gt-md="60" layout-padding>
 
     <div layout="row">
@@ -27,17 +34,10 @@
         <billing-plan plan="plans.small" current="plans.current"></billing-plan>
         <billing-plan plan="plans.large" current="plans.current"></billing-plan>
       </div>
-    </div>
-
+    </md-content>
   </div>
 
-
-
   <md-divider></md-divider>
-
-  <billing-addr></billing-addr>
-  <md-divider></md-divider>
-
-  <billing-card></billing-card>
+  <billing-invoices></billing-invoices>
 
 </div>
