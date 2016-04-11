@@ -1,11 +1,10 @@
 angular.module("horodata").controller("Billing", [
-  "$http"
   "$scope"
-  "userService"
   "titleService"
-  ($http, $scope, userService, titleService)->
+  ($scope, titleService)->
 
     titleService.set("Abonnement")
+
 
     $scope.plans =
       current: "free"

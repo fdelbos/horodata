@@ -17,13 +17,7 @@ test: bindata
 	./services \
 	./www
 
-bindata: mails templates
-
-mails:
-	go-bindata -o=./services/mail/messages/bin.go \
-	-pkg=messages \
-	-prefix="services/mail/messages" \
-	./services/mail/messages/*
+bindata: templates
 
 templates:
 	go-bindata -o=./html/bin.go \

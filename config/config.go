@@ -112,20 +112,11 @@ func init() {
 	// Email
 	//
 
-	viper.BindEnv("mail_sender")
-	viper.SetDefault("mail_sender", "Test User <me@sandboxf4743199e9ba4a069d656b6e4fe40b19.mailgun.org>")
+	viper.BindEnv("mail_queue_name")
+	viper.SetDefault("mail_queue_name", "mails")
 
-	viper.BindEnv("mail_smtp_host")
-	viper.SetDefault("mail_smtp_host", "smtp.mailgun.org")
-
-	viper.BindEnv("mail_smtp_port")
-	viper.SetDefault("mail_smtp_port", "465")
-
-	viper.BindEnv("mail_smtp_user")
-	viper.SetDefault("mail_smtp_user", "postmaster@sandboxf4743199e9ba4a069d656b6e4fe40b19.mailgun.org")
-
-	viper.BindEnv("mail_smtp_password")
-	viper.SetDefault("mail_smtp_password", "73pqshr0qlc1")
+	viper.BindEnv("mail_queue_host")
+	viper.SetDefault("mail_queue_host", "amqp://guest:guest@localhost:5672/")
 
 	//
 	// oauth
@@ -160,10 +151,10 @@ func init() {
 	//
 
 	viper.BindEnv("payment_publishable_key")
-	viper.SetDefault("payment_publishable_key", "pk_test_nTWT6X97pIQHuQk8k8XYkfL1")
+	viper.SetDefault("payment_publishable_key", "pk_test_Qepx3Si0RvnDab2jPoFq4fZw")
 
 	viper.BindEnv("payment_secret_key")
-	viper.SetDefault("payment_secret_key", "sk_test_ANrSNC5Yy2xAenilHrdGW9Lw")
+	viper.SetDefault("payment_secret_key", "sk_test_ksm8vhIDWTyGCzDpHulwPF6l")
 
 	//
 	// Profile Pictures
@@ -179,6 +170,12 @@ func init() {
 	viper.BindEnv("export_service")
 	viper.SetDefault("export_service", "http://localhost:5000")
 
+	//
+	// Queue
+	//
+
+	viper.BindEnv("queue_host")
+	viper.SetDefault("queue_host", "amqp://guest:guest@localhost:5672/")
 }
 
 func Configure() {

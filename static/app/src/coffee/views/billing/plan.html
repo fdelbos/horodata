@@ -54,12 +54,12 @@
   </md-card-content>
   <md-card-actions layout="row" layout-align="end center">
 
-    <md-button ng-if="current != plan.code" hide show-gt-sm class="md-raised md-primary">
+    <md-button ng-if="current != plan.code" ng-click="select($event)" hide show-gt-sm class="md-raised md-primary">
       <md-icon>check</md-icon>
       Selectionner
     </md-button>
 
-    <md-button ng-if="current != plan.code" hide-gt-sm class="md-fab md-primary">
+    <md-button ng-if="current != plan.code" ng-click="select($event)" hide-gt-sm class="md-fab md-primary">
       <md-icon>check</md-icon>
     </md-button>
 
