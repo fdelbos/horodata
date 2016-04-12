@@ -9,3 +9,4 @@ html/bin.go
 horodata
 glide.lock
 utils/export/venv/
+utils/export/export.pyc
