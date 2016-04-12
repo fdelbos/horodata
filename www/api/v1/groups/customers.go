@@ -38,7 +38,7 @@ func CustomerAdd(c *gin.Context) {
 	clean := []string{}
 	for _, name := range customers {
 		if len(name) > 200 {
-			errors["customers"] = "Le nom d'un dossier ne doit pas dépasser plus de 200 caractères."
+			errors["customers"] = "Le nom d'un dossier ne doit pas dépasser 200 caractères."
 			jsend.BadRequest(c, errors)
 			return
 		} else if strings.TrimSpace(name) != "" {
@@ -78,7 +78,7 @@ func CustomerUpdate(c *gin.Context) {
 	if data.Name == "" {
 		errors["name"] = "Ce champ est obligatoire."
 	} else if len(data.Name) > 200 {
-		errors["name"] = "Ce champ ne doit pas dépasser plus de 200 caractères."
+		errors["name"] = "Ce champ ne doit pas dépasser 200 caractères."
 	}
 	if len(errors) > 0 {
 		jsend.BadRequest(c, errors)

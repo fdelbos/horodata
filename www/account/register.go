@@ -22,7 +22,7 @@ func PostRegister(c *gin.Context) {
 	if email == "" {
 		errors["email"] = "Ce champ est obligatoire."
 	} else if len(email) > 100 {
-		errors["email"] = "Ce champ ne doit pas dépasser plus de 100 caractères."
+		errors["email"] = "Ce champ ne doit pas dépasser 100 caractères."
 	} else if valid.IsEmail(email) == false {
 		errors["email"] = "Cette adresse email n'est pas valide."
 	} else if _, err := user.ByEmail(email); err == nil {
@@ -38,7 +38,7 @@ func PostRegister(c *gin.Context) {
 	} else if len(password) < 6 {
 		errors["password"] = "Ce champ doit faire au moins 6 caractères."
 	} else if len(password) > 100 {
-		errors["password"] = "Ce champ ne doit pas dépasser plus de 100 caractères."
+		errors["password"] = "Ce champ ne doit pas dépasser 100 caractères."
 	}
 
 	fullName := c.PostForm("full_name")
@@ -47,7 +47,7 @@ func PostRegister(c *gin.Context) {
 	} else if len(fullName) < 4 {
 		errors["full_name"] = "Ce champ doit faire au moins 4 caractères."
 	} else if len(fullName) > 50 {
-		errors["full_name"] = "Ce champ ne doit pas dépasser plus de 50 caractères."
+		errors["full_name"] = "Ce champ ne doit pas dépasser 50 caractères."
 	}
 
 	recaptcha := c.PostForm("g-recaptcha-response")

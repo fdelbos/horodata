@@ -30,5 +30,5 @@
 * Pointage avec « heure temps-réel »
 * Multi-langues
 * Transférer la possession du compte vers un autre compte (ex : qq1 qui s’en va de l’entreprise)
-* depasser 24h?
+* dépasser 24h?
 * heure de fin / heure de debut

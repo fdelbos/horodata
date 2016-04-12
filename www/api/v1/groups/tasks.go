@@ -25,7 +25,7 @@ func TaskAdd(c *gin.Context) {
 	if data.Name == "" {
 		errors["name"] = "Ce champ est obligatoire."
 	} else if len(data.Name) > 30 {
-		errors["name"] = "Ce champ ne doit pas depasser plus de 30 caractères."
+		errors["name"] = "Ce champ ne doit pas dépasser 30 caractères."
 	}
 	if len(errors) > 0 {
 		jsend.BadRequest(c, errors)
@@ -60,7 +60,7 @@ func TaskUpdate(c *gin.Context) {
 	if data.Name == "" {
 		errors["name"] = "Ce champ est obligatoire."
 	} else if len(data.Name) > 40 {
-		errors["name"] = "Ce champ ne doit pas depasser plus de 40 caractères."
+		errors["name"] = "Ce champ ne doit pas dépasser 40 caractères."
 	}
 	if len(errors) > 0 {
 		jsend.BadRequest(c, errors)
