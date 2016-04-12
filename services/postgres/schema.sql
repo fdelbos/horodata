@@ -107,7 +107,8 @@ begin
 
     delete from addresses
     where
-        id not in (
+            user_id = new.user_id
+        and id not in (
             select address_id
             from address_current
             where user_id = new.user_id)
@@ -115,7 +116,7 @@ begin
             select address_id
             from invoices
             where
-                user_id = new.user_id
+                    user_id = new.user_id
                 and address_id = new.id);
 
     return new;
@@ -145,7 +146,7 @@ create table stripe_subscriptions (
     stripe_id text not null,
     active boolean default true not null,
     plan quota_plan not null,
-    tax_percent int,
+    tax_percent float default 0.0,
     end_date timestamp
 );
 

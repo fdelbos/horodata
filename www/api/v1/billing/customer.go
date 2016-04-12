@@ -18,11 +18,11 @@ func StripeKey(c *gin.Context) {
 func GetCard(c *gin.Context) {
 	user := middlewares.GetUser(c)
 
-	if customer, err := billing.GetCustomer(user.Id); err == sqlerrors.NotFound {
+	if customer, err := billing.CustomerByUserId(user.Id); err == sqlerrors.NotFound {
 		jsend.NotFound(c)
 	} else if err != nil {
 		jsend.Error(c, err)
-	} else if card, err := customer.GetCard(); err == sqlerrors.NotFound {
+	} else if card, err := customer.Card(); err == sqlerrors.NotFound {
 		jsend.NotFound(c)
 	} else if err != nil {
 		jsend.Error(c, err)
@@ -40,7 +40,7 @@ func NewCard(c *gin.Context) {
 
 	if err := json.NewDecoder(c.Request.Body).Decode(&data); err != nil {
 		jsend.ErrorJson(c)
-	} else if customer, err := billing.GetCustomer(user.Id); err == sqlerrors.NotFound {
+	} else if customer, err := billing.CustomerByUserId(user.Id); err == sqlerrors.NotFound {
 
 		if err := billing.NewCustomer(user.Id, data.Token); err != nil {
 			jsend.Error(c, err)

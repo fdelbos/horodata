@@ -2,15 +2,17 @@
   <div layout="row">
 
     <div ng-if="isAdmin" layout="column" flex>
-      <span class="md-caption">Utilisateur</span>
+      <span class="md-caption text-grey">Utilisateur</span>
       <div>{{ guests[detailJob.creator_id].full_name }}</div>
+      <span class="md-body-1 text-grey">{{ guests[detailJob.creator_id].email }}</span>
     </div>
 
     <div layout="column" flex>
-      <span class="md-caption">Cree le</span>
+      <span class="md-caption text-grey">Cree le</span>
       <div>{{ detailJob.created | Date }}</div>
     </div>
 
+    <br>
     <br>
     <br>
     <br>

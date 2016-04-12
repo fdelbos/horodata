@@ -1,0 +1,24 @@
+<div flex layout-padding>
+
+  <div ng-if="!addr.current && !card.current" layout="column" flex layout-align="center center">
+    <h3 class="md-headline">Vous n'avez pas saisi d'adresse ni de carte de crédit</h3>
+    <p>
+      Avant de pouvoir changer votre plan, vous devez saisir une adresse et une carte de crédit.
+    </p>
+  </div>
+
+  <div ng-if="addr.current && !card.current" layout="column" flex layout-align="center center">
+    <h3 class="md-headline">Vous n'avez pas saisi de carte de crédit</h3>
+    <p>
+      Avant de pouvoir changer votre plan, vous devez saisir une carte de crédit.
+    </p>
+  </div>
+
+  <div  ng-if="!addr.current && card.current" layout="column" flex layout-align="center center">
+    <h3 class="md-headline">Vous n'avez pas saisi d'adresse</h3>
+    <p>
+      Avant de pouvoir changer votre plan, vous devez saisir une adresse.
+    </p>
+  </div>
+
+</div>

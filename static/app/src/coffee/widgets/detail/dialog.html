@@ -20,7 +20,7 @@
           <app-widgets-detail-meta></app-widgets-detail-meta>
 
           <md-input-container flex>
-            <label>Sélectionnez un dossier</label>
+            <label>Dossier</label>
             <md-select ng-model="detailJob.customer_id">
               <md-option ng-repeat="c in group.customers" value="{{ c.id }}">
                 {{ c.name }}
@@ -30,7 +30,7 @@
           </md-input-container>
 
           <md-input-container flex>
-            <label>Sélectionnez une tâche</label>
+            <label>Tâche</label>
             <md-select ng-model="detailJob.task_id">
               <md-option ng-repeat="t in group.tasks" value="{{ t.id }}">
                 {{ t.name }}

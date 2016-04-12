@@ -1,13 +1,14 @@
 angular.module("horodata").controller("Billing", [
   "$scope"
+  "$http"
+  "apiService"
   "titleService"
-  ($scope, titleService)->
+  ($scope, $http, apiService, titleService)->
 
     titleService.set("Abonnement")
 
-
     $scope.plans =
-      current: "free"
+      current: null
       free:
         code: "free"
         name: "Gratuit"
@@ -37,4 +38,10 @@ angular.module("horodata").controller("Billing", [
         guests: 100
         jobs: 5000
 
+    $scope.loading = true
+    $http.get("#{apiService.get()}/billing/plan").then(
+      (resp) ->
+        $scope.loading = false
+        $scope.plans.current = resp.data.data.plan
+    )
 ])

@@ -78,6 +78,19 @@ func (u User) Quotas() (*Quotas, error) {
 	return quotas, quotas.saveInCache(u.Id)
 }
 
+func (u User) QuotaChangePlan(plan string) error {
+	const query = `
+	update quotas
+	set plan = $2
+	where user_id = $1;`
+
+	if err := postgres.Exec(query, u.Id, plan); err != nil {
+		return err
+	}
+	cache.DelPackage(cacheQuotas, fmt.Sprintf("%d", u.Id))
+	return u.UsageJobsReset()
+}
+
 func (q *Quotas) saveInCache(userId int64) error {
 	id := fmt.Sprintf("%d", userId)
 	return cache.SetPackage(cacheQuotas, id, q, time.Hour*4)

@@ -69,16 +69,26 @@ func NewCustomer(userId int64, token string) error {
 	return newCard.insert()
 }
 
-func GetCustomer(userId int64) (*Customer, error) {
+func CustomerByUserId(userId int64) (*Customer, error) {
 	c := &Customer{}
 	const query = `select * from subscribers where user_id = $1`
 	return c, postgres.QueryRow(c, query, userId)
 }
 
-func (c *Customer) GetCard() (*Card, error) {
-	card := &Card{}
-	const query = `select * from cards where user_id = $1`
-	return card, postgres.QueryRow(card, query, c.UserId)
+func CustomerByStripeId(id string) (*Customer, error) {
+	c := &Customer{}
+	const query = `select * from subscribers where stripe_id = $1`
+	return c, postgres.QueryRow(c, query, id)
+}
+
+func (c *Customer) User() (*user.User, error) {
+	return user.ById(c.UserId)
+}
+
+func (c *Customer) Subscription() (*Subscription, error) {
+	s := &Subscription{}
+	const query = `select * from stripe_subscriptions where user_id = $1`
+	return s, postgres.QueryRow(s, query, c.UserId)
 }
 
 func (c *Customer) UpdateCard(token string) error {
@@ -105,45 +115,5 @@ func (c *Customer) UpdateCard(token string) error {
 		resp.LastFour,
 		string(resp.Brand),
 		expiration,
-	)
-}
-
-type Card struct {
-	UserId     int64     `json:"user_id"`
-	Created    time.Time `json:"created"`
-	StripeId   string    `json:"stripe_id"`
-	Last4      string    `json:"last4"`
-	Brand      string    `json:"brand"`
-	Expiration time.Time `json:"expiration"`
-}
-
-func (c *Card) insert() error {
-	const query = `
-	INSERT INTO cards (
-		user_id,
-        stripe_id,
-        last4,
-        brand,
-        expiration
-	)
-	VALUES ($1, $2, $3, $4, $5);`
-	return postgres.Exec(
-		query,
-		c.UserId,
-		c.StripeId,
-		c.Last4,
-		c.Brand,
-		c.Expiration,
-	)
-}
-
-func (c *Card) Scan(scanFn func(dest ...interface{}) error) error {
-	return scanFn(
-		&c.UserId,
-		&c.Created,
-		&c.StripeId,
-		&c.Last4,
-		&c.Brand,
-		&c.Expiration,
 	)
 }

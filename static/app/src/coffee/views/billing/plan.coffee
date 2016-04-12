@@ -31,6 +31,9 @@ angular.module("horodata").controller("BillingPlanChange", [
   ($scope, $mdDialog, $mdToast, $http, $location, apiService, groupService)->
     $scope.loading = false
     $scope.preLoading = true
+    $scope.ready = false
+    $scope.errors = null
+    $scope.done = false
 
     $scope.addr =
       current: null
@@ -40,12 +43,16 @@ angular.module("horodata").controller("BillingPlanChange", [
       current: null
       loaded: false
 
+    $scope.period =
+      end: null
+      loaded: false
+
     getAddr = ->
       $http.get("#{apiService.get()}/billing/address").then(
         (resp) ->
           $scope.addr.loaded = true
           $scope.addr.current = resp.data.data
-        (resp) -> $scope.card.loaded = true
+        (resp) -> $scope.addr.loaded = true
       )
     getAddr()
 
@@ -58,10 +65,47 @@ angular.module("horodata").controller("BillingPlanChange", [
       )
     getCard()
 
-    w = $scope.$watchGroup(["addr.loaded", "card.loaded"], (v) ->
-      console.log v
-      if !v[0] || !v[1] then return
-      $scope.preLoading = false
-      w()
-    )
+    if $scope.plan.code == "free"
+      getEndPeriod = ->
+        $http.get("#{apiService.get()}/billing/end_period").then(
+          (resp) ->
+            $scope.period.loaded = true
+            $scope.period.end = resp.data.data.end
+          (resp) -> $scope.period.loaded = true
+        )
+      getEndPeriod()
+
+      w = $scope.$watchGroup(["addr.loaded", "card.loaded", "period.loaded"], (v) ->
+        if !v[0] || !v[1] || !v[2] then return
+        $scope.preLoading = false
+        $scope.ready = $scope.addr.current? && $scope.card.current?
+        w()
+      )
+
+    else
+      w = $scope.$watchGroup(["addr.loaded", "card.loaded"], (v) ->
+        if !v[0] || !v[1] then return
+        $scope.preLoading = false
+        $scope.ready = $scope.addr.current? && $scope.card.current?
+        w()
+      )
+
+    $scope.form =
+      accept: false
+
+    $scope.validate = ->
+      if $scope.plan.code != "free" and $scope.form.accept == false
+        $scope.errors =
+          accept: "Vous devez cocher cette case pour continuer."
+        return
+      $scope.loading = true
+      $http.post("#{apiService.get()}/billing/change_plan", {plan: $scope.plan.code}).then(
+        (resp) ->
+          $scope.loading = false
+          $scope.done = true
+          if $scope.plan.code != "free" then $scope.current = $scope.plan.code
+        (resp) ->
+          $scope.loading = false
+      )
+
 ])

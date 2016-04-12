@@ -86,8 +86,8 @@ func NewAddress(c *gin.Context) {
 	data.Zip = strings.TrimSpace(data.Zip)
 	if data.Zip == "" {
 		errors["zip"] = "Ce champ est obligatoire."
-	} else if len(data.Zip) > 100 {
-		errors["zip"] = "Ce champ ne doit pas dépasser plus de 100 caractères."
+	} else if len(data.Zip) > 6 {
+		errors["zip"] = "Ce champ ne doit pas dépasser plus de 6 caractères."
 	}
 
 	if len(errors) > 0 {

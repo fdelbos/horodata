@@ -20,7 +20,7 @@
 
   <div hide-xs layout="row">
 
-    <md-input-container hide show-gt-sm flex>
+    <md-input-container class="no-margin" hide show-gt-sm flex>
       <md-select ng-model="selected" placeholder="Choisissez une statistique">
         <md-option ng-value="s.id" ng-repeat="s in availableStats">{{ s.label }}</md-option>
       </md-select>
@@ -37,6 +37,8 @@
     </div>
 
   </div>
+
+  <md-divider></md-divider>
 
   <div ng-switch="selected" flex>
     <app-widgets-stats-customer-time ng-switch-when="customer_time"></app-widgets-stats-customer-time>

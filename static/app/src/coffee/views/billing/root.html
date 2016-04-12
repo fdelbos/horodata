@@ -7,7 +7,9 @@
   <billing-card></billing-card>
   <md-divider></md-divider>
 
-  <div flex-md="70" flex-gt-md="60" layout-padding>
+  <app-widgets-common-loading ng-if="loading"></app-widgets-common-loading>
+
+  <div ng-if="!loading" flex-md="70" flex-gt-md="60" layout-padding>
 
     <div layout="row">
       <div layout="row" layout-align="center center" hide show-gt-sm>

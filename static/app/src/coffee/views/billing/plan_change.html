@@ -9,23 +9,58 @@
       <div class="md-dialog-content">
 
         <app-widgets-common-loading ng-if="preLoading"></app-widgets-common-loading>
+        <billing-plan-not-ready ng-if="!preLoading && !ready"></billing-plan-not-ready>
 
-        <!-- <div layout-align="center center" layout="column">
-          <p class="text-grey md-body-1">
-            Notez que le numero de votre carte de credit ne transite jamais par nos serveurs.
-            Le processus de paiement est entièrement géré par
-            <a target="_blank" href="https://stripe.com">
-              stripe.com
-              <md-icon class="md-14">open_in_new</md-icon>
-            </a>
+        <div ng-if="!preLoading && ready && !done">
+
+          <div ng-if="plan.code !='free'" layout="column">
+            <h3 class="md-headline">
+              Plan selectionne: <span class="text-accent">{{ plan.name }}</span>
+            </h3>
+            <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.accept}" >
+              <md-switch ng-model="form.accept" aria-label="J'ai lu et j'accepte les conditions generales de ventes">
+                J'ai lu et j'accepte les
+                <a href="/static/docs/cgv.pdf" target="_blank">
+                  conditions generales de ventes
+                  <md-icon class="md-18">open_in_new</md-icon>
+                </a>
+              </md-switch>
+              <small ng-if="errors.accept" class="input-error">{{ errors.accept }}</small>
+            </md-input-container>
+            <p>
+              Votre nouveau plan sera effectif immediatement.
+            </p>
+          </div>
+
+          <div ng-if="plan.code =='free'" layout="column">
+            <h3 class="md-headline">
+              Souhaitez-vous vraiment revenir au plan gratuit?
+            </h3>
+            <p>
+              Votre carte de credit ne sera plus debitee mais vous ne serez pas rembourse pour le mois courant.
+            </p>
+            <p>
+              Votre quota sera mis a jour a la fin de la periode de facturation (le {{ period.end | Day }}).
+            </p>
+          </div>
+
+        </div>
+
+        <div ng-if="done" layout="column" flex layout-align="center center" layout-padding>
+          <h3 class="md-headline">
+            Felicitations, votre abonnement a bien ete mis a jour.
+          </h3>
+          <p>
+            Merci pour votre confiance.
           </p>
-        </div> -->
+        </div>
+
 
       </div>
     </md-dialog-content>
 
     <app-widgets-common-dialog-actions ng-if="!preLoading">
-      <md-button ng-click="update()" class="md-primary md-raised">Modifier</md-button>
+      <md-button ng-if="ready && !done" ng-click="validate()" class="md-primary md-raised">Valider</md-button>
     </app-widgets-common-dialog-actions>
 
   </form>

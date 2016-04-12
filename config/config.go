@@ -4,6 +4,7 @@ import (
 	"dev.hyperboloide.com/fred/horodata/services/cache"
 	"dev.hyperboloide.com/fred/horodata/services/captcha"
 	"dev.hyperboloide.com/fred/horodata/services/cookies"
+	log_service "dev.hyperboloide.com/fred/horodata/services/log"
 	"dev.hyperboloide.com/fred/horodata/services/mail"
 	"dev.hyperboloide.com/fred/horodata/services/oauth"
 	"dev.hyperboloide.com/fred/horodata/services/payment"
@@ -156,6 +157,15 @@ func init() {
 	viper.BindEnv("payment_secret_key")
 	viper.SetDefault("payment_secret_key", "sk_test_ksm8vhIDWTyGCzDpHulwPF6l")
 
+	viper.BindEnv("payment_endpoint")
+	viper.SetDefault("payment_endpoint", "X8pwmpajDokdQsbQpw9UUu9oRb8C6Ui9Gg8s99XVAv7nwmdjVL")
+
+	viper.BindEnv("payment_queue_name")
+	viper.SetDefault("payment_queue_name", "invoicing")
+
+	viper.BindEnv("payment_queue_host")
+	viper.SetDefault("payment_queue_host", "amqp://guest:guest@localhost:5672/")
+
 	//
 	// Profile Pictures
 	//
@@ -170,12 +180,6 @@ func init() {
 	viper.BindEnv("export_service")
 	viper.SetDefault("export_service", "http://localhost:5000")
 
-	//
-	// Queue
-	//
-
-	viper.BindEnv("queue_host")
-	viper.SetDefault("queue_host", "amqp://guest:guest@localhost:5672/")
 }
 
 func Configure() {
@@ -188,34 +192,7 @@ func Configure() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	switch viper.GetString("log_format") {
-	case "text":
-		log.SetFormatter(&log.TextFormatter{
-			DisableColors: true,
-		})
-	case "json":
-		log.SetFormatter(&log.JSONFormatter{})
-	default:
-		log.WithField("format", viper.GetString("log_format")).Fatal("Unknow log format")
-	}
-
-	switch viper.GetString("log_level") {
-	case "debug":
-		log.SetLevel(log.DebugLevel)
-	case "info":
-		log.SetLevel(log.InfoLevel)
-	case "warning":
-		log.SetLevel(log.WarnLevel)
-	case "error":
-		log.SetLevel(log.ErrorLevel)
-	case "fatal":
-		log.SetLevel(log.FatalLevel)
-	case "panic":
-		log.SetLevel(log.PanicLevel)
-	default:
-		log.WithField("level", viper.GetString("log_level")).Fatal("Unknow log level")
-	}
-
+	log_service.Configure()
 	cache.Configure()
 	captcha.Configure()
 	cookies.Configure()
