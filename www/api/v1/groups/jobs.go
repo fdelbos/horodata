@@ -126,7 +126,7 @@ func JobListing(c *gin.Context) {
 	} else if i < 0 {
 		errors["size"] = "Ce champ n'est pas valide."
 	} else if i > 100 {
-		errors["size"] = "La valeur de ce champ ne peut depasser 100."
+		errors["size"] = "La valeur de ce champ ne peut dépasser 100."
 	} else {
 		size = int(i)
 	}
@@ -208,7 +208,7 @@ func JobAdd(c *gin.Context) {
 	} else if data.Comment == "" && task.CommentMandatory {
 		errors["comment"] = "Ce champ est obligatoire."
 	} else if len(data.Comment) > 1500 {
-		errors["comment"] = "Ce champ ne doit pas depasser plus de 1500 caractères."
+		errors["comment"] = "Ce champ ne doit pas dépasser 1500 caractères."
 	}
 
 	if len(errors) > 0 {

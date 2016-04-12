@@ -65,7 +65,7 @@ func GuestAdd(c *gin.Context) {
 	if data.Email == "" {
 		errors["email"] = "Ce champ est obligatoire."
 	} else if len(data.Email) > 100 {
-		errors["email"] = "Ce champ ne doit pas dépasser plus de 100 caractères."
+		errors["email"] = "Ce champ ne doit pas dépasser 100 caractères."
 	} else if valid.IsEmail(data.Email) == false {
 		errors["email"] = "Cette adresse email n'est pas valide."
 	}

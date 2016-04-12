@@ -16,7 +16,7 @@
 
       <md-button ng-click="editAddr($event)" class="md-raised md-primary" hide show-gt-sm>
         <md-tooltip md-direction="top">
-          Editer les informations de Facturation
+          Editer les informations de facturation
         </md-tooltip>
         <md-icon class="md-18">edit</md-icon>
         Editer
@@ -28,7 +28,7 @@
     </div>
 
     <p class="md-body-1">
-      Ces informations apparaitront sur votre facture.
+      Ces informations apparaîtront sur votre facture.
       <br>
     </p>
 
@@ -37,21 +37,21 @@
     <md-whiteframe ng-if="!loading" class="md-whiteframe-1dp" flex layout-padding>
 
       <div ng-if="!addr.current"  layout="row" layout-align="center center" flex>
-        <span>Aucune information.</span>
+        <span>Vous n'avez pas saisi vos information.</span>
       </div>
 
       <div ng-if="addr.current" layout="column">
 
         <div layout-xs="column" layout="row">
           <div layout="column" flex>
-            <span class="md-caption text-grey">Nom</span>
+            <span class="md-caption text-grey">Nom Complet</span>
             <div>{{ addr.current.name }}</div>
           </div>
 
           <br hide show-xs>
 
           <div layout="column" flex>
-            <span class="md-caption text-grey">Email (desitinataire des factures)</span>
+            <span class="md-caption text-grey">Email (destinataire des factures)</span>
             <div>{{ addr.current.email }}</div>
           </div>
         </div>
@@ -60,7 +60,7 @@
 
         <div layout-xs="column" layout="row">
           <div layout="column" ng-if="addr.current.company" flex>
-            <span class="md-caption text-grey">Raison Sociale</span>
+            <span class="md-caption text-grey">Raison sociale</span>
             <div>{{ addr.current.company }}</div>
           </div>
 
@@ -97,7 +97,7 @@
           <br hide show-xs>
 
           <div layout="column" flex>
-            <span class="md-caption text-grey">Code Postal</span>
+            <span class="md-caption text-grey">Code postal</span>
             <div>{{ addr.current.zip }}</div>
           </div>
         </div>

@@ -1,7 +1,7 @@
-<md-dialog aria-label="Saisir une tâche" flex="50">
+<md-dialog aria-label="Saisir une activité" flex="50">
 
   <div ng-if="group.tasks.length == 0 || group.customers.length == 0">
-    <app-widgets-common-dialog-toolbar>Saisir une tâche</app-widgets-common-dialog-toolbar>
+    <app-widgets-common-dialog-toolbar>Saisir une activité</app-widgets-common-dialog-toolbar>
     <md-dialog-content>
       <app-widgets-empty-group><app-widgets-empty-group>
     </md-dialog-content>
@@ -11,7 +11,7 @@
 
   <form ng-if="group.tasks.length > 0 && group.customers.length > 0" name="newTaskForm">
 
-    <app-widgets-common-dialog-toolbar>Saisir une tâche</app-widgets-common-dialog-toolbar>
+    <app-widgets-common-dialog-toolbar>Saisir une activité</app-widgets-common-dialog-toolbar>
 
     <md-dialog-content>
       <div class="md-dialog-content">
