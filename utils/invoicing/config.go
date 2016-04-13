@@ -3,10 +3,10 @@ package main
 import (
 	log_service "dev.hyperboloide.com/fred/horodata/services/log"
 	"dev.hyperboloide.com/fred/horodata/services/mail"
-	"dev.hyperboloide.com/fred/horodata/services/payment"
 	"dev.hyperboloide.com/fred/horodata/services/postgres"
 	log "github.com/Sirupsen/logrus"
 	"github.com/spf13/viper"
+	"github.com/stripe/stripe-go"
 )
 
 var started bool
@@ -74,6 +74,20 @@ func init() {
 
 	viper.BindEnv("payment_secret_key")
 	viper.SetDefault("payment_secret_key", "sk_test_ksm8vhIDWTyGCzDpHulwPF6l")
+
+	//
+	// Pdf
+	//
+
+	viper.BindEnv("pdf_host")
+	viper.SetDefault("pdf_host", "http://localhost:8888")
+
+	viper.BindEnv("pdf_business")
+	viper.SetDefault("pdf_business", "/business")
+
+	viper.BindEnv("pdf_individual")
+	viper.SetDefault("pdf_individual", "/individual")
+
 }
 
 func Configure() {
@@ -84,6 +98,7 @@ func Configure() {
 
 	log_service.Configure()
 	mail.Configure()
-	payment.Configure()
 	postgres.Configure()
+
+	stripe.Key = viper.GetString("payment_secret_key")
 }

@@ -62,6 +62,13 @@ func (a *Address) Scan(scanFn func(dest ...interface{}) error) error {
 		&a.Zip)
 }
 
+func AddressById(id int64) (*Address, error) {
+	const query = `
+	select * from addresses where id = $1;`
+	a := &Address{}
+	return a, postgres.QueryRow(a, query, id)
+}
+
 func CurrentAddress(userId int64) (*Address, error) {
 	const query = `
 	select * from addresses where id = (
@@ -70,4 +77,8 @@ func CurrentAddress(userId int64) (*Address, error) {
 		where user_id = $1);`
 	a := &Address{}
 	return a, postgres.QueryRow(a, query, userId)
+}
+
+func (c *Customer) Address() (*Address, error) {
+	return CurrentAddress(c.UserId)
 }

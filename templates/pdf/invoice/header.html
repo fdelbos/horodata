@@ -1,0 +1,62 @@
+<style>
+  .top-addr {
+    margin-top: -20px;
+    margin-left: 40px;
+  }
+</style>
+
+<div class="row">
+
+  <div class="col-xs-8">
+
+    <span class="h1" style="font-size: 50px;">
+      Facture
+    </span>
+
+    <table class="table" style="font-size: 18px; margin-top: 20px; margin-bottom: 50px; width: 300px;">
+      <tr>
+        <td>
+          <strong>Numéro</strong>
+        </td>
+        <td>
+          <samp>{{ id }}</samp>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Date</strong>
+        </td>
+        <td>
+          <samp>{{ created }}</samp>
+        </td>
+      </tr>
+    </table>
+
+    <!-- <div style="font-size: 150%; margin-top: 20px;">
+      <strong>Numéro</strong>
+      <samp>{{ id }}</samp><br>
+      <strong>Date</strong>
+      <samp>{{ created }}</samp>
+    </div> -->
+
+  </div>
+  <div class="col-xs-4">
+    <div class="pull-right" style="width: 180px;">
+      <img src="hyperboloide.png" style="height:auto; width:auto; max-width:180px;">
+      <br>
+      <br>
+      <div class="pull-right">
+
+          <address class="top-addr">
+            Hyperboloide SAS<br>
+            1 rue Jean Effel<br>
+            17000 La Rochelle<br>
+            France<br>
+            TVA : FR 18 808 276 364
+          </address>
+
+      </div>
+
+    </div>
+  </div>
+</div>

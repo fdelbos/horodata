@@ -129,13 +129,13 @@ after insert on addresses for each row execute procedure addresses_keep_current(
 create table subscribers (
     user_id bigint primary key references users on delete cascade,
     created timestamp default now()  not null,
-    stripe_id text not null
+    stripe_id text unique not null
 );
 
 create table cards (
     user_id bigint primary key references users on delete cascade,
     created timestamp default now()  not null,
-    stripe_id text not null,
+    stripe_id text unique not null,
     last4 char(4) not null,
     brand text not null,
     expiration date not null
@@ -143,7 +143,7 @@ create table cards (
 
 create table stripe_subscriptions (
     user_id bigint primary key references users on delete cascade,
-    stripe_id text not null,
+    stripe_id text unique not null,
     active boolean default true not null,
     plan quota_plan not null,
     tax_percent float default 0.0,
@@ -152,10 +152,10 @@ create table stripe_subscriptions (
 
 create table invoices (
     id bigserial primary key,
-    created timestamp default now()  not null,
-    user_id bigint references users on delete restrict,
-    address_id bigint references addresses on delete restrict,
-    plan quota_plan not null,
+    stripe_id text unique not null,
+    created timestamp default now() not null,
+    user_id bigint not null references users on delete restrict,
+    address_id bigint not null references addresses on delete restrict,
     start_date timestamp not null,
     end_date timestamp not null,
     subtotal bigint not null,
@@ -164,12 +164,13 @@ create table invoices (
     tax_percent numeric(4 ,2),
     paid bool default false not null,
     sent bool default false not null,
-    charge text
+    charge_id text unique
 );
 
-create table invoice_items (
+create table invoice_lines (
     id bigserial primary key,
-    invoice_id  bigint references users on delete restrict,
+    stripe_id text unique not null,
+    invoice_id bigint not null references invoices on delete cascade,
     amount bigint not null,
     unit_price bigint not null,
     quantity bigint not null,
@@ -178,7 +179,6 @@ create table invoice_items (
     description text,
     title text
 );
-
 
 --
 -- Jobs

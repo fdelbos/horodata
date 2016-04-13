@@ -32,4 +32,4 @@ container: clean bindata
 push:
 	docker push $(DOCKERID)/$(NAME)
 
-.PHONY: build push
+.PHONY: build container push

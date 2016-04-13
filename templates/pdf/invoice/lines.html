@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-xs-12">
+
+      <table class="table table-bordered table-condensed">
+
+        <tr>
+          <th class="text-center">Désignation</th>
+          <th class="text-center">Période</th>
+          <th class="text-center">Quantité</th>
+          <th class="text-center">PU HT</th>
+          <th class="text-center">Total HT</th>
+        </tr>
+
+        {% for line in lines %}
+        <tr>
+
+          <td class="text-center">
+            <samp>
+              {{ line.title }}
+
+              {% if line.description %}
+              <br><small>{{ line.description }}</small>
+              {% endif %}
+
+            </samp>
+          </td>
+
+          <td class="text-center">
+            <samp>{{ line.start_date}} - {{ line.end_date }}</samp>
+          </td>
+
+          <td class="text-right">
+            <samp>{{ line.quantity }}</samp>
+          </td>
+
+          <td class="text-right">
+            <samp>{{ line.unit_price }}&euro;</samp>
+          </td>
+
+          <td class="text-right">
+            <samp>{{ line.amount }}&euro;</samp>
+          </td>
+
+        </tr>
+        {% endfor %}
+
+      </table>
+
+
+  </div>
+
+</div>
