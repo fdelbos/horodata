@@ -31,16 +31,16 @@ func init() {
 	viper.SetDefault("host", "localhost")
 
 	viper.BindEnv("www_root")
-	viper.SetDefault("www_root", "http://localhost:3000/www")
+	viper.SetDefault("www_root", "http://localhost:3000")
 
 	viper.BindEnv("api_root")
-	viper.SetDefault("api_root", "http://localhost:3000/www/api/v1")
+	viper.SetDefault("api_root", "http://localhost:3000/api/v1")
 
 	viper.BindEnv("static_root")
 	viper.SetDefault("static_root", "http://localhost:3000/static")
 
 	viper.BindEnv("www_angular_base")
-	viper.SetDefault("www_angular_base", "/www/app/")
+	viper.SetDefault("www_angular_base", "/app/")
 
 	//
 	// Captcha

@@ -17,7 +17,7 @@ import (
 )
 
 func Group(r *gin.RouterGroup) {
-	www := r.Group("/www")
+	www := r.Group("/")
 	{
 		www.GET("", Index)
 
@@ -27,6 +27,7 @@ func Group(r *gin.RouterGroup) {
 
 		if gin.IsDebugging() {
 			www.Static("/profiles", viper.GetString("profile_pictures"))
+			www.Static("/static", "./static")
 		}
 
 		endpoint := fmt.Sprintf("/%s", viper.GetString("payment_endpoint"))

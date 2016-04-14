@@ -17,10 +17,6 @@ func main() {
 	r := engine.Group("/")
 	{
 		www.Group(r)
-
-		if gin.IsDebugging() {
-			r.Static("/static", "./static")
-		}
 	}
 
 	connStr := fmt.Sprintf("%s:%d", viper.GetString("host"), viper.GetInt("port"))
