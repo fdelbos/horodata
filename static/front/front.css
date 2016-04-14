@@ -1,0 +1,82 @@
+main {
+  margin-bottom: 200px;
+}
+main .bottom-space {
+  margin-bottom: 150px;
+}
+.menu .menu-item {
+  font-weight: 300;
+  font-size: 1.1em;
+}
+.main {
+  margin-top: 40px;
+}
+.main h1 {
+  font-weight: 300;
+  font-size: 3.8em;
+}
+.main h2 {
+  font-weight: 300;
+  font-size: 3em;
+}
+.main h3 {
+  font-weight: 300;
+  font-size: 2em;
+}
+.main .subtitle {
+  font-size: 18px;
+  font-weight: 400;
+  color: #777;
+}
+.main .description {
+  color: #777;
+  font-weight: 400;
+  font-size: 16px;
+}
+.main .pricing h4 {
+  font-weight: 300;
+  font-size: 1.6em;
+}
+.main .pricing td {
+  padding: 4px;
+  font-size: 0.9em;
+}
+.main .pricing .unit {
+  float: right;
+  font-weight: 600;
+  font-size: 1em;
+}
+.main .pricing .price {
+  font-weight: 400;
+  font-size: 1.9em;
+}
+.main .pricing .month {
+  font-size: 1em;
+  color: #777;
+}
+.main .pricing .subprice {
+  font-size: 0.7em;
+  color: #777;
+}
+footer {
+  font-size: 12px;
+}
+footer h5 {
+  font-weight: 300;
+  font-size: 1.5em;
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}

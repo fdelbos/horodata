@@ -7,7 +7,12 @@ ADD profile-default.png     profile-default.png
 ADD roboto                  roboto
 ADD material_icons          material_icons
 ADD bower_components        bower_components
+
 ADD app/horodata.css        app/horodata.css
 ADD app/horodata.min.js     app/horodata.js
+
+ADD front/front.css         front/front.css
+
+ADD images                  images 
 
 CMD ["true"]

@@ -2,6 +2,8 @@
 
 
 ## Todo:
+* sur la facture faire "plan horodata 10 utilisateurs"
+* afficher tarrif ttc dans recap changement de plan
 * Si vide, ajouter texte dans liste "Aucune tâche saisie"
 * Désactiver les tool-tips
 * Message dans zone blanche page d'accueil "Sélectionnez ou créez un groupe" /Différent PC et mobile ?

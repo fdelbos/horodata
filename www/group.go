@@ -19,6 +19,8 @@ import (
 func Group(r *gin.RouterGroup) {
 	www := r.Group("/www")
 	{
+		www.GET("", Index)
+
 		account.Group(www)
 		api.Group(www)
 		www.Any("/app/*all", middlewares.UserFilter(), GetApp)
@@ -30,6 +32,10 @@ func Group(r *gin.RouterGroup) {
 		endpoint := fmt.Sprintf("/%s", viper.GetString("payment_endpoint"))
 		www.POST(endpoint, StripeEndpoint)
 	}
+}
+
+func Index(c *gin.Context) {
+	html.Render("front/index.html", c, nil, http.StatusOK)
 }
 
 func GetApp(c *gin.Context) {
