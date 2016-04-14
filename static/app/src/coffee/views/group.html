@@ -31,28 +31,27 @@
 
   <div ng-if="!isLoading && groupError == 'Forbidden'" layout-padding layout="row" layout-align="center center">
     <div flex-gt-sm="50" >
-      <h3 class="md-display-1">Vous n'avez pas accès a ce groupe</h3>
+      <h3 class="md-display-1">Vous n'avez pas accès à ce groupe.</h3>
       <p class="md-subhead">
-        Si vous connaissez le proprietaire de ce groupe demandez lui de vous inviter.
-        Sinon vous vous êtes surement trompé de page...
+        Si vous connaissez le propriétaire, demandez-lui de vous inviter.
       </p>
     </div>
   </div>
 
   <div ng-if="!isLoading && groupError == 'NotFound'" layout-padding layout="row" layout-align="center center">
     <div flex-gt-sm="50" >
-      <h3 class="md-display-1">Aucun groupe a cette adresse</h3>
+      <h3 class="md-display-1">Aucun groupe n'existe à cette adresse.</h3>
       <p class="md-subhead">
-        Le groupe que vous recherchez n'existe pas.
+        Veuillez vérifier l'adresse.
       </p>
     </div>
   </div>
 
   <div ng-if="!isLoading && groupError == 'unknow'" layout-padding layout="row" layout-align="center center">
     <div flex-gt-sm="50" >
-      <h3 class="md-display-1">Une erreure s'est produite!</h3>
+      <h3 class="md-display-1">Une erreur s'est produite !</h3>
       <p class="md-subhead">
-        Nous sommes terriblement désolés...
+        Nous en sommes désolés.
       </p>
     </div>
   </div>

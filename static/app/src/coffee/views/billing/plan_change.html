@@ -15,32 +15,32 @@
 
           <div ng-if="plan.code !='free'" layout="column">
             <h3 class="md-headline">
-              Plan selectionne: <span class="text-accent">{{ plan.name }}</span>
+              Plan selectionné : <span class="text-accent">{{ plan.name }}</span>
             </h3>
             <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.accept}" >
               <md-switch ng-model="form.accept" aria-label="J'ai lu et j'accepte les conditions generales de ventes">
                 J'ai lu et j'accepte les
                 <a href="/static/docs/cgv.pdf" target="_blank">
-                  conditions generales de ventes
+                  conditions générales de vente
                   <md-icon class="md-18">open_in_new</md-icon>
                 </a>
               </md-switch>
               <small ng-if="errors.accept" class="input-error">{{ errors.accept }}</small>
             </md-input-container>
             <p>
-              Votre nouveau plan sera effectif immediatement.
+              Votre nouveau plan sera effectif immédiatement.
             </p>
           </div>
 
           <div ng-if="plan.code =='free'" layout="column">
             <h3 class="md-headline">
-              Souhaitez-vous vraiment revenir au plan gratuit?
+              Souhaitez-vous vraiment revenir au plan gratuit ?
             </h3>
             <p>
-              Votre carte de credit ne sera plus debitee mais vous ne serez pas rembourse pour le mois courant.
+              Votre carte de crédit ne sera plus débitée mais vous ne serez pas remboursé du mois en cours.
             </p>
             <p>
-              Votre quota sera mis a jour a la fin de la periode de facturation (le {{ period.end | Day }}).
+              Vos quotas seront mis à jour le {{ period.end | Day }}, date de résiliation effective.
             </p>
           </div>
 
@@ -48,10 +48,10 @@
 
         <div ng-if="done" layout="column" flex layout-align="center center" layout-padding>
           <h3 class="md-headline">
-            Felicitations, votre abonnement a bien ete mis a jour.
+            Félicitations, votre abonnement a bien été mis a jour.
           </h3>
           <p>
-            Merci pour votre confiance.
+            Merci de votre confiance.
           </p>
         </div>
 
