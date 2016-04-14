@@ -1,6 +1,6 @@
 FROM busybox
 
-VOLUME /www/horodata/static
+VOLUME  /www/horodata/static
 WORKDIR /www/horodata/static
 
 ADD profile-default.png     profile-default.png

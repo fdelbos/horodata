@@ -82,12 +82,8 @@ func init() {
 	viper.BindEnv("pdf_host")
 	viper.SetDefault("pdf_host", "http://localhost:8888")
 
-	viper.BindEnv("pdf_business")
-	viper.SetDefault("pdf_business", "/business")
-
-	viper.BindEnv("pdf_individual")
-	viper.SetDefault("pdf_individual", "/individual")
-
+	viper.BindEnv("pdf_invoice")
+	viper.SetDefault("pdf_invoice", "/invoice")
 }
 
 func Configure() {

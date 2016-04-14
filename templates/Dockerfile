@@ -1,7 +1,7 @@
 FROM busybox
 
-VOLUME /templates
-WORKDIR /templates
+VOLUME  /horodata/templates
+WORKDIR /horodata/templates
 
 ADD mails mails
 ADD pdf pdf

@@ -11,3 +11,5 @@ glide.lock
 utils/export/venv/
 utils/export/export.pyc
 utils/invoicing/invoicing
+static/app/horodata.min.js
+static/app/horodata.js

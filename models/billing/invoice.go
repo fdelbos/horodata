@@ -1,6 +1,7 @@
 package billing
 
 import (
+	"fmt"
 	"time"
 
 	"dev.hyperboloide.com/fred/horodata/services/postgres"
@@ -77,6 +78,14 @@ func (i *Invoice) MarkAsSent() error {
 	set sent = true
 	where id = $1`
 	return postgres.Exec(query, i.Id)
+}
+
+func (i *Invoice) FileId() string {
+	return fmt.Sprintf("HD-%06d", i.Id)
+}
+
+func (i *Invoice) Address() (*Address, error) {
+	return AddressById(i.AddressId)
 }
 
 func InvoiceByStripeId(id string) (*Invoice, error) {
