@@ -9,7 +9,7 @@
       <md-list-item class="md-body-2" hide show-gt-sm>
         <div layout="row" layout-align="space-between center" flex>
           <div flex="10">Jour</div>
-          <div ng-if="isAdmin" flex="30">Utilisateur</div>
+          <div flex="30">Utilisateur</div>
           <div flex="25">Dossier</div>
           <div flex="25">Tâche</div>
           <div flex="5">Durée</div>
@@ -17,52 +17,68 @@
         <md-divider></md-divider>
       </md-list-item>
 
-      <md-list-item ng-repeat="i in listing.list" ng-click="showDetail($event, i)" hide show-gt-sm>
+      <md-list-item ng-repeat="i in listing.list" ng-click="showDetail($event, i)">
         <div layout="row" layout-align="space-between center" flex>
-          <div flex="10">
+
+          <div flex="10" hide show-gt-sm>
             {{ i.created | Day }}
           </div>
 
-          <div flex="30" ng-if="isAdmin" class="contact-item">
+          <div flex="30" flex-sm="50" flex-xs="100" class="contact-item">
             <md-list-item class="md-2-line contact-item">
               <img ng-src="{{ guests[i.creator_id].picture | Profile }}" class="md-avatar" alt="{{ guests[i.creator_id].full_name }}" />
 
               <div class="md-list-item-text compact">
                 <h3>{{ guests[i.creator_id].full_name }}</h3>
-                <p>{{ guests[i.creator_id].email }}</p>
+                <p hide-xs>{{ guests[i.creator_id].email }}</p>
+
+                <h3 hide show-xs>
+                  {{ customers[i.customer_id].name }}
+                </h3>
+                <h4 hide show-xs>
+                  <strong class="text-primary">{{ tasks[i.task_id].name }}</strong>
+                </h4>
+                <p hide show-xs>
+                  <span class="text-accent">{{ i.duration | Duration }}</span> - {{ i.created | Day }}
+                </p>
+
+              </div>
+
+            </md-list-item>
+          </div>
+
+          <div flex-sm="50" hide-xs hide-gt-sm class="contact-item">
+            <md-list-item class="md-2-line contact-item">
+              <div class="md-list-item-text compact">
+                <h3>
+                  {{ customers[i.customer_id].name }}
+                </h3>
+                <h4>
+                  <strong class="text-primary">{{ tasks[i.task_id].name }}</strong>
+                </h4>
+                <p>
+                  <span class="text-accent">{{ i.duration | Duration }}</span> - {{ i.created | Day }}
+                </p>
               </div>
             </md-list-item>
           </div>
 
-          <div flex="25">
+          <div flex="25" hide show-gt-sm>
             {{ customers[i.customer_id].name }}
           </div>
-          <div flex="25">
+
+          <div flex="25" hide show-gt-sm>
             {{ tasks[i.task_id].name }}
           </div>
-          <div flex="5">
+
+          <div flex="5" hide show-gt-sm>
             {{ i.duration | Duration }}
           </div>
+
         </div>
         <md-divider></md-divider>
       </md-list-item>
 
-      <md-list-item  ng-repeat="i in listing.list" class="md-2-line" ng-click="showDetail($event, i)" hide-gt-sm>
-        <div class="md-list-item-text" layout="column">
-          <div layout="row" layout-align="space-between center">
-            <h3>
-              {{ customers[i.customer_id].name }}
-            </h3>
-            <h4>
-              {{ i.created | Day }} - <span class="text-primary">{{ i.duration | Duration }}</span>
-            </h4>
-          </div>
-          <h4>{{ tasks[i.task_id].name }}</h4>
-          <span class="text-accent">{{ guests[i.creator_id].full_name }}</span>
-        </div>
-        <md-divider></md-divider>
-      </md-list-item>
-    </md-list>
 
   </div>
 
@@ -75,6 +91,9 @@
   </div>
 
   <app-widgets-common-loading ng-if="listing.loading"></app-widgets-common-loading>
+
+  <app-widgets-common-no-data ng-if="!listing.loading && listing.list.length == 0" begin="search.begin" end="search.end">
+  </app-widgets-common-no-data>
 
   <div ng-if="!listing.loading && listing.list.length > 0" layout-padding  layout-align="center center" layout="row" flex>
     <span class="md-body-1">résultats {{ listing.list.length }} / {{ listing.total }}</span>

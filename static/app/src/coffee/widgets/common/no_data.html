@@ -1,22 +1,14 @@
 <div layout="row" flex layout-align="center center">
   <md-whiteframe class="md-whiteframe-1dp md-accent" flex="100" flex-sm="70" flex-md="60" flex-gt-md="50" layout-padding layout-margin layout="column">
-
-    <div layout-padding layout-margin layout="column" layout-align="center center">
-
-      <div>
+    <div layout-padding layout-margin>
+      <div layout="column" layout-align="center center">
         <div class="md-headline">
           Aucune donnée pour la période
         </div>
-
         <p>
-          La periode du {{ search.begin | Day }} au {{ search.end | Day }} ne contient pas de saisie.
+          La periode du {{ begin | Day }} au {{ end | Day }} ne contient pas de saisie.
         </p>
-
-
       </div>
-
     </div>
-
-
   </md-whiteframe>
 </div>

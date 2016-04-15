@@ -25,13 +25,13 @@ func Group(r *gin.RouterGroup) {
 		api.Group(www)
 		www.Any("/app/*all", middlewares.UserFilter(), GetApp)
 
+		endpoint := fmt.Sprintf("/%s", viper.GetString("payment_endpoint"))
+		www.POST(endpoint, StripeEndpoint)
+
 		if gin.IsDebugging() {
 			www.Static("/profiles", viper.GetString("profile_pictures"))
 			www.Static("/static", "./static")
 		}
-
-		endpoint := fmt.Sprintf("/%s", viper.GetString("payment_endpoint"))
-		www.POST(endpoint, StripeEndpoint)
 	}
 }
 

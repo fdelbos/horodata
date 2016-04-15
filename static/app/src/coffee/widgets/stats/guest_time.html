@@ -17,6 +17,7 @@
 
   </div>
 
-  <app-widgets-stats-no-data ng-if="!stats.loading() && data.length == 0"></app-widgets-stats-no-data>
-
+  <app-widgets-common-no-data ng-if="!stats.loading() && data.length == 0" begin="search.begin" end="search.end">
+  </app-widgets-common-no-data>
+  
 </div>
