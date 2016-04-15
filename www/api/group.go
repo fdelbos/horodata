@@ -9,6 +9,7 @@ import (
 func Group(r *gin.RouterGroup) {
 	api := r.Group("/api")
 	api.Use(middlewares.UserFilter())
+	api.Use(middlewares.AjaxCSRFFilter)
 	{
 		v1.Group(api)
 	}

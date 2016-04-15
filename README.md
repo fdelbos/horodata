@@ -13,7 +13,6 @@
 * zopim
 * google analytics
 * cookies cnil
-* csrf (x-request-with)
 * supprimer un job / editer avec task ou customer innactif + verifier disparu et empty message
 * envoyer un rappel si rien saisi.
 * saisie j+1 passer en mode txt
