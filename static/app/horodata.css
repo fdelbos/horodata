@@ -110,3 +110,21 @@ md-input-container textarea[md-no-autogrow].md-input {
   background-repeat: no-repeat no-repeat;
   pointer-events: none;
 }
+.listing-row .email {
+  font-weight: 400;
+  font-size: 0.9em;
+}
+.listing-row .task {
+  font-weight: 600;
+  font-size: 0.8em;
+  color: #2196f3;
+}
+.listing-row .duration {
+  color: #ff4081;
+  font-weight: 600;
+  font-size: 0.9em;
+}
+.listing-row .date {
+  font-weight: 400;
+  font-size: 0.9em;
+}

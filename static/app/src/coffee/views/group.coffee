@@ -19,6 +19,17 @@ angular.module("horodata").controller("Group", [
     $scope.selectedTab =
       id: 0
 
+    $scope.selectTab = (i)->
+      $scope.selectedTab.id = i
+      if i == 0 then tabsService.set "jobs"
+      else if i == 1 and $scope.isAdmin == true then tabsService.set "export"
+      else tabsService.set null
+
+    $scope.goLeft = -> $scope.selectTab($scope.selectedTab.id - 1)
+    $scope.goRight = -> $scope.selectTab($scope.selectedTab.id + 1)
+
+    $scope.$watch("selectedTab.id", (v, o) -> if v != o then $scope.selectTab(v))
+
     getGroup = ->
       $scope.isLoading = true
       $http.get("#{apiService.get()}/groups/#{$routeParams.group}").then(
@@ -32,6 +43,7 @@ angular.module("horodata").controller("Group", [
           $scope.guests = _.keyBy($scope.group.guests, 'id')
           titleService.set($scope.group.name, true)
           $scope.isLoading = false
+          $scope.selectTab(0)
         (resp) ->
           $scope.isLoading = false
           $scope.groupError = switch resp.status
@@ -47,19 +59,5 @@ angular.module("horodata").controller("Group", [
     $scope.$on("group.reload", (e) ->
       e.stopPropagation()
       getGroup())
-
-    $scope.selectTab = (i)->
-      $scope.selectedTab.id = i
-      if i == 0 then tabsService.set "jobs"
-      else if i == 1 and $scope.isAdmin == true then tabsService.set "export"
-      else tabsService.set null
-
-    $scope.goLeft = -> $scope.selectTab($scope.selectedTab.id - 1)
-    $scope.goRight = -> $scope.selectTab($scope.selectedTab.id + 1)
-
-    $scope.$watch("selectedTab.id", (v, o) -> if v != o then $scope.selectTab(v))
-
-
-    $scope.selectTab(0)
 
 ])

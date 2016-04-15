@@ -1,0 +1,72 @@
+<div layout="row" class="listing-row" layout-align="space-between center" flex>
+
+  <div flex="10" hide show-gt-sm>
+    {{ row.created | Day }}
+  </div>
+
+  <div flex="30" flex-sm="50" class="contact-item" ng-if="isAdmin" hide-xs>
+    <md-list-item class="md-2-line contact-item">
+      <img ng-src="{{ guests[row.creator_id].picture | Profile }}" class="md-avatar" alt="{{ guests[row.creator_id].full_name }}" />
+      <div class="md-list-item-text compact">
+        <h3>{{ guests[row.creator_id].full_name }}</h3>
+        <p>
+          <span class="email">{{ guests[row.creator_id].email }}</span>
+        </p>
+      </div>
+    </md-list-item>
+  </div>
+
+  <div flex="25" hide show-gt-sm>
+    {{ customers[row.customer_id].name }}
+  </div>
+
+  <div flex="25" hide show-gt-sm>
+    {{ tasks[row.task_id].name }}
+  </div>
+
+  <div flex="5" hide show-gt-sm>
+    {{ row.duration | Duration }}
+  </div>
+
+  <div flex-sm="50" class="contact-item"  hide show-sm>
+    <md-list-item class="md-2-line">
+      <div class="md-list-item-text compact">
+        <h3>
+          {{ customers[row.customer_id].name }}
+          &nbsp;
+          <span class="task">{{ tasks[row.task_id].name }}</span>
+        </h3>
+        <p>
+          <span class="duration">{{ row.duration | Duration }}</span>
+          &nbsp;
+          <span class="date">{{ row.created | Day }}</span>
+        </p>
+      </div>
+    </md-list-item>
+  </div>
+
+  <div flex class="contact-item" hide show-xs>
+    <md-list-item class="md-2-line contact-item">
+
+      <img ng-if="isAdmin" ng-src="{{ guests[row.creator_id].picture | Profile }}" class="md-avatar" alt="{{ guests[row.creator_id].full_name }}" />
+
+      <div class="md-list-item-text compact">
+        <h3 ng-if="isAdmin" >{{ guests[row.creator_id].full_name }}</h3>
+
+        <h3>
+          {{ customers[row.customer_id].name }}
+          &nbsp;
+          <span class="task">{{ tasks[row.task_id].name }}</span>
+        </h3>
+
+        <p>
+          <span class="duration">{{ row.duration | Duration }}</span>
+          &nbsp;
+          <span class="date">{{ row.created | Day }}</span>
+        </p>
+
+      </div>
+    </md-list-item>
+  </div>
+
+</div>
