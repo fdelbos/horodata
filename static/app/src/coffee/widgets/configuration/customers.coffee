@@ -4,7 +4,7 @@ angular.module("horodata").directive("appWidgetsConfigurationCustomers", [
 
     l = (scope, elem, attr) ->
 
-      scope.customers =
+      scope.data =
         current: null
         selected: null
         edit: (ev)->
@@ -13,6 +13,7 @@ angular.module("horodata").directive("appWidgetsConfigurationCustomers", [
             "horodata/widgets/configuration/customers_edit_form.html"
             "appWidgetsConfigurationCustomersDialog"
             scope, ev)
+
         create: (ev)->
           @current = {customers: ""}
           popupService(
@@ -33,19 +34,14 @@ angular.module("horodata").controller("appWidgetsConfigurationCustomersDialog", 
   "$mdToast",
   "$http",
   "$location",
-  "apiService"
+  "apiService",
   ($scope, $mdDialog, $mdToast, $http, $location, apiService)->
     $scope.errors = null
     $scope.loading = false
 
-    update = (t) ->
-      idx = _.findIndex($scope.group.customers, {id: t.id})
-      $scope.group.customers[idx] = $scope.customers.current
-      $scope.group.customers = _.sortBy($scope.group.customers, ["name"])
-
     $scope.create = ->
       $scope.loading = true
-      $http.post("#{apiService.get()}/groups/#{$scope.group.url}/customers", $scope.customers.current).then(
+      $http.post("#{apiService.get()}/groups/#{$scope.group.url}/customers", $scope.data.current).then(
         (resp) ->
           total = resp.data.data.total
           $scope.$emit("group.reload")
@@ -61,12 +57,12 @@ angular.module("horodata").controller("appWidgetsConfigurationCustomersDialog", 
 
     $scope.edit = ->
       $scope.loading = true
-      $http.put("#{apiService.get()}/groups/#{$scope.group.url}/customers/#{ $scope.customers.selected }", $scope.customers.current).then(
+      $http.put("#{apiService.get()}/groups/#{$scope.group.url}/customers/#{ $scope.data.selected }", $scope.data.current).then(
         (resp) ->
           $mdDialog.hide()
-          $mdToast.showSimple("Dossier '#{$scope.customers.current.name}' modifié")
-          update($scope.customers.current)
-          $scope.customers.selected = null
+          $mdToast.showSimple("Dossier '#{$scope.data.current.name}' modifié")
+          $scope.$emit("group.reload")
+          $scope.data.selected = null
         (resp) ->
           $scope.errors = resp.data.errors
           $scope.loading = false
@@ -74,12 +70,12 @@ angular.module("horodata").controller("appWidgetsConfigurationCustomersDialog", 
 
     $scope.delete = ->
       $scope.loading = true
-      $http.delete("#{apiService.get()}/groups/#{$scope.group.url}/customers/#{ $scope.customers.selected }").then(
+      $http.delete("#{apiService.get()}/groups/#{$scope.group.url}/customers/#{ $scope.data.selected }").then(
         (resp) ->
           $mdDialog.hide()
-          $mdToast.showSimple("Dossier '#{$scope.customers.current.name}' supprimé")
-          $scope.group.customers.splice(_.findIndex($scope.group.customers, {id: parseInt $scope.customers.selected}), 1)
-          $scope.customers.selected = null
+          $mdToast.showSimple("Dossier '#{$scope.data.current.name}' supprimé")
+          $scope.$emit("group.reload")
+          $scope.data.selected = null
         (resp) ->
           $scope.errors = resp.data.errors
           $scope.loading = false

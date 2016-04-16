@@ -8,7 +8,7 @@
 
         <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.customers}" >
           <label>Nom des dossiers (un dossier par ligne)</label>
-          <textarea md-no-autogrow ng-model="customers.current.customers" rows="5" md-select-on-focus></textarea>
+          <textarea md-no-autogrow ng-model="data.current.customers" rows="5" md-select-on-focus></textarea>
           <small ng-if="errors.customers" class="input-error">{{ errors.customers }}</small>
         </md-input-container>
 

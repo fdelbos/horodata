@@ -6,7 +6,7 @@
       <div class="md-display-1" hide show-gt-sm>Dossiers</div>
       <div class="md-headline" hide-gt-sm>Dossiers</div>
 
-      <md-button ng-click="customers.create($event)" class="md-raised md-primary" hide show-gt-sm>
+      <md-button ng-click="data.create($event)" class="md-raised md-primary" hide show-gt-sm>
         <md-tooltip md-direction="top">
           Ajouter de nouveaux dossiers
         </md-tooltip>
@@ -14,7 +14,7 @@
         Ajouter
       </md-button>
 
-      <md-button ng-click="customers.create($event)" class="md-fab md-mini md-primary" hide-gt-sm aria-label="Ajouter de nouveaux dossiers">
+      <md-button ng-click="data.create($event)" class="md-fab md-mini md-primary" hide-gt-sm aria-label="Ajouter de nouveaux dossiers">
         <md-icon class="md-24">add</md-icon>
       </md-button>
     </div>
@@ -32,14 +32,14 @@
       <div layout="row" flex>
         <md-input-container flex>
           <label>Sélectionnez un dossier</label>
-          <md-select ng-model="customers.selected">
+          <md-select ng-model="data.selected">
             <md-option ng-repeat="c in group.customers" ng-if="c.active" value="{{ c.id }}">
               {{ c.name }}
             </md-option>
           </md-select>
         </md-input-container>
 
-        <md-button ng-if="customers.selected" ng-click="customers.edit($event)" class="md-fab md-mini md-accent" aria-label="Modifier le dossier">
+        <md-button ng-if="data.selected" ng-click="data.edit($event)" class="md-fab md-mini md-accent" aria-label="Modifier le dossier">
           <md-tooltip md-direction="top">
             Modifier le dossier
           </md-tooltip>

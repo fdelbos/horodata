@@ -40,7 +40,10 @@
           <md-input-container flex>
             <label>Dossier</label>
             <md-select ng-model="detailJob.customer_id">
-              <md-option ng-repeat="c in group.customers" value="{{ c.id }}">
+              <md-option
+                ng-repeat="c in group.customers"
+                ng-if="c.active || detailJob.customer_id == c.id"
+                value="{{ c.id }}">
                 {{ c.name }}
               </md-option>
             </md-select>
@@ -50,7 +53,10 @@
           <md-input-container flex>
             <label>Tâche</label>
             <md-select ng-model="detailJob.task_id">
-              <md-option ng-repeat="t in group.tasks" value="{{ t.id }}">
+              <md-option
+                ng-repeat="t in group.tasks"
+                ng-if="t.active || detailJob.task_id == t.id"
+                value="{{ t.id }}">
                 {{ t.name }}
               </md-option>
             </md-select>

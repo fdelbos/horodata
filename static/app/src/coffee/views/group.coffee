@@ -34,6 +34,8 @@ angular.module("horodata").controller("Group", [
       $scope.isLoading = true
       $http.get("#{apiService.get()}/groups/#{$routeParams.group}").then(
         (resp) ->
+          if !$scope.group? then $scope.selectTab(0)
+          
           $scope.group = resp.data.data
           groupService.set($scope.group)
           $scope.isAdmin = $scope.group.guests?
@@ -43,7 +45,6 @@ angular.module("horodata").controller("Group", [
           $scope.guests = _.keyBy($scope.group.guests, 'id')
           titleService.set($scope.group.name, true)
           $scope.isLoading = false
-          $scope.selectTab(0)
         (resp) ->
           $scope.isLoading = false
           $scope.groupError = switch resp.status

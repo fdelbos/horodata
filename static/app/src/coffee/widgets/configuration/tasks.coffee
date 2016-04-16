@@ -4,7 +4,7 @@ angular.module("horodata").directive("appWidgetsConfigurationTasks", [
 
     l = (scope, elem, attr) ->
 
-      scope.tasks =
+      scope.data =
         current: null
         selected: null
         edit: (ev) ->
@@ -40,18 +40,13 @@ angular.module("horodata").controller("appWidgetsConfigurationTasksDialog", [
     $scope.errors = null
     $scope.loading = false
 
-    update = (t) ->
-      idx = _.findIndex($scope.group.tasks, {id: t.id})
-      $scope.group.tasks[idx] = $scope.tasks.current
-      $scope.group.tasks = _.sortBy($scope.group.tasks, ["name"])
-
     $scope.create = ->
       $scope.loading = true
-      $http.post("#{apiService.get()}/groups/#{$scope.group.url}/tasks", $scope.tasks.current).then(
+      $http.post("#{apiService.get()}/groups/#{$scope.group.url}/tasks", $scope.data.current).then(
         (resp) ->
           $scope.$emit("group.reload")
           $mdDialog.hide()
-          $mdToast.showSimple("Nouvelle tâche '#{$scope.tasks.current.name}' ajoutée")
+          $mdToast.showSimple("Nouvelle tâche '#{$scope.data.current.name}' ajoutée")
         (resp) ->
           $scope.loading = false
           $scope.errors = resp.data.errors
@@ -59,12 +54,12 @@ angular.module("horodata").controller("appWidgetsConfigurationTasksDialog", [
 
     $scope.edit = ->
       $scope.loading = true
-      $http.put("#{apiService.get()}/groups/#{$scope.group.url}/tasks/#{ $scope.tasks.selected }", $scope.tasks.current).then(
+      $http.put("#{apiService.get()}/groups/#{$scope.group.url}/tasks/#{ $scope.data.selected }", $scope.data.current).then(
         (resp) ->
           $mdDialog.hide()
-          $mdToast.showSimple("Tâche '#{$scope.tasks.current.name}' modifiée")
-          update($scope.tasks.current)
-          $scope.tasks.selected = null
+          $mdToast.showSimple("Tâche '#{$scope.data.current.name}' modifiée")
+          $scope.$emit("group.reload")
+          $scope.data.selected = null
         (resp) ->
           $scope.loading = false
           $scope.errors = resp.data.errors
@@ -72,17 +67,15 @@ angular.module("horodata").controller("appWidgetsConfigurationTasksDialog", [
 
     $scope.delete = ->
       $scope.loading = true
-      $http.delete("#{apiService.get()}/groups/#{$scope.group.url}/tasks/#{ $scope.tasks.selected }", $scope.tasks.current).then(
+      $http.delete("#{apiService.get()}/groups/#{$scope.group.url}/tasks/#{ $scope.data.selected }", $scope.data.current).then(
         (resp) ->
           $mdDialog.hide()
-          $mdToast.showSimple("Tâche '#{$scope.tasks.current.name}' supprimée")
-          $scope.group.tasks.splice(_.findIndex($scope.group.tasks, {id: parseInt $scope.tasks.selected}), 1)
-          $scope.tasks.selected = null
+          $mdToast.showSimple("Tâche '#{$scope.data.current.name}' supprimée")
+          $scope.$emit("group.reload")
+          $scope.data.selected = null
         (resp) ->
           $scope.loading = false
           $scope.errors = resp.data.errors
       )
-
-
 
 ])

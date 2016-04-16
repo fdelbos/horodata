@@ -10,7 +10,7 @@
         Tâches
       </div>
 
-      <md-button ng-click="tasks.create($event)" class="md-raised md-primary" hide show-gt-sm>
+      <md-button ng-click="data.create($event)" class="md-raised md-primary" hide show-gt-sm>
         <md-tooltip md-direction="top">
           Ajouter une nouvelle tâche
         </md-tooltip>
@@ -18,7 +18,7 @@
         Ajouter
       </md-button>
 
-      <md-button ng-click="tasks.create($event)" class="md-fab md-primary md-mini" hide-gt-sm aria-label="Ajouter une nouvelle tâche">
+      <md-button ng-click="data.create($event)" class="md-fab md-primary md-mini" hide-gt-sm aria-label="Ajouter une nouvelle tâche">
         <md-icon class="md-24">add</md-icon>
       </md-button>
     </div>
@@ -37,7 +37,7 @@
       <div layout="row" flex>
         <md-input-container flex>
           <label>Sélectionnez une tâche</label>
-          <md-select ng-model="tasks.selected">
+          <md-select ng-model="data.selected">
             <md-option ng-repeat="t in group.tasks" ng-if="t.active" value="{{ t.id }}">
               {{ t.name }}
               <small ng-if="t.comment_mandatory">(Commentaire obligatoire)</small>
@@ -45,7 +45,7 @@
           </md-select>
         </md-input-container>
 
-        <md-button ng-if="tasks.selected" ng-click="tasks.edit($event)" class="md-fab md-mini md-accent" aria-label="Editer une tâche">
+        <md-button ng-if="data.selected" ng-click="data.edit($event)" class="md-fab md-mini md-accent" aria-label="Editer une tâche">
           <md-tooltip md-direction="top">
             Modifier la tâche
           </md-tooltip>
