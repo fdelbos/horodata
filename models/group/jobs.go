@@ -86,13 +86,15 @@ func (g *Group) JobRemove(id int64) error {
 }
 
 type JobApi struct {
-	Id         int64     `json:"id"`
-	Created    time.Time `json:"created"`
-	TaskId     int64     `json:"task_id"`
-	CustomerId int64     `json:"customer_id"`
-	CreatorId  int64     `json:"creator_id"`
-	Duration   int64     `json:"duration"`
-	Comment    string    `json:"comment,omitempty"`
+	Id         int64      `json:"id"`
+	Created    time.Time  `json:"created"`
+	TaskId     int64      `json:"task_id"`
+	CustomerId int64      `json:"customer_id"`
+	CreatorId  int64      `json:"creator_id"`
+	Duration   int64      `json:"duration"`
+	Comment    string     `json:"comment,omitempty"`
+	Updated    *time.Time `json:"updated,omitempty"`
+	UpdaterId  *int64     `json:"updater_id,omitempty"`
 }
 
 func (j *JobApi) Scan(scanFn func(dest ...interface{}) error) error {
@@ -103,14 +105,16 @@ func (j *JobApi) Scan(scanFn func(dest ...interface{}) error) error {
 		&j.CustomerId,
 		&j.Duration,
 		&j.Comment,
-		&j.CreatorId)
+		&j.CreatorId,
+		&j.Updated,
+		&j.UpdaterId)
 }
 
 func (g *Group) JobApiGet(id int64) (*JobApi, error) {
 	j := &JobApi{}
 	const query = `
     select
-		id, created, task_id, customer_id, duration, comment, creator_id
+		id, created, task_id, customer_id, duration, comment, creator_id, updated, updater_id
     from
 		jobs
     where
@@ -168,7 +172,7 @@ func (g *Group) JobApiList(begin, end time.Time, customer, creator *int64, reque
 func jobApiGenQuery(customer, creator *int64) string {
 	const query = `
 	select
-		id, created, task_id, customer_id, duration, comment, creator_id
+		id, created, task_id, customer_id, duration, comment, creator_id, updated, updater_id
 	from jobs
 	where
 			group_id = $1

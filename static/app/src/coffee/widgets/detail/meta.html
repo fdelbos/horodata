@@ -2,17 +2,33 @@
   <div layout="row">
 
     <app-widgets-input-static-text
+      caption="Crée le"
+      text="{{ detailJob.created | Date }}">
+    </app-widgets-input-static-text>
+
+    <app-widgets-input-static-text
       ng-if="isAdmin"
       caption="Utilisateur"
       text="{{ guests[detailJob.creator_id].full_name }}"
       help="{{ guests[detailJob.creator_id].email }}">
     </app-widgets-input-static-text>
 
+  </div>
+
+  <div layout="row" ng-if="detailJob.updated">
 
     <app-widgets-input-static-text
-      caption="Crée le"
-      text="{{ detailJob.created | Date }}">
+      caption="Modifié le"
+      text="{{ detailJob.updated | Date }}">
+    </app-widgets-input-static-text>
+
+    <app-widgets-input-static-text
+      ng-if="isAdmin"
+      caption="Par"
+      text="{{ guests[detailJob.updater_id].full_name }}"
+      help="{{ guests[detailJob.updater_id].email }}">
     </app-widgets-input-static-text>
 
   </div>
+
 </div>

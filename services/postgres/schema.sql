@@ -237,5 +237,5 @@ create table jobs (
     duration bigint not null,
     comment text,
     updated timestamp,
-    updater_id bigint references users on delete restrict
+    updater_id bigint references guests on delete restrict
 );

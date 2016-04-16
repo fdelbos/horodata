@@ -3,13 +3,15 @@ angular.module("horodata").controller("detailDialog", [
   "$mdDialog",
   "$mdToast",
   "$http",
-  "$location",
   "apiService"
-  "groupService"
-  ($scope, $mdDialog, $mdToast, $http, $location, apiService, groupService)->
+  "listingService"
+  ($scope, $mdDialog, $mdToast, $http, apiService, listingService)->
     $scope.name = ""
     $scope.errors = null
     $scope.loading = false
+
+    $scope.deleteMode = false
+    $scope.toggleDeleteMode = -> $scope.deleteMode = !$scope.deleteMode
 
     $scope.canEdit = false
     if $scope.isAdmin then $scope.canEdit = true
@@ -24,17 +26,35 @@ angular.module("horodata").controller("detailDialog", [
 
     $scope.close = -> $mdDialog.hide()
 
-    $scope.send = ->
+    $scope.update = ->
       $scope.loading = true
-      $http.post("#{apiService.get()}/groups", {name: $scope.name}).then(
+
+      job =
+        duration:$scope.detailJob.hours * 3600 + $scope.detailJob.minutes * 60
+        task: parseInt $scope.detailJob.task_id
+        customer:  parseInt $scope.detailJob.customer_id
+        comment:  $scope.detailJob.comment
+
+      $http.put("#{apiService.get()}/groups/#{$scope.group.url}/jobs/#{$scope.detailJob.id}", job).then(
         (resp) ->
-          group = resp.data.data
           $mdDialog.hide()
-          $mdToast.showSimple("Nouveau groupe '#{group.name}' créé")
-          $location.path("/#{group.url}")
-          groupService.fetch()
+          $mdToast.showSimple("Saisie mise à jour")
+          listingService.get().reload()
         (resp) ->
           $scope.loading = false
           $scope.errors = resp.data.errors
       )
+
+    $scope.delete = ->
+      $scope.loading = true
+      $http.delete("#{apiService.get()}/groups/#{$scope.group.url}/jobs/#{$scope.detailJob.id}").then(
+        (resp) ->
+          $mdDialog.hide()
+          $mdToast.showSimple("Saisie supprimee")
+          listingService.get().reload()
+        (resp) ->
+          $scope.loading = false
+          $scope.errors = resp.data.errors
+      )
+
 ])

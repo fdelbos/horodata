@@ -2,20 +2,38 @@
 
   <form  name="editTaskForm">
 
-    <md-toolbar>
-      <div class="md-toolbar-tools">
-        <h2>Détail de la saisie</h2>
-        <span flex></span>
-        <md-button class="md-icon-button" aria-label="Fermer" ng-click="close()">
-          <md-icon class="md-24">close</md-icon>
-        </md-button>
-      </div>
-    </md-toolbar>
+    <app-widgets-common-dialog-toolbar warn="deleteMode">
+      <span ng-if="!deleteMode">Détail de la saisie</span>
+      <span ng-if="deleteMode">Effacer la saisie</span>
+    </app-widgets-common-dialog-toolbar>
 
-    <md-dialog-content>
+    <md-dialog-content ng-if="!deleteMode">
       <div class="md-dialog-content">
 
-        <div layout="column">
+        <div ng-if="!canEdit" layout="column">
+
+          <app-widgets-detail-meta></app-widgets-detail-meta>
+
+          <app-widgets-input-static-text caption="Dossier" text="{{ customers[detailJob.customer_id].name }}">
+          </app-widgets-input-static-text>
+
+          <div layout="row">
+            <app-widgets-input-static-text caption="Tâche" text="{{ tasks[detailJob.task_id].name }}">
+            </app-widgets-input-static-text>
+
+            <app-widgets-input-static-text caption="Durée" text="{{ detailJob.duration | Duration }}">
+            </app-widgets-input-static-text>
+          </div>
+
+          <app-widgets-input-static-text
+            ng-if="detailJob.comment"
+            caption="Commentaire"
+            text="{{ detailJob.comment }}">
+          </app-widgets-input-static-text>
+
+        </div>
+
+        <div ng-if="canEdit" layout="column">
 
           <app-widgets-detail-meta></app-widgets-detail-meta>
 
@@ -77,9 +95,32 @@
       </div>
     </md-dialog-content>
 
-    <app-widgets-common-dialog-actions>
-      <md-button ng-click="send()" ng-if="canEdit" class="md-primary md-raised">Editer</md-button>
-      <md-button ng-click="delete()" ng-if="canEdit" class="md-raised md-warn">Supprimer</md-button>
+    <md-dialog-content ng-if="deleteMode">
+      <div class="md-dialog-content">
+        <div layout="column" layout-align="center center" flex>
+          <span class="md-headline input-error">Etes-vous sûr de supprimer cette saisie ?</span>
+          <br>
+          <br>
+          <span>
+            Elle sera definitivement effacee.
+          </span>
+        </div>
+      </div>
+    </md-dialog-content>
+
+    <app-widgets-common-dialog-actions ng-if="canEdit && !deleteMode" close="Annuler">
+      <md-button ng-click="update()" class="md-primary md-raised">Editer</md-button>
+      <md-button ng-click="toggleDeleteMode()" class="md-raised md-warn">Supprimer</md-button>
+    </app-widgets-common-dialog-actions>
+
+    <md-dialog-actions ng-if="canEdit && deleteMode">
+      <md-button ng-if="!loading" ng-click="delete()" class="md-raised md-warn">Supprimer</md-button>
+      <md-button ng-if="!loading" ng-click="toggleDeleteMode()" class="md-raised" aria-label="Annuler">Annuler</md-button>
+      <md-progress-linear ng-if="loading" md-mode="indeterminate"></md-progress-linear>
+    </md-dialog-actions>
+
+
+    <app-widgets-common-dialog-actions ng-if="!canEdit" close="Fermer">
     </app-widgets-common-dialog-actions>
 
   </form>
