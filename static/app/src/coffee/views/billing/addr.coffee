@@ -6,14 +6,19 @@ angular.module("horodata").directive("billingAddr", [
 
     l = (scope, elem, attr) ->
 
+      scope.addr =
+        current: null
+        edit: null
+
       scope.editAddr = (ev)->
+        if !scope.addr.current?
+           scope.addr.edit = {}
+        else
+          scope.addr.edit = _.cloneDeep(scope.addr.current)
         popupService(
           "horodata/views/billing/addr_edit.html",
           "BillingAddrEdit"
           scope, ev)
-
-      scope.addr =
-        current: null
 
       get = ->
         scope.loading = true
@@ -45,10 +50,11 @@ angular.module("horodata").controller("BillingAddrEdit", [
   "groupService"
   ($scope, $mdDialog, $mdToast, $http, $location, apiService, groupService)->
     $scope.loading = false
+    $scope.errors = null
 
     $scope.update = ->
       $scope.loading = true
-      $http.post("#{apiService.get()}/billing/address", $scope.addr.current).then(
+      $http.post("#{apiService.get()}/billing/address", $scope.addr.edit).then(
         (resp) ->
           $mdDialog.hide()
           $mdToast.showSimple("Nouvelle adresse enregistree.")

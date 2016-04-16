@@ -9,66 +9,74 @@
       <div class="md-dialog-content">
 
         <div layout-xs="column" layout="row">
-          <md-input-container flex-xs flex-gt-xs="50" class="md-block"  ng-class="{'md-input-invalid': errors.name}" >
-            <label>Nom</label>
-            <input type="text" md-maxlength="50" ng-model="addr.current.name">
-            <small ng-if="errors.name" class="input-error">{{ errors.name }}</small>
-          </md-input-container>
 
-          <md-input-container flex-xs flex-gt-xs="50" class="md-block"  ng-class="{'md-input-invalid': errors.email}" >
-            <label>
-              Email
-              <span class="md-caption">&nbsp;(destinataire des factures)</span>
-            </label>
-            <input type="text" md-maxlength="100" ng-model="addr.current.email">
-            <small ng-if="errors.email" class="input-error">{{ errors.email }}</small>
-          </md-input-container>
+          <app-widgets-input-text
+            flex-xs flex-gt-xs="50"
+            caption="Nom"
+            value="addr.edit.name"
+            error="errors.name">
+          </app-widgets-input-text>
+
+          <app-widgets-input-text
+            flex-xs flex-gt-xs="50"
+            caption="Email"
+            sub-caption="(destinataire des factures)"
+            value="addr.edit.email"
+            error="errors.email">
+          </app-widgets-input-text>
+
         </div>
 
         <div layout-xs="column" layout="row">
-          <md-input-container flex="70" flex-xs="100" class="md-block"  ng-class="{'md-input-invalid': errors.company}" >
-            <label>
-              Raison sociale
-              <span class="md-caption">&nbsp;(si applicable)</span>
-            </label>
-            <input type="text" md-maxlength="100" ng-model="addr.current.company">
-            <small ng-if="errors.company" class="input-error">{{ errors.company }}</small>
-          </md-input-container>
 
-          <md-input-container flex="30" flex-xs="100" class="md-block"  ng-class="{'md-input-invalid': errors.vat}" >
-            <label>
-              TVA
-              <span class="md-caption">&nbsp;(si applicable)</span>
-            </label>
-            <input type="text" md-maxlength="25" ng-model="addr.current.vat">
-            <small ng-if="errors.vat" class="input-error">{{ errors.vat }}</small>
-          </md-input-container>
+          <app-widgets-input-text
+            flex="70" flex-xs="100"
+            caption="Raison sociale"
+            sub-caption="(si applicable)"
+            value="addr.edit.company"
+            error="errors.company">
+          </app-widgets-input-text>
+
+          <app-widgets-input-text
+            flex="30" flex-xs="100"
+            caption="TVA"
+            sub-caption="(si applicable)"
+            value="addr.edit.vat"
+            error="errors.vat">
+          </app-widgets-input-text>
+
         </div>
 
-        <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.addr1}" >
-          <label>Adresse (première ligne)</label>
-          <input type="text" md-maxlength="150" ng-model="addr.current.addr1">
-          <small ng-if="errors.addr1" class="input-error">{{ errors.addr1 }}</small>
-        </md-input-container>
+        <app-widgets-input-text
+          caption="Adresse"
+          sub-caption="(première ligne)"
+          value="addr.edit.addr1"
+          error="errors.addr1">
+        </app-widgets-input-text>
 
-        <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.addr2}" >
-          <label>Adresse (seconde ligne)</label>
-          <input type="text" md-maxlength="150" ng-model="addr.current.addr2">
-          <small ng-if="errors.addr2" class="input-error">{{ errors.addr2 }}</small>
-        </md-input-container>
+        <app-widgets-input-text
+          caption="Adresse"
+          sub-caption="(seconde ligne)"
+          value="addr.edit.addr2"
+          error="errors.addr2">
+        </app-widgets-input-text>
 
         <div layout-xs="column" layout="row">
-          <md-input-container flex-xs flex-gt-xs="70" class="md-block"  ng-class="{'md-input-invalid': errors.city}" >
-            <label>Ville</label>
-            <input type="text" md-maxlength="100" ng-model="addr.current.city">
-            <small ng-if="errors.city" class="input-error">{{ errors.city }}</small>
-          </md-input-container>
 
-          <md-input-container flex-xs flex-gt-xs="30" class="md-block"  ng-class="{'md-input-invalid': errors.zip}" >
-            <label>Code Postal</label>
-            <input type="text" md-maxlength="6" ng-model="addr.current.zip">
-            <small ng-if="errors.zip" class="input-error">{{ errors.zip }}</small>
-          </md-input-container>
+          <app-widgets-input-text
+            flex-xs flex-gt-xs="70"
+            caption="Ville"
+            value="addr.edit.city"
+            error="errors.city">
+          </app-widgets-input-text>
+
+          <app-widgets-input-text
+            flex-xs flex-gt-xs="30"
+            caption="Code Postal"
+            value="addr.edit.zip"
+            error="errors.zip">
+          </app-widgets-input-text>
+
         </div>
 
         <div layout-align="center center" layout="column">

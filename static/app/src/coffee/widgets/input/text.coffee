@@ -5,6 +5,7 @@ angular.module("horodata").directive("appWidgetsInputText", [
         value: "="
         error: "="
         caption: "@"
+        subCaption: "@"
         help: "@"
       replace: true
       restrict: "E"

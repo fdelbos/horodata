@@ -9,17 +9,22 @@
       <div class="md-dialog-content">
 
         <div layout-xs="column" layout="row">
-          <md-input-container flex-xs flex-gt-xs="80" class="md-block"  ng-class="{'md-input-invalid': errors.number}" >
-            <label>Numéro de carte</label>
-            <input type="text" md-maxlength="20" ng-model="card.new.number">
-            <small ng-if="errors.number" class="input-error">{{ errors.number }}</small>
-          </md-input-container>
 
-          <md-input-container flex-xs flex-gt-xs="20" class="md-block"  ng-class="{'md-input-invalid': errors.cvc}" >
-            <label>CVC</label>
-            <input type="text" md-maxlength="4" ng-model="card.new.cvc">
-            <small ng-if="errors.cvc" class="input-error">{{ errors.cvc }}</small>
-          </md-input-container>
+          <app-widgets-input-text
+            flex-xs flex-gt-xs="70"
+            caption="Numéro de carte"
+            value="card.new.number"
+            error="errors.number">
+          </app-widgets-input-text>
+
+          <app-widgets-input-text
+            flex-xs flex-gt-xs="30"
+            caption="CVC"
+            sub-caption="(au dos de la carte)"
+            value="card.new.cvc"
+            error="errors.cvc">
+          </app-widgets-input-text>
+
         </div>
 
         <div layout-xs="column" layout="row">
