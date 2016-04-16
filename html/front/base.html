@@ -29,12 +29,14 @@
   <script type="text/javascript" src="{{ ctx.StaticRoot }}/bower_components/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="{{ ctx.StaticRoot }}/bower_components/Materialize/dist/js/materialize.min.js"></script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
+  
   <script>
   $(document).ready(function(){
       $(".button-collapse").sideNav();
   });
   </script>
+
+  {% include "front/cookies.html" %}
 
 </body>
 </html>

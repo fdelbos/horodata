@@ -1,0 +1,23 @@
+<script type="text/javascript" src="{{ ctx.StaticRoot }}/bower_components/cookieconsent2/build/cookieconsent.min.js"></script>
+
+<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
+<script type="text/javascript">
+    window.cookieconsent_options = {
+      message:"Ce site internet utilise des cookies pour une meilleure experience utilisateur.",
+      dismiss:"Ok !",
+      learnMore:null,
+      link:null,
+      theme:"{{ ctx.StaticRoot }}/bower_components/cookieconsent2/build/light-floating.css",
+
+      {% verbatim %}
+      markup:[
+        '<div class="cc_banner-wrapper {{containerClasses}}">',
+        '<div class="cc_banner cc_container cc_container--open">',
+        '<a href="#null" data-cc-event="click:dismiss" target="_blank" class="cc_btn cc_btn_accept_all">{{options.dismiss}}</a>',
+        '<p class="cc_message">{{options.message}} <a data-cc-if="options.link" target="{{ options.target }}" class="cc_more_info" href="{{options.link || "#null"}}">{{options.learnMore}}</a></p>',
+        '</div>',
+        '</div>'
+      ]
+      {% endverbatim %}
+    };
+</script>
