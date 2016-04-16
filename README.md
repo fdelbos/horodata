@@ -10,7 +10,6 @@
 * Facturation et plans
 * Ajouter "Profil" dans menu + options photo et changement nom
 * Pb affichage Internet Explorer (dossiers et types crées non-affichés)
-* zopim
 * google analytics
 * cookies cnil
 * supprimer un job / editer avec task ou customer innactif + verifier disparu et empty message
@@ -23,6 +22,7 @@
 * verifier proprietaire dans messages Quotas
 
 ## Later:
+* zopim
 * force mdp : https://github.com/dropbox/zxcvbn + captcha si + 10 dans la journee.
 * push (ajout tâche à la liste & notif lors de création de tâche par un collaborateur)
 * Rapports / mail ?

@@ -43,63 +43,41 @@
       <div ng-if="addr.current" layout="column">
 
         <div layout-xs="column" layout="row">
-          <div layout="column" flex>
-            <span class="md-caption text-grey">Nom Complet</span>
-            <div>{{ addr.current.name }}</div>
-          </div>
-
+          <app-widgets-input-static-text caption="Nom Complet" text="{{ addr.current.name }}">
+          </app-widgets-input-static-text>
           <br hide show-xs>
-
-          <div layout="column" flex>
-            <span class="md-caption text-grey">Email (destinataire des factures)</span>
-            <div>{{ addr.current.email }}</div>
-          </div>
+          <app-widgets-input-static-text caption="Email (destinataire des factures)" text="{{  addr.current.email }}">
+          </app-widgets-input-static-text>
         </div>
 
         <br ng-if="addr.current.company || addr.current.vat">
 
         <div layout-xs="column" layout="row">
-          <div layout="column" ng-if="addr.current.company" flex>
-            <span class="md-caption text-grey">Raison sociale</span>
-            <div>{{ addr.current.company }}</div>
-          </div>
-
+          <app-widgets-input-static-text ng-if="addr.current.company" caption="Raison sociale" text="{{  addr.current.company }}">
+          </app-widgets-input-static-text>
           <br ng-if="addr.current.var" hide show-xs>
-
-          <div layout="column" ng-if="addr.current.vat" flex>
-            <span class="md-caption text-grey">TVA</span>
-            <div>{{ addr.current.vat }}</div>
-          </div>
+          <app-widgets-input-static-text ng-if="addr.current.vat" caption="TVA" text="{{  addr.current.vat }}">
+          </app-widgets-input-static-text>
         </div>
 
         <br>
 
-        <div layout="column" flex>
-          <span class="md-caption text-grey">Adresse (première ligne)</span>
-          <div>{{ addr.current.addr1 }}</div>
-        </div>
+        <app-widgets-input-static-text caption="Adresse (première ligne)" text="{{  addr.current.addr1 }}">
+        </app-widgets-input-static-text>
 
         <br ng-if="addr.current.addr2">
 
-        <div layout="column" ng-if="addr.current.addr2" flex>
-          <span class="md-caption text-grey">Adresse (seconde ligne)</span>
-          <div>{{ addr.current.addr2 }}</div>
-        </div>
+        <app-widgets-input-static-text ng-if="addr.current.addr2" caption="Adresse (seconde ligne)" text="{{  addr.current.addr2 }}">
+        </app-widgets-input-static-text>
 
         <br>
 
         <div layout-xs="column" layout="row">
-          <div layout="column" flex>
-            <span class="md-caption text-grey">Ville</span>
-            <div>{{ addr.current.city }}</div>
-          </div>
-
+          <app-widgets-input-static-text caption="Ville" text="{{  addr.current.city }}">
+          </app-widgets-input-static-text>
           <br hide show-xs>
-
-          <div layout="column" flex>
-            <span class="md-caption text-grey">Code postal</span>
-            <div>{{ addr.current.zip }}</div>
-          </div>
+          <app-widgets-input-static-text caption="Code postal" text="{{  addr.current.zip }}">
+          </app-widgets-input-static-text>
         </div>
 
       </div>

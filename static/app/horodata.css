@@ -34,7 +34,7 @@ md-sidenav {
   color: #ff4081;
 }
 .text-grey {
-  color: #777;
+  color: rgba(0, 0, 0, 0.54);
 }
 .input-hint {
   position: absolute;
@@ -127,4 +127,8 @@ md-input-container textarea[md-no-autogrow].md-input {
 .listing-row .date {
   font-weight: 400;
   font-size: 0.9em;
+}
+.static-input {
+  padding-bottom: 18px;
+  padding-top: 7px;
 }

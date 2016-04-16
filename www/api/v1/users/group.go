@@ -1,7 +1,9 @@
 package users
 
 import (
+	"encoding/json"
 	"net/http"
+	"strings"
 
 	"dev.hyperboloide.com/fred/horodata/middlewares"
 	"dev.hyperboloide.com/fred/horodata/models/user"
@@ -12,14 +14,47 @@ import (
 func Group(r *gin.RouterGroup) {
 	users := r.Group("/users")
 	{
-		users.GET("/me", Me)
+		users.GET("/me", Get)
+		users.PUT("/me", Update)
 		users.GET("/me/quotas", Quota)
 	}
 }
 
-func Me(c *gin.Context) {
+func Get(c *gin.Context) {
 	u := middlewares.GetUser(c)
 	jsend.Success(c, http.StatusOK, u)
+}
+
+func Update(c *gin.Context) {
+	u := middlewares.GetUser(c)
+
+	var data struct {
+		Name string `json:"name"`
+	}
+	if err := json.NewDecoder(c.Request.Body).Decode(&data); err != nil {
+		jsend.ErrorJson(c)
+		return
+	}
+
+	errors := map[string]string{}
+	data.Name = strings.TrimSpace(data.Name)
+	if data.Name == "" {
+		errors["name"] = "Ce champ est obligatoire."
+	} else if len(data.Name) < 4 {
+		errors["name"] = "Ce champ doit faire au moins 4 caractères."
+	} else if len(data.Name) > 50 {
+		errors["name"] = "Ce champ ne doit pas dépasser 50 caractères."
+	} else {
+		u.FullName = data.Name
+	}
+
+	if len(errors) > 0 {
+		jsend.BadRequest(c, errors)
+	} else if err := u.Update(); err != nil {
+		jsend.Error(c, err)
+	} else {
+		jsend.Ok(c, nil)
+	}
 }
 
 func Quota(c *gin.Context) {

@@ -42,24 +42,14 @@
 
       <div ng-if="card.current" layout="column">
 
-        <div layout="column" flex>
-          <span class="md-caption text-grey">Marque</span>
-          <div>{{ card.current.brand }}</div>
-        </div>
+        <app-widgets-input-static-text caption="Marque" text="{{  card.current.brand }}">
+        </app-widgets-input-static-text>
 
-        <br>
+        <app-widgets-input-static-text caption="Numéro" text="#### #### #### {{ card.current.last4 }}">
+        </app-widgets-input-static-text>
 
-        <div layout="column" flex>
-          <span class="md-caption text-grey">Numéro</span>
-          <div>#### #### #### {{ card.current.last4 }}</div>
-        </div>
-
-        <br>
-
-        <div layout="column" flex>
-          <span class="md-caption text-grey">Expiration</span>
-          <div>{{ card.current.expiration | Month }}</div>
-        </div>
+        <app-widgets-input-static-text caption="Expiration" text="{{ card.current.expiration | Month }}">
+        </app-widgets-input-static-text>
 
       </div>
 

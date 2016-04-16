@@ -1,0 +1,5 @@
+<md-input-container class="md-block" ng-class="{'md-input-invalid': error}" >
+  <label>{{ caption }}</label>
+  <input type="text" ng-model="value">
+  <small ng-if="error" class="input-error">{{ error }}</small>
+</md-input-container>

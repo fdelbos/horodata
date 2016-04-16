@@ -57,10 +57,13 @@ func (u *User) SendWelcome() error {
 
 func (u *User) Update() error {
 	const query = `
-	update guests
+	update users
 	set active = $2, full_name = $3
 	where id = $1;`
-	return postgres.Exec(query, u.Id, u.Active, u.FullName)
+	if err := postgres.Exec(query, u.Id, u.Active, u.FullName); err != nil {
+		return err
+	}
+	return u.removeFromCache()
 }
 
 func (u *User) Insert() error {

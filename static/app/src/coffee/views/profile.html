@@ -9,16 +9,9 @@
 
         <div layout="column">
 
-          <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.email}" >
-            <label>Nom complet</label>
-            <input type="text" md-maxlength="50" ng-model="name">
-            <small ng-if="errors.email" class="input-error">{{ errors.email }}</small>
-          </md-input-container>
+          <app-widgets-input-text caption="Nom complet" error="errors.name" value="name"></app-widgets-input-text>
 
-          <div layout="column" flex>
-            <span class="md-caption">Email</span>
-            <div>{{ user.email }}</div>
-          </div>
+          <app-widgets-input-static-text caption="Email" text="{{ user.email }}"></app-widgets-input-static-text>
 
           <br>
 
@@ -27,7 +20,7 @@
     </md-dialog-content>
 
     <app-widgets-common-dialog-actions>
-      <md-button ng-click="send()" class="md-primary md-raised">Modifier</md-button>
+      <md-button ng-click="update()" class="md-primary md-raised">Modifier</md-button>
     </app-widgets-common-dialog-actions>
 
   </form>

@@ -25,7 +25,7 @@ angular.module("horodata").directive("appMenuSidenav", [
         scope.closeSidenav()
         $location.path(url)
 
-      scope.$on("$routeChangeSuccess", ->
+      scope.$on("$routeChangeStart", ->
         scope.currentGroupUrl = $routeParams.group
         scope.closeSidenav()
       )

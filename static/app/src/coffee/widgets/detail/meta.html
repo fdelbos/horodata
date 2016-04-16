@@ -1,21 +1,18 @@
 <div>
   <div layout="row">
 
-    <div ng-if="isAdmin" layout="column" flex>
-      <span class="md-caption text-grey">Utilisateur</span>
-      <div>{{ guests[detailJob.creator_id].full_name }}</div>
-      <span class="md-body-1 text-grey">{{ guests[detailJob.creator_id].email }}</span>
-    </div>
+    <app-widgets-input-static-text
+      ng-if="isAdmin"
+      caption="Utilisateur"
+      text="{{ guests[detailJob.creator_id].full_name }}"
+      help="{{ guests[detailJob.creator_id].email }}">
+    </app-widgets-input-static-text>
 
-    <div layout="column" flex>
-      <span class="md-caption text-grey">Crée le</span>
-      <div>{{ detailJob.created | Date }}</div>
-    </div>
 
-    <br>
-    <br>
-    <br>
-    <br>
+    <app-widgets-input-static-text
+      caption="Crée le"
+      text="{{ detailJob.created | Date }}">
+    </app-widgets-input-static-text>
 
   </div>
 </div>
