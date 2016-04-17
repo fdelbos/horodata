@@ -1,45 +1,47 @@
 <div>
 
-
-  <billing-addr></billing-addr>
-  <md-divider></md-divider>
-
-  <billing-card></billing-card>
-  <md-divider></md-divider>
-
   <app-widgets-common-loading ng-if="loading"></app-widgets-common-loading>
 
-  <div ng-if="!loading" flex-md="70" flex-gt-md="60" layout-padding>
+  <div ng-if="!loading" layout="column">
 
-    <div layout="row">
-      <div layout="row" layout-align="center center" hide show-gt-sm>
-        <md-icon class="md-36 md-accent">euro_symbol</md-icon>&nbsp;
-        <span class="md-display-1">Plans</span>
+    <billing-addr></billing-addr>
+    <md-divider></md-divider>
+
+    <billing-card></billing-card>
+    <md-divider></md-divider>
+
+    <div ng-if="!loading" layout="column" flex flex-md="70" flex-gt-md="60" layout-padding>
+
+      <div layout="row">
+        <div layout="row" layout-align="center center" hide show-gt-sm>
+          <md-icon class="md-36 md-accent">euro_symbol</md-icon>&nbsp;
+          <span class="md-display-1">Plans</span>
+        </div>
+
+        <div layout="row" layout-align="center center" hide-gt-sm>
+          <md-icon class="md-accent">euro_symbol</md-icon>&nbsp;
+          <span class="md-headline">Plans<span>
+        </div>
       </div>
 
-      <div layout="row" layout-align="center center" hide-gt-sm>
-        <md-icon class="md-accent">euro_symbol</md-icon>&nbsp;
-        <span class="md-headline">Plans<span>
-      </div>
+      <p class="md-body-1">
+        Tous nos plans sont sans engagement de durée.
+      </p>
+
+      <md-content class="md-padding" layout-xs="column" layout="row" flex>
+        <div layout="column" flex flex-md="35" flex-gt-md="30">
+          <billing-plan plan="plans.free" current="plans.current" end="plans.end"></billing-plan>
+          <billing-plan plan="plans.medium" current="plans.current" end="plans.end"></billing-plan>
+        </div>
+        <div layout="column" flex flex-md="35" flex-gt-md="30">
+          <billing-plan plan="plans.small" current="plans.current" end="plans.end"></billing-plan>
+          <billing-plan plan="plans.large" current="plans.current" end="plans.end"></billing-plan>
+        </div>
+      </md-content>
     </div>
 
-    <p class="md-body-1">
-      Tous nos plans sont sans engagement de durée.
-    </p>
-
-    <md-content class="md-padding" layout-xs="column" layout="row" >
-      <div flex-xs flex-gt-xs="50" layout="column">
-        <billing-plan plan="plans.free" current="plans.current"></billing-plan>
-        <billing-plan plan="plans.medium" current="plans.current"></billing-plan>
-      </div>
-      <div flex-xs flex-gt-xs="50" layout="column">
-        <billing-plan plan="plans.small" current="plans.current"></billing-plan>
-        <billing-plan plan="plans.large" current="plans.current"></billing-plan>
-      </div>
-    </md-content>
+    <md-divider></md-divider>
+    <billing-invoices></billing-invoices>
   </div>
-
-  <md-divider></md-divider>
-  <billing-invoices></billing-invoices>
 
 </div>

@@ -1,4 +1,4 @@
-<md-dialog aria-label="Changer de plan" flex="50">
+<md-dialog aria-label="Changer de plan" flex="60">
   <form name="planChange">
 
     <app-widgets-common-dialog-toolbar>
@@ -11,36 +11,52 @@
         <app-widgets-common-loading ng-if="preLoading"></app-widgets-common-loading>
         <billing-plan-not-ready ng-if="!preLoading && !ready"></billing-plan-not-ready>
 
-        <div ng-if="!preLoading && ready && !done">
+        <div ng-if="!preLoading && ready && !done" layout="column" layout-gt-md="row">
 
-          <div ng-if="plan.code !='free'" layout="column">
-            <h3 class="md-headline">
-              Plan selectionné : <span class="text-accent">{{ plan.name }}</span>
-            </h3>
-            <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.accept}" >
+          <billing-plan plan="plan" flex flex-gt-md="40" flex-sm="40" recap="true"></billing-plan>
+
+          <div ng-if="plan.code !='free'" flex flex-gt-md="60" layout="column">
+
+            <div layout-align="center center" layout="row">
+              <h3 class="md-headline">
+                Plan selectionné : <span class="text-accent">{{ plan.name }}</span>
+              </h3>
+            </div>
+
+
+            <div layout-align="center center" layout="column">
+            <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.accept}">
               <md-switch ng-model="form.accept" aria-label="J'ai lu et j'accepte les conditions generales de ventes">
-                J'ai lu et j'accepte les
-                <a href="/static/docs/cgv.pdf" target="_blank">
-                  conditions générales de vente
-                  <md-icon class="md-18">open_in_new</md-icon>
-                </a>
+                <p class="md-body-1">
+                  J'ai lu et j'accepte les
+                  <br>
+                  <a href="/static/docs/cgv.pdf" target="_blank">
+                    conditions générales de vente
+                    <md-icon class="md-18">open_in_new</md-icon>
+                  </a>
+                </p>
               </md-switch>
               <small ng-if="errors.accept" class="input-error">{{ errors.accept }}</small>
             </md-input-container>
-            <p>
-              Votre nouveau plan sera effectif immédiatement.
-            </p>
+
+            <div layout-align="center center" layout="row">
+              <span class="md-caption text-grey">
+                Votre nouveau plan sera effectif immédiatement.
+              </span>
+            </div>
           </div>
 
-          <div ng-if="plan.code =='free'" layout="column">
+          </div>
+
+          <div ng-if="plan.code =='free'" flex flex-gt-md="60" layout="column">
             <h3 class="md-headline">
               Souhaitez-vous vraiment revenir au plan gratuit ?
             </h3>
-            <p>
+            <p class="md-body-1">
               Votre carte de crédit ne sera plus débitée mais vous ne serez pas remboursé du mois en cours.
-            </p>
-            <p>
-              Vos quotas seront mis à jour le {{ period.end | Day }}, date de résiliation effective.
+              <br>
+              <br>
+              Vos quotas seront mis à jour le <strong>{{ period.end | Day }}</strong>, date de résiliation effective.
             </p>
           </div>
 
@@ -59,9 +75,12 @@
       </div>
     </md-dialog-content>
 
-    <app-widgets-common-dialog-actions ng-if="!preLoading">
+    <app-widgets-common-dialog-actions ng-if="!done" ng-if="!preLoading">
       <md-button ng-if="ready && !done" ng-click="validate()" class="md-primary md-raised">Valider</md-button>
     </app-widgets-common-dialog-actions>
+
+    <app-widgets-common-dialog-actions ng-if="done" close="Fermer"></app-widgets-common-dialog-actions>
+
 
   </form>
 </md-dialog>

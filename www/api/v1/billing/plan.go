@@ -63,12 +63,17 @@ func ChangePlan(c *gin.Context) {
 func GetPlan(c *gin.Context) {
 	u := middlewares.GetUser(c)
 
-	if q, err := u.Quotas(); err != nil {
+	if s, err := billing.SubscriptionByUserId(u.Id); err == errors.NotFound {
+		jsend.Ok(c, struct {
+			Plan string `json:"plan"`
+		}{"free"})
+	} else if err != nil {
 		jsend.Error(c, err)
 	} else {
 		jsend.Ok(c, struct {
-			Plan string `json:"plan"`
-		}{q.Plan})
+			Plan string     `json:"plan"`
+			End  *time.Time `json:"end,omitempty"`
+		}{s.Plan, s.End})
 	}
 }
 

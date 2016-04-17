@@ -1,11 +1,21 @@
 <md-card>
 
   <md-card-content>
-    <span class="md-headline">
+    <span class="md-headline" layout="row">
       {{ plan.name }}
-      <span ng-if="current == plan.code" class="md-body-1 text-accent">(Plan courant)</span>
     </span>
-    <br>
+    <div class="md-caption text-accent">
+      <span ng-if="current == plan.code && !end && !recap">
+        (Plan courant)
+      </span>
+      <span ng-if="current == plan.code && end && !recap">
+        (jusqu'au {{ end | Day }})
+      </span>
+      <span ng-if="plan.code == 'free' && end && !recap">
+        (Plan effectif le {{ end | Day }})
+      </span>
+      &nbsp;
+    </div>
     <br>
     <div>
 
@@ -23,19 +33,47 @@
 
       <md-divider></md-divider>
       <div layout-align="space-between center" layout="row">
-        <span class="md-body-1">Saisies (par jour)</span>
+        <span class="md-body-1">
+          Saisies
+          <span class="md-caption text-grey">(par jour)</span>
+        </span>
         <span class="md-body-2">{{ plan.jobs }}</span>
       </div>
 
 
       <br>
 
-      <div ng-if="plan.price != 0" layout="column" layout-align="center center">
+      <div ng-if="plan.price != 0 && !recap" layout="column" layout-align="center center">
         <div layout-align="center center" layout="row">
           <span class="md-display-1">{{ plan.price }} &euro;</span>
           <span class="text-grey">&nbsp; / mois</span>
         </div>
         <span class="md-caption text-grey">hors taxes</span>
+      </div>
+
+      <div ng-if="plan.price != 0 && recap" layout="column" >
+
+        <md-divider></md-divider>
+        <div layout-align="space-between center" layout="row">
+          <span class="md-body-1">Prix HT</span>
+          <span class="md-body-2">
+            {{ plan.price }} &euro;
+            <span class="md-caption text-grey">/ mois</span>
+          </span>
+        </div>
+
+        <md-divider></md-divider>
+        <div layout-align="space-between center" layout="row">
+          <span class="md-body-1">
+            Prix TTC
+            <span class="md-caption text-grey">(TVA: 20%)</span>
+          </span>
+          <span class="md-body-2">
+            {{ plan.priceTTC }} &euro;
+            <span class="md-caption text-grey">/ mois</span>
+          </span>
+        </div>
+
       </div>
 
       <div ng-if="plan.price == 0" layout="column" layout-align="center center">
@@ -48,7 +86,7 @@
 
     </div>
   </md-card-content>
-  <md-card-actions layout="row" layout-align="end center">
+  <md-card-actions ng-if="!recap && !end" layout="row" layout-align="end center">
 
     <md-button ng-if="current != plan.code" ng-click="select($event)" hide show-gt-sm class="md-raised md-primary">
       <md-icon>check</md-icon>
@@ -58,6 +96,7 @@
     <md-button ng-if="current != plan.code" ng-click="select($event)" hide-gt-sm class="md-fab md-primary">
       <md-icon>check</md-icon>
     </md-button>
+
 
     <md-button ng-if="current == plan.code" hide show-gt-sm class="md-raised" ng-disabled="true">
       <md-icon>check</md-icon>
@@ -69,4 +108,28 @@
     </md-button>
 
   </md-card-actions>
+
+  <md-card-actions ng-if="!recap && end" layout="row" layout-align="end center">
+
+    <md-button ng-if="plan.code != 'free'" ng-click="select($event)" hide show-gt-sm class="md-raised md-primary">
+      <md-icon>check</md-icon>
+      Selectionner
+    </md-button>
+
+    <md-button ng-if="plan.code != 'free'" ng-click="select($event)" hide-gt-sm class="md-fab md-primary">
+      <md-icon>check</md-icon>
+    </md-button>
+
+
+    <md-button ng-if="plan.code == 'free'" hide show-gt-sm class="md-raised" ng-disabled="true">
+      <md-icon>check</md-icon>
+      Plan courant
+    </md-button>
+
+    <md-button ng-if="plan.code == 'free'" hide-gt-sm class="md-fab md-primary" ng-disabled="true">
+      <md-icon>check</md-icon>
+    </md-button>
+
+  </md-card-actions>
+
 </md-card>

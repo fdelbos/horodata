@@ -15,6 +15,8 @@ angular.module("horodata").directive("billingPlan", [
       scope:
         plan: "="
         current: "="
+        recap: "="
+        end: "="
       restrict: "E"
       templateUrl: "horodata/views/billing/plan.html"
     }
@@ -103,7 +105,9 @@ angular.module("horodata").controller("BillingPlanChange", [
         (resp) ->
           $scope.loading = false
           $scope.done = true
-          if $scope.plan.code != "free" then $scope.current = $scope.plan.code
+          $mdToast.showSimple("Abonnement mis a jour")
+          # if $scope.plan.code != "free" then $scope.current = $scope.plan.code
+          $scope.$emit("plan.reload")
         (resp) ->
           $scope.loading = false
       )
