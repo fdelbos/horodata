@@ -3,11 +3,9 @@
 
 ## Todo:
 * sur la facture faire "plan horodata 10 utilisateurs"
-* afficher tarrif ttc dans recap changement de plan
 * Désactiver les tool-tips
 * Message dans zone blanche page d'accueil "Sélectionnez ou créez un groupe" /Différent PC et mobile ?
 * Statistiques
-* Facturation et plans
 * Ajouter "Profil" dans menu + options photo et changement nom
 * Pb affichage Internet Explorer (dossiers et types crées non-affichés)
 * google analytics

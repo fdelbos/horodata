@@ -2,9 +2,14 @@ package billing
 
 import (
 	"fmt"
+	"io"
+	"log"
+	"os"
+	"path"
 	"time"
 
 	"dev.hyperboloide.com/fred/horodata/services/postgres"
+	"github.com/spf13/viper"
 	"github.com/stripe/stripe-go"
 	"github.com/stripe/stripe-go/invoice"
 )
@@ -82,6 +87,19 @@ func (i *Invoice) MarkAsSent() error {
 
 func (i *Invoice) FileId() string {
 	return fmt.Sprintf("HD-%06d", i.Id)
+}
+
+func (i *Invoice) Write(w io.Writer) error {
+	filename := path.Join(viper.GetString("invoicing_output"), i.FileId()+".pdf")
+	log.Print(filename)
+	r, err := os.Open(filename)
+	if err != nil {
+		return err
+	}
+	defer r.Close()
+
+	_, err = io.Copy(w, r)
+	return err
 }
 
 func (i *Invoice) Address() (*Address, error) {

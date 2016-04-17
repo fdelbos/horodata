@@ -180,6 +180,13 @@ func init() {
 	viper.BindEnv("export_service")
 	viper.SetDefault("export_service", "http://localhost:5000")
 
+	//
+	// Invoicing
+	//
+
+	viper.BindEnv("invoicing_output")
+	viper.SetDefault("invoicing_output", "/tmp/invoices.horodata/")
+
 }
 
 func Configure() {

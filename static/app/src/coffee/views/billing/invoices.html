@@ -1,0 +1,43 @@
+<div  layout-padding>
+
+  <div layout="column" flex-md="70" flex-gt-md="60">
+
+    <div layout="row" layout-align="space-between center">
+
+      <div layout="row" layout-align="center center" hide show-gt-sm>
+        <md-icon class="md-36 md-accent">folder</md-icon>&nbsp;
+        <span class="md-display-1">Factures</span>
+      </div>
+
+      <div layout="row" layout-align="center center" hide-gt-sm>
+        <md-icon class="md-accent">folder</md-icon>&nbsp;
+        <span class="md-headline">Factures<span>
+      </div>
+
+    </div>
+
+    <app-widgets-common-loading ng-if="loading"></app-widgets-common-loading>
+
+    <md-list>
+      <md-list-item ng-repeat="i in invoices">
+        <div layout="row" flex>
+          <span>
+            {{ i.created | Day}}
+            &nbsp;
+            {{ i.total }} &euro;
+          </span>
+        </div>
+        <md-button class="md-secondary" ng-href="{{ url}}/{{ i.id }}" download>
+          <md-tooltip md-direction="left">
+            Telecharger la facture
+          </md-tooltip>
+          <md-icon>file_download</md-icon>
+        </md-button>
+      </md-list-item>
+
+      <md-divider></md-divider>
+    </md-list>
+
+  </div>
+
+</div>

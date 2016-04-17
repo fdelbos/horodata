@@ -13,5 +13,7 @@ func Group(r *gin.RouterGroup) {
 		billing.GET("/plan", GetPlan)
 		billing.GET("/end_period", GetEndPeriod)
 		billing.POST("/change_plan", ChangePlan)
+		billing.GET("/invoices", Invoices)
+		billing.GET("/invoices/:id", GetInvoice)
 	}
 }
