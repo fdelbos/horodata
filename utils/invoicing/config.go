@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	log_service "dev.hyperboloide.com/fred/horodata/services/log"
 	"dev.hyperboloide.com/fred/horodata/services/mail"
 	"dev.hyperboloide.com/fred/horodata/services/postgres"
@@ -97,4 +99,8 @@ func Configure() {
 	postgres.Configure()
 
 	stripe.Key = viper.GetString("payment_secret_key")
+
+	if err := os.MkdirAll(viper.GetString("output"), 0755); err != nil {
+		log.Fatal(err)
+	}
 }

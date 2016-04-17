@@ -10,7 +10,7 @@ import (
 var _ = Describe("Payment", func() {
 
 	It("should send an event", func() {
-		err := NewEvent("evt_17zmLMFjT5XSbba3h2RCk6IO")
+		err := NewEvent("evt_181FdWFjT5XSbba34KNBFKc6")
 		Ω(err).To(BeNil())
 	})
 })

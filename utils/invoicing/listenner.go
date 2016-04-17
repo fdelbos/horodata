@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	"dev.hyperboloide.com/fred/horodata/services/payment"
+	log "github.com/Sirupsen/logrus"
 	"github.com/stripe/stripe-go/event"
 )
 
@@ -32,9 +33,11 @@ func listenner(buff []byte) error {
 		} else if id, ok := idObj.(string); !ok {
 			return ErrInvoiceIdNotStr
 		} else {
+			log.WithField("id", id).Info("processing invoice")
 			return ProcessInvoice(id)
 		}
 	default:
+		log.WithField("type", e.Type).Info("dropping unsupported event")
 		return nil
 	}
 }

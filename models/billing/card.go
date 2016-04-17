@@ -3,10 +3,10 @@ package billing
 import (
 	"time"
 
+	"dev.hyperboloide.com/fred/horodata/services/postgres"
+	log "github.com/Sirupsen/logrus"
 	"github.com/stripe/stripe-go"
 	"github.com/stripe/stripe-go/card"
-
-	"dev.hyperboloide.com/fred/horodata/services/postgres"
 )
 
 type Card struct {
@@ -77,7 +77,7 @@ func (c *Customer) UpdateCard(token string) error {
     on conflict (user_id) do update set
         stripe_id = $2, last4 = $3, brand = $4, expiration = $5`
 
-	return postgres.Exec(
+	err = postgres.Exec(
 		query,
 		c.UserId,
 		resp.ID,
@@ -85,4 +85,12 @@ func (c *Customer) UpdateCard(token string) error {
 		string(resp.Brand),
 		expiration,
 	)
+	if err != nil {
+		log.WithFields(map[string]interface{}{
+			"package":  "horodata.models.billing",
+			"function": "func (c *Customer) UpdateCard(token string) error",
+			"step":     "postgres update/insert",
+		}).Error(err)
+	}
+	return err
 }

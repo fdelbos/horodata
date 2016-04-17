@@ -133,7 +133,7 @@ create table subscribers (
 );
 
 create table cards (
-    user_id bigint primary key references users on delete cascade,
+    user_id bigint primary key references subscribers on delete cascade,
     created timestamp default now()  not null,
     stripe_id text unique not null,
     last4 char(4) not null,
@@ -142,7 +142,7 @@ create table cards (
 );
 
 create table stripe_subscriptions (
-    user_id bigint primary key references users on delete cascade,
+    user_id bigint primary key references subscribers on delete cascade,
     stripe_id text unique not null,
     active boolean default true not null,
     plan quota_plan not null,

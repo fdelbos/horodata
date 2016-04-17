@@ -50,7 +50,9 @@ func (s *Subscription) save() error {
 		s.End)
 	if err != nil {
 		log.WithFields(map[string]interface{}{
-			"step":         "Subscribtion save to db",
+			"package":      "horodata.models.billing",
+			"function":     "func (s *Subscription) save() error",
+			"step":         "insert / update to db",
 			"subscription": s,
 		}).Error(err)
 	}
@@ -110,7 +112,9 @@ func (s *Subscription) Unsubscribe() error {
 		})
 	if err != nil {
 		log.WithFields(map[string]interface{}{
-			"step":         "Cancel subscription / send to stripe",
+			"package":      "horodata.models.billing",
+			"function":     "func (s *Subscription) Unsubscribe() error",
+			"step":         "Stripe cancel subscription",
 			"subscription": s,
 		}).Error(err)
 		return err
@@ -130,6 +134,12 @@ func (s *Subscription) Update(plan string) error {
 	var err error
 	c, err := s.Customer()
 	if err != nil {
+		log.WithFields(map[string]interface{}{
+			"package":      "horodata.models.billing",
+			"function":     "func (s *Subscription) Update(plan string) error",
+			"step":         "get customer",
+			"subscription": s,
+		}).Error(err)
 		return err
 	}
 
@@ -153,8 +163,9 @@ func (s *Subscription) Update(plan string) error {
 	if err != nil {
 		if err != nil {
 			log.WithFields(map[string]interface{}{
-				"step":         "Subscribe update / send to stripe",
-				"plan":         plan,
+				"package":      "horodata.models.billing",
+				"function":     "func (s *Subscription) Update(plan string) error",
+				"step":         "Stripe plan New/Update",
 				"subscription": s,
 			}).Error(err)
 			return err
@@ -170,9 +181,16 @@ func (s *Subscription) Update(plan string) error {
 		return err
 	} else if u, err := c.User(); err != nil {
 		return err
-	} else {
-		return u.QuotaChangePlan(plan)
+	} else if err := u.QuotaChangePlan(plan); err != nil {
+		log.WithFields(map[string]interface{}{
+			"package":      "horodata.models.billing",
+			"function":     "func (s *Subscription) Update(plan string) error",
+			"step":         "quota change plan",
+			"subscription": s,
+		}).Error(err)
+		return err
 	}
+	return nil
 }
 
 func SubscriptionByStripeId(id string) (*Subscription, error) {

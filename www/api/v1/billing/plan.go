@@ -53,7 +53,7 @@ func ChangePlan(c *gin.Context) {
 		return
 	}
 
-	if sub.Update(data.Plan); err != nil {
+	if err := sub.Update(data.Plan); err != nil {
 		jsend.Error(c, err)
 	} else {
 		jsend.Ok(c, data)

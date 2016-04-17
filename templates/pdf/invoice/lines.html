@@ -15,30 +15,28 @@
         <tr>
 
           <td class="text-center">
-            <samp>
               {{ line.title }}
 
               {% if line.description %}
-              <br><small>{{ line.description }}</small>
+              <br>
+              <small>{{ line.description }}</small>
               {% endif %}
-
-            </samp>
           </td>
 
           <td class="text-center">
-            <samp>{{ line.start_date}} - {{ line.end_date }}</samp>
+            {{ line.start_date}} - {{ line.end_date }}
           </td>
 
           <td class="text-right">
-            <samp>{{ line.quantity }}</samp>
+            {{ line.quantity }}
           </td>
 
           <td class="text-right">
-            <samp>{{ line.unit_price }}&euro;</samp>
+            {{ line.unit_price }}&euro;
           </td>
 
           <td class="text-right">
-            <samp>{{ line.amount }}&euro;</samp>
+            {{ line.amount }}&euro;
           </td>
 
         </tr>
@@ -49,4 +47,48 @@
 
   </div>
 
+</div>
+
+<div class="row">
+
+  <div class="col-xs-7">
+    {% if paid %}
+    <strong>Facture aquittée le :</strong>
+    &nbsp;{{ created }}
+    {% endif %}
+  </div>
+
+  <div class="col-xs-4 col-xs-offset-1">
+      <table class="table table-bordered table-condensed">
+
+        <tr>
+          <th>Sous-Total</th>
+          <td class="text-right">
+            {{ subtotal }}&euro;
+          </td>
+        </tr>
+
+        <tr>
+          <th>
+            TVA&#42; {{ tax_percent }}&#37;
+          </th>
+          <td class="text-right">
+            {{ tax }}&euro;
+          </td>
+        </tr>
+
+        <tr>
+          <th>Total TTC</th>
+          <td class="text-right">
+              {{ total }}&euro;
+          </td>
+        </tr>
+
+      </table>
+      <div class="text-center" style="margin-top: -15px;">
+        <strong>Date d'échéance :</strong>
+        {{ created }}
+      </div>
+
+  </div>
 </div>

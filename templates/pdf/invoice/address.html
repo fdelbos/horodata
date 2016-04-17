@@ -1,50 +1,35 @@
 <div class="row">
   <div class="col-xs-12">
 
-    <style>
-      .dl-horizontal dt {
-        float: left;
-        width: 160px;
-        clear: left;
-        text-align: right;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-      .dl-horizontal dd {
-        margin-left: 180px;
-      }
-    </style>
+    <strong>Facturé à :</strong>
+    <br>
 
-    <dl class="dl-horizontal" style="font-size: 12px;">
+    Numéro de client: {{ client_id }}
+    <br>
 
-      <dt>Numéro de client</dt>
-      <dd><samp>{{ client_id }}</samp></dd>
+    {{ address.name }}
+    <br>
 
-      <dt>Nom</dt>
-      <dd><samp>{{ address.name }}</samp></dd>
+    {% if address.company %}
+    {{ address.company }}
+    <br>
+    {% endif %}
 
-      {% if address.company %}
-      <dt>Entreprise</dt>
-      <dd><samp>{{ address.company }}</samp></dd>
-      {% endif %}
+    {{ address.addr1 }}
+    <br>
 
-      <dt>Addresse</dt>
-      <dd><samp>{{ address.addr1 }}</samp></dd>
+    {% if address.addr2 %}
+    {{ address.addr2 }}
+    <br>
+    {% endif %}
 
-      {% if address.addr2 %}
-      <dt></dt>
-      <dd><samp>{{ address.addr2 }}</samp></dd>
-      {% endif %}
+    {{ address.zip }} {{ address.city }}
+    <br>
 
-      <dt>Ville</dt>
-      <dd><samp>{{ address.zip }} {{ address.city }}</samp></dd>
-
-      {% if address.vat %}
-      <dt>TVA Client</dt>
-      <dd><samp>{{ address.vat }}</samp></dd>
-      {% endif %}
-    </dl>
+    {% if address.vat %}
+    N° TVA:
+    {{ address.vat }}
+    {% endif %}
 
   </div>
 

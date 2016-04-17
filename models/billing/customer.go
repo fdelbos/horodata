@@ -6,6 +6,7 @@ import (
 
 	"dev.hyperboloide.com/fred/horodata/models/user"
 	"dev.hyperboloide.com/fred/horodata/services/postgres"
+	log "github.com/Sirupsen/logrus"
 	"github.com/stripe/stripe-go"
 	"github.com/stripe/stripe-go/card"
 	"github.com/stripe/stripe-go/customer"
@@ -21,7 +22,15 @@ func (c *Customer) insert() error {
 	const query = `
 	insert into subscribers (user_id, stripe_id)
 	values ($1, $2);`
-	return postgres.Exec(query, c.UserId, c.StripeId)
+	err := postgres.Exec(query, c.UserId, c.StripeId)
+	if err != nil {
+		log.WithFields(map[string]interface{}{
+			"package":  "horodata.models.billing",
+			"function": "func (c *Customer) insert() error",
+			"step":     "postgres save",
+		}).Error(err)
+	}
+	return err
 }
 
 func (c *Customer) Scan(scanFn func(dest ...interface{}) error) error {
@@ -42,6 +51,11 @@ func NewCustomer(userId int64, token string) error {
 	cp.SetSource(token)
 	sc, err := customer.New(cp)
 	if err != nil {
+		log.WithFields(map[string]interface{}{
+			"package":  "horodata.models.billing",
+			"function": "func NewCustomer(userId int64, token string) error",
+			"step":     "Stripe new customer",
+		}).Error(err)
 		return err
 	}
 	cus := &Customer{
@@ -56,6 +70,11 @@ func NewCustomer(userId int64, token string) error {
 		sc.DefaultSource.ID,
 		&stripe.CardParams{Customer: sc.ID})
 	if err != nil {
+		log.WithFields(map[string]interface{}{
+			"package":  "horodata.models.billing",
+			"function": "func NewCustomer(userId int64, token string) error",
+			"step":     "Stripe get card",
+		}).Error(err)
 		return err
 	}
 

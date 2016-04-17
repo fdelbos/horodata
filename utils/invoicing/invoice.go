@@ -19,6 +19,7 @@ import (
 )
 
 func ProcessInvoice(stripeId string) error {
+
 	invoice, err := billing.InvoiceByStripeId(stripeId)
 
 	if err == nil && !invoice.Sent {
@@ -66,7 +67,7 @@ func genMsg(invoice *billing.Invoice) interface{} {
 		Lines      []interface{}    `json:"lines"`
 	}{
 		invoice.FileId(),
-		fmt.Sprintf("HD-%09d", invoice.UserId),
+		fmt.Sprintf("HD-%06d", invoice.UserId),
 		dateToString(invoice.Created),
 		address,
 		dateToString(invoice.StartDate),
@@ -168,5 +169,5 @@ func dateToString(d time.Time) string {
 }
 
 func floatToPercent(nb float64) string {
-	return fmt.Sprint("%.2f", nb)
+	return fmt.Sprintf("%.2f", nb)
 }
