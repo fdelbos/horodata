@@ -6,13 +6,13 @@
     </span>
     <div class="md-caption text-accent">
       <span ng-if="current == plan.code && !end && !recap">
-        (Plan courant)
+        Plan courant
       </span>
       <span ng-if="current == plan.code && end && !recap">
-        (jusqu'au {{ end | Day }})
+        Plan effectif jusqu'au {{ end | Day }}
       </span>
       <span ng-if="plan.code == 'free' && end && !recap">
-        (Plan effectif le {{ end | Day }})
+        Ce plan sera effectif le {{ end | Day }}
       </span>
       &nbsp;
     </div>

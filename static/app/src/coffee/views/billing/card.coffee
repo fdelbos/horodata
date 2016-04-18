@@ -94,7 +94,7 @@ angular.module("horodata").controller("BillingCardEdit", [
           $http.post("#{apiService.get()}/billing/card", {token: resp.id}).then(
             (resp) ->
               $mdDialog.hide()
-              $mdToast.showSimple("Nouvelle carte de credit enregistree.")
+              $mdToast.showSimple("Nouvelle carte de crédit enregistrée.")
               $scope.card.current = resp.data.data
               $scope.loading = false
             (resp) ->
