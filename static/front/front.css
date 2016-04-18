@@ -4,6 +4,20 @@ main {
 main .bottom-space {
   margin-bottom: 150px;
 }
+input[type=checkbox],
+input[type=radio] {
+  vertical-align: -2px;
+  margin: 0;
+  padding: 0;
+}
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid #039be5;
+  box-shadow: 0 1px 0 0 #039be5;
+}
+.input-field input[type=password]:focus {
+  border-bottom: 1px solid #039be5;
+  box-shadow: 0 1px 0 0 #039be5;
+}
 .menu .menu-item {
   font-weight: 300;
   font-size: 1.1em;

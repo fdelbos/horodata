@@ -1,13 +1,14 @@
 package account
 
 import (
+	"net/http"
+
 	"dev.hyperboloide.com/fred/horodata/html"
 	sqlerrors "dev.hyperboloide.com/fred/horodata/models/errors"
 	"dev.hyperboloide.com/fred/horodata/models/user"
 	"dev.hyperboloide.com/fred/horodata/services/captcha"
 	valid "github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func GetRegister(c *gin.Context) {
@@ -48,6 +49,11 @@ func PostRegister(c *gin.Context) {
 		errors["full_name"] = "Ce champ doit faire au moins 4 caractères."
 	} else if len(fullName) > 50 {
 		errors["full_name"] = "Ce champ ne doit pas dépasser 50 caractères."
+	}
+
+	accept := c.PostForm("accept")
+	if accept != "yes" {
+		errors["accept"] = "Ce champ est obligatoire."
 	}
 
 	recaptcha := c.PostForm("g-recaptcha-response")
