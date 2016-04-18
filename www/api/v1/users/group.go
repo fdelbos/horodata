@@ -4,11 +4,14 @@ import (
 	"encoding/json"
 	"net/http"
 	"strings"
+	"time"
 
 	"dev.hyperboloide.com/fred/horodata/middlewares"
 	"dev.hyperboloide.com/fred/horodata/models/user"
+	"dev.hyperboloide.com/fred/horodata/services/mail"
 	"dev.hyperboloide.com/fred/horodata/www/api/jsend"
 	"github.com/gin-gonic/gin"
+	"github.com/hyperboloide/qmail/client"
 )
 
 func Group(r *gin.RouterGroup) {
@@ -17,6 +20,7 @@ func Group(r *gin.RouterGroup) {
 		users.GET("/me", Get)
 		users.PUT("/me", Update)
 		users.GET("/me/quotas", Quota)
+		users.POST("/contact_message", ContactMessage)
 	}
 }
 
@@ -81,5 +85,39 @@ func Quota(c *gin.Context) {
 			},
 		}
 		jsend.Ok(c, res)
+	}
+}
+
+func ContactMessage(c *gin.Context) {
+	u := middlewares.GetUser(c)
+
+	var data struct {
+		Content string `json:"content"`
+	}
+	if err := json.NewDecoder(c.Request.Body).Decode(&data); err != nil {
+		jsend.ErrorJson(c)
+		return
+	}
+
+	errors := map[string]string{}
+	data.Content = strings.TrimSpace(data.Content)
+	if data.Content == "" {
+		errors["content"] = "Ce champ est obligatoire."
+	} else if len(data.Content) > 5000 {
+		errors["content"] = "Ce champ ne doit pas dépasser 5000 caractères."
+	} else if err := mail.Mailer().Send(client.Mail{
+		Dests:    []string{u.Email},
+		Subject:  "Nouveau message Horodata",
+		Template: "message",
+		Data: map[string]interface{}{
+			"name":    u.FullName,
+			"email":   u.Email,
+			"message": data.Content,
+			"created": time.Now().Format("01/02/2006 15h04"),
+		},
+	}); err != nil {
+		jsend.Error(c, err)
+	} else {
+		jsend.Ok(c, nil)
 	}
 }

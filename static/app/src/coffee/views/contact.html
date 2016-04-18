@@ -1,0 +1,57 @@
+<md-dialog aria-label="Nous contacter" flex="40">
+
+
+  <app-widgets-common-dialog-toolbar>Nous contacter</app-widgets-common-dialog-toolbar>
+
+  <md-dialog-content>
+    <div class="md-dialog-content">
+
+      <div layout="column">
+
+        <p class="md-body-1">
+          Hyperboloide, l'equipe derriere Horodata se tient a votre disposition
+          pour toute question relative a notre produit.
+          <br>
+          <br>
+          Si vous avez besoin d'aide ou si vous souhaitez simplement nous
+          aider a ameliorer Horodata grace a vos suggestions,
+          n'hesitez pas nous contacter. Nous ferons de notre mieux pour vous
+          repondre au plus vitre
+        </p>
+
+        <md-whiteframe class="md-whiteframe-1dp" layout="column" layout-padding flex>
+
+          <div layout="column" class="static-input" flex>
+            <span class="md-caption text-grey">Email</span>
+            <div>
+              <a href="mailto:contact@hyperboloide.com">contact@hyperboloide.com</a>
+            </div>
+          </div>
+
+          <app-widgets-input-static-text
+            text="05 12 34 56 78"
+            caption="Telephone"
+            help="Du lundi au samedi de 9h a 19h">
+          </app-widgets-input-static-text>
+
+        </md-whiteframe>
+
+        <p class="md-body-1">
+          Vous pouvez aussi nous envoyer un message a l'aide du formulaire ci-dessous:
+        </p>
+
+        <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.content}" >
+          <label>Message</label>
+          <textarea md-no-autogrow ng-model="message.content" rows="3" md-select-on-focus></textarea>
+          <small ng-if="errors.content" class="input-error">{{ errors.comment }}</small>
+        </md-input-container>
+
+      </div>
+    </div>
+  </md-dialog-content>
+
+  <app-widgets-common-dialog-actions>
+    <md-button ng-if="message.content" ng-click="send()" class="md-primary md-raised">Envoyer</md-button>
+  </app-widgets-common-dialog-actions>
+
+</md-dialog>

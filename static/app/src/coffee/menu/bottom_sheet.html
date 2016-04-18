@@ -24,6 +24,13 @@
     </div>
 
     <div layout="column" layout-align="center center">
+      <md-button class="md-fab md-primary" ng-click="showContact($event)">
+        <md-icon class="md-36">message</md-icon>
+      </md-button>
+      <div>Contact</div>
+    </div>
+
+    <div layout="column" layout-align="center center">
       <md-button class="md-fab md-warn" ng-href="{{ home }}/account/logout">
         <md-icon class="md-36">directions_run</md-icon>
       </md-button>
@@ -53,6 +60,13 @@
         <md-icon class="md-24">euro_symbol</md-icon>
       </md-button>
       <div>Abonnement</div>
+    </div>
+
+    <div layout="row" layout-align="center center">
+      <md-button class="md-fab md-mini md-primary" ng-click="showContact($event)">
+        <md-icon class="md-24">message</md-icon>
+      </md-button>
+      <div>Contact</div>
     </div>
 
     <div layout="row" layout-align="center center">
