@@ -1,6 +1,8 @@
 <div  layout-padding>
 
-  <div layout="column" flex-md="70" flex-gt-md="60">
+  <app-widgets-common-loading ng-if="loading"></app-widgets-common-loading>
+
+  <div ng-if="!loading" layout="column" flex-md="70" flex-gt-md="60">
 
     <div layout="row" layout-align="space-between center">
 
@@ -16,9 +18,9 @@
 
     </div>
 
-    <app-widgets-common-loading ng-if="loading"></app-widgets-common-loading>
 
-    <md-list>
+
+    <md-list ng-if="invoices.length > 0">
       <md-list-item ng-repeat="i in invoices">
         <div layout="row" flex>
           <span>
@@ -35,6 +37,12 @@
 
       <md-divider></md-divider>
     </md-list>
+
+    <div ng-if="invoices.length == 0" flex>
+      <md-whiteframe class="md-whiteframe-1dp" flex layout layout-padding layout-align="center center">
+        <span class="md-headline">Vous n'avez pas de facture</span>
+      </md-whiteframe>
+    </div>
 
   </div>
 

@@ -44,9 +44,29 @@
 
       </div>
 
-      <div class="col l6 s12">
-        <h5 class="grey-text text-darken-2">Footer Content</h5>
-        <p class="grey-text text-darken-1">You can use rows and columns here to organize your footer content.</p>
+      <div class="col l3 s6">
+        <h5 class="grey-text text-darken-2">Documents</h5>
+        <p class="grey-text text-darken-1">
+          <ul>
+            <li>
+              <a href="{{ ctx.StaticRoot }}/CGV.pdf" target="_blank">Conditions Generales de Vente</a>
+            </li>
+            <li>
+              <a href="{{ ctx.StaticRoot }}/CGU.pdf" target="_blank">Conditions Generales d'Utilisation</a>
+            </li>
+          </ul>
+        </p>
+      </div>
+
+      <div class="col l3 s6" layout="column">
+        <h5 class="grey-text text-darken-2">Hebergement et Securite</h5>
+        <p class="grey-text text-darken-1">
+          Horodata est un produit Francais heberge en France.
+          La securite des donnees ...
+        </p>
+        <div layout="row">
+          <img src="{{ ctx.StaticRoot }}/images/france.png" width="70">
+        </div>
       </div>
 
       <div class="col l1 offset-l1 s12">

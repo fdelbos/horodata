@@ -15,6 +15,7 @@ var bump = require('gulp-bump');
 var header = require('gulp-header');
 var minifyCss = require('gulp-minify-css');
 var gzip = require('gulp-gzip');
+var addsrc = require('gulp-add-src');
 
 var MODULE = "front";
 var DEST = "./dist/";
@@ -41,8 +42,12 @@ gulp.task('release', function() { return inc('major'); })
 */
 
 gulp.task('local-css', function(){
-  gulp.src('./src/less/**.less')
-    .pipe(less())
+    var lessStream = gulp.src('./src/less/**/*.less')
+      .pipe(less());
+
+    var cssSream = gulp.src('./src/css/**/*.css');
+
+    merge(cssSream, lessStream)
     .pipe(concat(MODULE + ".css"))
     .pipe(gulp.dest('./'));
 })

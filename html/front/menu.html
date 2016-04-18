@@ -49,6 +49,7 @@
             </a>
             {% else %}
             <a class="menu-item grey-text text-darken-3" href="{{ ctx.WWWAccount }}/login">Connexion</a>
+            <a class="menu-item grey-text text-darken-3" href="{{ ctx.WWWAccount }}/register">Inscription</a>
             {% endif %}
           </li>
         </ul>
@@ -58,6 +59,7 @@
           <li><a href="{{ ctx.WWWApp }}">Acceder à l'application</a></li>
           {% else %}
           <li><a href="{{ ctx.WWWAccount }}/login">Connexion</a></li>
+          <li><a href="{{ ctx.WWWAccount }}/register">Inscription</a></li>
           {% endif %}
           <li><a href="{{ ctx.WWWRoot }}#description">Comment ça marche?</a></li>
           <li><a href="{{ ctx.WWWRoot }}#abonnements">Abonnements</a></li>

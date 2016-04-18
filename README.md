@@ -13,9 +13,8 @@
 * edit nom groupe
 * Bon numero de dossiers ajoutes (si doublons)
 * verifier proprietaire dans messages Quotas
-* menu contact
 * push (ajout tâche à la liste & notif lors de création de tâche par un collaborateur)
-
+* groupe invite pas not ready
 
 ## Later:
 * code promo (assoce)
