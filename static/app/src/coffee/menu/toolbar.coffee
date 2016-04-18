@@ -31,6 +31,10 @@ angular.module("horodata").directive("appMenuToolbar", [
         $mdBottomSheet.hide()
         popupService("horodata/views/quotas.html", "Quotas", scope, ev)
 
+      scope.showContact = (ev) ->
+        $mdBottomSheet.hide()
+        popupService("horodata/views/contact.html", "Contact", scope, ev)
+
     return {
       link: l
       replace: true
