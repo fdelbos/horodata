@@ -23,7 +23,7 @@ func Group(r *gin.RouterGroup) {
 
 		account.Group(www)
 		api.Group(www)
-		www.Any("/app/*all", middlewares.UserFilter(), GetApp)
+		www.Any("/app/*all", middlewares.UserFilter, GetApp)
 
 		endpoint := fmt.Sprintf("/%s", viper.GetString("payment_endpoint"))
 		www.POST(endpoint, StripeEndpoint)

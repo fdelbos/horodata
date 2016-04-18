@@ -8,6 +8,10 @@ main .bottom-space {
   font-weight: 300;
   font-size: 1.1em;
 }
+.menu .user-image {
+  margin-top: 10px;
+  height: 46px;
+}
 .main {
   margin-top: 40px;
 }

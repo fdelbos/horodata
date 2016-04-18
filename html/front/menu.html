@@ -1,10 +1,27 @@
 <div class="menu navbar-fixed">
 
   <nav class="navbar-fixed white" role="navigation">
+
+    {% if ctx.User %}
+    <ul id="dropdown_user" class="dropdown-content">
+      <li>
+        <a class="menu-item grey-text text-darken-3" href="{{ ctx.WWWApp }}">
+          <span class="material-icons" style="font-size: 16px">access_time</span> Acceder à l'application
+        </a>
+      </li>
+      <li>
+        <a class="menu-item grey-text text-darken-3" href="{{ ctx.WWWAccount }}/logout">
+          <span class="material-icons" style="font-size: 16px">directions_run</span> Quitter
+        </a>
+      </li>
+    </ul>
+    {% endif %}
+
       <div class="nav-wrapper container grey-text text-darken-3">
 
         <a id="logo-container" href="{{ ctx.WWWRoot }}" class="brand-logo grey-text text-darken-3">
-          Horodata
+            <span class="material-icons">access_time</span>
+            Horodata
         </a>
 
         <a href="#" data-activates="nav-mobile" class="button-collapse grey-text text-darken-3">
@@ -12,13 +29,38 @@
         </a>
 
         <ul class="right hide-on-med-and-down">
-          <li><a class="menu-item grey-text text-darken-3" href="{{ ctx.WWWRoot }}">Comment ça marche?</a></li>
+          <li><a class="menu-item grey-text text-darken-3" href="{{ ctx.WWWRoot }}#description">Comment ça marche?</a></li>
           <li><a class="menu-item grey-text text-darken-3" href="{{ ctx.WWWRoot }}#abonnements">Abonnements</a></li>
-          <li><a class="menu-item grey-text text-darken-3" href="{{ ctx.WWWAccount }}/login">Connexion</a></li>
+          <li>
+            {% if ctx.User %}
+            <a class="dropdown-button menu-item grey-text text-darken-3" href="#!" data-activates="dropdown_user">
+              {% if ctx.User.Picture %}
+              <img
+                src="{{ ctx.WWWRoot }}/profiles/{{ ctx.User.Picture  }}.jpg"
+                alt="{{ ctx.User.FullName }}"
+                class="circle user-image">
+              {% else %}
+              <img
+                src="{{ ctx.StaticRoot }}/profile-default.png"
+                alt="{{ ctx.User.FullName }}"
+                class="circle user-image">
+              {% endif %}
+              <i class="material-icons right">arrow_drop_down</i>
+            </a>
+            {% else %}
+            <a class="menu-item grey-text text-darken-3" href="{{ ctx.WWWAccount }}/login">Connexion</a>
+            {% endif %}
+          </li>
         </ul>
 
         <ul id="nav-mobile" class="side-nav">
-          <li><a href="#">Navbar Link</a></li>
+          {% if ctx.User %}
+          <li><a href="{{ ctx.WWWApp }}">Acceder à l'application</a></li>
+          {% else %}
+          <li><a href="{{ ctx.WWWAccount }}/login">Connexion</a></li>
+          {% endif %}
+          <li><a href="{{ ctx.WWWRoot }}#description">Comment ça marche?</a></li>
+          <li><a href="{{ ctx.WWWRoot }}#abonnements">Abonnements</a></li>
         </ul>
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
       </div>
