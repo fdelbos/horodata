@@ -52,6 +52,9 @@ md-input-container textarea[md-no-autogrow].md-input {
 .free-space {
   height: 100px;
 }
+.bottom-space {
+  margin-bottom: : 100px;
+}
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
