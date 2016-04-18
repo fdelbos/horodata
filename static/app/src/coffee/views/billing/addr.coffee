@@ -57,7 +57,7 @@ angular.module("horodata").controller("BillingAddrEdit", [
       $http.post("#{apiService.get()}/billing/address", $scope.addr.edit).then(
         (resp) ->
           $mdDialog.hide()
-          $mdToast.showSimple("Nouvelle adresse enregistree.")
+          $mdToast.showSimple("Nouvelle adresse enregistrée.")
           $scope.addr.current = resp.data.data
           $scope.loading = false
         (resp) ->
