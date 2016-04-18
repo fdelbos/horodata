@@ -8,7 +8,6 @@
 * Statistiques
 * Ajouter "Profil" dans menu + options photo et changement nom
 * Pb affichage Internet Explorer (dossiers et types crées non-affichés)
-* google analytics
 * envoyer un rappel si rien saisi.
 * CGV / CGU
 * page d'accueil + pricing
