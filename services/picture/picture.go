@@ -6,6 +6,7 @@ import (
 	"image"
 	"image/jpeg"
 	"image/png"
+	"io"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -26,20 +27,15 @@ func Configure() {
 	}
 }
 
-func ProfileFromUrl(url, id string) error {
-	resp, err := http.Get(url)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
+func ProfilePictureFromReader(r io.Reader, id, contentType string) error {
 	var img image.Image
-	contentType := resp.Header.Get("Content-Type")
+	var err error
+
 	switch contentType {
 	case "image/png":
-		img, err = png.Decode(resp.Body)
+		img, err = png.Decode(r)
 	case "image/jpeg":
-		img, err = jpeg.Decode(resp.Body)
+		img, err = jpeg.Decode(r)
 	default:
 		return errors.New(fmt.Sprintf("unsupported image format '%s'", contentType))
 	}
@@ -55,4 +51,14 @@ func ProfileFromUrl(url, id string) error {
 	}
 	defer out.Close()
 	return jpeg.Encode(out, m, nil)
+}
+
+func ProfileFromUrl(url, id string) error {
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	return ProfilePictureFromReader(resp.Body, id, resp.Header.Get("Content-Type"))
 }

@@ -1,6 +1,7 @@
 package user
 
 import (
+	"io"
 	"time"
 
 	sqlerrors "dev.hyperboloide.com/fred/horodata/models/errors"
@@ -48,6 +49,37 @@ func (u User) PictureGet() (*Picture, error) {
 
 	picture := &Picture{}
 	return picture, postgres.QueryRow(picture, query, u.Id)
+}
+
+func (u User) PictureSetFromRequest(r io.Reader, contentType string) error {
+	isNew := false
+	current, err := u.PictureGet()
+	if err == sqlerrors.NotFound {
+		isNew = true
+		current = &Picture{
+			Id:     uniuri.NewLen(32),
+			UserId: u.Id,
+			Origin: "",
+		}
+	} else if err != nil {
+		return err
+	}
+
+	if err := picture.ProfilePictureFromReader(r, current.Id, contentType); err != nil {
+		return err
+	} else if isNew {
+		log.WithFields(map[string]interface{}{
+			"user": u.Id,
+			"id":   current.Id,
+		}).Info("Insert picture.")
+		return current.Insert()
+	} else {
+		log.WithFields(map[string]interface{}{
+			"user": u.Id,
+			"id":   current.Id,
+		}).Info("Update picture.")
+		return current.Update()
+	}
 }
 
 func (u User) PictureSetFromOrigin(origin string) error {

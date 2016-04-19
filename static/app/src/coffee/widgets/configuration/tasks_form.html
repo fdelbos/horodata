@@ -3,17 +3,17 @@
 
     <app-widgets-common-dialog-toolbar>
       <span ng-if="!data.current.id">Ajouter une nouvelle tâche</span>
-      <span ng-if="data.current.id">Modifier la tâche {{ data.current.name }}</span>
+      <span ng-if="data.current.id">Modifier la tâche</span>
     </app-widgets-common-dialog-toolbar>
 
     <md-dialog-content>
       <div class="md-dialog-content">
 
-        <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.name}" >
-          <label>Nom de la tâche</label>
-          <input md-maxlength="30" type="text" ng-model="data.current.name">
-          <small ng-if="errors.name" class="input-error">{{ errors.name }}</small>
-        </md-input-container>
+        <app-widgets-input-text
+          value="data.current.name"
+          caption="Nom de la tâche"
+          error="errors.name">
+        </app-widgets-input-text>
 
         <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.admin}" >
           <md-switch ng-model="data.current.comment_mandatory" aria-label="Commentaire obligatoire">

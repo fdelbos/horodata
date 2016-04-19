@@ -5,11 +5,11 @@
 
     <md-dialog-content>
       <div class="md-dialog-content">
-        <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.name}" >
-          <label>Nom du dossier</label>
-          <input md-maxlength="40" type="text" ng-model="data.current.name">
-          <small ng-if="errors.name" class="input-error">{{ errors.name }}</small>
-        </md-input-container>
+        <app-widgets-input-text
+          value="data.current.name"
+          caption="Nom du dossier"
+          error="errors.name">
+        </app-widgets-input-text>
       </div>
     </md-dialog-content>
 

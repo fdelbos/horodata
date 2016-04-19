@@ -2,19 +2,17 @@
 
 
 ## Todo:
-* sur la facture faire "plan horodata 10 utilisateurs"
 * Message dans zone blanche page d'accueil "Sélectionnez ou créez un groupe" /Différent PC et mobile ?
 * Statistiques
-* Ajouter "Profil" dans menu + options photo et changement nom
 * Pb affichage Internet Explorer (dossiers et types crées non-affichés)
 * envoyer un rappel si rien saisi.
-* CGV / CGU
 * page d'accueil + pricing
 * edit nom groupe
 * Bon numero de dossiers ajoutes (si doublons)
 * verifier proprietaire dans messages Quotas
 * push (ajout tâche à la liste & notif lors de création de tâche par un collaborateur)
 * groupe invite pas not ready
+
 
 ## Later:
 * code promo (assoce)

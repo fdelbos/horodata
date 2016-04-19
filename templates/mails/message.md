@@ -1,6 +1,9 @@
-## nouveau message de {{ .name }} - {{ .email }}
+
+nouveau message de: {{ .name }} - {{ .email }}
+
 
 Envoye le : {{ .created }}
+
 
 ```
 {{ .message }}

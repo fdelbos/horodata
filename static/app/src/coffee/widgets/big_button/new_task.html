@@ -33,7 +33,7 @@
           <md-input-container flex>
             <label>Tâche</label>
             <md-select ng-model="task.task">
-              <md-option ng-repeat="t in group.tasks" ng-if="i.active" value="{{ t.id }}">
+              <md-option ng-repeat="t in group.tasks" ng-if="t.active" value="{{ t.id }}">
                 {{ t.name }}
               </md-option>
             </md-select>

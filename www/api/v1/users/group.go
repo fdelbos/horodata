@@ -32,29 +32,33 @@ func Get(c *gin.Context) {
 func Update(c *gin.Context) {
 	u := middlewares.GetUser(c)
 
-	var data struct {
-		Name string `json:"name"`
+	name := c.PostForm("name")
+
+	errors := map[string]string{}
+	name = strings.TrimSpace(name)
+	if name == "" {
+		errors["name"] = "Ce champ est obligatoire."
+	} else if len(name) < 4 {
+		errors["name"] = "Ce champ doit faire au moins 4 caractères."
+	} else if len(name) > 50 {
+		errors["name"] = "Ce champ ne doit pas dépasser 50 caractères."
+	} else {
+		u.FullName = name
 	}
-	if err := json.NewDecoder(c.Request.Body).Decode(&data); err != nil {
-		jsend.ErrorJson(c)
+	if len(errors) > 0 {
+		jsend.BadRequest(c, errors)
 		return
 	}
 
-	errors := map[string]string{}
-	data.Name = strings.TrimSpace(data.Name)
-	if data.Name == "" {
-		errors["name"] = "Ce champ est obligatoire."
-	} else if len(data.Name) < 4 {
-		errors["name"] = "Ce champ doit faire au moins 4 caractères."
-	} else if len(data.Name) > 50 {
-		errors["name"] = "Ce champ ne doit pas dépasser 50 caractères."
-	} else {
-		u.FullName = data.Name
+	file, header, err := c.Request.FormFile("file")
+	if err == nil {
+		if err := u.PictureSetFromRequest(file, header.Header.Get("Content-Type")); err != nil {
+			jsend.Error(c, err)
+			return
+		}
 	}
 
-	if len(errors) > 0 {
-		jsend.BadRequest(c, errors)
-	} else if err := u.Update(); err != nil {
+	if err := u.Update(); err != nil {
 		jsend.Error(c, err)
 	} else {
 		jsend.Ok(c, nil)
@@ -106,7 +110,7 @@ func ContactMessage(c *gin.Context) {
 	} else if len(data.Content) > 5000 {
 		errors["content"] = "Ce champ ne doit pas dépasser 5000 caractères."
 	} else if err := mail.Mailer().Send(client.Mail{
-		Dests:    []string{u.Email},
+		Dests:    []string{"contact@hyperboloide.com"},
 		Subject:  "Nouveau message Horodata",
 		Template: "message",
 		Data: map[string]interface{}{

@@ -8,12 +8,11 @@
 
         <app-widgets-common-quota-error></app-widgets-common-quota-error>
 
-
-        <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.email}" >
-          <label>Adresse email</label>
-          <input type="text" md-maxlength="100" ng-model="guests.current.email">
-          <small ng-if="errors.email" class="input-error">{{ errors.email }}</small>
-        </md-input-container>
+        <app-widgets-input-text
+          value="guests.current.email"
+          caption="Adresse email"
+          error="errors.email">
+        </app-widgets-input-text>
 
         <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.rate}" >
           <label>Taux horaire</label>

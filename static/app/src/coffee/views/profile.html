@@ -9,6 +9,16 @@
 
         <div layout="column">
 
+          <div layout="column" class="static-input" flex>
+            <span class="md-caption text-grey">Photo</span>
+            <lf-ng-md-file-input
+              lf-files='files'
+              lf-placeholder="Selectionnez une image"
+              lf-browse-label="Choisir"
+              lf-remove-label="Enlever"
+              accept="image/*"> </lf-ng-md-file-input>
+          </div>
+
           <app-widgets-input-text caption="Nom complet" error="errors.name" value="name"></app-widgets-input-text>
 
           <app-widgets-input-static-text caption="Email" text="{{ user.email }}"></app-widgets-input-static-text>
