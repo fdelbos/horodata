@@ -5,9 +5,21 @@
         <div class="md-headline">
           Aucune donnée pour la période
         </div>
-        <p>
+
+        <p class="md-body-1">
           La periode du {{ begin | Day }} au {{ end | Day }} ne contient pas de saisie.
+          <br>
+          <br>
+          Pour saisir une activite, cliquez sur le bouton
+          <span class="md-body-2">Saisir une activité</span>
+          en bas a droite.
         </p>
+
+        <div layout-align="center center" layout="column">
+          <img height="70" src="/static/images/new_job.png" />
+          <span class="md-caption text-grey">(bouton "Saisir une activité")</span>
+        </div>
+
       </div>
     </div>
   </md-whiteframe>
