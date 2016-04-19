@@ -57,7 +57,6 @@ func Update(c *gin.Context) {
 			return
 		}
 	}
-
 	if err := u.Update(); err != nil {
 		jsend.Error(c, err)
 	} else {
