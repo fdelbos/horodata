@@ -2,22 +2,60 @@
 
   <app-widgets-loading ng-if="stats.loading()"></app-widgets-loading>
 
-  <div ng-if="!stats.loading() && data.length > 0" flex>
+  <app-widgets-common-no-data ng-if="!stats.loading() && data.length == 0" begin="search.begin" end="search.end">
+  </app-widgets-common-no-data>
 
-    <div id="chart"></div>
+  <div ng-if="!stats.loading() && data.length > 0" flex layout="column" layout-gt-sm="row" layout-padding>
 
-    <c3chart bindto-id="chart" ng-if="data">
+    <app-widgets-stats-container caption="Temps par utlisateur">
+      <div id="percent-chart"></div>
+    </app-widgets-stats-container>
+
+    <c3chart ng-if="data" bindto-id="percent-chart">
       <chart-column
         ng-repeat="i in data"
         column-id="{{ i.guest_id }}"
         column-name="{{ guests[i.guest_id].full_name }}"
         column-values="{{ i.duration }}"
         column-type="pie"/>
+        <chart-pie expand="true" show-label="true" label-format-function="formatDuration" threshold-label="0.1"/>
+    </c3chart>
+
+    <app-widgets-stats-container caption="Cout par utilisateur">
+      <div id="cost-chart"></div>
+    </app-widgets-stats-container>
+
+    <c3chart ng-if="costs" bindto-id="cost-chart">
+      <chart-column
+        ng-repeat="i in costs"
+        column-id="{{ i.guest_id }}"
+        column-name="{{ guests[i.guest_id].full_name }}"
+        column-values="{{ i.cost }}"
+        column-type="pie"/>
+      <chart-pie expand="true" show-label="true" label-format-function="formatCost" threshold-label="0.1"/>
     </c3chart>
 
   </div>
 
-  <app-widgets-common-no-data ng-if="!stats.loading() && data.length == 0" begin="search.begin" end="search.end">
-  </app-widgets-common-no-data>
-  
+  <md-table-container>
+    <table md-table>
+      <thead md-head>
+        <tr md-row>
+          <th md-column><span>Utilisateur</span></th>
+          <th md-column><span>Temps</span></th>
+          <th md-column><span>Cout</span></th>
+        </tr>
+      </thead>
+      <tbody md-body>
+        <tr md-row md-auto-select ng-repeat="i in tableData">
+          <td md-cell>{{ guests[i.id].full_name }}</td>
+          <td md-cell>{{ i.duration }}</td>
+          <td md-cell>{{ i.cost }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </md-table-container>
+
+
+
 </div>

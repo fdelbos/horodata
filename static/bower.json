@@ -25,7 +25,8 @@
     "c3": "^0.4.10",
     "c3-angular": "^1.1.0",
     "cookieconsent2": "^1.0.10",
-    "lf-ng-md-file-input": "^1.4.4"
+    "lf-ng-md-file-input": "^1.4.4",
+    "angular-material-data-table": "^0.10.7"
   },
   "resolutions": {
     "angular": "1.5.0"

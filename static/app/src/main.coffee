@@ -1,6 +1,11 @@
-angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages", "gridshore.c3js.chart", "lfNgMdFileInput"])
-
-.config([
+angular.module("horodata", [
+  "ngMaterial"
+  "ngRoute"
+  "ngMessages"
+  "gridshore.c3js.chart"
+  "lfNgMdFileInput"
+  "md.data.table"
+]).config([
   "$mdDateLocaleProvider"
   "$mdThemingProvider"
   "$locationProvider"
@@ -50,11 +55,8 @@ angular.module("horodata", ["ngMaterial", "ngRoute", "ngMessages", "gridshore.c3
       else return new Date(NaN)
     $mdDateLocaleProvider.formatDate = (date) -> moment(date).format('L')
 
-])
-
-.run([
+]).run([
   "$http"
   ($http)->
     $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-
 ])

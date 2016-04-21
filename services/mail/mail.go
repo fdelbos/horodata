@@ -17,6 +17,7 @@ func Configure() {
 	if err != nil {
 		log.WithField("error", err).Fatal("Cannot connect to mail queue")
 	}
+	log.WithField("queue", viper.GetString("mail_queue_name")).Info("Connected to mail queue.")
 	mailer = m
 }
 

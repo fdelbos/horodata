@@ -65,25 +65,15 @@ func StatsTaskTime(c *gin.Context) {
 func StatsGuestTime(c *gin.Context) {
 	g := middlewares.GetGroup(c)
 
-	begin, end, errors, err := extractTime(c)
-	if err != nil {
+	if begin, end, errors, err := extractTime(c); err != nil {
 		jsend.Error(c, err)
-		return
 	} else if len(errors) > 0 {
 		jsend.BadRequest(c, errors)
-		return
-	}
-
-	guestId, errors, err := extractGuestId(c)
-	if err != nil {
+	} else if guestId, errors, err := extractGuestId(c); err != nil {
 		jsend.Error(c, err)
-		return
 	} else if len(errors) > 0 {
 		jsend.BadRequest(c, errors)
-		return
-	}
-
-	if res, err := g.StatsGuestTime(begin, end, guestId); err != nil {
+	} else if res, err := g.StatsGuestTime(begin, end, guestId); err != nil {
 		jsend.Error(c, err)
 	} else {
 		jsend.Ok(c, res)

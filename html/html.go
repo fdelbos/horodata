@@ -1,20 +1,21 @@
 package html
 
 import (
+	"bytes"
+	"fmt"
+	"io"
+	"net/http"
+	"time"
+
 	"dev.hyperboloide.com/fred/horodata/middlewares"
 	"dev.hyperboloide.com/fred/horodata/models/user"
 	"dev.hyperboloide.com/fred/horodata/services/cookies"
 	"dev.hyperboloide.com/fred/horodata/services/urls"
-	"bytes"
-	"fmt"
 	log "github.com/Sirupsen/logrus"
 	"github.com/flosch/pongo2"
 	_ "github.com/flosch/pongo2-addons"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
-	"io"
-	"net/http"
-	"time"
 )
 
 var (
@@ -46,10 +47,8 @@ func (l *Loader) Get(path string) (io.Reader, error) {
 func init() {
 	if viper.GetBool("dev_mode") == true {
 		tmpls = pongo2.NewSet("www", pongo2.MustNewLocalFileSystemLoader("html"))
-		log.Info("Templates loaded from disk.")
 	} else {
 		tmpls = pongo2.NewSet("www", NewLoader(Asset))
-		log.Info("Templates loaded from binary.")
 	}
 
 }
@@ -97,24 +96,29 @@ func Render(name string, c *gin.Context, ctx map[string]interface{}, status int)
 		ctx = map[string]interface{}{}
 	}
 	if err := AddContext(c, ctx); err != nil {
-		log.WithFields(log.Fields{
-			"error": err,
-		}).Error("error adding context to html template.")
+		log.WithFields(map[string]interface{}{
+			"package":  "horodata.html",
+			"function": "func Render(name string, c *gin.Context, ctx map[string]interface{}, status int)",
+			"step":     "AddContext(c, ctx)",
+		}).Error(err)
 		quickError(c)
-	}
-	tmpl, err := tmpls.FromCache(name)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"error": err,
-		}).Error("error while rendering html template.")
+	} else if tmpl, err := tmpls.FromCache(name); err != nil {
+		log.WithFields(map[string]interface{}{
+			"package":  "horodata.html",
+			"function": "func Render(name string, c *gin.Context, ctx map[string]interface{}, status int)",
+			"step":     "tmpls.FromCache(name)",
+		}).Error(err)
 		quickError(c)
-	}
-	c.Writer.WriteHeader(status)
-	if err := tmpl.ExecuteWriter(ctx, c.Writer); err != nil {
-		log.WithFields(log.Fields{
-			"error": err,
-		}).Error("error while rendering html template.")
-		quickError(c)
+	} else {
+		c.Writer.WriteHeader(status)
+		if err := tmpl.ExecuteWriter(ctx, c.Writer); err != nil {
+			log.WithFields(map[string]interface{}{
+				"package":  "horodata.html",
+				"function": "func Render(name string, c *gin.Context, ctx map[string]interface{}, status int)",
+				"step":     "tmpl.ExecuteWriter(ctx, c.Writer)",
+			}).Error(err)
+			quickError(c)
+		}
 	}
 }
 

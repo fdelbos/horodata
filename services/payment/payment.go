@@ -28,6 +28,7 @@ func Configure() {
 	if err != nil {
 		log.WithField("error", err).Fatal("Cannot connect to  payment queue.")
 	}
+	log.WithField("queue", viper.GetString("payment_queue_name")).Info("Connected to payment queue.")
 	queue = q
 }
 

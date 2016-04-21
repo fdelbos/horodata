@@ -1,8 +1,8 @@
-<div layout="column" layout-padding>
+<div layout="column" layout-padding class="bottom-space">
 
   <div hide-md hide-lg layout="row">
     <md-input-container flex>
-      <md-select ng-model="selected" placeholder="Choisissez une statistique">
+      <md-select ng-model="selected" placeholder="Choisissez une donnee">
         <md-option ng-value="s.id" ng-repeat="s in availableStats">{{ s.label }}</md-option>
       </md-select>
     </md-input-container>
@@ -21,7 +21,7 @@
   <div hide-xs layout="row">
 
     <md-input-container class="no-margin" hide show-gt-sm flex>
-      <md-select ng-model="selected" placeholder="Choisissez une statistique">
+      <md-select ng-model="selected" placeholder="Choisissez une donnee">
         <md-option ng-value="s.id" ng-repeat="s in availableStats">{{ s.label }}</md-option>
       </md-select>
     </md-input-container>

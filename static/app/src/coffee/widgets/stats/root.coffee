@@ -10,15 +10,15 @@ angular.module("horodata").directive("appWidgetsStats", [
       scope.availableStats = [
         {
           id: "customer_time"
-          label: "Répartition du temps par dossier"
+          label: "Dossiers"
         }
         {
           id: "task_time"
-          label: "Répartition du temps par tâche"
+          label: "Tâches"
         }
         {
           id: "guest_time"
-          label: "Répartition du temps par utilisateur"
+          label: "Utilisateurs"
         }
       ]
 
