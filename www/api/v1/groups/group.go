@@ -40,6 +40,7 @@ func Group(r *gin.RouterGroup) {
 				stats.GET("/customer_time", StatsCustomerTime)
 				stats.GET("/customer_cost", StatsCustomerCost)
 				stats.GET("/task_time", StatsTaskTime)
+				stats.GET("/task_cost", StatsTaskCost)
 				stats.GET("/guest_time", StatsGuestTime)
 			}
 		}

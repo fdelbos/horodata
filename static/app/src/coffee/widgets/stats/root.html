@@ -1,6 +1,6 @@
 <div layout="column" layout-padding class="bottom-space">
 
-  <div hide-md hide-lg layout="row">
+  <div hide show-xs show-sm layout="row">
     <md-input-container flex>
       <md-select ng-model="selected" placeholder="Choisissez une donnee">
         <md-option ng-value="s.id" ng-repeat="s in availableStats">{{ s.label }}</md-option>
@@ -42,7 +42,7 @@
 
   <div ng-switch="selected" flex>
     <app-widgets-stats-customer ng-switch-when="customer"></app-widgets-stats-customer>
-    <app-widgets-stats-task-time ng-switch-when="task_time"></app-widgets-stats-task-time>
+    <app-widgets-stats-task ng-switch-when="task"></app-widgets-stats-task>
     <app-widgets-stats-guest-time ng-switch-when="guest_time"></app-widgets-stats-guest-time>
   </div>
 

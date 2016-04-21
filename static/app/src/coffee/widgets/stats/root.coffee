@@ -13,7 +13,7 @@ angular.module("horodata").directive("appWidgetsStats", [
           label: "Dossiers"
         }
         {
-          id: "task_time"
+          id: "task"
           label: "Tâches"
         }
         {

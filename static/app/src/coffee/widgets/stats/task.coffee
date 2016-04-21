@@ -1,4 +1,4 @@
-angular.module("horodata").directive("appWidgetsStatsCustomer", [
+angular.module("horodata").directive("appWidgetsStatsTask", [
   "statsService"
   "statsFilterService"
   (statsService, statsFilterService)->
@@ -9,13 +9,14 @@ angular.module("horodata").directive("appWidgetsStatsCustomer", [
 
       updateTime = ->
         scope.time = null
-        statsService.fetch(scope.group.url, "customer_time", (data) -> scope.time = data)
+        statsService.fetch(scope.group.url, "task_time", (data) -> scope.time = data)
       updateTime()
 
       updateCost = ->
         scope.cost = null
-        statsService.fetch(scope.group.url, "customer_cost", (data) -> scope.cost = data)
+        statsService.fetch(scope.group.url, "task_cost", (data) -> scope.cost = data)
       updateCost()
+
 
       scope.formatTime = (value, ration, id) ->
         d = moment.duration(value, 'seconds')
@@ -36,15 +37,15 @@ angular.module("horodata").directive("appWidgetsStatsCustomer", [
         if !v[0]? || !v[1]? then return
 
         m = {}
-        m[i.customer_id] = {cost: i.cost} for i in scope.cost
-        m[i.customer_id].duration = i.duration for i in scope.time
+        m[i.task_id] = {cost: i.cost} for i in scope.cost
+        m[i.task_id].duration = i.duration for i in scope.time
 
         listing = []
         for k, v of m
           listing.push {
             cost: v.cost
             duration: scope.formatTime(v.duration)
-            name: scope.customers[k].name
+            name: scope.tasks[k].name
             id: k
           }
         scope.listing = _.sortBy(listing, (i) -> i.name.toLowerCase())
@@ -55,6 +56,6 @@ angular.module("horodata").directive("appWidgetsStatsCustomer", [
       link: l
       replace: true
       restrict: "E"
-      templateUrl: "horodata/widgets/stats/customer.html"
+      templateUrl: "horodata/widgets/stats/task.html"
     }
 ])
