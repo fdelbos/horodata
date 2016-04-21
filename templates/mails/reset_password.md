@@ -10,4 +10,4 @@ Merci d'utiliser Horodata.
 
 Cordialement,
 
-L'equipe Horodata
+L'équipe Horodata

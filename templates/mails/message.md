@@ -1,10 +1,9 @@
 
-nouveau message de: {{ .name }} - {{ .email }}
+Nouveau message de : {{ .name }} - {{ .email }}
 
+Envoyé : {{ .created }}
 
-Envoye le : {{ .created }}
-
-
+Message :
 ```
 {{ .message }}
 ```

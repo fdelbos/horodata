@@ -6,7 +6,7 @@
     <ul id="dropdown_user" class="dropdown-content">
       <li>
         <a class="menu-item grey-text text-darken-3" href="{{ ctx.WWWApp }}">
-          <span class="material-icons" style="font-size: 16px">access_time</span> Acceder à l'application
+          <span class="material-icons" style="font-size: 16px">access_time</span> Accéder à l'application
         </a>
       </li>
       <li>
@@ -48,15 +48,15 @@
               <i class="material-icons right" style="margin-left:0;">arrow_drop_down</i>
             </a>
             {% else %}
-            <a class="menu-item grey-text text-darken-3" href="{{ ctx.WWWAccount }}/login">Connexion</a>
             <a class="menu-item grey-text text-darken-3" href="{{ ctx.WWWAccount }}/register">Inscription</a>
+            <a class="menu-item grey-text text-darken-3" href="{{ ctx.WWWAccount }}/login">Connexion</a>
             {% endif %}
           </li>
         </ul>
 
         <ul id="nav-mobile" class="side-nav">
           {% if ctx.User %}
-          <li><a href="{{ ctx.WWWApp }}">Acceder à l'application</a></li>
+          <li><a href="{{ ctx.WWWApp }}">Accéder à l'application</a></li>
           {% else %}
           <li><a href="{{ ctx.WWWAccount }}/login">Connexion</a></li>
           <li><a href="{{ ctx.WWWAccount }}/register">Inscription</a></li>

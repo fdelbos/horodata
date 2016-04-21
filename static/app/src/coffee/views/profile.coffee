@@ -26,11 +26,11 @@ angular.module("horodata").controller("Profile", [
         $mdDialog.hide()
         if hasImage
           t = $mdToast.simple()
-          t.textContent("Votre profile a bien été modifié (rechargez la page pour voir votre nouvelle photo).")
+          t.textContent("Votre profil a bien été modifié (rechargez la page pour voir votre nouvelle photo).")
           t.hideDelay = 8000
           $mdToast.show(t)
         else
-          $mdToast.showSimple("Votre profile a bien été modifié")
+          $mdToast.showSimple("Votre profil a bien été modifié")
 
       formData = new FormData()
       formData.append("name", $scope.name)
