@@ -9,7 +9,7 @@ angular.module("horodata").directive("appWidgetsStats", [
 
       scope.availableStats = [
         {
-          id: "customer_time"
+          id: "customer"
           label: "Dossiers"
         }
         {

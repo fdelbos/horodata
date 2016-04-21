@@ -38,6 +38,7 @@ func Group(r *gin.RouterGroup) {
 			stats := gr.Group("/stats")
 			{
 				stats.GET("/customer_time", StatsCustomerTime)
+				stats.GET("/customer_cost", StatsCustomerCost)
 				stats.GET("/task_time", StatsTaskTime)
 				stats.GET("/guest_time", StatsGuestTime)
 			}

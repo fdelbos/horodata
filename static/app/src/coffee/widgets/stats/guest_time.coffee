@@ -7,15 +7,13 @@ angular.module("horodata").directive("appWidgetsStatsGuestTime", [
       scope.stats = statsService
       scope.filter = statsFilterService
 
-      scope.tableData = []
-
       generateCosts = (data) ->
         guestRates = {}
         for g in scope.group.guests
           if g.rate? and parseFloat(g.rate) != NaN
             guestRates[g.id] = parseFloat g.rate
         costs = []
-
+        scope.listing = []
         for i in data
           if guestRates[i.guest_id]?
             c = (i.duration / 3600) * guestRates[i.guest_id]
@@ -23,7 +21,7 @@ angular.module("horodata").directive("appWidgetsStatsGuestTime", [
               guest_id: i.guest_id
               cost: c
             }
-            scope.tableData.push {
+            scope.listing.push {
               id: i.guest_id
               cost: scope.formatCost(c)
               duration: scope.formatDuration(i.duration)

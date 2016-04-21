@@ -34,6 +34,21 @@ func StatsCustomerTime(c *gin.Context) {
 	}
 }
 
+func StatsCustomerCost(c *gin.Context) {
+	g := middlewares.GetGroup(c)
+
+	begin, end, errors, err := extractTime(c)
+	if err != nil {
+		jsend.Error(c, err)
+	} else if len(errors) > 0 {
+		jsend.BadRequest(c, errors)
+	} else if res, err := g.StatsCustomerCost(begin, end); err != nil {
+		jsend.Error(c, err)
+	} else {
+		jsend.Ok(c, res)
+	}
+}
+
 func StatsTaskTime(c *gin.Context) {
 	g := middlewares.GetGroup(c)
 

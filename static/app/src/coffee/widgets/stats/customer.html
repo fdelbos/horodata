@@ -2,34 +2,34 @@
 
   <app-widgets-loading ng-if="stats.loading()"></app-widgets-loading>
 
-  <app-widgets-common-no-data ng-if="!stats.loading() && data.length == 0" begin="search.begin" end="search.end">
+  <app-widgets-common-no-data ng-if="!stats.loading() && time.length == 0" begin="search.begin" end="search.end">
   </app-widgets-common-no-data>
 
-  <div ng-if="!stats.loading() && data.length > 0" flex layout="column" layout-gt-sm="row" layout-padding>
+  <div ng-if="!stats.loading() && time.length > 0" flex layout="column" layout-gt-sm="row" layout-padding>
 
-    <app-widgets-stats-container caption="Temps par utlisateur">
+    <app-widgets-stats-container caption="Temps par dossier">
       <div id="percent-chart"></div>
     </app-widgets-stats-container>
 
-    <c3chart ng-if="data" bindto-id="percent-chart">
+    <c3chart bindto-id="percent-chart" ng-if="time">
       <chart-column
-        ng-repeat="i in data"
-        column-id="{{ i.guest_id }}"
-        column-name="{{ guests[i.guest_id].full_name }}"
+        ng-repeat="i in time"
+        column-id="{{ i.customer_id }}"
+        column-name="{{ customers[i.customer_id].name }}"
         column-values="{{ i.duration }}"
         column-type="pie"/>
-        <chart-pie expand="true" show-label="true" label-format-function="formatDuration" threshold-label="0.1"/>
+      <chart-pie expand="true" show-label="true" label-format-function="formatTime" threshold-label="0.1"/>
     </c3chart>
 
-    <app-widgets-stats-container caption="Cout par utilisateur">
+    <app-widgets-stats-container caption="Cout par dossier">
       <div id="cost-chart"></div>
     </app-widgets-stats-container>
 
-    <c3chart ng-if="costs" bindto-id="cost-chart">
+    <c3chart ng-if="cost" bindto-id="cost-chart">
       <chart-column
-        ng-repeat="i in costs"
-        column-id="{{ i.guest_id }}"
-        column-name="{{ guests[i.guest_id].full_name }}"
+        ng-repeat="i in cost"
+        column-id="{{ i.customer_id }}"
+        column-name="{{ customers[i.customer_id].name }}"
         column-values="{{ i.cost }}"
         column-type="pie"/>
       <chart-pie expand="true" show-label="true" label-format-function="formatCost" threshold-label="0.1"/>
@@ -41,21 +41,19 @@
     <table md-table>
       <thead md-head>
         <tr md-row>
-          <th md-column><span>Utilisateur</span></th>
+          <th md-column><span>Dossier</span></th>
           <th md-column><span>Temps</span></th>
           <th md-column><span>Cout</span></th>
         </tr>
       </thead>
       <tbody md-body>
         <tr md-row md-auto-select ng-repeat="i in listing">
-          <td md-cell>{{ guests[i.id].full_name }}</td>
-          <td md-cell>{{ i.duration }}</td>
+          <td md-cell>{{ customers[i.customer_id].name }}</td>
+          <td md-cell>{{ formatTime(i.duration) }}</td>
           <td md-cell>{{ i.cost }}</td>
         </tr>
       </tbody>
     </table>
   </md-table-container>
-
-
 
 </div>
