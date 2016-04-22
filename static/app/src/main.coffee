@@ -10,11 +10,13 @@ angular.module("horodata", [
   "$mdThemingProvider"
   "$locationProvider"
   "$routeProvider"
+  "$httpProvider"
   (
     $mdDateLocaleProvider
     $mdThemingProvider
     $locationProvider
     $routeProvider
+    $httpProvider
   ) ->
 
     $mdThemingProvider.theme('default')
@@ -54,6 +56,13 @@ angular.module("horodata", [
         return m.toDate()
       else return new Date(NaN)
     $mdDateLocaleProvider.formatDate = (date) -> moment(date).format('L')
+
+
+    if !$httpProvider.defaults.headers.get
+        $httpProvider.defaults.headers.get = {}
+    $httpProvider.defaults.headers.get['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT'
+    $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache'
+    $httpProvider.defaults.headers.get['Pragma'] = 'no-cache'
 
 ]).run([
   "$http"

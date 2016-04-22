@@ -4,7 +4,6 @@
 ## Todo:
 * Message dans zone blanche page d'accueil "Sélectionnez ou créez un groupe" /Différent PC et mobile ?
 * Statistiques
-* Pb affichage Internet Explorer (dossiers et types crées non-affichés)
 * envoyer un rappel si rien saisi.
 * page d'accueil + pricing
 * edit nom groupe
