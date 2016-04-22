@@ -7,7 +7,7 @@
 
   <div ng-if="!stats.loading() && time.length > 0" flex layout="column" layout-gt-sm="row" layout-padding>
 
-    <app-widgets-stats-container caption="Temps par tache">
+    <app-widgets-stats-container caption="Temps par tâche">
       <div id="time-chart"></div>
     </app-widgets-stats-container>
 
@@ -21,7 +21,7 @@
       <chart-pie expand="true" show-label="true" label-format-function="formatTime" threshold-label="0.1"/>
     </c3chart>
 
-    <app-widgets-stats-container caption="Cout par tache">
+    <app-widgets-stats-container caption="Coût par tâche">
       <div id="cost-chart"></div>
     </app-widgets-stats-container>
 
@@ -41,9 +41,9 @@
     <table md-table>
       <thead md-head>
         <tr md-row>
-          <th md-column><span>Tache</span></th>
+          <th md-column><span>Tâche</span></th>
           <th md-column><span>Temps</span></th>
-          <th md-column><span>Cout</span></th>
+          <th md-column><span>Coût</span></th>
         </tr>
       </thead>
       <tbody md-body>
