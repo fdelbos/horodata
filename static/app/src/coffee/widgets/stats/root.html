@@ -1,39 +1,43 @@
-<div layout="column" layout-padding class="bottom-space">
+<div layout="column"  class="bottom-space">
 
-  <div hide show-xs show-sm layout="row">
-    <md-input-container flex>
-      <md-select ng-model="selected" placeholder="Choisissez une donnée">
-        <md-option ng-value="s.id" ng-repeat="s in availableStats">{{ s.label }}</md-option>
-      </md-select>
-    </md-input-container>
-  </div>
+  <div layout="column" flex layout-padding>
 
-  <div hide show-xs layout="row" flex layout-align="center center">
-    <span>du</span>
-    <md-datepicker  ng-model="filter.begin" md-placeholder="Date début" md-max-date="filter.end" flex></md-datepicker>
-  </div>
-
-  <div hide show-xs layout="row" flex layout-align="center center">
-    <span>au</span>
-    <md-datepicker ng-model="filter.end" md-placeholder="Date fin" md-max-date="today" flex></md-datepicker>
-  </div>
-
-  <div hide-xs layout="row">
-
-    <md-input-container class="no-margin" hide show-gt-sm flex>
-      <md-select ng-model="selected" placeholder="Choisissez une donnée">
-        <md-option ng-value="s.id" ng-repeat="s in availableStats">{{ s.label }}</md-option>
-      </md-select>
-    </md-input-container>
-
-    <div layout="row" flex="50" flex-gt-sm="25" layout-align="center center" >
-      <span>du</span>
-      <md-datepicker  ng-model="filter.begin" md-placeholder="Date début" md-max-date="filter.end"></md-datepicker>
+    <div hide show-xs show-sm layout="row">
+      <md-input-container flex>
+        <md-select ng-model="selected" placeholder="Choisissez une donnée">
+          <md-option ng-value="s.id" ng-repeat="s in availableStats">{{ s.label }}</md-option>
+        </md-select>
+      </md-input-container>
     </div>
 
-    <div layout="row" flex="50" flex-gt-sm="25" layout-align="center center" >
+    <div hide show-xs layout="row" flex layout-align="center center">
+      <span>du</span>
+      <md-datepicker  ng-model="filter.begin" md-placeholder="Date début" md-max-date="filter.end" flex></md-datepicker>
+    </div>
+
+    <div hide show-xs layout="row" flex layout-align="center center">
       <span>au</span>
       <md-datepicker ng-model="filter.end" md-placeholder="Date fin" md-max-date="today" flex></md-datepicker>
+    </div>
+
+    <div hide-xs layout="row">
+
+      <md-input-container class="no-margin" hide show-gt-sm flex>
+        <md-select ng-model="selected" placeholder="Choisissez une donnée">
+          <md-option ng-value="s.id" ng-repeat="s in availableStats">{{ s.label }}</md-option>
+        </md-select>
+      </md-input-container>
+
+      <div layout="row" flex="50" flex-gt-sm="25" layout-align="center center" >
+        <span>du</span>
+        <md-datepicker  ng-model="filter.begin" md-placeholder="Date début" md-max-date="filter.end"></md-datepicker>
+      </div>
+
+      <div layout="row" flex="50" flex-gt-sm="25" layout-align="center center" >
+        <span>au</span>
+        <md-datepicker ng-model="filter.end" md-placeholder="Date fin" md-max-date="today" flex></md-datepicker>
+      </div>
+
     </div>
 
   </div>
@@ -44,6 +48,10 @@
     <app-widgets-stats-customer ng-switch-when="customer"></app-widgets-stats-customer>
     <app-widgets-stats-task ng-switch-when="task"></app-widgets-stats-task>
     <app-widgets-stats-guest-time ng-switch-when="guest_time"></app-widgets-stats-guest-time>
+  </div>
+
+  <app-widgets-stats-no-data ng-if="!selected" ></app-widgets-stats-no-data>
+
   </div>
 
 </div>

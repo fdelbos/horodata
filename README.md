@@ -2,8 +2,6 @@
 
 
 ## Todo:
-* Message dans zone blanche page d'accueil "Sélectionnez ou créez un groupe" /Différent PC et mobile ?
-* Statistiques
 * envoyer un rappel si rien saisi.
 * page d'accueil + pricing
 * edit nom groupe

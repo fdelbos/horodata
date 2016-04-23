@@ -9,6 +9,8 @@
 
   <title>Horodata</title>
 
+  {% include "front/favicon.html" %}
+
   <link href="{{ ctx.StaticRoot }}/roboto/Roboto.css" rel='stylesheet' type='text/css'>
   <link href="{{ ctx.StaticRoot }}/material_icons/material_icons.css" rel='stylesheet' type='text/css'>
   <link href="{{ ctx.StaticRoot }}/bower_components/angular-material/angular-material.min.css" rel="stylesheet">
@@ -56,9 +58,9 @@
     </div>
   </div>
 
-  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-
   {% include "front/analytics.html" %}
+
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
 </body>
 </html>
