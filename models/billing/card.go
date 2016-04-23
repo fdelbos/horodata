@@ -7,6 +7,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/stripe/stripe-go"
 	"github.com/stripe/stripe-go/card"
+	"github.com/stripe/stripe-go/customer"
 )
 
 type Card struct {
@@ -61,6 +62,24 @@ func (c *Customer) UpdateCard(token string) error {
 		Token:    token,
 	})
 	if err != nil {
+		log.WithFields(map[string]interface{}{
+			"package":  "horodata.models.billing",
+			"function": "func (c *Customer) UpdateCard(token string) error",
+			"step":     "card.New",
+		}).Error(err)
+		return err
+	}
+
+	_, err = customer.Update(
+		c.StripeId,
+		&stripe.CustomerParams{DefaultSource: resp.ID},
+	)
+	if err != nil {
+		log.WithFields(map[string]interface{}{
+			"package":  "horodata.models.billing",
+			"function": "func (c *Customer) UpdateCard(token string) error",
+			"step":     "customer.Update",
+		}).Error(err)
 		return err
 	}
 

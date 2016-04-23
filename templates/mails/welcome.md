@@ -3,7 +3,7 @@
 Nous avons bien pris en compte votre inscription !
 
 Vous pouvez accéder à votre compte à partir de l'adresse suivante :
-[https://horodata.com](https://horodata.com).
+[https://horodata.fr](https://horodata.fr).
 
 Une fois connecté, vous pourrez créer un nouveau groupe et le partager avec d'autres utilisateurs.
 
