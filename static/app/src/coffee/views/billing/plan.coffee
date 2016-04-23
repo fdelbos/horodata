@@ -110,6 +110,8 @@ angular.module("horodata").controller("BillingPlanChange", [
           $scope.$emit("plan.reload")
         (resp) ->
           $scope.loading = false
+          $scope.errors =
+            plan: true
       )
 
 ])

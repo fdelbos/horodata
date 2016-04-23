@@ -44,6 +44,14 @@
                 Votre nouveau plan sera effectif immédiatement.
               </span>
             </div>
+
+            <div ng-if="errors.plan" layout-align="center center" layout-padding layout="row">
+              <span class="md-subhead input-error">
+                Le payement a ete refuse! Veuillez verifier que votre carte de
+                credit est valide et que sa limite n'a pas ete atteinte.
+              </span>
+            </div>
+
           </div>
 
           </div>
@@ -59,7 +67,6 @@
               Vos quotas seront mis à jour le <strong>{{ period.end | Day }}</strong>, date de résiliation effective.
             </p>
           </div>
-
         </div>
 
         <div ng-if="done" layout="column" flex layout-align="center center" layout-padding>
