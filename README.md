@@ -2,16 +2,15 @@
 
 
 ## Todo:
-* envoyer un rappel si rien saisi.
 * page d'accueil + pricing
 * edit nom groupe
-* Bon numero de dossiers ajoutes (si doublons)
 * verifier proprietaire dans messages Quotas
 * push (ajout tâche à la liste & notif lors de création de tâche par un collaborateur)
-* groupe invite pas not ready
 
 
 ## Later:
+* envoyer un rappel si rien saisi.
+* Bon numero de dossiers ajoutes (si doublons)
 * code promo (assoce)
 * force mdp : https://github.com/dropbox/zxcvbn + captcha si + 10 dans la journee.
 * Rapports / mail ?

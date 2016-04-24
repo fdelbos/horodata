@@ -1,32 +1,75 @@
 <div layout-padding layout-margin layout="column" layout-align="center center">
 
-  <div ng-if="group.tasks.length == 0 && group.customers.length == 0">
-    <div class="md-headline input-error">
-      Vous venez de créer un nouveau groupe
+  <div ng-if="isAdmin || isOwner">
+
+    <div ng-if="group.tasks.length == 0 && group.customers.length == 0">
+      <div class="md-headline text-primary">
+        Felicitations, vous venez de créer un nouveau groupe.
+      </div>
+      <p>
+        Rendez-vous dès maintenant sous l'onglet "Configuration" pour ajouter des dossiers et tâches,
+        et, pour inviter d'autres utilisateurs à saisir leur activité.
+      </p>
     </div>
-    <p>
-      Rendez vous dès maintenant sous l'onglet "Configuration" pour ajouter des dossiers et tâches, et, pour inviter d'autres utilisateurs à saisir leur activité.
-    </p>
+
+    <div ng-if="group.tasks.length > 0 && group.customers.length == 0">
+      <div class="md-headline text-primary">
+        Le groupe ne possède aucun dossier
+      </div>
+      <p>
+        Vous devez ajouter des dossiers pour rendre possible la saisie.
+        Cliquez sous l'onglet "Configuration" pour en ajouter.
+      </p>
+    </div>
+
+    <div ng-if="group.tasks.length == 0 && group.customers.length > 0">
+      <div class="md-headline text-primary">
+        Le groupe ne possède aucune tâche
+      </div>
+      <p>
+        Vous devez ajouter des tâches pour rendre possible la saisie.
+        Cliquez sous l'onglet "Configuration" pour en ajouter.
+      </p>
+    </div>
+
   </div>
 
-  <div ng-if="group.tasks.length > 0 && group.customers.length == 0">
-    <div class="md-headline input-error">
-      Le groupe ne  possède aucun dossier
-    </div>
-    <p>
-      Vous devez ajouter des dossiers pour rendre possible la saisie.
-      Cliquez sous l'onglet "Configuration" pour en ajouter.
-    </p>
-  </div>
+  <div ng-if="!isAdmin && !isOwner">
 
-  <div ng-if="group.tasks.length == 0 && group.customers.length > 0">
-    <div class="md-headline input-error">
-      Le groupe ne  possède aucune tâche
+    <div ng-if="group.tasks.length == 0 && group.customers.length == 0">
+      <div class="md-headline text-primary ">
+        Ce groupe vient d'etre cree.
+      </div>
+      <p>
+        L'administrateur du groupe, n'a pas encore cree de dossiers
+        ni de taches. Veuillez le contacter pour qu'il complete
+        la configuration du groupe,
+        et vous permette de saisir vos activites.
+      </p>
     </div>
-    <p>
-      Vous devez ajouter des tâches pour rendre possible la saisie.
-      Cliquez sous l'onglet "Configuration" pour en ajouter.
-    </p>
+
+    <div ng-if="group.tasks.length > 0 && group.customers.length == 0">
+      <div class="md-headline text-primary ">
+        Le groupe ne possède aucun dossier
+      </div>
+      <p>
+        L'administrateur du groupe, n'a pas encore cree de dossier.
+        Veuillez le contacter pour qu'il complete la configuration du groupe,
+        et vous permette de saisir vos activites.
+      </p>
+    </div>
+
+    <div ng-if="group.tasks.length == 0 && group.customers.length > 0">
+      <div class="md-headline text-primary ">
+        Le groupe ne possède aucune tâche
+      </div>
+      <p>
+        L'administrateur du groupe, n'a pas encore cree de dossier.
+        Veuillez le contacter pour qu'il complete la configuration du groupe,
+        et vous permette de saisir vos activites.
+      </p>
+    </div>
+
   </div>
 
 </div>

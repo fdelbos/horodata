@@ -1,11 +1,23 @@
 <md-dialog aria-label="Saisir une activité" flex="50">
 
   <div ng-if="group.tasks.length == 0 || group.customers.length == 0">
+
     <app-widgets-common-dialog-toolbar>Saisir une activité</app-widgets-common-dialog-toolbar>
+
     <md-dialog-content>
-      <app-widgets-empty-group><app-widgets-empty-group>
+      <div layout-padding ng-if="group.tasks.length == 0 && group.customers.length == 0" layout="column" layout-align="center center">
+        <div class="md-headline text-primary ">
+          Vous ne pouvez encore pas saisir vos activites
+        </div>
+        <p>
+          Pour pouvoir saisir des activites, un groupe doit
+          etres associe a des taches et des dossiers.
+        </p>
+      </div>
     </md-dialog-content>
+
     <app-widgets-common-dialog-actions></app-widgets-common-dialog-actions>
+
   </div>
 
 

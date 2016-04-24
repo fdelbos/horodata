@@ -35,11 +35,13 @@ angular.module("horodata").controller("Group", [
       $http.get("#{apiService.get()}/groups/#{$routeParams.group}").then(
         (resp) ->
           if !$scope.group? then $scope.selectTab(0)
-          
+
           $scope.group = resp.data.data
           groupService.set($scope.group)
+
           $scope.isAdmin = $scope.group.guests?
           $scope.isOwner = $scope.user.id == $scope.group.owner
+
           $scope.tasks = _.keyBy($scope.group.tasks, 'id')
           $scope.customers = _.keyBy($scope.group.customers, 'id')
           $scope.guests = _.keyBy($scope.group.guests, 'id')
