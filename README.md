@@ -4,7 +4,6 @@
 ## Todo:
 * page d'accueil + pricing
 * edit nom groupe
-* verifier proprietaire dans messages Quotas
 * push (ajout tâche à la liste & notif lors de création de tâche par un collaborateur)
 
 
