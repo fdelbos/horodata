@@ -4,7 +4,7 @@
 
     <div ng-if="group.tasks.length == 0 && group.customers.length == 0">
       <div class="md-headline text-primary">
-        Felicitations, vous venez de créer un nouveau groupe.
+        Félicitations, vous venez de créer un nouveau groupe.
       </div>
       <p>
         Rendez-vous dès maintenant sous l'onglet "Configuration" pour ajouter des dossiers et tâches,
@@ -38,35 +38,31 @@
 
     <div ng-if="group.tasks.length == 0 && group.customers.length == 0">
       <div class="md-headline text-primary ">
-        Ce groupe vient d'etre cree.
+        Ce groupe vient d'être créé.
       </div>
       <p>
-        L'administrateur du groupe, n'a pas encore cree de dossiers
-        ni de taches. Veuillez le contacter pour qu'il complete
-        la configuration du groupe,
-        et vous permette de saisir vos activites.
+        Vous ne pouvez donc pas saisir d'activité.
+        Veuillez contacter l'administrateur du groupe pour qu'il le configure.
       </p>
     </div>
 
     <div ng-if="group.tasks.length > 0 && group.customers.length == 0">
       <div class="md-headline text-primary ">
-        Le groupe ne possède aucun dossier
+        Le groupe ne possède pas de dossier
       </div>
       <p>
-        L'administrateur du groupe, n'a pas encore cree de dossier.
-        Veuillez le contacter pour qu'il complete la configuration du groupe,
-        et vous permette de saisir vos activites.
+        Vous ne pouvez donc pas saisir d'activité.
+        Veuillez contacter l'administrateur du groupe pour qu'il ajoute des dossiers.
       </p>
     </div>
 
     <div ng-if="group.tasks.length == 0 && group.customers.length > 0">
       <div class="md-headline text-primary ">
-        Le groupe ne possède aucune tâche
+        Le groupe ne possède pas de tâche
       </div>
       <p>
-        L'administrateur du groupe, n'a pas encore cree de dossier.
-        Veuillez le contacter pour qu'il complete la configuration du groupe,
-        et vous permette de saisir vos activites.
+        Vous ne pouvez donc pas saisir d'activité.
+        Veuillez contacter l'administrateur du groupe pour qu'il ajoute des tâches.
       </p>
     </div>
 
