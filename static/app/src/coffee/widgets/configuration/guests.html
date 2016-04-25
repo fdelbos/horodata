@@ -32,7 +32,7 @@
     <md-whiteframe class="md-whiteframe-1dp" flex layout-padding layout="space-around center" ng-if="group.guests.length > 0">
       <div layout="row" flex>
         <md-input-container flex>
-          <label>Selectionnez un utilisateur</label>
+          <label>Sélectionnez un utilisateur</label>
           <md-select ng-model="guests.selected">
             <md-option ng-repeat="g in group.guests" ng-if="g.active" value="{{ g.id }}">
 
