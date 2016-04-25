@@ -18,6 +18,7 @@
           <label>Taux horaire</label>
           <input type="text" ng-model="guests.current.rate" valid-decimal>
           <small ng-if="errors.rate" class="input-error">{{ errors.rate }}</small>
+          <span ng-if="!errors.rate" class="md-caption text-grey">Permet de calculer les coûts pour les statistiques</span>
         </md-input-container>
 
         <md-input-container class="md-block"  ng-class="{'md-input-invalid': errors.admin}" >
