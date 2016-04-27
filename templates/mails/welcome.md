@@ -1,4 +1,5 @@
-## Bienvenue sur Horodata !
+Bienvenue sur Horodata !
+---
 
 Nous avons bien pris en compte votre inscription !
 
