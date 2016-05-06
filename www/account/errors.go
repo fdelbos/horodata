@@ -15,8 +15,8 @@ func GetError(c *gin.Context, err error) {
 	c.Writer.WriteHeader(http.StatusInternalServerError)
 
 	data := map[string]interface{}{
-		"Title":  "Erreure du serveur",
-		"Error":  "Une erreure a été détectée!",
+		"Title":  "Erreur du serveur",
+		"Error":  "Une erreur a été détectée.",
 		"Detail": "Veuillez recommencer."}
 	html.Render("account/error.html", c, data, http.StatusInternalServerError)
 }
@@ -24,7 +24,7 @@ func GetError(c *gin.Context, err error) {
 func UserNotVerified(c *gin.Context) {
 	data := map[string]interface{}{
 		"Title":  "Connexion refusée",
-		"Error":  "L'adresse email associée a ce compte n' a pas été verifiée.",
-		"Detail": "Verifiez cette adresse aupres du fournisseur de votre compte et recommencez."}
+		"Error":  "L'adresse email associée à ce compte n'a pas été verifiée.",
+		"Detail": "Veuillez vérifier l'adresse et recommencez."}
 	html.Render("account/error.html", c, data, http.StatusInternalServerError)
 }
