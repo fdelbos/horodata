@@ -12,7 +12,7 @@ import (
 )
 
 func init() {
-	viper.SetEnvPrefix("stats")
+	viper.SetEnvPrefix("report")
 
 	//
 	// PostgreSQL

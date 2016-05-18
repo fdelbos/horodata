@@ -22,7 +22,7 @@ angular.module("horodata").directive("appWidgetsStatsTask", [
         d = moment.duration(value, 'seconds')
         minutes = d.minutes()
         if minutes < 10 then minutes = "0#{minutes}"
-        "#{moment.duration(value, 'seconds').hours()}h#{minutes}"
+        "#{parseInt(moment.duration(value, 'seconds').asHours())}h#{minutes}"
 
       scope.formatCost = (value, ration, id) -> value
 

@@ -42,7 +42,7 @@ angular.module("horodata").directive("appWidgetsStatsGuestTime", [
         d = moment.duration(value, 'seconds')
         minutes = d.minutes()
         if minutes < 10 then minutes = "0#{minutes}"
-        "#{moment.duration(value, 'seconds').hours()}h#{minutes}"
+        "#{parseInt(moment.duration(value, 'seconds').asHours())}h#{minutes}"
 
 
       scope.$watch("filter", (v, o) ->
